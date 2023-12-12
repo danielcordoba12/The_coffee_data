@@ -15,6 +15,7 @@ import EditarLote from './components/editarlote'
 import EditarFinca from './components/EditarFinca'
 import Usuario from './components/usuariosRegistrar'
 import editarusuario from './components/editarusuario'
+import ListarUsuarios from './components/listarusuario'
 
 function App(){
   return(
@@ -33,6 +34,7 @@ function App(){
         <Route path='/loginfrom'  element={<LoginForm/>}/>
         <Route path='/Usuario'  element={<Usuario/>}/>
         <Route path='/Usuario/editar' element={<editarusuario/>}/>
+        <Route path='/Usuario/listar' element={<ListarUsuarios/>}/>
       </Routes>
     </>
   )
