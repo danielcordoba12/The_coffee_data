@@ -43,3 +43,6 @@ app.get('/documents', (req,res) =>{
 app.listen(4000, () => {
     console.log("Servidor se esta ejecutando en el puerto 4000");
 });
+
+import cors from 'cors'
+app.use(cors());
