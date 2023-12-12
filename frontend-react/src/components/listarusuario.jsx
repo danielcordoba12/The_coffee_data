@@ -1,69 +1,71 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 import Api from "../services/api";
 import { Link } from "react-router-dom";
-import '../style/lotes.css'
+import '../style/usuarios.css'; // Asegúrate de importar el estilo correcto
 
-
-const Listarlote = () => {
-    const [lotes, setlotes] = useState([]);
+const ListarUsuarios = () => {
+    const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
-        const buscarlotes = async () => {
+        const buscarUsuarios = async () => {
             try {
-                const response = await Api.get('lote/listar');
-                setlotes(response.data);
+                const response = await Api.get('usuario/listar');
+                setUsuarios(response.data);
             } catch (error) {
-                console.error('Error fetching tasks:', error);
+                console.error('Error fetching users:', error);
             }
         }
-        buscarlotes();
+        buscarUsuarios();
     }, []);
+
+    const handleUpdate = (id) => {
+        // Lógica para manejar la actualización, si es necesario.
+        console.log(`Actualizar usuario con ID: ${id}`);
+    };
+
     return (
         <>
-          <img src="../../public/img/fondo.png" alt="" className="fondo2" />
-          <div className="tablalistar">
-            <h1 className="titu">lotes</h1>
-            <br />
-            <table className="tableprincipal">
-              <thead>
-                <tr>
-                  <th>id</th>
-                  <th>Fecha Creación</th>
-                  <th>Nombre</th>
-                  <th>Longitud</th>
-                  <th>Latitud</th>
-                  <th>Estado</th>
-                  <th>opciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {lotes.map((task) => (
-                  <tr key={task.id}>
-                    <td>{task.id}</td>
-                    <td>{task.fecha_creacion}</td>
-                    <td>{task.nombre}</td>
-                    <td>{task.longitud}</td>
-                    <td>{task.latitud}</td>
-                    <td>{task.estado}</td>
-                    <td>
-                      <button
-                        type="button"
-                        className="btn-primary"
-                        onClick={() => handleUpdate(task.id)}
-                      >
-                        <Link to={`/lote/editar/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                          Modificar
-                        </Link>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+            <img src="../../public/img/fondo.png" alt="" className="fondo2" />
+            <div className="tablalistar">
+                <h1 className="titu">Usuarios</h1>
+                <br />
+                <table className="tableprincipal">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha Creación</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Número Documentos</th>
+                            <th>Teléfono</th>
+                            <th>Correo Electrónico</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {usuarios.map((usuario) => (
+                            <tr key={usuario.id}>
+                                <td>{usuario.id}</td>
+                                <td>{usuario.fecha_creacion}</td>
+                                <td>{usuario.nombre}</td>
+                                <td>{usuario.apellido}</td>
+                                <td>{usuario.numero_documentos}</td>
+                                <td>{usuario.telefono}</td>
+                                <td>{usuario.correo_electronico}</td>
+                                <td>
+                                    <button type="button" className="btn-primary" onClick={() => handleUpdate(usuario.id)}>
+                                        <Link to={`/usuario/editar/${usuario.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                            Modificar
+                                        </Link>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </>
-      );
-      
-}
+    );
+};
 
-export default Listarlote
+export default ListarUsuarios;
