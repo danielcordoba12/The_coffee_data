@@ -1,0 +1,25 @@
+
+
+.columnas{
+    background-color: black;
+    color:  white;
+    border: 1px solid white;
+    width: 120px;
+}
+.columnas-2{
+    text-align: center;
+    width: 210px;
+    height: 40px;
+    /* border: 1px solid white; */
+}
+
+.columna-1{
+    border-radius: 8px 0px 0px 0px;
+}
+.columna-2{
+    border-radius: 0px 8px 0px 0px;
+}
+.filas {
+    background-color: rgb(243, 245, 246); 
+    text-align: center;
+}

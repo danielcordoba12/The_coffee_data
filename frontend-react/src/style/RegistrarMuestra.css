@@ -1,0 +1,128 @@
+En tu archivo Formulario.css
+.main.content {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.formulario {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 0px 0px 8px 8px;
+  display: flex;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgb(30, 30, 30, 50%);
+  border-bottom:1px black solid;
+  justify-content: space-between;
+  max-width: 800px;
+  width: 100%;
+}
+.title{
+  margin-bottom: 0px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 670px;
+  height: 60px;
+  font-size: 2.5em;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgb(30, 30, 30, 50%);
+  border-bottom:1px black solid;  
+  border: none;
+}
+
+.columna {
+  flex: 1;
+  margin-left: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: white;
+  font-size: 0.9em;
+}
+
+.input {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom:1px rgb(153, 151, 151) solid;
+  color: white;
+  outline: none;
+}
+
+.button {
+  width: 115px;
+  font-size: 1.3em;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer; 
+  margin-left: 2px;
+}
+.button:hover{
+  background-color: #2980b9;
+
+}
+.formulario input + label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #ffffff;
+  font-size: 16px;
+  pointer-events: none;
+  transition: transform 0.3s, font-size 0.3s, color 0.3s;
+}
+
+.formulario input:focus + label,
+.formulario input:not(:placeholder-shown) + label {
+  transform: translateY(-100%) scale(1.2);
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+  top: 10px;
+  transition: all 0.5s;
+}
+
+.container-input{
+    position: relative;
+    padding: 12px;
+
+
+  }
+
+/* ================================listar muestra===============================0
+
+*/
+
+.tabla-container {
+  margin: 20px;
+}
+
+.tabla {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tabla th, .tabla td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.tabla th {
+  background-color: #f2f2f2;
+}
