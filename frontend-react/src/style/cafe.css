@@ -1,0 +1,84 @@
+/* 
+  //estilos fincas registrar// */
+
+
+  .tabla6 {
+    backdrop-filter: blur(10px);
+    width: 350px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgb(30, 30, 30, 50%);
+    border-bottom:1px black solid;
+  }
+  
+  .tabla6 h1 {
+    color: white;
+    text-decoration: none   ;
+    text-align: center;
+    font-weight: bold;
+ 
+    font-size: 1.5rem;
+    margin: 20px 0;
+  }
+  
+  .tabla6 div {
+    margin-bottom: 15px;
+  }
+  
+  .tabla6 input {
+    width: 100%;
+    padding: 10px;
+    /* border-bottom: 1px solid #ccc; */
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom:1px rgb(153, 151, 151) solid;
+    color: white;
+    outline: none;
+  }
+  
+  /* Efecto del placeholder */
+  .tabla6 input + label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #ffffff;
+    font-size: 16px;
+    pointer-events: none;
+    transition: transform 0.3s, font-size 0.3s, color 0.3s;
+    
+  }
+  
+  /* Placeholder transformado al enfocar el campo */
+  .tabla6 input:focus + label,
+  .tabla6 input:not(:placeholder-shown) + label {
+    transform: translateY(-100%) scale(1.2);
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    top: 10px;
+    transition: all 0.5s;
+  }
+  
+  .tabla6 button {
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #2980b9;
+  }
+  
+  .tabla6 button:hover {
+    background-color: #2980b9;
+  }
+  
+  .div-input{
+    position: relative;
+  }

@@ -1,64 +1,55 @@
 import React, { useEffect, useState } from "react"
 import Api from "../services/api";
 import { Link } from "react-router-dom";
-import '../style/fincas.css'
 
 
-const ListarFinca = () => {
-    const [fincas, setFincas] = useState([]);
+const Listarcafe = () => {
+    const [cafe, setcafe] = useState([]);
 
     useEffect(() => {
-        const buscarFincas = async () => {
+        const buscarcafe = async () => {
             try {
-                const response = await Api.get('finca/listar');
-                setFincas(response.data);
+                const response = await Api.get('cafe/listar');
+                setcafe(response.data);
+                console.log(response)
             } catch (error) {
                 console.error('Error fetching tasks:', error);
             }
         }
-        buscarFincas();
+        buscarcafe();
     }, []);
     return (<>
         <img src="../../public/img/fondo.png" alt="" className="fondo2" />
         <div className="tablalistar">
-            <h1 className="titu"> Listado de  Fincas</h1>
+            <h1 className="titu"> Listado de  cafe</h1>
             <br />
             <table className="tableprincipal">
                 <thead>
                     <tr className="bg-gray-200">
                         <th>id</th>
-                        <th>Fecha Creación</th>
-                        <th>Nombre</th>
-                        <th>Longitud</th>
-                        <th>Latitud</th>
-                        <th>usuario</th>
-                        <th>municipio</th>
-                        <th>Estado</th>
-                        <th>Nombre Vereda</th>
+                        <th>estado</th>
+                        <th>lote</th>
+                        <th>variedad</th>
                         <th>opciones</th>
 
 
                     </tr>
                 </thead>
                 <tbody>
-                    {fincas.map((task) => (
+                    {cafe.map((task) => (
                         <tr key={task.id} className="border-t">
                             <td>{task.id}</td>
-                            <td>{task.fecha_creacion}</td>
-                            <td>{task.nombre}</td>
-                            <td>{task.longitud}</td>
-                            <td>{task.latitud}</td>
-                            <td>{task.nombre_usuario}</td>
-                            <td>{task.nombre_municipio}</td>
                             <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                            <td>{task.noombre_vereda}</td>
+                            <td>{task.numero_lote}</td>
+                            <td>{task.nombre_variedad}</td>
+
                             <td>
                                 <button
                                     type="button"
                                     className="btn-primary"
                                     onClick={() => handleUpdate(task.id)}
                                 >
-                                    <Link to={`/finca/editar/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <Link to={`/cafe/editar/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         Modificar
                                     </Link>
                                 </button>
@@ -74,4 +65,4 @@ const ListarFinca = () => {
     )
 }
 
-export default ListarFinca
+export default Listarcafe
