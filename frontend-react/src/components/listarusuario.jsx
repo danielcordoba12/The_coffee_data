@@ -9,23 +9,20 @@ const ListarUsuarios = () => {
     useEffect(() => {
         const buscarUsuarios = async () => {
             try {
-                const response = await Api.get('usuario/listar');
+                const response = await Api.get('usuario/listarusuario');
                 setUsuarios(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
-        }
+        };
         buscarUsuarios();
     }, []);
 
-    const handleUpdate = (id) => {
-        // Lógica para manejar la actualización, si es necesario.
-        console.log(`Actualizar usuario con ID: ${id}`);
-    };
 
     return (
         <>
-            <img src="../../public/img" alt="" className="fondo2" />
+            {/* Asegúrate de tener la ruta correcta de la imagen */}
+            <img src="../../public/img/fondo.png" alt="" className="fondo2" />
             <div className="tablalistar">
                 <h1 className="titu">Usuarios</h1>
                 <br />
@@ -33,12 +30,13 @@ const ListarUsuarios = () => {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Fecha Creación</th>
+                           
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Número Documentos</th>
                             <th>Teléfono</th>
                             <th>Correo Electrónico</th>
+                            <th>estado</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -46,15 +44,15 @@ const ListarUsuarios = () => {
                         {usuarios.map((usuario) => (
                             <tr key={usuario.id}>
                                 <td>{usuario.id}</td>
-                                <td>{usuario.fecha_creacion}</td>
                                 <td>{usuario.nombre}</td>
                                 <td>{usuario.apellido}</td>
                                 <td>{usuario.numero_documentos}</td>
                                 <td>{usuario.telefono}</td>
                                 <td>{usuario.correo_electronico}</td>
+                                <td>{usuario.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                                 <td>
                                     <button type="button" className="btn-primary" onClick={() => handleUpdate(usuario.id)}>
-                                        <Link to={`/usuario/editar/${usuario.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        <Link to={`/usuario/actualizar/${usuario.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                             Modificar
                                         </Link>
                                     </button>
@@ -69,3 +67,4 @@ const ListarUsuarios = () => {
 };
 
 export default ListarUsuarios;
+ 
