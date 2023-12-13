@@ -4,20 +4,20 @@ import Api from "../services/api";
 const Editarcafe = () => {
 
     const { id } = useParams();
-    const [cafe, setcafe] = useState({ lotes_id: '', variedades_id: '' });
+    const [cafe, setcafes] = useState({ fecha_creacion: '', nombre: '', longitud: '', latitud: '', usuarios_id: '', municipios_id: '', noombre_vereda: '' });
     const navigate = useNavigate()
 
     useEffect(() => {
-        const buscarcafe = async () => {
+        const buscarcafes = async () => {
             try {
                 const response = await Api.get(`/cafe/buscar/${id}`);
-                setcafe(response.data[0]);
+                setcafes(response.data[0]);
             } catch (error) {
                 console.error('Error buscando el usuario', error);
 
             }
         };
-        buscarcafe();
+        buscarcafes();
     }, [id]);
 
     const handleEditUser1 = async () => {
@@ -56,14 +56,14 @@ const Editarcafe = () => {
                     type="number"
                     placeholder="lotes_id"
                     value={cafe.lotes_id}
-                    onChange={(e) => setcafe({ ...cafe, lotes_id: e.target.value })}
+                    onChange={(e) => setcafes({ ...cafe, lotes_id: e.target.value })}
                 />
 
                 <input
                     className="input-field" 
                     type="number" placeholder="variedades_id " 
                     value={cafe.variedades_id } 
-                    onChange={(e) => setcafe({ ...cafe, variedades_id : e.target.value })}
+                    onChange={(e) => setcafes({ ...cafe, variedades_id : e.target.value })}
                 />
                 
                 
