@@ -14,7 +14,7 @@ import Registrarlote from './components/loteRegistrar'
 import EditarLote from './components/editarlote'
 import EditarFinca from './components/EditarFinca'
 import Usuario from './components/usuariosRegistrar'
-import editarusuario from './components/editarusuario'
+import EditarUsuario from './components/editarusuario'
 import ListarUsuarios from './components/listarusuario'
 import ListarMunicipio from './components/municipiolistar'
 import RegistrarMunicipio from './components/municipioregistrar'
@@ -25,6 +25,7 @@ import Editarvariedad from './components/variedadeseditar'
 import Listarcafe from './components/cafelistar'
 import RegistrarCafe from './components/caferegistrar'
 import Editarcafe from './components/cafeeditar'
+
 
 
 function App(){
@@ -41,9 +42,8 @@ function App(){
         <Route path='/lote/registrar' element={<Registrarlote/>}/>
         <Route path='/lote/editar/:id' element={<EditarLote/>}/>
         <Route path='/Analisis' element={<Analisiss/>}/>
-        <Route path='/loginfrom'  element={<LoginForm/>}/>
+        <Route path='/'  element={<LoginForm/>}/>
         <Route path='/Usuario'  element={<Usuario/>}/>
-        <Route path='/Usuario/editar' element={<editarusuario/>}/>
         <Route path='/Usuario/listar' element={<ListarUsuarios/>}/>
         <Route path='/municipio/listar' element={<ListarMunicipio/>}/>
         <Route path='/municipio/registrar' element={<RegistrarMunicipio/>}/>
@@ -56,6 +56,7 @@ function App(){
         <Route path='/cafe/editar/:id' element={<Editarcafe/>}/>
 
 
+        <Route path='/Usuario/actualizar' element={<EditarUsuario/>}/>
       </Routes>
     </>
   )

@@ -5,14 +5,14 @@ import { validationResult } from "express-validator";
     try {
         let error1 = validationResult(req);
         if (!error1.isEmpty()){
-            return res.status(400).json(error1);
+            return res.status(200).json(error1);
         }
         let data = req.body;
         console.log("user",data);
 
-        let sql= 'INSERT INTO usuarios( fecha_creacion,nombre, apellido, numero_documentos,telefono, correo_electronico, user_password, tipo_documento, rol, cargo) VALUES (?,?,?,?,?,?,?,?,?,?)';
+        let sql= 'INSERT INTO usuarios( ,nombre, apellido, numero_documentos,telefono, correo_electronico, user_password, tipo_documento, rol, cargo) VALUES (?,?,?,?,?,?,?,?,?,?)';
 
-        const [rows] = await pool.query(sql, [ data.fecha_creacion,data.nombre, data.apellido, data.documento, data.telefono,data.correo,data.contraseña,data.tipo_identificacion,data.rol,data.cargo]); 
+        const [rows] = await pool.query(sql, [data.nombre, data.apellido, data.documento, data.telefono,data.correo,data.contraseña,data.tipo_identificacion,data.rol,data.cargo]); 
         
         if (rows.affectedRows > 0) {
             res.status(200).json({
@@ -22,8 +22,8 @@ import { validationResult } from "express-validator";
             );
 
         } else {
-            res.status(400).json({
-                "status": 400,
+            res.status(200).json({
+                "status": 200,
                 "message": "No se registro el usuario!"
             }
             );
@@ -32,8 +32,8 @@ import { validationResult } from "express-validator";
 
 
     } catch (error) {
-        res.status(500).json({
-            "status": 500,
+        res.status(200).json({
+            "status": 200,
             "message": "error en en el servidor" + error 
         }
         );
@@ -48,7 +48,7 @@ export const listarUsuario = async (req, res) => {
         const [result] = await pool.query("select * from usuarios");
         res.status(200).json(result);
     } catch (err) {
-        res.status(500).json({
+        res.status(200).json({
             massage: "Error en listar usuario :" + err
         });
     }
@@ -59,7 +59,7 @@ export const buscarUsuarios = async (req, res) => {
         const [result] = await pool.query("select * from usuarios where id =" + id);
         res.status(200).json(result);
     } catch (err) {
-        res.status(500).json({
+        res.status(200).json({
             massage: "Error en listar usuario :" + err
         });
     }
@@ -71,7 +71,7 @@ export const actualizarUsuario = async (req, res) => {
     try {
         let error1 = validationResult(req);
         if (!error1.isEmpty()){
-            return res.status(400).json(error1);
+            return res.status(200).json(error1);
         }
         let id = req.params.id;
         let { nombre, apellido, documento, telefono,correo,contraseña,tipo_identificacion,rol,cargo} = req.body;
@@ -92,16 +92,16 @@ export const actualizarUsuario = async (req, res) => {
             }
             );
         } else {
-            res.status(400).json({
-                "status": 400,
+            res.status(200).json({
+                "status": 200,
                 "message": "El usuario no fue actualizado!"
 
             }
             );
         }
     } catch (e) {
-        res.status(500).json({
-            "status": 500,
+        res.status(200).json({
+            "status": 200,
             "message": "Error en el servidor " + e
         }
         );
@@ -129,7 +129,7 @@ export const desactivarUsuario = async (req, res) => {
         }
     } catch (err) {
       console.error('Error en desactivarUsuario:', err);
-      res.status(500).json({ mensaje: 'Error en desactivarUsuario: ' + err });
+      res.status(200).json({ mensaje: 'Error en desactivarUsuario: ' + err });
     }
   };
   export const ActivarUsuario = async (req, res) => {
@@ -152,6 +152,6 @@ export const desactivarUsuario = async (req, res) => {
         }
     } catch (err) {
       console.error('Error en activarUsuaeio:', err);
-      res.status(500).json({ mensaje: 'Error en activarUsuario: ' + err });
+      res.status(200).json({ mensaje: 'Error en activarUsuario: ' + err });
     }
   };
