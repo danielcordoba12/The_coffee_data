@@ -44,7 +44,7 @@ const Listarlote = () => {
                     <td>{task.nombre}</td>
                     <td>{task.longitud}</td>
                     <td>{task.latitud}</td>
-                    <td>{task.estado}</td>
+                    <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                     <td>
                       <button
                         type="button"
