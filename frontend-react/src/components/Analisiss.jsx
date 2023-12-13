@@ -1,66 +1,69 @@
-import React,{useEffect,useRef} from "react";
-import api from "../services/api";
+import React, { useEffect, useRef } from "react";
+import Api from "../services/api";
 import { useNavigate } from "react-router-dom";
-import '../style/analisis.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faUser,faHelmetSafety,faClockRotateLeft,faMugSaucer,faToolbox,faMagnifyingGlassChart,faChartColumn,faPhone,faSliders}  from'@fortawesome/free-solid-svg-icons'
+import '../style/analisis.css'
 
-function Analisiss() {
-  return (
+const RegistrarAnalisis= () => {
+    const calidad = useRef();
+    const tipo_analisis_id  = useRef();
+    const muestras_id  = useRef();
+    const usuarios_id= useRef();
+   
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        calidad.current.focus();
+    }, [])
+
+    const handleSubmit = (e) => {
+
+        e.preventDefault();
+
+        const data = {
+   
+            calidad: calidad.current.value,
+            tipo_analisis_id: tipo_analisis_id .current.value,
+            muestras_id : muestras_id .current.value,
+            usuarios_id : usuarios_id .current.value
+        };
+        const headers = {
+            headers: {
+                token: "xd"
+            }
+        }
+        let fetch = Api.post("analisis/registrar", data, headers)
+        window.location = "analisis/registrar"
+    }
+    return (
     <>
+        <img src="../../public/img/fondo.png " alt="" className="fondo2" />
+        <form className="tabla2" onSubmit={handleSubmit} method="post">
+            <h1 className="text-center font-bold underline text-3xl p-3 m-2">Registro Análisis</h1>
 
-        <img src="../../public/img/fondo.png" alt="hiiiiii" className="fondo3" />
-        <header>
-
-            <h1>ADMIN</h1>
-        </header>
-        <nav className="navbar">
-               <div className="list-items">
-                   <ul>
-                       <li>
-                           <FontAwesomeIcon icon={faHelmetSafety} className="icon" />
-                           Administrador
-                       </li>
-                       <li>
-                           <FontAwesomeIcon icon={faClockRotateLeft} className="icon"/>
-                           Historia
-                       </li>
-                       <li>
-                           <FontAwesomeIcon icon={faMugSaucer} className="icon"/>
-                           Mi producto
-                       </li>
-                       <li>
-                           <FontAwesomeIcon icon={faToolbox} className="icon"/>
-                           Servicio
-                       </li>
-                       <li>
-                       <FontAwesomeIcon icon={faMagnifyingGlassChart} className="icon"/>
-                           Analisis
-                       </li>
-                       <li>
-                           <FontAwesomeIcon icon={faChartColumn} className="icon"/>
-                           Comparacion
-                       </li>
-                       <li>
-                           <FontAwesomeIcon icon={faPhone}className="icon" />
-                           Contacto
-                       </li>
-                       <li>
-                           <FontAwesomeIcon icon={faSliders} className="icon"/>
-                           Configuracion
-                       </li>
-
-
-                   </ul>
-               </div>
-           </nav>
-
-    
-
-          
-     
-    </>  
-  );
+            <div className="div-input">
+                <input type="text" id="calidad" name="calidad" ref={calidad} placeholder="" />
+                <label for="calidad">Calidad</label>
+            </div>
+      
+            <div className="div-input">
+                <input type="number" id="tipo_analisis_id " name="tipo_analisis_id " ref={tipo_analisis_id } placeholder="" />
+                <label for="tipo_analisis_id">Tipo de Análisis</label>
+            </div>
+            <div className="div-input">
+                <input type="number" id="Muestras " name=" muestras_id " ref={ muestras_id } placeholder="" />
+                <label for=" muestras_id">Muestras</label>
+            </div>
+            <div className="div-input">
+                <input type="text" id="usuarios_id" name="usuarios_id" ref={usuarios_id} placeholder="" />
+                <label for="usuarios_id">Usuarios</label>
+            </div>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline"
+                type="submit">Registro Análisis</button>
+        </form>
+    </>
+    )
 }
 
-export default Analisiss;
+
+export default RegistrarAnalisis
