@@ -14,7 +14,7 @@ import Registrarlote from './components/loteRegistrar'
 import EditarLote from './components/editarlote'
 import EditarFinca from './components/EditarFinca'
 import Usuario from './components/usuariosRegistrar'
-import editarusuario from './components/editarusuario'
+import EditarUsuario from './components/editarusuario'
 import ListarUsuarios from './components/listarusuario'
 
 function App(){
@@ -32,12 +32,13 @@ function App(){
         <Route path='/lote/editar/:id' element={<EditarLote/>}/>
         <Route path='/Analisis' element={<Analisiss/>}/>
         <Route path='/loginfrom'  element={<LoginForm/>}/>
-        <Route path='/Usuario'  element={<Usuario/>}/>
-        <Route path='/Usuario/editar' element={<editarusuario/>}/>
-        <Route path='/Usuario/listar' element={<ListarUsuarios/>}/>
+        <Route path='/usuario'  element={<Usuario/>}/>
+        <Route path="/usuario/listar" element={<ListarUsuarios />} />
+        <Route path="/usuario/editar/:id" element={<EditarUsuario />} />
+
       </Routes>
     </>
   )
 }
 
-export default App
+export default App 

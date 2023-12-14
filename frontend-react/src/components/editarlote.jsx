@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Api from "../services/api";
-const EditarLote = () => {
 
+
+const EditarLote = () => {
     const { id } = useParams();
     const [Lote, setLotes] = useState({ fecha_creacion: '', nombre: '', longitud: '', latitud: '', fincas_id: '' });
     const navigate = useNavigate()

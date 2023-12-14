@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Api from "../services/api";
 import { Link } from "react-router-dom";
-import '../style/usuarios.css'; // Asegúrate de importar el estilo correcto
+import '../style/usuarios.css';
 
 const ListarUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -9,7 +9,7 @@ const ListarUsuarios = () => {
     useEffect(() => {
         const buscarUsuarios = async () => {
             try {
-                const response = await Api.get('usuario/listar');
+                const response = await Api.get('usuario/listarusuario');
                 setUsuarios(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
@@ -17,11 +17,6 @@ const ListarUsuarios = () => {
         }
         buscarUsuarios();
     }, []);
-
-    const handleUpdate = (id) => {
-        // Lógica para manejar la actualización, si es necesario.
-        console.log(`Actualizar usuario con ID: ${id}`);
-    };
 
     return (
         <>
@@ -39,6 +34,7 @@ const ListarUsuarios = () => {
                             <th>Número Documentos</th>
                             <th>Teléfono</th>
                             <th>Correo Electrónico</th>
+                            <th>estado</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -52,8 +48,10 @@ const ListarUsuarios = () => {
                                 <td>{usuario.numero_documentos}</td>
                                 <td>{usuario.telefono}</td>
                                 <td>{usuario.correo_electronico}</td>
+                                <td>{usuario.estado}</td>
                                 <td>
-                                    <button type="button" className="btn-primary" onClick={() => handleUpdate(usuario.id)}>
+                                    <button type="button" className="btn-primary"
+                                    onClick={() => handleUpdate(usuario.id)}>
                                         <Link to={`/usuario/editar/${usuario.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                             Modificar
                                         </Link>

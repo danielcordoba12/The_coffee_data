@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Api from "../services/api";
+import '../style/fincas.css';
 
-const editarusuario = () => {
+const EditarUsuario = () => {
     const { id } = useParams();
     const [usuario, setUsuario] = useState({
-        fecha_creacion: '',
         nombre: '',
-        apellido : '',
-        numero_documentos : '',
-        telefono : '',
-        correo_electronico : '',
-        user_password : '',
-        tipo_documento : '',
-        rol : '',
-        cargo : '',
-        estado : '',
+        apellido: '',
+        numero_documentos: '',
+        telefono: '',
+        correo_electronico: '',
+        user_password: '',
+        tipo_documento: '',
+        rol: '',
+        cargo: '',
     });
-
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -33,86 +31,117 @@ const editarusuario = () => {
         buscarUsuario();
     }, [id]);
 
-    const handleEditUser1 = async () => {
-        try {
-            await Api.put(`/usuario/actualizar/${id}`, usuario);
-            navigate("/usuario/listar");
-        } catch (error) {
-            console.error('Error editando el usuario: ', error);
-        }
+    const handleInputChange = (e, field) => {
+        setUsuario({ ...usuario, [field]: e.target.value });
     };
 
-    const handleEditUser2 = async () => {
+    const handleEditUser = async (actionType) => {
         try {
-            await Api.patch(`/usuario/desactivar/${id}`, usuario);
+            let url;
+            switch (actionType) {
+                case "actualizar":
+                    url = `/usuario/actualizar/${id}`;
+                    break;
+                case "desactivar":
+                    url = `/usuario/desactivar/${id}`;
+                    break;
+                case "activar":
+                    url = `/usuario/activar/${id}`;
+                    break;
+                default:
+                    break;
+            }
+
+            await Api[actionType === "actualizar" ? "put" : "patch"](url, usuario);
             navigate("/usuario/listar");
         } catch (error) {
-            console.error('Error desactivando el usuario: ', error);
+            console.error(`Error ${actionType} el usuario: `, error);
         }
     };
 
     return (
-        <div>
-            <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar usuario</h1>
-            <div className="max-w-xs">
-                <input
-                    className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="date"
-                    placeholder="fecha_creacion"
-                    value={usuario.fecha_creacion}
-                    onChange={(e) => setUsuario({ ...usuario, fecha_creacion: e.target.value })}
-                />
-                <input
-                    className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    placeholder="nombre"
-                    value={usuario.nombre}
-                    onChange={(e) => setUsuario({ ...usuario, nombre: e.target.value })}
-                />
-                <input
-                    className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    placeholder="longitud"
-                    value={usuario.longitud}
-                    onChange={(e) => setUsuario({ ...usuario, longitud: e.target.value })}
-                />
-                <input
-                    className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    placeholder="latitud"
-                    value={usuario.latitud}
-                    onChange={(e) => setUsuario({ ...usuario, latitud: e.target.value })}
-                />
-                <input
-                    className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="number"
-                    placeholder="usuarios_id"
-                    value={usuario.usuarios_id}
-                    onChange={(e) => setUsuario({ ...usuario, usuarios_id: e.target.value })}
-                />
-                <input
-                    className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="number"
-                    placeholder="municipios_id"
-                    value={usuario.municipios_id}
-                    onChange={(e) => setUsuario({ ...usuario, municipios_id: e.target.value })}
-                />
-                <input
-                    className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    placeholder="nombre_vereda"
-                    value={usuario.nombre_vereda}
-                    onChange={(e) => setUsuario({ ...usuario, nombre_vereda: e.target.value })}
-                />
-                <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline"
-                    onClick={handleEditUser1}
-                >
-                    Actualizar
-                </button>
+        <>
+            <img src="../../public/img/fondo.png" alt="" className="fondo2" />
+            <div className="tabla3">
+                <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Usuario</h1>
+                <div className="max-w-xs">
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        placeholder="Nombre"
+                        value={usuario.nombre}
+                        onChange={(e) => handleInputChange(e, 'nombre')}
+                    />
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        placeholder="Apellido"
+                        value={usuario.apellido}
+                        onChange={(e) => handleInputChange(e, 'apellido')}
+                    />
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        placeholder="Número Documentos"
+                        value={usuario.numero_documentos}
+                        onChange={(e) => handleInputChange(e, 'numero_documentos')}
+                    />
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        placeholder="Teléfono"
+                        value={usuario.telefono}
+                        onChange={(e) => handleInputChange(e, 'telefono')}
+                    />
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        placeholder="Correo Electrónico"
+                        value={usuario.correo_electronico}
+                        onChange={(e) => handleInputChange(e, 'correo_electronico')}
+                    />
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        placeholder="Contraseña"
+                        value={usuario.user_password}
+                        onChange={(e) => handleInputChange(e, 'user_password')}
+                    />
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        placeholder="Tipo de Documento"
+                        value={usuario.tipo_documento}
+                        onChange={(e) => handleInputChange(e, 'tipo_documento')}
+                    />
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        placeholder="Rol"
+                        value={usuario.rol}
+                        onChange={(e) => handleInputChange(e, 'rol')}
+                    />
+                    <input
+                        className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        type="text"
+                        placeholder="Cargo"
+                        value={usuario.cargo}
+                        onChange={(e) => handleInputChange(e, 'cargo')}
+                    />
+
+                    <button className="btn-primary" onClick={() => handleEditUser("actualizar")}>
+                        Actualizar
+                    </button>
+                    <button className="btn-secondary" onClick={() => handleEditUser("desactivar")}>
+                        Desactivar
+                    </button>
+                    <button className="btn-tertiary" onClick={() => handleEditUser("activar")}>
+                        Activar
+                    </button>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
-export default editarusuario;
+export default EditarUsuario;

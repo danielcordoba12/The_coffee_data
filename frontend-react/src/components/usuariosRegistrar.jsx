@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import '../style/fincas.css';
 
 const Registrar = () => {
-    const fecha_creacion = useRef();
     const nombre = useRef();
     const apellido = useRef();
     const numero_documentos = useRef();
@@ -14,7 +13,6 @@ const Registrar = () => {
     const tipo_documento = useRef();
     const rol = useRef();
     const cargo = useRef();
-    const estado = useRef();
 
     const navigate = useNavigate();
 
@@ -26,7 +24,6 @@ const Registrar = () => {
         e.preventDefault();
 
         const data = {
-            fecha_creacion: fecha_creacion.current.value,
             nombre: nombre.current.value,
             apellido: apellido.current.value,
             numero_documentos: numero_documentos.current.value,
@@ -36,12 +33,6 @@ const Registrar = () => {
             tipo_documento: tipo_documento.current.value,
             rol: rol.current.value,
             cargo: cargo.current.value,
-            estado: estado.current.value,
-            longitud: longitud.current.value,  // Reemplazar con el valor adecuado
-            latitud: latitud.current.value,    // Reemplazar con el valor adecuado
-            usuarios_id: usuarios_id.current.value,  // Reemplazar con el valor adecuado
-            municipios_id: municipios_id.current.value, // Reemplazar con el valor adecuado
-            noombre_vereda: noombre_vereda.current.value,
         };
 
         const headers = {
@@ -54,19 +45,16 @@ const Registrar = () => {
             await Api.post("usuario/registrar", data, headers);
             navigate("/usuario/listar");
         } catch (error) {
-            console.error("Error al registrar la Usuario:", error);
+            console.error("Error al registrar el Usuario:", error);
+            // Mostrar mensaje de error al usuario si es necesario
         }
     };
 
     return (
         <>
-            <img src="../../public/img/" alt="" className="fondo2" />
-            <form className="tabla2" onSubmit={handleSubmit} method="post">
+            <img src="../../public/img/fondo.png" alt="" className="fondo2" />
+            <form className="tabla2" onSubmit={handleSubmit}>
                 <h1 className="text-center font-bold underline text-3xl p-3 m-2">Registrar usuarios</h1>
-
-                <div className="div-input">
-                    <input type="date" id="fecha_creacion" name="fecha_creacion" ref={fecha_creacion} placeholder="" />
-                </div>
 
                 <div className="div-input">
                     <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
@@ -113,14 +101,7 @@ const Registrar = () => {
                     <label htmlFor="cargo">Cargo</label>
                 </div>
 
-                <div className="div-input">
-                    <input type="text" id="estado" name="estado" ref={estado} placeholder="" />
-                    <label htmlFor="estado">Estado</label>
-                </div>
-
-                {/* Resto de campos... */}
-
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline" type="submit">Registrar Usuario</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline" type="button">Registrar Usuario</button>
             </form>
         </>
     );
