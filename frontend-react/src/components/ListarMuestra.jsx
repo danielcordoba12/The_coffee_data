@@ -1,63 +1,95 @@
-import React from 'react';
+import React, { useEffect, useState } from "react"
 import '../style/RegistrarMuestra.css';
+import Api from "../services/api";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faInfo}  from'@fortawesome/free-solid-svg-icons'
+import '../style/RegistrarMuestra.css'
+import { Link } from "react-router-dom";
+
+
+
 
 
 const ListarMuestra = () => {
+
+
+  const [muestras, setmuestras] = useState([]);
+
+  useEffect(() => {
+      const buscarMuestras = async () => {
+          try {
+              const response = await Api.get('muestra/listar');
+              setmuestras(response.data);
+          } catch (error) {
+              console.error('Error fetching tasks:', error);
+          }
+      }
+      buscarMuestras();
+  }, []);
+    
+
   return (
-    <div className="tabla-container">
-      <table className="tabla">
+    <>
+    <img src="../../public/img/fondo.png" alt="" className="fondo2" />
+
+    <div className="main-container">
+      <table className="table-muestra">
         <thead>
           <tr>
-            <th>Columna 1</th>
-            <th>Columna 2</th>
-            <th>Columna 3</th>
-            <th>Columna 4</th>
-            <th>Columna 5</th>
-            <th>Columna 6</th>
-            <th>Columna 7</th>
-            <th>Columna 8</th>
-            <th>Columna 9</th>
-            <th>Columna 10</th>
-            <th>Columna 11</th>
-            <th>Columna 12</th>
-            <th>Columna 13</th>
-            <th>Columna 14</th>
-            <th>Columna 15</th>
-            <th>Columna 16</th>
-            <th>Columna 17</th>
-            <th>Columna 18</th>
-            <th>Columna 19</th>
-            <th>Columna 20</th>
+            <th>ID</th>
+            <th>Fecha de creacion</th>
+            <th>Codigo externo</th>
+            <th>Consecutivo informe</th>
+            <th>Muestreo</th>
+            <th>Preparacion de la muestra</th>
+            <th>Cantidad</th>
+            <th>Tipo de molienda</th>
+            <th>tipo de fermantacion</th>
+            <th>Actualizar</th>
+            <th>Mas</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Dato 1,1</td>
-            <td>Dato 1,2</td>
-            <td>Dato 1,3</td>
-            <td>Dato 1,4</td>
-            <td>Dato 1,5</td>
-            <td>Dato 1,6</td>
-            <td>Dato 1,7</td>
-            <td>Dato 1,8</td>
-            <td>Dato 1,9</td>
-            <td>Dato 1,10</td>
-            <td>Dato 1,11</td>
-            <td>Dato 1,12</td>
-            <td>Dato 1,13</td>
-            <td>Dato 1,14</td>
-            <td>Dato 1,15</td>
-            <td>Dato 1,16</td>
-            <td>Dato 1,17</td>
-            <td>Dato 1,18</td>
-            <td>Dato 1,19</td>
-            <td>Dato 1,20</td>
-          </tr>
-          {/* Puedes agregar más filas según sea necesario */}
-        </tbody>
+                {muestras.map((task) => (
+                  <tr >
+                    <td>{task.id}</td>
+                    <td>{task.fecha_creacion}</td>
+                    <td>{task.codigo_externo}</td>
+                    <td>{task.consecutivo_informe}</td>
+                    <td>{task.muestreo}</td>
+                    <td>{task.preparacion_muestra}</td>
+                    <td>{task.cantidad}</td>
+                    <td>{task.tipo_molienda}</td>
+                    <td>{task.tipo_fermentacion}</td>
+                    <td>
+                      <Link to={`/editar/muestra/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        Editar
+                      </Link>
+                    </td>
+                    <td>
+                      <FontAwesomeIcon icon={faInfo} className="icon" />
+                      <button
+                                    type="button"
+                                    className="btn-primary"
+                                    onClick={() => handleUpdate(task.id)}
+                                >
+                                    <Link to={`/ModalMuestra/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        Mas
+                                    </Link>
+                                </button>
+                    </td> 
+
+                  </tr>
+                ))}
+              </tbody>
       </table>
     </div>
+
+
+
+    </>
   );
 };
 
 export default ListarMuestra;
+

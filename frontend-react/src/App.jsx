@@ -15,7 +15,8 @@ import EditarLote from './components/editarlote'
 import EditarFinca from './components/EditarFinca'
 import RegistrarMuestra from './components/RegistrarMuestra'
 import ListarMuestra from './components/ListarMuestra'
-
+import ModalMuestra from './components/ModalMuestra'
+import EditarMestra from './components/EditarMuestra'
 
 
 function App(){
@@ -35,6 +36,9 @@ function App(){
         <Route path='/loginfrom'  element={<LoginForm/>}/>
         <Route path='/registrar/muestra'  element={<RegistrarMuestra/>}/>
         <Route path='/listar/muestra'  element={<ListarMuestra/>}/>
+        <Route path='/ModalMuestra/:id'  element={<ModalMuestra/>}/>
+        <Route path='/editar/muestra/:id'  element={<EditarMestra/>}/>
+
 
       </Routes>
     </>

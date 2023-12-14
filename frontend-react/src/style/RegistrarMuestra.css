@@ -1,4 +1,11 @@
-En tu archivo Formulario.css
+.fondo2 {
+  z-index: -999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
 .main.content {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -108,21 +115,86 @@ label {
 
 */
 
-.tabla-container {
-  margin: 20px;
-}
 
-.tabla {
-  border-collapse: collapse;
+
+.main-container{
+  backdrop-filter: blur(10px);
   width: 100%;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgb(30, 30, 30, 50%);
+    border-bottom:1px black solid;
 }
 
-.tabla th, .tabla td {
-  border: 1px solid #ddd;
+.table-muestra {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table-muestra th,
+.table-muestra td {
   padding: 8px;
   text-align: left;
+  color: white;
+
 }
 
-.tabla th {
-  background-color: #f2f2f2;
+.table-muestra  th {
+
+  background-color: rgb(94, 79, 38);
+}
+
+.table-muestra  tr{
+  background-color: transparent;
+}
+.table-muestra  td{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: transparent;
+}
+.icon:hover{
+  color: yellow;
+
+}
+
+
+
+.info-complete{
+  
+  backdrop-filter: blur(10px);
+
+}
+.value{
+  color: white;
+}
+.container-label{  
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 300px;
+  margin-top: 10px;
+}
+.info-complete td{
+  margin-left: 48px;
+
+}
+.label-modal{
+  width: 70%;
+  border-radius: 5px;
+  background-color: rgb(94, 79, 38);
+
+}
+
+
+/* ==============================Editar mestra====================== */
+.container-button{
+  display: flex;
+}
+.handleEditUser1{
+  height: 7px;
 }
