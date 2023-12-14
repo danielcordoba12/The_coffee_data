@@ -6,7 +6,6 @@ import Muestra from './components/Resultados'
 import Dashboard from './components/dashboard'
 import Finca from './components/fincas'
 import Registrar from './components/fincaRegistrar'
-import Analisiss from './components/Analisiss'
 import LoginForm from './components/login'
 import GuardarResultado from './components/registrarResultados'
 import Listarlote from './components/lotelistar'
@@ -25,6 +24,8 @@ import Editarvariedad from './components/variedadeseditar'
 import Listarcafe from './components/cafelistar'
 import RegistrarCafe from './components/caferegistrar'
 import Editarcafe from './components/cafeeditar'
+import RegistrarAnalisis from './components/Analisiss'
+import ListarAnalisis from './components/ListarAnalisis'
 
 
 
@@ -41,7 +42,8 @@ function App(){
         <Route path='/lote/listar' element={<Listarlote/>}/>
         <Route path='/lote/registrar' element={<Registrarlote/>}/>
         <Route path='/lote/editar/:id' element={<EditarLote/>}/>
-        <Route path='/Analisis' element={<Analisiss/>}/>
+        <Route path='/analisis/registrar' element={<RegistrarAnalisis/>}/>
+        <Route path='/analisis/listar' element={<ListarAnalisis/>}/>
         <Route path='/'  element={<LoginForm/>}/>
         <Route path='/Usuario'  element={<Usuario/>}/>
         <Route path='/Usuario/listar' element={<ListarUsuarios/>}/>

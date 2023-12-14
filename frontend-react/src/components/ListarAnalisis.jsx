@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react"
 import Api from "../services/api";
 import { Link } from "react-router-dom";
-import '../style/.css'
+import '../style/listana.css'
 
 
-const ListarFinca = () => {
+const ListarAnalisis = () => {
     const [fincas, setFincas] = useState([]);
 
     useEffect(() => {
         const buscarFincas = async () => {
             try {
-                const response = await Api.get('finca/listar');
+                const response = await Api.get('analisis/listar');
                 setFincas(response.data);
             } catch (error) {
                 console.error('Error fetching tasks:', error);
@@ -21,40 +21,38 @@ const ListarFinca = () => {
     return (<>
         <img src="../../public/img/fondo.png" alt="" className="fondo2" />
         <div className="tablalistar">
-            <h1 className="titu"> Listado de  Fincas</h1>
+            <h1 className="titu">Listar Análisis</h1>
             <br />
             <table className="tableprincipal">
                 <thead>
                     <tr className="bg-gray-200">
-                        <th>id</th>
-                        <th>Fecha Creación</th>
-                        <th>Nombre</th>
-                        <th>Longitud</th>
-                        <th>Latitud</th>
+                        <th>Fecha</th>
+                        <th>Calidad</th>
+                        <th>Tipo Análisis</th>
+                        <th>Muestras</th>
+                        <th>Usuarios</th>
                         <th>Estado</th>
-                        <th>Nombre Vereda</th>
-                        <th>opciones</th>
 
-
+            
                     </tr>
                 </thead>
                 <tbody>
                     {fincas.map((task) => (
                         <tr key={task.id} className="border-t">
-                            <td>{task.id}</td>
-                            <td>{task.fecha_creacion}</td>
-                            <td>{task.nombre}</td>
-                            <td>{task.longitud}</td>
-                            <td>{task.latitud}</td>
+                             <td>{task.fecha_analisis}</td>
+                            <td>{task.calidad}</td>
+                            <td>{task.tipo_analisis_id}</td>
+                            <td>{task.muestras_id}</td>
+                            <td>{task.usuarios_id}</td>
                             <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                            <td>{task.noombre_vereda}</td>
+                           
                             <td>
                                 <button
                                     type="button"
                                     className="btn-primary"
                                     onClick={() => handleUpdate(task.id)}
                                 >
-                                    <Link to={`/finca/editar/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <Link to={`/analisis/editar/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         Modificar
                                     </Link>
                                 </button>
@@ -70,4 +68,4 @@ const ListarFinca = () => {
     )
 }
 
-export default ListarFinca
+export default ListarAnalisis
