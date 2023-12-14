@@ -25,7 +25,7 @@ const ListarUsuarios = () => {
 
     return (
         <>
-            <img src="../../public/img" alt="" className="fondo2" />
+            <img src="../../public/img/fondo.png" alt="" className="fondo2" />
             <div className="tablalistar">
                 <h1 className="titu">Usuarios</h1>
                 <br />
