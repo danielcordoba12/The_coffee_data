@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import Api from "../services/api";
-import '../style/fincas.css';
+import { useNavigate, useParams } from "react-router-dom";
+import '../style/usuarios.css';
 
 const EditarUsuario = () => {
     const { id } = useParams();
@@ -70,65 +70,64 @@ const EditarUsuario = () => {
                         type="text"
                         placeholder="Nombre"
                         value={usuario.nombre}
-                        onChange={(e) => handleInputChange(e, 'nombre')}
+                        onChange={(e) => handleInputChange(e, "nombre")}
                     />
                     <input
                         className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Apellido"
                         value={usuario.apellido}
-                        onChange={(e) => handleInputChange(e, 'apellido')}
+                        onChange={(e) => handleInputChange(e, "apellido")}
                     />
                     <input
                         className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Número Documentos"
                         value={usuario.numero_documentos}
-                        onChange={(e) => handleInputChange(e, 'numero_documentos')}
+                        onChange={(e) => handleInputChange(e, "numero_documentos")}
                     />
                     <input
                         className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Teléfono"
                         value={usuario.telefono}
-                        onChange={(e) => handleInputChange(e, 'telefono')}
+                        onChange={(e) => handleInputChange(e, "telefono")}
                     />
                     <input
                         className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Correo Electrónico"
                         value={usuario.correo_electronico}
-                        onChange={(e) => handleInputChange(e, 'correo_electronico')}
+                        onChange={(e) => handleInputChange(e, "correo_electronico")}
                     />
                     <input
                         className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Contraseña"
                         value={usuario.user_password}
-                        onChange={(e) => handleInputChange(e, 'user_password')}
+                        onChange={(e) => handleInputChange(e, "user_password")}
                     />
                     <input
                         className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Tipo de Documento"
                         value={usuario.tipo_documento}
-                        onChange={(e) => handleInputChange(e, 'tipo_documento')}
+                        onChange={(e) => handleInputChange(e, "tipo_documento")}
                     />
                     <input
                         className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Rol"
                         value={usuario.rol}
-                        onChange={(e) => handleInputChange(e, 'rol')}
+                        onChange={(e) => handleInputChange(e, "rol")}
                     />
                     <input
                         className="shadow appearance-none border rounded w-full py-2 m-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         placeholder="Cargo"
                         value={usuario.cargo}
-                        onChange={(e) => handleInputChange(e, 'cargo')}
+                        onChange={(e) => handleInputChange(e, "cargo")}
                     />
-
                     <button className="btn-primary" onClick={() => handleEditUser("actualizar")}>
                         Actualizar
                     </button>

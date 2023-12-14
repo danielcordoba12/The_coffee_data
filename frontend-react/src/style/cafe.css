@@ -1,51 +1,8 @@
-/* Estilos CSS para la tabla con clase table1 */
-.fondo2 {
-  z-index: -999;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  box-sizing: border-box; /* Usar border-box en lugar de cover */
-  margin: 0; /* Eliminar el margen predeterminado del body y html */
-  padding: 0; /* Eliminar el relleno predeterminado del body y html */
-  overflow: hidden; /* Evitar que el contenido sobresalga del contenedor */
-}
-
-
-.table1 {
-    width: 100%;
-    border-collapse: collapse;
-
-  }
-  
-  .table1 th,
-  .table1 td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
-  
-  .table1 th {
-    background-color: rgba(30,30,30);
-    color: white;
-  }
-  
-  .table1 tr:hover {
-    background-color: #968c8c;
-  }
-  .border-t{
-    background-color: #2980b9;
-    color: rgb(255, 255, 255);
-  }
-  
 /* 
   //estilos fincas registrar// */
 
 
-.tabla2 {
+  .tabla6 {
     backdrop-filter: blur(10px);
     width: 350px;
     margin: auto;
@@ -57,7 +14,7 @@
     border-bottom:1px black solid;
   }
   
-  .tabla2 h1 {
+  .tabla6 h1 {
     color: white;
     text-decoration: none   ;
     text-align: center;
@@ -67,11 +24,11 @@
     margin: 20px 0;
   }
   
-  .tabla2 div {
+  .tabla6 div {
     margin-bottom: 15px;
   }
   
-  .tabla2 input {
+  .tabla6 input {
     width: 100%;
     padding: 10px;
     /* border-bottom: 1px solid #ccc; */
@@ -85,12 +42,12 @@
   }
   
   /* Efecto del placeholder */
-  .tabla2 input + label {
+  .tabla6 input + label {
     position: absolute;
     top: 50%;
     left: 10px;
     transform: translateY(-50%);
-    /* color: #ffffff; */
+    color: #ffffff;
     font-size: 16px;
     pointer-events: none;
     transition: transform 0.3s, font-size 0.3s, color 0.3s;
@@ -98,8 +55,8 @@
   }
   
   /* Placeholder transformado al enfocar el campo */
-  .tabla2 input:focus + label,
-  .tabla2 input:not(:placeholder-shown) + label {
+  .tabla6 input:focus + label,
+  .tabla6 input:not(:placeholder-shown) + label {
     transform: translateY(-100%) scale(1.2);
     font-size: 12px;
     color: rgb(255, 255, 255);
@@ -107,8 +64,7 @@
     transition: all 0.5s;
   }
   
-  .tabla2 button {
-    background-color: #3498db;
+  .tabla6 button {
     color: #fff;
     font-weight: bold;
     padding: 10px 15px;
@@ -116,9 +72,10 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    background-color: #2980b9;
   }
   
-  .tabla2 button:hover {
+  .tabla6 button:hover {
     background-color: #2980b9;
   }
   

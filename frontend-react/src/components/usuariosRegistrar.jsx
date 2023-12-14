@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import Api from "../services/api";
 import { useNavigate } from "react-router-dom";
-import '../style/fincas.css';
+import '../style/usuarios.css';
 
-const Registrar = () => {
+const Registrarusuarios = () => {
     const nombre = useRef();
     const apellido = useRef();
     const numero_documentos = useRef();
@@ -101,10 +101,10 @@ const Registrar = () => {
                     <label htmlFor="cargo">Cargo</label>
                 </div>
 
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline" type="button">Registrar Usuario</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline" type="submit">Registrar Usuario</button>
             </form>
         </>
     );
 };
 
-export default Registrar;
+export default Registrarusuarios;

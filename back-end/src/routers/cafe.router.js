@@ -9,10 +9,10 @@ const cafeRoute= Router();
 
 cafeRoute.get('/listar',listarcafe);
 cafeRoute.get('/buscar/:id',buscarCafe);
-cafeRoute.post('/registrar',validartoken,validarCafe,guardarCafe);
-cafeRoute.put('/actualizar/:id',validartoken,validarCafe,actualizarCafe);
-cafeRoute.patch('/desactivar/:id',validartoken,estadoCafe);
-cafeRoute.patch('/activar/:id',validartoken,ActivarCafe);
+cafeRoute.post('/registrar',validarCafe,guardarCafe);
+cafeRoute.put('/actualizar/:id',validarCafe,actualizarCafe);
+cafeRoute.patch('/desactivar/:id',estadoCafe);
+cafeRoute.patch('/activar/:id',ActivarCafe);
 
 
 

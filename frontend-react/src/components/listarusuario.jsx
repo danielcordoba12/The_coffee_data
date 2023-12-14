@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Api from "../services/api";
 import { Link } from "react-router-dom";
 import '../style/usuarios.css';
-
 const ListarUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
 
@@ -14,7 +13,7 @@ const ListarUsuarios = () => {
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
-        }
+        };
         buscarUsuarios();
     }, []);
 
@@ -25,37 +24,30 @@ const ListarUsuarios = () => {
                 <h1 className="titu">Usuarios</h1>
                 <br />
                 <table className="tableprincipal">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Fecha Creación</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Número Documentos</th>
-                            <th>Teléfono</th>
-                            <th>Correo Electrónico</th>
-                            <th>estado</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
+                        <th>id</th>
+                        <th>nombre</th>
+                        <th>Apellido</th>
+                        <th>Numero de documento</th>
+                        <th>Telefono</th>
+                        <th>Correo</th>
+                        <th>Estado</th>
+                        <th>opciones</th>
                     <tbody>
                         {usuarios.map((usuario) => (
                             <tr key={usuario.id}>
                                 <td>{usuario.id}</td>
-                                <td>{usuario.fecha_creacion}</td>
                                 <td>{usuario.nombre}</td>
                                 <td>{usuario.apellido}</td>
                                 <td>{usuario.numero_documentos}</td>
                                 <td>{usuario.telefono}</td>
                                 <td>{usuario.correo_electronico}</td>
-                                <td>{usuario.estado}</td>
+                                <td>{usuario.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                                 <td>
-                                    <button type="button" className="btn-primary"
-                                    onClick={() => handleUpdate(usuario.id)}>
-                                        <Link to={`/usuario/editar/${usuario.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <Link to={`/usuario/actualizar/${usuario.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        <button type="button" className="btn-primary" onClick={() => handleUpdate(usuario.id)}>
                                             Modificar
-                                        </Link>
-                                    </button>
+                                        </button>
+                                    </Link>
                                 </td>
                             </tr>
                         ))}

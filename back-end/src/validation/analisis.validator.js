@@ -1,9 +1,6 @@
 import { check } from "express-validator";
 
 export const validarAnalisis = [
-  check('fecha_analisis')
-    .notEmpty().withMessage('Ingrese una fecha válida en el formato año-mes-dia')
-    .matches(/^\d{4}-\d{2}-\d{2}$/).withMessage('Ingrese una fecha válida en el formato año-mes-dia'),
 
   check('calidad')
     .notEmpty().withMessage('Ingrese una calidad válida')
