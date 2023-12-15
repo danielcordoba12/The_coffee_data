@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Api from "../services/api";
+import '../style/fincas.css'
 const EditarFinca = () => {
 
     const { id } = useParams();
@@ -51,13 +52,9 @@ const EditarFinca = () => {
           <div className="tabla3">
             <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Finca</h1>
             <div className="max-w-xs">
-              <input
-                className="input-field"
-                type="date"
-                placeholder="fecha_creacion"
-                value={Finca.fecha_creacion}
-                onChange={(e) => setFincas({ ...Finca, fecha_creacion: e.target.value })}
-              />
+            <input
+                    className="input-field" type="date" placeholder="fecha_creacion" value={Finca.fecha_creacion} onChange={(e) => setFincas({ ...Finca, fecha_creacion: e.target.value })}
+                />
               <input
                 className="input-field"
                 type="text"
@@ -125,7 +122,8 @@ const EditarFinca = () => {
           </div>
         </>
       );
+              }
       
-}
+
 
 export default EditarFinca

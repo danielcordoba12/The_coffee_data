@@ -86,7 +86,7 @@ export const actualizarFinca = async (req, res) => {
     let id = req.params.id;
     let { fecha_creacion, nombre, longitud, latitud, usuarios_id, municipios_id, noombre_vereda } = req.body;
 
-    let sql = `update fincas SET fecha_creacion='${fecha_creacion}',nombre='${nombre}',longitud='${longitud}',latitud='${latitud}',usuarios_id='${usuarios_id}',municipios_id='${municipios_id}',noombre_vereda='${noombre_vereda}'
+    let sql = `update fincas set fecha_creacion='${fecha_creacion}',nombre='${nombre}',longitud='${longitud}',latitud='${latitud}',usuarios_id='${usuarios_id}',municipios_id='${municipios_id}',noombre_vereda='${noombre_vereda}'
             where id=${id}`;
 
     const [rows] = await pool.query(sql);

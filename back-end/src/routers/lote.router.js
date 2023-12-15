@@ -12,7 +12,7 @@ loteRoute.get('/buscar/:id',buscarlote);
 
 loteRoute.post('/registrar',validarLote,guardarlote);
 
-loteRoute.put('/Actualizar/:id',actualizarlote);
+loteRoute.put('/Actualizar/:id',validarLote,actualizarlote);
 
 loteRoute.patch('/Desactivar/:id',desactivarlote);
 
