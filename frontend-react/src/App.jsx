@@ -47,9 +47,9 @@ function App(){
         <Route path='/analisis/update/:id' element={<EditarAnalisis/>}/>
         <Route path='/analisis/listar' element={<ListarAnalisis/>}/>
         <Route path='/'  element={<LoginForm/>}/>
-        <Route path='/Usuario'  element={<Registrarusuarios/>}/>
-        <Route path='/Usuario/listar' element={<ListarUsuarios/>}/>
-        <Route path='/municipio/listar' element={<ListarMunicipio/>}/>
+        <Route path='/usuario'  element={<Registrarusuarios/>}/>
+        <Route path='/usuario/listar' element={<ListarUsuarios/>}/>
+        <Route path='/usuario/actualizar/:id' element={<EditarUsuario/>}/>
         <Route path='/municipio/registrar' element={<RegistrarMunicipio/>}/>
         <Route path='/municipio/editar/:id' element={<Editarmunicipio/>}/>
         <Route path='/variedad/listar' element={<ListarVariedad/>}/>
