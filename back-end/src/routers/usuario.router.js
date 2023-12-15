@@ -8,12 +8,12 @@ import { validartoken } from "../controllers/autenticacion.controller.js";
 
 const usuarioRoute = Router();
 
-usuarioRoute.post("/registrar",validatorUsuario,guardarUsuario);
+usuarioRoute.post("/registrar",guardarUsuario);
 usuarioRoute.get("/listarusuario",listarUsuario);
 usuarioRoute.get("/buscarusuario/:id",buscarUsuarios);
-usuarioRoute.patch("/activar/:id",validartoken,ActivarUsuario); 
-usuarioRoute.patch("/desactivar/:id",validartoken,desactivarUsuario);
-usuarioRoute.put("/actualizar/:id",validatorUsuario,actualizarUsuario);
+usuarioRoute.patch("/activar/:id",ActivarUsuario); 
+usuarioRoute.patch("/desactivar/:id",desactivarUsuario);
+usuarioRoute.put("/actualizar/:id",actualizarUsuario); 
 
 
 
