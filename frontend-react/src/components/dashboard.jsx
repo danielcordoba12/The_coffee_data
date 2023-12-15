@@ -11,6 +11,7 @@ import api from "../services/api";
 function Dashboard() {
     return(
         <>
+    <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" />
 
         <div className="main-container-dasboard">
 
