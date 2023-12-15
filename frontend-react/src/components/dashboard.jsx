@@ -11,7 +11,6 @@ import api from "../services/api";
 function Dashboard() {
     return(
         <>
-    <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" />
 
         <div className="main-container-dasboard">
 
@@ -101,14 +100,9 @@ function Dashboard() {
                                     Muestras
                                 </Link>
                             </li>
+                           
                             <li className="li-dasboard">
-                                <Link to={"/Resultado"} style={{ textDecoration: 'none', color: 'black !important' }}>
-                                    <FontAwesomeIcon icon={faSliders} className="icon"/>
-                                    Resultados
-                                </Link>
-                            </li>
-                            <li className="li-dasboard">
-                                <Link to={"/municipio/listarr"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                <Link to={"/municipio/listar"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                     <FontAwesomeIcon icon={faSliders} className="icon"/>
                                     Municipios
                                 </Link>
