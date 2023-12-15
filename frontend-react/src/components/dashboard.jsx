@@ -1,7 +1,8 @@
 import React,{useEffect,useState} from "react";
 import '../style/dashboard.css'
+import { Outlet,Link } from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faUser,faHelmetSafety,faClockRotateLeft,faMugSaucer,faToolbox,faMagnifyingGlassChart,faChartColumn,faPhone,faSliders}  from'@fortawesome/free-solid-svg-icons'
+import {faUser,faHelmetSafety,faClockRotateLeft,faUsers,faToolbox,faMagnifyingGlassChart,faChartColumn,faPhone,faSliders,faVials}  from'@fortawesome/free-solid-svg-icons'
 // import {faUser} from '@fortawesome/free-brands-svg-icons'
 import api from "../services/api";
 
@@ -12,7 +13,7 @@ function Dashboard() {
         <>
 
         <img src="../../public/img/fondo.png" alt="" className="fondo" />
-        <div className="main-container">
+        <div className="main-container-dasboard">
 
             <div className="nav-header">
                 <div className="header">
@@ -35,8 +36,8 @@ function Dashboard() {
                     </div>
 
                     <div className="empty"></div>   
-                    <div className="container-title">
-                        <h1 className="title">The Coffee data</h1>
+                    <div className="container-title-dasboard">
+                        <h1 className="title-dasboard">The Coffee data</h1>
                     </div>
 
                     <div className="empty"></div>   
@@ -54,11 +55,12 @@ function Dashboard() {
                 </div>
             </div>
             <nav className="nav">
-               
+            
                 <div className="lista-items">
                     <ul>
-                        <li>
-                            <FontAwesomeIcon icon={faHelmetSafety} className="icon" />
+                        <li className="first-icon">
+                            
+                            <FontAwesomeIcon icon={faHelmetSafety} className="icon " />
                             Administrador
                         </li>
                         <li>
@@ -66,29 +68,48 @@ function Dashboard() {
                             Historia
                         </li>
                         <li>
-                            <FontAwesomeIcon icon={faMugSaucer} className="icon"/>
-                            Mi producto
+                            <Link to={"/Usuario/listar"}>
+                                <FontAwesomeIcon icon={faUsers}  className="icon"/>
+                                Usuarios
+                            </Link>
                         </li>
                         <li>
-                            <FontAwesomeIcon icon={faToolbox} className="icon"/>
-                            Servicio
+                            <Link to={"/finca/listar"}>
+                                <FontAwesomeIcon icon={faToolbox} className="icon"/>
+                                Fincas
+                            </Link>
                         </li>
                         <li>
-                        <FontAwesomeIcon icon={faMagnifyingGlassChart} className="icon"/>
-                            Analisis
+                            <Link to={"/lote/listar"}>
+                                <FontAwesomeIcon icon={faMagnifyingGlassChart} className="icon"/>
+                                Lotes
+                            </Link>
                         </li>
                         <li>
-                            <FontAwesomeIcon icon={faChartColumn} className="icon"/>
-                            Comparacion
+                            <Link >
+                                <FontAwesomeIcon icon={faChartColumn} className="icon"/>
+                                Veredas
+                            </Link>
                         </li>
                         <li>
-                            <FontAwesomeIcon icon={faPhone}className="icon" />
-                            Contacto
+                            <Link to={"/Analisis"}>
+                                <FontAwesomeIcon icon={faPhone}className="icon" />
+                                Analisis
+                            </Link>
                         </li>
                         <li>
-                            <FontAwesomeIcon icon={faSliders} className="icon"/>
-                            Configuracion
+                            <Link to={"/listar/muestra"}>
+                                <FontAwesomeIcon icon={faVials}  className="icon"/>
+                                Muestras
+                            </Link>
                         </li>
+                        <li className="li-dasboard">
+                            <Link to={"/Resultado"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                <FontAwesomeIcon icon={faSliders} className="icon"/>
+                                Resultados
+                            </Link>
+                        </li>
+                        
 
 
                     </ul>

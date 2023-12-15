@@ -6,7 +6,6 @@ import Muestra from './components/Resultados'
 import Dashboard from './components/dashboard'
 import Finca from './components/fincas'
 import Registrar from './components/fincaRegistrar'
-import Analisiss from './components/Analisiss'
 import LoginForm from './components/login'
 import GuardarResultado from './components/registrarResultados'
 import Listarlote from './components/lotelistar'
@@ -17,6 +16,21 @@ import RegistrarMuestra from './components/RegistrarMuestra'
 import ListarMuestra from './components/ListarMuestra'
 import ModalMuestra from './components/ModalMuestra'
 import EditarMestra from './components/EditarMuestra'
+import Registrarusuarios from './components/usuariosRegistrar'
+import EditarUsuario from './components/editarusuario'
+import ListarUsuarios from './components/listarusuario'
+import ListarMunicipio from './components/municipiolistar'
+import RegistrarMunicipio from './components/municipioregistrar'
+import Editarmunicipio from './components/municipioeditar'
+import ListarVariedad from './components/variedadlistar'
+import Registrarvariedad from './components/variedadregistrar'
+import Editarvariedad from './components/variedadeseditar'
+import Listarcafe from './components/cafelistar'
+import RegistrarCafe from './components/caferegistrar'
+import Editarcafe from './components/cafeeditar'
+import RegistrarAnalisis from './components/Analisiss'
+import ListarAnalisis from './components/ListarAnalisis'
+
 
 
 function App(){
@@ -32,7 +46,7 @@ function App(){
         <Route path='/lote/listar' element={<Listarlote/>}/>
         <Route path='/lote/registrar' element={<Registrarlote/>}/>
         <Route path='/lote/editar/:id' element={<EditarLote/>}/>
-        <Route path='/Analisis' element={<Analisiss/>}/>
+        {/* <Route path='/Analisis' element={<Analisiss/>}/> */}
         <Route path='/loginfrom'  element={<LoginForm/>}/>
         <Route path='/registrar/muestra'  element={<RegistrarMuestra/>}/>
         <Route path='/listar/muestra'  element={<ListarMuestra/>}/>
@@ -40,9 +54,26 @@ function App(){
         <Route path='/editar/muestra/:id'  element={<EditarMestra/>}/>
 
 
+        <Route path='/analisis/registrar' element={<RegistrarAnalisis/>}/>
+        <Route path='/analisis/listar' element={<ListarAnalisis/>}/>
+        <Route path='/'  element={<LoginForm/>}/>
+        <Route path='/Usuario'  element={<Registrarusuarios/>}/>
+        <Route path='/Usuario/listar' element={<ListarUsuarios/>}/>
+        <Route path='/municipio/listar' element={<ListarMunicipio/>}/>
+        <Route path='/municipio/registrar' element={<RegistrarMunicipio/>}/>
+        <Route path='/municipio/editar/:id' element={<Editarmunicipio/>}/>
+        <Route path='/variedad/listar' element={<ListarVariedad/>}/>
+        <Route path='/variedad/registrar' element={<Registrarvariedad/>}/>
+        <Route path='/variedad/editar/:id' element={<Editarvariedad/>}/>
+        <Route path='/cafe/listar' element={<Listarcafe/>}/>
+        <Route path='/cafe/registrar' element={<RegistrarCafe/>}/>
+        <Route path='/cafe/editar/:id' element={<Editarcafe/>}/>
+
+
+        <Route path='/Usuario/actualizar' element={<EditarUsuario/>}/>
       </Routes>
     </>
   )
 }
 
-export default App
+export default App 

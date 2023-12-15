@@ -6,7 +6,7 @@ import {validationResult} from 'express-validator';
 export const listarmunicipio= async (req,res)=>{
     try{
 
-        const[result]= await pool.query("select m.id, m.nombre, d.nombre as nombre_departamento, m.fecha_creacion from municipios m join departamentos d on d.id = m.departamentos_id");
+        const[result]= await pool.query("select m.id, m.nombre , d.nombre as nombre_departamento, m.fecha_creacion from municipios m join departamentos d on d.id = m.departamentos_id");
         res.status(200).json(result);
 
 

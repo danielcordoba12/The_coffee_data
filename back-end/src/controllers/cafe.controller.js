@@ -81,7 +81,7 @@ export const actualizarCafe=async (req, res) =>{
     let id = req.params.id;
     let {lotes_id,variedades_id}  = req.body;
 
-    let sql=`update fincas SET lotes_id='${lotes_id}',variedades_id='${variedades_id}'
+    let sql=`update cafes SET lotes_id='${lotes_id}',variedades_id='${variedades_id}'
             where id=${id}`;
 
     const [rows] = await pool.query(sql);

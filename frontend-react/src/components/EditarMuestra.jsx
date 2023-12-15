@@ -54,17 +54,16 @@
       <>
       <img src="../../public/img/fondo.png" alt="" className="fondo2" />
 
-  <div className='main.content'>
-  <h1 className='title'>Editar Muestra</h1>
+  <div className='main-content-registrar'>
+  <h1 className='title-registrar-muestras'>Editar Muestra</h1>
 
-    <form className="formulario info-complete"  >
+    <form className="formulario-muestra info-complete"  >
       <div className="columna">
         <div className='container-input'>
           <input type="date" id="fecha_creacion" name="fecha_creacion" className='input' placeholder='' value={Muestra.fecha_creacion} onChange={(e)=> setMuestra({ ...Muestra, fecha_creacion: e.target.value})}/> 
           
         </div>
         <div className='container-input'> 
-        <label htmlFor="fecha_creacion" className='label'>Campo 1:</label>
           <input type="text" id="codigo_externo" name="codigo_externo" className='input' placeholder='' value={Muestra.codigo_externo} onChange={(e)=> setMuestra({ ...Muestra, codigo_externo: e.target.value})}/>
         </div>
         <div className='container-input'>

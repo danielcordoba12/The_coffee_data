@@ -4,14 +4,14 @@
 }
 
 
-body {
+/* body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
- 
- 
-}
+
+
+} */
 
 .fondo {
     position: fixed;
@@ -31,7 +31,7 @@ header {
     justify-content: space-between;
     align-items: center;
     z-index: 99;
-    
+
 
 }
 
@@ -160,9 +160,9 @@ color: #1f1f1f;
 
 
 
-.wrapper .icon-close {  
+.wrapper .icon-close {
     position: absolute;
-    top: 0;  
+    top: 0;
     right: 0;
     width: 45px;
     height: 45px;
@@ -176,7 +176,7 @@ color: #1f1f1f;
     border-top-right-radius: 20px;
     cursor: pointer;
     z-index: 1;
-    
+
 }
 
 
@@ -256,7 +256,7 @@ color: #1f1f1f;
 .remenber-forgot a{
     color: #ffffff;
     text-decoration: none;
-    
+
 }
 
 .remember-forgot hover {
@@ -285,7 +285,7 @@ color: #1f1f1f;
     font-weight: 500;
     margin: 25px 0 10px;
 
-    
+
 }
 
 .login-register p a{

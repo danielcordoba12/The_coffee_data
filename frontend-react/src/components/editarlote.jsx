@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Api from "../services/api";
-const EditarLote = () => {
+import '../style/lotes.css'
 
+
+const EditarLote = () => {
     const { id } = useParams();
     const [Lote, setLotes] = useState({ fecha_creacion: '', nombre: '', longitud: '', latitud: '', fincas_id: '' });
     const navigate = useNavigate()
@@ -82,23 +84,26 @@ const EditarLote = () => {
                     onChange={(e) => setLotes({ ...Lote, fincas_id: e.target.value })}
                 />
                 <button
-                    className="btn-primary"
-                    onClick={handleEditUser1}
-                >
-                    Actualizar
-                </button>
+                className="btn-primary"
+                onClick={handleEditUser1}
+              >
+                Actualizar
+              </button>
+              {Lote.estado === 1 ? (
                 <button
-                    className="btn-secondary"
-                    onClick={handleEditUser2}
+                  className="btn-secondary"
+                  onClick={handleEditUser2}
                 >
-                    Desactivar
+                  Desactivar
                 </button>
+              ) : (
                 <button
-                    className="btn-tertiary"
-                    onClick={handleEditUser3}
+                  className="btn-tertiary"
+                  onClick={handleEditUser3}
                 >
-                    Activar
+                  Activar
                 </button>
+              )}
             </div>
         </div>
         </>

@@ -30,7 +30,7 @@ const ListarMuestra = () => {
 
   return (
     <>
-    <img src="../../public/img/fondo.png" alt="" className="fondo2" />
+    <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" />
 
     <div className="main-container">
       <table className="table-muestra">

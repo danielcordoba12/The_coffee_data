@@ -63,12 +63,12 @@ const RegistrarMuestra = () => {
 
   return (
     <>
-        <img src="../../public/img/fondo.png" alt="" className="fondo2" />
+        <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" />
 
-    <div className='main.content'>
-    <h1 className='title'>Registrar Muestra</h1>
+    <div className='main-content-registrar'>
+    <h1 className='title-registrar-muestras'>Registrar Muestra</h1>
 
-      <form className="formulario" onSubmit={handleSubmit}  method="post" >
+      <form className="formulario-muestra" onSubmit={handleSubmit}  method="post" >
         <div className="columna">
           <div className='container-input'>
             <input type="date" id="fecha_creacion" name="fecha_creacion" className='input' placeholder='' ref={fecha_creacion} />

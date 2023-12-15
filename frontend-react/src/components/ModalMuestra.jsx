@@ -48,8 +48,8 @@ return(
     <>
     <img src="../../public/img/fondo.png" alt="" className="fondo2" />
 
-<div id="modalInfo">
-    <form className="formulario"  method="post">
+<div id="modalInfo" className="modal-info">
+    <form className="formulario-muestra"  method="post">
     <table className="info-complete">
         <tbody>
         <tr>
