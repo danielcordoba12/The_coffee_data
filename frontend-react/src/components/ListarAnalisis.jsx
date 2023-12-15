@@ -52,7 +52,7 @@ const ListarAnalisis = () => {
                                     className="btn-primary"
                                     onClick={() => handleUpdate(task.id)}
                                 >
-                                    <Link to={`/analisis/editar/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <Link to={`/analisis/update/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         Modificar
                                     </Link>
                                 </button>

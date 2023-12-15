@@ -44,7 +44,7 @@ const ListarMuestra = () => {
             <th>Preparacion de la muestra</th>
             <th>Cantidad</th>
             <th>Tipo de molienda</th>
-            <th>tipo de fermantacion</th>
+            <th>Estado</th>
             <th>Actualizar</th>
             <th>Mas</th>
           </tr>
@@ -60,14 +60,13 @@ const ListarMuestra = () => {
                     <td>{task.preparacion_muestra}</td>
                     <td>{task.cantidad}</td>
                     <td>{task.tipo_molienda}</td>
-                    <td>{task.tipo_fermentacion}</td>
+                    <td>{task.estado}</td>
                     <td>
                       <Link to={`/editar/muestra/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         Editar
                       </Link>
                     </td>
                     <td>
-                      <FontAwesomeIcon icon={faInfo} className="icon" />
                       <button
                                     type="button"
                                     className="btn-primary"

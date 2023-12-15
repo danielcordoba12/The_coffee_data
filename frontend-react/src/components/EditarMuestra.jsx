@@ -26,7 +26,7 @@
         try {
             await Api.put(`/muestra/actualizar/${id}`, Muestra);
             // Si la actualización es exitosa, se ejecutará esta línea
-            navigate("/listar/muestra/");
+            window.location="/listar/muestra";
         } catch (error) {
             console.error('Error editando la muestra: ', error);
             // Aquí puedes agregar lógica adicional para manejar el error, si es necesario
@@ -116,7 +116,7 @@
           <input type="text" id="cafes_id" name="cafes_id" className='input' placeholder='' value={Muestra.cafes_id} onChange={(e)=> setMuestra({ ...Muestra, cafes_id: e.target.value})}/>
         </div>
         <div className="container-button">
-      <button  className='button' type="submit" onClick={handleEditUser1}>Enviar</button>
+      <button  className='button' type="submit" onClick={handleEditUser1}>Actualizar</button>
       {Muestra.estado === 1 ? (
                 <button
                   className="btn-secondary"

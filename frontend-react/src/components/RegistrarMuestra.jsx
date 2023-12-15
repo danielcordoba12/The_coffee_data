@@ -56,9 +56,8 @@ const RegistrarMuestra = () => {
       };
 
 
-      Api.post("/muestra/registrar",data,{}).finally(()=>{
-        navigate("/lote/listar")
-    })
+      let fetch = Api.post("/muestra/registrar", data)
+        window.location = "/listar/muestra"
   }
 
   return (

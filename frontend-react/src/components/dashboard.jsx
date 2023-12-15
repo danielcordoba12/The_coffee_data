@@ -63,10 +63,7 @@ function Dashboard() {
                                 <FontAwesomeIcon icon={faHelmetSafety} className="icon " />
                                 Administrador
                             </li>
-                            <li>
-                                <FontAwesomeIcon icon={faClockRotateLeft} className="icon"/>
-                                Historia
-                            </li>
+
                             <li>
                                 <Link to={"/Usuario/listar"}>
                                     <FontAwesomeIcon icon={faUsers}  className="icon"/>
@@ -86,13 +83,13 @@ function Dashboard() {
                                 </Link>
                             </li>
                             <li>
-                                <Link >
+                                <Link to={"/cafe/listar"}>
                                     <FontAwesomeIcon icon={faChartColumn} className="icon"/>
-                                    Veredas
+                                    Cafe
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/Analisis"}>
+                                <Link to={"/analisis/listar"}>
                                     <FontAwesomeIcon icon={faPhone}className="icon" />
                                     Analisis
                                 </Link>
@@ -107,6 +104,18 @@ function Dashboard() {
                                 <Link to={"/Resultado"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                     <FontAwesomeIcon icon={faSliders} className="icon"/>
                                     Resultados
+                                </Link>
+                            </li>
+                            <li className="li-dasboard">
+                                <Link to={"/municipio/listarr"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                    <FontAwesomeIcon icon={faSliders} className="icon"/>
+                                    Municipios
+                                </Link>
+                            </li>
+                            <li className="li-dasboard">
+                                <Link to={"/variedad/listar"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                    <FontAwesomeIcon icon={faSliders} className="icon"/>
+                                    Variedad
                                 </Link>
                             </li>
                             

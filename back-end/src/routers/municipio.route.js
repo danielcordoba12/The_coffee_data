@@ -9,9 +9,9 @@ municipioRoute.get('/listar',listarmunicipio);
 
 municipioRoute.get('/buscar/:id',buscarmunicipio);
 
-municipioRoute.post('/registrar',validarMunicipios,guardarmunicipio);
+municipioRoute.post('/registrar',guardarmunicipio);
 
 
-municipioRoute.put('/Actualizar/:id',validarMunicipios,actualizarmunicipio);
+municipioRoute.put('/Actualizar/:id',actualizarmunicipio);
 
 export default  municipioRoute;
