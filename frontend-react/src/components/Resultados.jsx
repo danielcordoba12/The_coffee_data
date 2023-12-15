@@ -17,7 +17,6 @@ function Muestra() {
         })
     }, [])
     
-
     return(
         <>
 

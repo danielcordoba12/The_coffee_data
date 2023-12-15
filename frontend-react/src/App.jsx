@@ -26,6 +26,7 @@ import RegistrarCafe from './components/caferegistrar'
 import Editarcafe from './components/cafeeditar'
 import RegistrarAnalisis from './components/Analisiss'
 import ListarAnalisis from './components/ListarAnalisis'
+import EditarAnalisis from './components/EditarAnalisis'
 
 
 
@@ -43,6 +44,7 @@ function App(){
         <Route path='/lote/registrar' element={<Registrarlote/>}/>
         <Route path='/lote/editar/:id' element={<EditarLote/>}/>
         <Route path='/analisis/registrar' element={<RegistrarAnalisis/>}/>
+        <Route path='/analisis/update/:id' element={<EditarAnalisis/>}/>
         <Route path='/analisis/listar' element={<ListarAnalisis/>}/>
         <Route path='/'  element={<LoginForm/>}/>
         <Route path='/Usuario'  element={<Registrarusuarios/>}/>
