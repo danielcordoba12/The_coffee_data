@@ -6,12 +6,12 @@ import { validartoken } from "../controllers/autenticacion.controller.js";
 
 const muestraRoute = Router()
 
-muestraRoute.post("/registrar",validartoken,validarMuestra,guardarMuestra);
-muestraRoute.put("/actualizar/:id",validartoken,validarMuestra,actualizarMuestra);
+muestraRoute.post("/registrar",guardarMuestra);
+muestraRoute.put("/actualizar/:id",actualizarMuestra);
 muestraRoute.get("/buscar/:id",buscarMuestra);
 muestraRoute.get("/listar",listarMuestras);
-muestraRoute.patch("/desactivar/:id",validartoken,desactivarMuestra);
-muestraRoute.patch("/activar/:id",validartoken,activarMuestra);
+muestraRoute.patch("/desactivar/:id",desactivarMuestra);
+muestraRoute.patch("/activar/:id",activarMuestra);
 
 
 export default muestraRoute;

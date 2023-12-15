@@ -10,9 +10,9 @@ loteRoute.get('/listar',listarlote);
 
 loteRoute.get('/buscar/:id',buscarlote);
 
-loteRoute.post('/registrar',validarLote,guardarlote);
+loteRoute.post('/registrar',guardarlote);
 
-loteRoute.put('/Actualizar/:id',validarLote,actualizarlote);
+loteRoute.put('/Actualizar/:id',actualizarlote);
 
 loteRoute.patch('/Desactivar/:id',desactivarlote);
 

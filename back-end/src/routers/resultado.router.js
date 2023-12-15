@@ -7,10 +7,10 @@ import { validartoken } from "../controllers/autenticacion.controller.js";
 const resultadoRoute = Router();
 
 
-resultadoRoute.post("/registrar",validartoken,validarResultado,guardarResultado);
+resultadoRoute.post("/registrar",guardarResultado);
 resultadoRoute.get("/listar",listarResultados);
 resultadoRoute.get("/buscar/:id",buscarResultado);
-resultadoRoute.put("/update/:id",validartoken,validarResultado,actualizarResultado);
+resultadoRoute.put("/update/:id",actualizarResultado);
 resultadoRoute.delete("/delete/:id",eliminarResultado);
 
 

@@ -8,8 +8,8 @@
 
    
 
-    variedadesRoute.post('/registrar',validatorVariedades,guardarVariedad);
-    variedadesRoute.put('/actualizar/:id',validatorVariedades,actualizarVariedad);
+    variedadesRoute.post('/registrar',guardarVariedad);
+    variedadesRoute.put('/actualizar/:id',actualizarVariedad);
     variedadesRoute.get('/listar',listarVariedad);
     variedadesRoute.get('/buscar/:id',buscarvariedad);
 
