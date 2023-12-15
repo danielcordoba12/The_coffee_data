@@ -2,15 +2,47 @@
     padding: 0;
     margin: 0;
 }
+.main-container-dasboard {
+    
+    /* overflow: hidden; */
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    height: 100vh;
+} 
+.content-container {
+    width: 1820px;
+    height: 120px;
+    position: relative;
+    /* height: 820px; */
 
+    background-color: red;
+    z-index: 12;
+}    
+.container-outlet{
+    display: flex;
+
+}
 .nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px; /* Ajusta el ancho según tus necesidades */
+    height: 100%;
+    background-color: #333; /* Color de fondo del menú */
+    color: #fff; /* Color del texto en el menú */
+    padding: 20px;  
     text-decoration: none;
+    display: flex;
+    flex-direction: row; /* Coloca los elementos del nav en fila horizontal */
+    flex: 1;
     color:  white;
+    
     position: relative;
     left: 0px;
     /* width: 400px; */
     width: 250px;
-    height:calc(100vh - 50px) ;
+    /* height:calc(100vh - 8px) ; */
+    height:94vh;
     background-color: rgba(30, 30, 30, 0.767);
 }
 

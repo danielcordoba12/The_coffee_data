@@ -12,7 +12,6 @@ function Dashboard() {
     return(
         <>
 
-        <img src="../../public/img/fondo.png" alt="" className="fondo" />
         <div className="main-container-dasboard">
 
             <div className="nav-header">
@@ -54,68 +53,78 @@ function Dashboard() {
 
                 </div>
             </div>
-            <nav className="nav">
-            
-                <div className="lista-items">
-                    <ul>
-                        <li className="first-icon">
+            <div className="container-outlet">
+
+                <nav className="nav">
+                    <div className="lista-items">
+                        <ul>
+                            <li className="first-icon">
+                                
+                                <FontAwesomeIcon icon={faHelmetSafety} className="icon " />
+                                Administrador
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faClockRotateLeft} className="icon"/>
+                                Historia
+                            </li>
+                            <li>
+                                <Link to={"/Usuario/listar"}>
+                                    <FontAwesomeIcon icon={faUsers}  className="icon"/>
+                                    Usuarios
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={"/finca/listar"}>
+                                    <FontAwesomeIcon icon={faToolbox} className="icon"/>
+                                    Fincas
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={"/lote/listar"}>
+                                    <FontAwesomeIcon icon={faMagnifyingGlassChart} className="icon"/>
+                                    Lotes
+                                </Link>
+                            </li>
+                            <li>
+                                <Link >
+                                    <FontAwesomeIcon icon={faChartColumn} className="icon"/>
+                                    Veredas
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={"/Analisis"}>
+                                    <FontAwesomeIcon icon={faPhone}className="icon" />
+                                    Analisis
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={"/listar/muestra"}>
+                                    <FontAwesomeIcon icon={faVials}  className="icon"/>
+                                    Muestras
+                                </Link>
+                            </li>
+                            <li className="li-dasboard">
+                                <Link to={"/Resultado"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                    <FontAwesomeIcon icon={faSliders} className="icon"/>
+                                    Resultados
+                                </Link>
+                            </li>
                             
-                            <FontAwesomeIcon icon={faHelmetSafety} className="icon " />
-                            Administrador
-                        </li>
-                        <li>
-                            <FontAwesomeIcon icon={faClockRotateLeft} className="icon"/>
-                            Historia
-                        </li>
-                        <li>
-                            <Link to={"/Usuario/listar"}>
-                                <FontAwesomeIcon icon={faUsers}  className="icon"/>
-                                Usuarios
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={"/finca/listar"}>
-                                <FontAwesomeIcon icon={faToolbox} className="icon"/>
-                                Fincas
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={"/lote/listar"}>
-                                <FontAwesomeIcon icon={faMagnifyingGlassChart} className="icon"/>
-                                Lotes
-                            </Link>
-                        </li>
-                        <li>
-                            <Link >
-                                <FontAwesomeIcon icon={faChartColumn} className="icon"/>
-                                Veredas
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={"/Analisis"}>
-                                <FontAwesomeIcon icon={faPhone}className="icon" />
-                                Analisis
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={"/listar/muestra"}>
-                                <FontAwesomeIcon icon={faVials}  className="icon"/>
-                                Muestras
-                            </Link>
-                        </li>
-                        <li className="li-dasboard">
-                            <Link to={"/Resultado"} style={{ textDecoration: 'none', color: 'black !important' }}>
-                                <FontAwesomeIcon icon={faSliders} className="icon"/>
-                                Resultados
-                            </Link>
-                        </li>
-                        
+                            
 
 
-                    </ul>
-                </div>
+                        </ul>
+            </div>
+
             </nav>
+            <div className="content-container">
+                <Outlet/>
+            </div>
         </div>
+
+        
+            </div>
+
 
         </>
         
