@@ -41,7 +41,7 @@ const RegistrarAnalisis= () => {
     <>
         <img src="../../public/img/fondo.png " alt="" className="fondo2" />
         <form className="tabla2" onSubmit={handleSubmit} method="post">
-            <h1 className="text-center font-bold underline text-3xl p-3 m-2">Registro Análisis</h1>
+            <h1 className="text-center font-bold underline text-3xl p-3 m-2">Análisis</h1>
 
 
 
