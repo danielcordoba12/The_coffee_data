@@ -15,7 +15,7 @@ const ModalMuestra = () => {
     // const navigate = useNavigate()
 
     useEffect(()=> {
-        const buscarFincas = async () => {
+        const buscarMuestra = async () => {
             try {
                 const response = await Api.get(`/muestra/buscar/${id}`);
                 setFincas(response.data[0]);
@@ -24,7 +24,7 @@ const ModalMuestra = () => {
                 
             }
         };
-        buscarFincas();
+        buscarMuestra();
     },[id]);
 
     // const handleEditUser1 = async () => {

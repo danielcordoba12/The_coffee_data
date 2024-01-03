@@ -22,34 +22,41 @@
 
 }
 .nav{
-    position: fixed;
     top: 0;
     left: 0;
-    width: 200px; /* Ajusta el ancho según tus necesidades */
-    height: 100%;
-    background-color: #333; /* Color de fondo del menú */
+    width: 90px;
+    height: 94vh;
     color: #fff; /* Color del texto en el menú */
     padding: 20px;  
     text-decoration: none;
     display: flex;
     flex-direction: row; /* Coloca los elementos del nav en fila horizontal */
     flex: 1;
-    color:  white;
     
     position: relative;
     left: 0px;
     /* width: 400px; */
-    width: 250px;
-    /* height:calc(100vh - 8px) ; */
-    height:94vh;
+    /* width: 250px; */
+    /* height:calc(100vh - 6px) ; */
     background-color: rgba(30, 30, 30, 0.767);
+    transition: all 800ms 
+
 }
 
 .lista-items ul{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow: hidden;
+}
 
+.lista-items ul li p{
+    margin-top: 1rem;
+}
+.icon-menu{
+    font-size: 1.5em;
+    margin-left: 12px;
+    
 }
 
 /* /////////////////////////////////////HEAD NAV (Title,User name)////////////////////// */
@@ -134,25 +141,40 @@
     justify-content: center;
     text-align: center; */
     width: 100%;
-    position: relative;
+    /* position: relative; */
 }
-li{
-    display: flex;
+.nav ul li a ,.first-icon{
+    display: inline-flex;
     align-items: center;
     text-decoration: none;
-    list-style: none;
+    color: black; /* Establece el color de texto deseado */
+}
+.lista-items ul li :hover ,.first-icon:hover{
+    background-color: rgba(70, 68, 68, 0.918);
+    border-radius: 10px;
+    cursor: pointer;
+    color: rgb(229, 198, 154);
+}
+.lista-items ul li{
+    display: flex ;
     height: 50px;
     padding: 5px 5px 5px 12px ;
-    width:90%;
+    width:100%;
     font-size:1em;
     transition: all 6ms;
+    
 }
-
+.lista-items ul li p{
+    width: 200px; /* Ajusta el tamaño del contenedor según tus necesidades */
+    white-space: nowrap; /* Evita el salto de línea */
+    overflow: hidden; /* Oculta el contenido que no cabe en el contenedor */
+    
+}
 
 .icon{
     margin-right: 32px;
 }
-li:hover{
+.lista-items ul li:hover{
     background-color: rgba(70, 68, 68, 0.918);
     /* color: rgb(204, 153, 12); */
     border-radius: 10px;

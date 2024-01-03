@@ -11,12 +11,31 @@ import resultadoRoute from "./src/routers/resultado.router.js";
 import cafeRoute from "./src/routers/cafe.router.js";
 
 import autRoute from "./src/routers/autenticacion.router.js";
+import bodyParser from "body-parser";
+import cors from 'cors';
 
 
 const app = express();
 
-app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials : true,
+}));
 
+
+
+app.use(express.json());
+// app.use(bodyParser.urlencoded({extended:false}));Poder trabajar con el formato json
+
+
+app.use((re,res,next)=>{
+    res.setHeader("Access-Control-Allow-Origin","http://localhost:5173");
+    res.setHeader("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,PATCH");
+    res.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Credentials","true");
+    next();
+
+});
 
 app.use("/usuario", usuarioRoute);
 app.use("/muestra",muestraRoute);
@@ -28,6 +47,7 @@ app.use('/analisis',analisisRoute);
 app.use('/resultado',resultadoRoute);
 app.use('/cafe',cafeRoute);
 app.use('/validacion',autRoute)
+
 
 
 app.set ('view engine','ejs');
@@ -44,5 +64,4 @@ app.listen(4000, () => {
     console.log("Servidor se esta ejecutando en el puerto 4000");
 });
 
-import cors from 'cors'
-app.use(cors());
+// app.use(cors());

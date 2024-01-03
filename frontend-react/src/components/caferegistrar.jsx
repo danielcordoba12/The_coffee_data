@@ -8,7 +8,6 @@ import '../style/cafe.css'
 const RegistrarCafe = () => {
     const lotes_id = useRef();
     const variedades_id = useRef();
- 
 
     const navigate = useNavigate()
 
