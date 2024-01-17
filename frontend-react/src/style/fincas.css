@@ -205,7 +205,7 @@
 /* styles.css */
 
 .tableprincipal {
-  width: 100%;
+  width: 20%;
   border-collapse: collapse;
   margin-top: 20px; /* Espaciado superior */
   border: none;
@@ -243,4 +243,120 @@
   background-color: #207bb5; /* Cambio de color al pasar el ratón */
 }
 
+
+
+/*css para el boton de registrar finca*/
+/* En tu archivo fincas.css */
+
+.btn-registrar {
+ 
+  display: inline-block;
+  width: 150px;
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Color de fondo */
+  color: white; /* Color del texto */
+  text-decoration: none; /* Quitar subrayado del enlace */
+  border: none; /* Quitar borde */
+  border-radius: 4px; /* Añadir esquinas redondeadas */
+  cursor: pointer; /* Cambiar cursor al pasar por encima */
+  font-size: 16px; /* Tamaño del texto */
+}
+
+.btn-registrar:hover {
+  background-color: #56b15a; /* Cambiar color de fondo al pasar por encima */
+}
+
   
+
+/*modal css*/
+/* En tu archivo fincas.css */
+/* Estilos generales */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-registrar {
+  display: block;
+  margin-top: 20px;
+  background-color: #28a745;
+  color: #fff;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+/* Estilos del modal */
+body.modal-open {
+  overflow: hidden; /* Evitar el desplazamiento de la página mientras el modal está abierto */
+  background-color: #007bff;
+}
+
+
+.tabla3 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(37, 25, 25, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1000;
+  max-width: 80%; /* Ajusta el ancho máximo según tus necesidades */
+  width: 400px;  /* Ajusta el ancho según tus necesidades */
+  text-align: center; /* Centra el contenido */
+}
+
+.tabla3 h1 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #fff; /* Ajusta el color del texto según tus necesidades */
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  margin: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-modal {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #dc3545;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo semitransparente */
+  z-index: 999; /* Valor superior al z-index del modal */
+}

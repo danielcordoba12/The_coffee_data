@@ -63,7 +63,6 @@ export const guardarFinca = async (req, res) => {
 
 
   } catch (e) {
-    console.log(eq)
     return res.status(500).json({
       "status": 500,
       "message": "error en el servidor :" + e
