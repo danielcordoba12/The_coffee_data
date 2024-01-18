@@ -8,7 +8,6 @@ import LoginForm from './components/login'
 import GuardarResultado from './components/registrarResultados'
 import Listarlote from './components/lotelistar'
 import Registrarlote from './components/loteRegistrar'
-import EditarLote from './components/editarlote'
 import EditarFinca from './components/EditarFinca'
 import RegistrarMuestra from './components/RegistrarMuestra'
 import ListarMuestra from './components/ListarMuestra'
@@ -44,7 +43,6 @@ function App(){
         <Route path='/finca/editar/:id' element={<EditarFinca/>}/>
         <Route path='/lote/listar' element={<Listarlote/>}/>
         <Route path='/lote/registrar' element={<Registrarlote/>}/>
-        <Route path='/lote/editar/:id' element={<EditarLote/>}/>
         <Route path='/analisis/registrar' element={<RegistrarAnalisis/>}/>
         <Route path='/analisis/update/:id' element={<EditarAnalisis/>}/>
         <Route path='/analisis/listar' element={<ListarAnalisis/>}/>

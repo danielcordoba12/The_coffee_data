@@ -37,7 +37,7 @@ const Registrarlote = () => {
     }
     return (<>
         <img src="../../public/img/fondo.png" alt="" className="fondo2" />
-        <form className="tabla3" onSubmit={handleSubmit} method="post">
+        <form className="tabla2" onSubmit={handleSubmit} method="post">
             <h1 className="text-center font-bold underline text-3xl p-3 m-2">Crear lote</h1>
 
             <div className="div-input">
@@ -61,7 +61,7 @@ const Registrarlote = () => {
                 <input type="number" id="fincas_id " name="fincas_id " ref={fincas_id } placeholder="" />
                 <label for="fincas_id ">finca</label>
             </div>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline"
+            <button className="btn-register-lote"
                 type="submit">Registrar lote</button>
         </form>
     </>

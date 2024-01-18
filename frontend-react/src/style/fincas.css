@@ -1,326 +1,132 @@
 /* Estilos CSS para la tabla con clase table1 */
 
 .fondo2 {
-    z-index: -999;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+  z-index: -999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 
 .table1 {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px; 
-  }
-  
-  .table1 th,
-  .table1 td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
-  
-  .table1 th {
-    background-color: rgba(30,30,30);
-    color: white;
-  }
-  
-  .table1 tr:hover {
-    background-color: #968c8c;
-  }
-  .border-t{
-    background-color: #2980b9;
-    color: rgb(255, 255, 255);
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px; 
+}
+
+.table1 th,
+.table1 td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table1 th {
+  background-color: rgba(30,30,30);
+  color: white;
+}
+
+.table1 tr:hover {
+  background-color: #968c8c;
+}
+.border-t{
+  background-color: #2980b9;
+  color: rgb(255, 255, 255);
+}
+
 /* 
-  //estilos fincas registrar// */
+//estilos fincas registrar// */
 
 
 .tabla2 {
-    backdrop-filter: blur(10px);
-    width: 350px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: rgb(30, 30, 30, 50%);
-    border-bottom:1px black solid;
-  }
+  backdrop-filter: blur(10px);
+  width: 350px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgb(30, 30, 30, 50%);
+  border-bottom:1px black solid;
+}
+
+.tabla2 h1 {
+  color: white;
+  text-decoration: none   ;
+  text-align: center;
+  font-weight: bold;
+
+  font-size: 1.5rem;
+  margin: 20px 0;
+}
+
+.tabla2 div {
+  margin-bottom: 15px;
+}
+
+.tabla2 input {
+  width: 100%;
+  padding: 10px;
+  /* border-bottom: 1px solid #ccc; */
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom:1px rgb(153, 151, 151) solid;
+  color: white;
+  outline: none;
+}
+
+/* Efecto del placeholder */
+.tabla2 input + label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  /* color: #ffffff; */
+  font-size: 16px;
+  pointer-events: none;
+  transition: transform 0.3s, font-size 0.3s, color 0.3s;
+  color:white ;
   
-  .tabla2 h1 {
-    color: white;
-    text-decoration: none   ;
-    text-align: center;
-    font-weight: bold;
- 
-    font-size: 1.5rem;
-    margin: 20px 0;
-  }
-  
-  .tabla2 div {
-    margin-bottom: 15px;
-  }
-  
-  .tabla2 input {
-    width: 100%;
-    padding: 10px;
-    /* border-bottom: 1px solid #ccc; */
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    background-color: transparent;
-    border: none;
-    border-bottom:1px rgb(153, 151, 151) solid;
-    color: white;
-    outline: none;
-  }
-  
-  /* Efecto del placeholder */
-  .tabla2 input + label {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    /* color: #ffffff; */
-    font-size: 16px;
-    pointer-events: none;
-    transition: transform 0.3s, font-size 0.3s, color 0.3s;
-    color:white ;
-    
-  }
-  
-  /* Placeholder transformado al enfocar el campo */
-  .tabla2 input:focus + label,
-  .tabla2 input:not(:placeholder-shown) + label {
-    transform: translateY(-100%) scale(1.2);
-    font-size: 12px;
-    color: rgb(255, 255, 255);
-    top: 10px;
-    transition: all 0.5s;
-  }
-  
-  .tabla2 button {
-    background-color: #3498db;
-    color: #fff;
-    font-weight: bold;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .tabla2 button:hover {
-    background-color: #2980b9;
-  }
-  
-  .div-input{
-    position: relative;
-  }
+}
+
+/* Placeholder transformado al enfocar el campo */
+.tabla2 input:focus + label,
+.tabla2 input:not(:placeholder-shown) + label {
+  transform: translateY(-100%) scale(1.2);
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+  top: 10px;
+  transition: all 0.5s;
+}
+
+.tabla2 button {
+  background-color: #3498db;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tabla2 button:hover {
+  background-color: #2980b9;
+}
+
+.div-input{
+  position: relative;
+}
 
 /* editar fincas */
 
 
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .input-field {
-    width: 100%;
-    padding: 8px;
-    margin: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .btn-primary {
-    background-color: #3498db;
-    color: #fff;
-    font-weight: bold;
-    padding: 8px 16px;
-    margin: 8px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-secondary {
-    background-color: #e74c3c;
-    color: #fff;
-    font-weight: bold;
-    padding: 8px 16px;
-    margin: 8px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-tertiary {
-    background-color: #2ecc71;
-    color: #fff;
-    font-weight: bold;
-    padding: 8px 16px;
-    margin: 8px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  /* listar fincas */
-
-  
-.fondo2 {
-  width: 100%;
-  height: auto;
-  position: absolute;
-  z-index: -1;
-}
-
-.tablalistar {
-  backdrop-filter: blur(10px);
-    width: 100%;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      background-color: rgb(30, 30, 30, 50%);
-      border-bottom:1px black solid;
-}
-
-.titu {
-  justify-content: center;
-  text-align: center;
-  font-weight: bold;  
-  color: rgb(241, 241, 241);
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-
-/* styles.css */
-
-.tableprincipal {
-  width: 20%;
-  border-collapse: collapse;
-  margin-top: 20px; /* Espaciado superior */
-  border: none;
-}
-
-.tableprincipal th,
-.tableprincipal td {
-  
-  padding: 8px;
-  text-align: left;
-  color: white;
-}
-
-.tableprincipal th {
-  background-color: rgb(94, 79, 38); /* Color de fondo más claro para encabezados */
-}
-
-.tableprincipal tr{
-  background-color: transparent;
-  
-}
-
-.btn-primary {
-  background-color: #0099ff; /* Color de fondo del botón */
-  color: #fff;
-  font-weight: bold;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s; /* Efecto de transición al pasar el ratón */
-}
-
-.btn-primary:hover {
-  background-color: #207bb5; /* Cambio de color al pasar el ratón */
-}
-
-
-
-/*css para el boton de registrar finca*/
-/* En tu archivo fincas.css */
-
-.btn-registrar {
- 
-  display: inline-block;
-  width: 150px;
-  padding: 10px 20px;
-  background-color: #4CAF50; /* Color de fondo */
-  color: white; /* Color del texto */
-  text-decoration: none; /* Quitar subrayado del enlace */
-  border: none; /* Quitar borde */
-  border-radius: 4px; /* Añadir esquinas redondeadas */
-  cursor: pointer; /* Cambiar cursor al pasar por encima */
-  font-size: 16px; /* Tamaño del texto */
-}
-
-.btn-registrar:hover {
-  background-color: #56b15a; /* Cambiar color de fondo al pasar por encima */
-}
-
-  
-
-/*modal css*/
-/* En tu archivo fincas.css */
-/* Estilos generales */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-
-
-.btn-primary {
-  background-color: #007bff;
-  color: #fff;
-  padding: 8px 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-registrar {
-  display: block;
-  margin-top: 20px;
-  background-color: #28a745;
-  color: #fff;
-  padding: 8px 16px;
-  text-decoration: none;
-}
-
-/* Estilos del modal */
-body.modal-open {
-  overflow: hidden; /* Evitar el desplazamiento de la página mientras el modal está abierto */
-  background-color: #007bff;
-}
-
-
-.tabla3 {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(37, 25, 25, 0.8);
-  padding: 20px;
-  border-radius: 8px;
-  z-index: 1000;
-  max-width: 80%; /* Ajusta el ancho máximo según tus necesidades */
-  width: 400px;  /* Ajusta el ancho según tus necesidades */
-  text-align: center; /* Centra el contenido */
-}
-
-.tabla3 h1 {
-  font-size: 1.5em;
-  margin-bottom: 10px;
-  color: #fff; /* Ajusta el color del texto según tus necesidades */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .input-field {
@@ -331,32 +137,226 @@ body.modal-open {
   border-radius: 4px;
 }
 
-.btn-modal {
-  background-color: #007bff;
+.btn-primary {
+  background-color: #3498db;
   color: #fff;
+  font-weight: bold;
   padding: 8px 16px;
+  margin: 8px;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
-  margin-right: 10px;
+}
+
+.btn-secondary {
+  background-color: #e74c3c;
+  color: #fff;
+  font-weight: bold;
+  padding: 8px 16px;
+  margin: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-tertiary {
+  background-color: #2ecc71;
+  color: #fff;
+  font-weight: bold;
+  padding: 8px 16px;
+  margin: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* listar fincas */
+
+
+.fondo2 {
+width: 100%;
+height: auto;
+position: absolute;
+z-index: -1;
+}
+
+.tablalistar {
+backdrop-filter: blur(10px);
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgb(30, 30, 30, 50%);
+    border-bottom:1px black solid;
+}
+
+.titu {
+justify-content: center;
+text-align: center;
+font-weight: bold;  
+color: rgb(241, 241, 241);
+font-size: 1.5rem;
+margin-bottom: 1rem;
+}
+
+
+/* styles.css */
+
+.tableprincipal {
+width: 20%;
+border-collapse: collapse;
+margin-top: 20px; /* Espaciado superior */
+border: none;
+}
+
+.tableprincipal th,
+.tableprincipal td {
+
+padding: 8px;
+text-align: left;
+color: white;
+}
+
+.tableprincipal th {
+background-color: rgb(94, 79, 38); /* Color de fondo más claro para encabezados */
+}
+
+.tableprincipal tr{
+background-color: transparent;
+
+}
+
+.btn-primary {
+background-color: #0099ff; /* Color de fondo del botón */
+color: #fff;
+font-weight: bold;
+padding: 8px 16px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: background-color 0.3s; /* Efecto de transición al pasar el ratón */
+}
+
+.btn-primary:hover {
+background-color: #207bb5; /* Cambio de color al pasar el ratón */
+}
+
+
+
+/*css para el boton de registrar finca*/
+/* En tu archivo fincas.css */
+
+.btn-registrar {
+
+display: inline-block;
+width: 150px;
+padding: 10px 20px;
+background-color: #4CAF50; /* Color de fondo */
+color: white; /* Color del texto */
+text-decoration: none; /* Quitar subrayado del enlace */
+border: none; /* Quitar borde */
+border-radius: 4px; /* Añadir esquinas redondeadas */
+cursor: pointer; /* Cambiar cursor al pasar por encima */
+font-size: 16px; /* Tamaño del texto */
+}
+
+.btn-registrar:hover {
+background-color: #56b15a; /* Cambiar color de fondo al pasar por encima */
+}
+
+
+
+/*modal css*/
+/* En tu archivo fincas.css */
+/* Estilos generales */
+body {
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
+}
+
+
+
+.btn-primary {
+background-color: #007bff;
+color: #fff;
+padding: 8px 16px;
+border: none;
+cursor: pointer;
+}
+
+.btn-registrar {
+display: block;
+margin-top: 20px;
+background-color: #28a745;
+color: #fff;
+padding: 8px 16px;
+text-decoration: none;
+}
+
+/* Estilos del modal */
+body.modal-open {
+overflow: hidden; /* Evitar el desplazamiento de la página mientras el modal está abierto */
+background-color: #007bff;
+}
+
+
+.tabla3 {
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color: rgb(37, 25, 25, 0.8);
+padding: 20px;
+border-radius: 8px;
+z-index: 1000;
+max-width: 80%; /* Ajusta el ancho máximo según tus necesidades */
+width: 400px;  /* Ajusta el ancho según tus necesidades */
+text-align: center; /* Centra el contenido */
+}
+
+.tabla3 h1 {
+font-size: 1.5em;
+margin-bottom: 10px;
+color: #fff; /* Ajusta el color del texto según tus necesidades */
+}
+
+.input-field {
+width: 100%;
+padding: 8px;
+margin: 8px;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+.btn-modal {
+background-color: #007bff;
+color: #fff;
+padding: 8px 16px;
+border: none;
+cursor: pointer;
+margin-right: 10px;
 }
 
 .close-modal-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #dc3545;
-  color: #fff;
-  padding: 8px 16px;
-  border: none;
-  cursor: pointer;
+position: absolute;
+top: 10px;
+right: 10px;
+background-color: #dc3545;
+color: #fff;
+padding: 8px 16px;
+border: none;
+cursor: pointer;
 }
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Fondo semitransparente */
-  z-index: 999; /* Valor superior al z-index del modal */
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.8); /* Fondo semitransparente */
+z-index: 999; /* Valor superior al z-index del modal */
 }
