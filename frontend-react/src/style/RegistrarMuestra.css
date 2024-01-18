@@ -21,12 +21,9 @@
   z-index: 12;
   font-family: Arial, sans-serif;
   display: none ;
-  /* display: flex; */
   flex-direction: column;
   position: fixed;
-  /* background-color: red; */
-  backdrop-filter: blur(10px);
-  /* background-color: rgba(30, 30, 30, 0.925); */
+  backdrop-filter: blur(16px);
   width: 100%;
   padding: 0;
   justify-content: center;
@@ -34,6 +31,10 @@
   text-align: center;
   height: 100vh;
   
+}
+.main-content-registrar.show {
+
+  display: flex;
 }
 
 
@@ -194,24 +195,73 @@ label {
 
 
 
-.modal-info{
+/* .modal-info{
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100vh;
-}
+} */
 .formulario-muestra{
   display: flex;
   align-items: center;
   justify-content: center;
   
 }
-.info-complete{
-  
-  backdrop-filter: blur(10px);
 
+
+
+/* ==============================Editar mestra====================== */
+.main-content-actualizar {
+  z-index: 12;
+  font-family: Arial, sans-serif;
+  display: none ;
+  /* display: flex; */
+  flex-direction: column;
+  position: fixed;
+  /* background-color: red; */
+  backdrop-filter: blur(10px);
+  /* background-color: rgba(30, 30, 30, 0.925); */
+  width: 100%;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  
 }
+  .main-content-actualizar.show{
+  display: flex;
+}
+.container-button{
+  display: flex;
+}
+.handleEditUser1{
+  height: 7px;
+}
+
+/* //////////////////Modal infor////////////////// */
+.modal-info{
+  z-index: 12;
+  font-family: Arial, sans-serif;
+  display: none ;
+  /* display: flex; */
+  flex-direction: column;
+  position: fixed;
+  /* background-color: red; */
+  backdrop-filter: blur(10px);
+  /* background-color: rgba(30, 30, 30, 0.925); */
+  width: 100%;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+}
+.modal-info.show{
+  display: flex ;
+}
+
 .value{
   color: white;
 }
@@ -232,12 +282,19 @@ label {
   background-color: rgb(94, 79, 38);
 
 }
-
-
-/* ==============================Editar mestra====================== */
-.container-button{
+.btn-x{
   display: flex;
-}
-.handleEditUser1{
-  height: 7px;
+  position: absolute  ;
+  top: 12px ;
+  right: 12px;
+  cursor: pointer;
+  width: 30px; /* Ajusta el ancho del botón según tus necesidades */
+  height: 30px; /* Ajusta la altura del botón según tus necesidades */
+  border-radius: 50%; 
+  background-color: red; /* Cambia el color de fondo según tus necesidades */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  color: white;
 }
