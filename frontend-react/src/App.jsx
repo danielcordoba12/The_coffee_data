@@ -5,11 +5,10 @@ import Dashboard from './components/dashboard'
 import Finca from './components/fincas'
 import Registrar from './components/fincaRegistrar'
 import LoginForm from './components/login'
-import GuardarResultado from './components/registrarResultados'
+import Resultado from './components/Resultados'
 import Listarlote from './components/lotelistar'
 import Registrarlote from './components/loteRegistrar'
 import EditarFinca from './components/EditarFinca'
-import RegistrarMuestra from './components/RegistrarMuestra'
 import ListarMuestra from './components/ListarMuestra'
 import ModalMuestra from './components/ModalMuestra'
 import EditarMestra from './components/EditarMuestra'
@@ -30,6 +29,8 @@ import ListarAnalisis from './components/ListarAnalisis'
 import EditarAnalisis from './components/EditarAnalisis'
 
 
+import carrusel from './components/RegistrarMuestra'
+
 
 function App(){
   return(
@@ -37,7 +38,7 @@ function App(){
       <Routes>
       <Route path='/' element={<Dashboard/>}>
         <Route path='/Resultado' element={<Muestra/>}/>
-        <Route path='/resultado/guardar' element={<GuardarResultado/>}/>
+        <Route path='/resultado/guardar' element={<Resultado/>}/>
         <Route path='/finca/listar' element={<Finca/>}/>
         <Route path='/finca/registrar' element={<Registrar/>}/>
         <Route path='/finca/editar/:id' element={<EditarFinca/>}/>
@@ -59,7 +60,7 @@ function App(){
         <Route path='/cafe/listar' element={<Listarcafe/>}/>
         <Route path='/cafe/editar/:id' element={<Editarcafe/>}/>
         <Route path='/cafe/registrar' element={<RegistrarCafe/>}/>
-        <Route path='/registrar/muestra' element={<RegistrarMuestra/>}/>
+        <Route path='/carrusel' element={<carrusel/>}/>
         <Route path='/listar/muestra' element={<ListarMuestra/>}/>
         <Route path='/ModalMuestra/:id' element={<ModalMuestra/>}/>
         <Route path='/editar/muestra/:id' element={<EditarMestra/>}/>
