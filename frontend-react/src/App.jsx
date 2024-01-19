@@ -3,12 +3,9 @@ import { Route, Routes } from 'react-router-dom'
 import Muestra from './components/Resultados'
 import Dashboard from './components/dashboard'
 import Finca from './components/fincas'
-import Registrar from './components/fincaRegistrar'
 import LoginForm from './components/login'
 import Resultado from './components/Resultados'
-import Listarlote from './components/lotelistar'
-import Registrarlote from './components/loteRegistrar'
-import EditarFinca from './components/EditarFinca'
+import Lote from './components/Lotes'
 import ListarMuestra from './components/ListarMuestra'
 import ModalMuestra from './components/ModalMuestra'
 import EditarMestra from './components/EditarMuestra'
@@ -39,11 +36,8 @@ function App(){
       <Route path='/' element={<Dashboard/>}>
         <Route path='/Resultado' element={<Muestra/>}/>
         <Route path='/resultado/guardar' element={<Resultado/>}/>
-        <Route path='/finca/listar' element={<Finca/>}/>
-        <Route path='/finca/registrar' element={<Registrar/>}/>
-        <Route path='/finca/editar/:id' element={<EditarFinca/>}/>
-        <Route path='/lote/listar' element={<Listarlote/>}/>
-        <Route path='/lote/registrar' element={<Registrarlote/>}/>
+        <Route path='/finca' element={<Finca/>}/>
+        <Route path='/lote' element={<Lote/>}/>
         <Route path='/analisis/registrar' element={<RegistrarAnalisis/>}/>
         <Route path='/analisis/update/:id' element={<EditarAnalisis/>}/>
         <Route path='/analisis/listar' element={<ListarAnalisis/>}/>
