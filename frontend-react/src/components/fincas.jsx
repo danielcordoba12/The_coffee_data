@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
 import "../style/fincas.css";
+import Sweet from "../helpers/Sweet";
 
 const FincaView = () => {
     const [fincas, setFincas] = useState([]);
@@ -49,6 +50,7 @@ const FincaView = () => {
     const handleEditUser1 = async () => {
         try {
             await Api.put(`/finca/actualizar/${selectedFincaId}`, modalFinca);
+            Sweet.actualizacionExitosa();
             closeEditarModal();
             // Recargar la lista de fincas después de la actualización
             const response = await Api.get("finca/listar");
@@ -59,26 +61,32 @@ const FincaView = () => {
     };
 
     const handleEditUser2 = async () => {
-        try {
-            await Api.patch(`/finca/desactivar/${selectedFincaId}`, modalFinca);
-            closeEditarModal();
-            // Recargar la lista de fincas después de la desactivación
-            const response = await Api.get("finca/listar");
-            setFincas(response.data);
-        } catch (error) {
-            console.error("Error desactivando el Finca: ", error);
+        const result = await Sweet.confimarDeshabilitar({});
+        if (result.isConfirmed) {
+            try {
+                await Api.patch(`/finca/desactivar/${selectedFincaId}`, modalFinca);
+                closeEditarModal();
+                // Recargar la lista de fincas después de la desactivación
+                const response = await Api.get("finca/listar");
+                setFincas(response.data);
+            } catch (error) {
+                console.error("Error desactivando el Finca: ", error);
+            }
         }
     };
 
     const handleEditUser3 = async () => {
-        try {
-            await Api.patch(`/finca/activar/${selectedFincaId}`, modalFinca);
-            closeEditarModal();
-            // Recargar la lista de fincas después de la activación
-            const response = await Api.get("finca/listar");
-            setFincas(response.data);
-        } catch (error) {
-            console.error("Error activando el Finca: ", error);
+        const result = await Sweet.confimarHabilitar({});
+        if (result.isConfirmed) {
+            try {
+                await Api.patch(`/finca/activar/${selectedFincaId}`, modalFinca);
+                closeEditarModal();
+                // Recargar la lista de fincas después de la activación
+                const response = await Api.get("finca/listar");
+                setFincas(response.data);
+            } catch (error) {
+                console.error("Error activando el Finca: ", error);
+            }
         }
     };
 
@@ -99,6 +107,7 @@ const FincaView = () => {
 
         try {
             await Api.post("finca/registrar", data, headers);
+            Sweet.registroExitoso();
             closeRegistrarModal();
             // Recargar la lista de fincas después del registro
             const response = await Api.get("finca/listar");

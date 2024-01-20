@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef} from "react";
 import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
 import "../style/lotes.css";
+import Sweet from "../helpers/Sweet";
 
 
 const lote = () => {
@@ -49,18 +50,22 @@ const lote = () => {
 
 
   const handleEditUser1 = async () => {
-    try {
-      await Api.put(`/lote/actualizar/${selectedLoteId}`, modalLote);
-      closeModal();
-      // Recargar la lista de lotes después de la actualización
-      const response = await Api.get("lote/listar");
-      setLotes(response.data);
-    } catch (error) {
-      console.error("Error editando el Lote: ", error);
-    }
+      try {
+        await Api.put(`/lote/actualizar/${selectedLoteId}`, modalLote);
+        Sweet.actualizacionExitosa();
+        closeModal();
+        // Recargar la lista de lotes después de la actualización
+        const response = await Api.get("lote/listar");
+        setLotes(response.data);
+      } catch (error) {
+        console.error("Error editando el Lote: ", error);
+      }
   };
 
   const handleEditUser2 = async () => {
+    const result = await Sweet.confimarDeshabilitar({
+    });
+    if (result.isConfirmed) {
     try {
       await Api.patch(`/lote/desactivar/${selectedLoteId}`, modalLote);
       closeModal();
@@ -70,17 +75,21 @@ const lote = () => {
     } catch (error) {
       console.error("Error desactivando el Lote: ", error);
     }
+  }
   };
 
   const handleEditUser3 = async () => {
-    try {
-      await Api.patch(`/lote/activar/${selectedLoteId}`, modalLote);
-      closeModal();
-      // Recargar la lista de lotes después de la activación
-      const response = await Api.get("lote/listar");
-      setLotes(response.data);
-    } catch (error) {
-      console.error("Error activando el Lote: ", error);
+    const result = await Sweet.confimarHabilitar({});
+    if (result.isConfirmed) {
+      try {
+        await Api.patch(`/lote/activar/${selectedLoteId}`, modalLote);
+        closeModal();
+        // Recargar la lista de lotes después de la activación
+        const response = await Api.get("lote/listar");
+        setLotes(response.data);
+      } catch (error) {
+        console.error("Error activando el Lote: ", error);
+      }
     }
   };
 
@@ -101,6 +110,7 @@ const lote = () => {
 
     try {
       await Api.post("lote/registrar", data, headers);
+      Sweet.registroExitoso();
       closeRegistrarModal();
       // Recargar la lista de fincas después del registro
       const response = await Api.get("lote/listar");
