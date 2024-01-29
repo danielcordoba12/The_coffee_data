@@ -115,7 +115,7 @@ function Dashboard() {
                             </li>
                         
                             <li className="li-dasboard">
-                                <Link to={"/municipio/listar"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                <Link to={"/municipio"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                     <FontAwesomeIcon icon={faSliders} className="icon"/>
                                     <p>Municipios</p>
                                 </Link>

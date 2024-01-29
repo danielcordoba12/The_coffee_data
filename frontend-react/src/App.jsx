@@ -7,15 +7,13 @@ import LoginForm from './components/login'
 import Resultado from './components/Resultados'
 import Lote from './components/Lotes'
 import Cafe from './components/cafe'
+import Municipio from './components/Municipio'
 import ListarMuestra from './components/ListarMuestra'
 import ModalMuestra from './components/ModalMuestra'
 import EditarMestra from './components/EditarMuestra'
 import Registrarusuarios from './components/usuariosRegistrar'
 import EditarUsuario from './components/editarusuario'
 import ListarUsuarios from './components/listarusuario'
-import ListarMunicipio from './components/municipiolistar'
-import RegistrarMunicipio from './components/municipioregistrar'
-import Editarmunicipio from './components/municipioeditar'
 import ListarVariedad from './components/variedadlistar'
 import Registrarvariedad from './components/variedadregistrar'
 import Editarvariedad from './components/variedadeseditar'
@@ -25,6 +23,7 @@ import EditarAnalisis from './components/EditarAnalisis'
 
 
 import carrusel from './components/RegistrarMuestra'
+
 
 
 
@@ -44,9 +43,7 @@ function App(){
         <Route path='/usuario'  element={<Registrarusuarios/>}/>
         <Route path='/usuario/listar' element={<ListarUsuarios/>}/>
         <Route path='/usuario/actualizar/:id' element={<EditarUsuario/>}/>
-        <Route path='/municipio/listar' element={<ListarMunicipio/>}/>
-        <Route path='/municipio/registrar' element={<RegistrarMunicipio/>}/>
-        <Route path='/municipio/editar/:id' element={<Editarmunicipio/>}/>
+        <Route path='/municipio' element={<Municipio/>}/>
         <Route path='/variedad/listar' element={<ListarVariedad/>}/>
         <Route path='/variedad/registrar' element={<Registrarvariedad/>}/>
         <Route path='/variedad/editar/:id' element={<Editarvariedad/>}/>

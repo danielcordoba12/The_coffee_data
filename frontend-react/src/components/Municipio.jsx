@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
 import '../style/municipio.css';
 import Sweet from "../helpers/Sweet";
 
-const MunicipioView = () => {
+const Municipio = () => {
     const [municipios, setMunicipios] = useState([]);
     const [selectedMunicipioId, setSelectedMunicipioId] = useState(null);
     const [modalMunicipio, setModalMunicipio] = useState(null);
@@ -12,6 +13,8 @@ const MunicipioView = () => {
     const fecha_creacion = useRef();
     const nombre = useRef();
     const departamentos_id = useRef();
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const buscarMunicipios = async () => {
@@ -29,7 +32,7 @@ const MunicipioView = () => {
         setSelectedMunicipioId(municipioId);
         try {
             const response = await Api.get(`/municipio/buscar/${municipioId}`);
-            setModalMunicipio(response.data[0]);
+            setModalMunicipio(response.data);
         } catch (error) {
             console.error("Error buscando el municipio", error);
         }
@@ -240,4 +243,4 @@ const MunicipioView = () => {
     );
 };
 
-export default MunicipioView;
+export default Municipio;
