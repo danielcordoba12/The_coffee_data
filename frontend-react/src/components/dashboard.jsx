@@ -96,7 +96,7 @@ function Dashboard() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/cafe/listar"}>
+                                <Link to={"/cafe"}>
                                     <FontAwesomeIcon icon={faChartColumn} className="icon"/>
                                     <p>Cafe</p>
                                 </Link>
