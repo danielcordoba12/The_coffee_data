@@ -6,6 +6,7 @@ import Finca from './components/fincas'
 import LoginForm from './components/login'
 import Resultado from './components/Resultados'
 import Lote from './components/Lotes'
+import Cafe from './components/cafe'
 import ListarMuestra from './components/ListarMuestra'
 import ModalMuestra from './components/ModalMuestra'
 import EditarMestra from './components/EditarMuestra'
@@ -18,15 +19,13 @@ import Editarmunicipio from './components/municipioeditar'
 import ListarVariedad from './components/variedadlistar'
 import Registrarvariedad from './components/variedadregistrar'
 import Editarvariedad from './components/variedadeseditar'
-import Listarcafe from './components/cafelistar'
-import RegistrarCafe from './components/caferegistrar'
-import Editarcafe from './components/cafeeditar'
 import RegistrarAnalisis from './components/Analisiss'
 import ListarAnalisis from './components/ListarAnalisis'
 import EditarAnalisis from './components/EditarAnalisis'
 
 
 import carrusel from './components/RegistrarMuestra'
+
 
 
 function App(){
@@ -51,9 +50,7 @@ function App(){
         <Route path='/variedad/listar' element={<ListarVariedad/>}/>
         <Route path='/variedad/registrar' element={<Registrarvariedad/>}/>
         <Route path='/variedad/editar/:id' element={<Editarvariedad/>}/>
-        <Route path='/cafe/listar' element={<Listarcafe/>}/>
-        <Route path='/cafe/editar/:id' element={<Editarcafe/>}/>
-        <Route path='/cafe/registrar' element={<RegistrarCafe/>}/>
+        <Route path='/cafe' element={<Cafe/>}/>
         <Route path='/carrusel' element={<carrusel/>}/>
         <Route path='/listar/muestra' element={<ListarMuestra/>}/>
         <Route path='/ModalMuestra/:id' element={<ModalMuestra/>}/>
