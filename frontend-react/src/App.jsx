@@ -8,21 +8,20 @@ import Resultado from './components/Resultados'
 import Lote from './components/Lotes'
 import Cafe from './components/cafe'
 import Municipio from './components/Municipio'
+import Variedad from './components/variedad'
 import ListarMuestra from './components/ListarMuestra'
 import ModalMuestra from './components/ModalMuestra'
 import EditarMestra from './components/EditarMuestra'
 import Registrarusuarios from './components/usuariosRegistrar'
 import EditarUsuario from './components/editarusuario'
 import ListarUsuarios from './components/listarusuario'
-import ListarVariedad from './components/variedadlistar'
-import Registrarvariedad from './components/variedadregistrar'
-import Editarvariedad from './components/variedadeseditar'
 import RegistrarAnalisis from './components/Analisiss'
 import ListarAnalisis from './components/ListarAnalisis'
 import EditarAnalisis from './components/EditarAnalisis'
 
 
 import carrusel from './components/RegistrarMuestra'
+
 
 
 
@@ -44,9 +43,7 @@ function App(){
         <Route path='/usuario/listar' element={<ListarUsuarios/>}/>
         <Route path='/usuario/actualizar/:id' element={<EditarUsuario/>}/>
         <Route path='/municipio' element={<Municipio/>}/>
-        <Route path='/variedad/listar' element={<ListarVariedad/>}/>
-        <Route path='/variedad/registrar' element={<Registrarvariedad/>}/>
-        <Route path='/variedad/editar/:id' element={<Editarvariedad/>}/>
+        <Route path='/variedad' element={<Variedad/>}/>
         <Route path='/cafe' element={<Cafe/>}/>
         <Route path='/carrusel' element={<carrusel/>}/>
         <Route path='/listar/muestra' element={<ListarMuestra/>}/>

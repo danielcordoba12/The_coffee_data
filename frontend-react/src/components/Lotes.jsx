@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
 import "../style/lotes.css";
@@ -50,32 +50,32 @@ const lote = () => {
 
 
   const handleEditUser1 = async () => {
-      try {
-        await Api.put(`/lote/actualizar/${selectedLoteId}`, modalLote);
-        Sweet.actualizacionExitosa();
-        closeModal();
-        // Recargar la lista de lotes después de la actualización
-        const response = await Api.get("lote/listar");
-        setLotes(response.data);
-      } catch (error) {
-        console.error("Error editando el Lote: ", error);
-      }
+    try {
+      await Api.put(`/lote/actualizar/${selectedLoteId}`, modalLote);
+      Sweet.actualizacionExitosa();
+      closeModal();
+      // Recargar la lista de lotes después de la actualización
+      const response = await Api.get("lote/listar");
+      setLotes(response.data);
+    } catch (error) {
+      console.error("Error editando el Lote: ", error);
+    }
   };
 
   const handleEditUser2 = async () => {
     const result = await Sweet.confimarDeshabilitar({
     });
     if (result.isConfirmed) {
-    try {
-      await Api.patch(`/lote/desactivar/${selectedLoteId}`, modalLote);
-      closeModal();
-      // Recargar la lista de lotes después de la desactivación
-      const response = await Api.get("lote/listar");
-      setLotes(response.data);
-    } catch (error) {
-      console.error("Error desactivando el Lote: ", error);
+      try {
+        await Api.patch(`/lote/desactivar/${selectedLoteId}`, modalLote);
+        closeModal();
+        // Recargar la lista de lotes después de la desactivación
+        const response = await Api.get("lote/listar");
+        setLotes(response.data);
+      } catch (error) {
+        console.error("Error desactivando el Lote: ", error);
+      }
     }
-  }
   };
 
   const handleEditUser3 = async () => {
@@ -130,7 +130,7 @@ const lote = () => {
       <img src="../../public/img/fondo.png" alt="" className="fondo2" />
       <div className="tablalistar">
         <h1 className="titu"> Listado de Lotes</h1>
-        
+
         <button to="/lote/registrar" className="btn-registrar-lote" onClick={openRegistrarModal}>
           Registrar Lote
         </button>
