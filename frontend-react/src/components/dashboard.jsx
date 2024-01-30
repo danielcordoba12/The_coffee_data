@@ -84,19 +84,19 @@ function Dashboard() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/finca/listar"}>
+                                <Link to={"/finca"}>
                                     <FontAwesomeIcon icon={faToolbox} className="icon"/>
                                     <p>Fincas</p>
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/lote/listar"}>
+                                <Link to={"/lote"}>
                                     <FontAwesomeIcon icon={faMagnifyingGlassChart} className="icon"/>
                                     <p>Lotes</p>
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/cafe/listar"}>
+                                <Link to={"/cafe"}>
                                     <FontAwesomeIcon icon={faChartColumn} className="icon"/>
                                     <p>Cafe</p>
                                 </Link>
@@ -115,13 +115,13 @@ function Dashboard() {
                             </li>
                         
                             <li className="li-dasboard">
-                                <Link to={"/municipio/listar"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                <Link to={"/municipio"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                     <FontAwesomeIcon icon={faSliders} className="icon"/>
                                     <p>Municipios</p>
                                 </Link>
                             </li>
                             <li className="li-dasboard">
-                                <Link to={"/variedad/listar"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                <Link to={"/variedad"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                     <FontAwesomeIcon icon={faSliders} className="icon"/>
                                     <p>Variedad</p>
                                 </Link>

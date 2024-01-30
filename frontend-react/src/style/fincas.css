@@ -39,88 +39,6 @@
 //estilos fincas registrar// */
 
 
-.tabla2 {
-  backdrop-filter: blur(10px);
-  width: 350px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: rgb(30, 30, 30, 50%);
-  border-bottom:1px black solid;
-}
-
-.tabla2 h1 {
-  color: white;
-  text-decoration: none   ;
-  text-align: center;
-  font-weight: bold;
-
-  font-size: 1.5rem;
-  margin: 20px 0;
-}
-
-.tabla2 div {
-  margin-bottom: 15px;
-}
-
-.tabla2 input {
-  width: 100%;
-  padding: 10px;
-  /* border-bottom: 1px solid #ccc; */
-  box-sizing: border-box;
-  margin-bottom: 10px;
-  background-color: transparent;
-  border: none;
-  border-bottom:1px rgb(153, 151, 151) solid;
-  color: white;
-  outline: none;
-}
-
-/* Efecto del placeholder */
-.tabla2 input + label {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  /* color: #ffffff; */
-  font-size: 16px;
-  pointer-events: none;
-  transition: transform 0.3s, font-size 0.3s, color 0.3s;
-  color:white ;
-  
-}
-
-/* Placeholder transformado al enfocar el campo */
-.tabla2 input:focus + label,
-.tabla2 input:not(:placeholder-shown) + label {
-  transform: translateY(-100%) scale(1.2);
-  font-size: 12px;
-  color: rgb(255, 255, 255);
-  top: 10px;
-  transition: all 0.5s;
-}
-
-.tabla2 button {
-  background-color: #3498db;
-  color: #fff;
-  font-weight: bold;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.tabla2 button:hover {
-  background-color: #2980b9;
-}
-
-.div-input{
-  position: relative;
-}
-
 /* editar fincas */
 
 
@@ -312,7 +230,8 @@ background-color: rgb(37, 25, 25, 0.8);
 padding: 20px;
 border-radius: 8px;
 z-index: 1000;
-max-width: 80%; /* Ajusta el ancho máximo según tus necesidades */
+max-height: 95%;
+max-width: 70%; /* Ajusta el ancho máximo según tus necesidades */
 width: 400px;  /* Ajusta el ancho según tus necesidades */
 text-align: center; /* Centra el contenido */
 }
@@ -360,3 +279,98 @@ height: 100%;
 background-color: rgba(0, 0, 0, 0.8); /* Fondo semitransparente */
 z-index: 999; /* Valor superior al z-index del modal */
 }
+
+
+
+/* estilos de registrar css*/
+
+.btn-blue {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+  padding: 8px;
+  
+  border-radius: 4px;
+  outline: none;
+}
+
+.btn-blue:hover {
+  background-color: #0056b3;
+}
+
+.btn-blue:focus {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+
+
+.input-reg {
+  width: 100%;
+  padding: 8px;
+  margin: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  }
+  
+  
+
+  
+.tabla2 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(37, 25, 25, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1000;
+  max-height: 98%;
+  max-width: 70%; /* Ajusta el ancho máximo según tus necesidades */
+  width: 40px;  /* Ajusta el ancho según tus necesidades */
+  text-align: center; /* Centra el contenido */
+  margin: 0 auto;
+  }
+  
+  .tabla2 h1 {
+  font-size: 1.5em;
+  margin-bottom: 1px;
+  color: #fff; /* Ajusta el color del texto según tus necesidades */
+  }
+  
+  .input-field {
+  width: 100%;
+  padding: 8px;
+  margin: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  }
+  
+  .btn-modal {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  }
+  
+  .close-modal-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #dc3545;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  }
+  
+  .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  z-index: 999; /* Valor superior al z-index del modal */
+  }
