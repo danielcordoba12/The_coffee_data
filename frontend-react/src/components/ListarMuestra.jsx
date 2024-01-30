@@ -4,8 +4,8 @@
   import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
   import {faX }  from'@fortawesome/free-solid-svg-icons'
   // import '../style/RegistrarMuestra.css'
-  import { Link, json } from "react-router-dom";
-import Sweet from "../helpers/Sweet";
+  import { Link, json } from "react-router-dom";  
+  import Sweet from "../helpers/Sweet";
 
 
   const Muestra = () => {
@@ -548,19 +548,21 @@ import Sweet from "../helpers/Sweet";
                       <td>{task.estado}</td>
                       <td> 
                       {task.estado === 1 ? (
-                          <button
-                            className="btn-secondary"
-                            onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
-                          >
-                            Desactivar
-                          </button>
+                        <button
+                        className="btn-tertiary"
+                        onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                      >
+                        Activar
+                      </button>
+                      
                         ) : (
                           <button
-                            className="btn-tertiary"
-                            onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
-                          >
-                            Activar
-                          </button>
+                          className="btn-secondary"
+                          onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
+                        >
+                          Desactivar
+                        </button>
+                          
                         )}  
                       </td>
                       <td>

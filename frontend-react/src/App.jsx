@@ -37,8 +37,7 @@ function App(){
     <>
       <Routes>
       <Route path='/' element={<Dashboard/>}>
-        <Route path='/Resultado' element={<Muestra/>}/>
-        <Route path='/resultado/guardar' element={<Resultado/>}/>
+        <Route path='/Resultado' element={<Resultado/>}/>
         <Route path='/finca/listar' element={<Finca/>}/>
         <Route path='/finca/registrar' element={<Registrar/>}/>
         <Route path='/finca/editar/:id' element={<EditarFinca/>}/>
@@ -60,7 +59,6 @@ function App(){
         <Route path='/cafe/listar' element={<Listarcafe/>}/>
         <Route path='/cafe/editar/:id' element={<Editarcafe/>}/>
         <Route path='/cafe/registrar' element={<RegistrarCafe/>}/>
-        <Route path='/carrusel' element={<carrusel/>}/>
         <Route path='/listar/muestra' element={<ListarMuestra/>}/>
         <Route path='/ModalMuestra/:id' element={<ModalMuestra/>}/>
         <Route path='/editar/muestra/:id' element={<EditarMestra/>}/>

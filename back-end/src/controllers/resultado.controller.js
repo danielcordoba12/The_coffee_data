@@ -16,7 +16,6 @@ export const guardarResultado = async (req, res) => {
 
         let resultadoExitoso = true; // Variable para verificar si al menos un resultado fue exitoso
 
-    console.log(datos)
         for (const dato of data) {
             const sql = 'INSERT INTO resultados(valor, analisis_id, variables_id, fecha_creacion) VALUES (?, ?, ?, ?)';
             const [rows] = await pool.query(sql, [dato.valor, dato.analisis_id, dato.variables_id, dato.fecha]);
@@ -41,6 +40,8 @@ export const guardarResultado = async (req, res) => {
             });
         }
     } catch (error) {
+    console.log(datos)
+
         res.status(500).json({
             "status": 500,
             "message": "Error en el servidor" + error
@@ -52,7 +53,7 @@ export const guardarResultado = async (req, res) => {
 export const buscarResultado = async (req, res) => {
     try {
         let id = req.params.id;
-        const [result] = await pool.query("SELECT r.id,r.valor, t.nombre AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join tipos_analisis as t on r.analisis_id = t.id WHERE analisis_id = ?", [id]);
+        const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id = ` + id);
         res.status(200).json(result);
     } catch (err) {
         res.status(500).json({
@@ -64,7 +65,13 @@ export const buscarResultado = async (req, res) => {
 
 export const listarResultados = async (req, res) => {
     try {
-        const [result] = await pool.query("SELECT r.id,r.valor, r.analisis_id as analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join tipos_analisis as t on r.analisis_id = t.id;");
+        // const [result] = await pool.query("SELECT r.id,r.valor, r.analisis_id as analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join tipos_analisis as t on r.analisis_id = t.id;");
+        // const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion, v.nombre AS variable FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id JOIN analisis as t ON r.analisis_id = t.id GROUP BY r.analisis_id;");
+        // const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion, v.nombre AS variable FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id JOIN analisis as t ON r.analisis_id = t.id GROUP BY r.fecha_creacion;");
+
+
+        const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion,m.consecutivo_informe AS muestra, v.nombre AS variable FROM resultados AS r JOIN variables AS v ON r.variables_id  = v.id  JOIN analisis as t ON r.analisis_id = t.id JOIN muestras as m ON t.muestras_id = m.id GROUP BY t.muestras_id;");
+        
         res.status(200).json(result);
     } catch (err) {
         res.status(500).json({
@@ -101,34 +108,63 @@ export const eliminarResultado = async (req, res) => {
 };
 
 
+// export const actualizarResultado = async (req, res) => {
+//     try {
+//         // let error1 = validationResult(req);
+//         // if (!error1.isEmpty()){
+//         //     return res.status(400).json(error1);
+//         // }
+//         let id = req.params.id;
+//         let { valor, analisis_id, variables_id, fecha_creacion } = req.body;
+
+//         let sql = `UPDATE resultados SET valor = ?, analisis_id = ?, variables_id = ?, fecha_creacion = ? WHERE id = ?`;
+
+//         const [rows] = await pool.query(sql, [valor, analisis_id, variables_id, fecha_creacion, id]);
+
+//         if (rows.affectedRows > 0) {
+//             res.status(200).json({
+//                 "status": 200,
+//                 "message": "¡Registro de Resultado actualizado..!"
+//             });
+//         } else {
+//             res.status(400).json({
+//                 "status": 400,
+//                 "message": "¡El resultado no fue actualizado"
+//             });
+//         }
+//     } catch (e) {
+//         res.status(500).json({
+//             "status": 500,
+//             "message": "Error en el servidor..! " + e
+//         });
+//     }
+
+
+// };
 export const actualizarResultado = async (req, res) => {
     try {
-        // let error1 = validationResult(req);
-        // if (!error1.isEmpty()){
-        //     return res.status(400).json(error1);
-        // }
-        let id = req.params.id;
-        let { valor, analisis_id, variables_id, fecha_creacion } = req.body;
+    const datosActualizados = req.body.datosActualizados;
 
-        let sql = `UPDATE resultados SET valor = ?, analisis_id = ?, variables_id = ?, fecha_creacion = ? WHERE id = ?`;
+    // await pool.beginTransaction();
 
-        const [rows] = await pool.query(sql, [valor, analisis_id, variables_id, fecha_creacion, id]);
+    for (const dato of datosActualizados) {
+        const sql = 'UPDATE resultados SET valor = ? WHERE id = ?';
+        await pool.query(sql, [dato.valor, dato.id]);
+    }
 
-        if (rows.affectedRows > 0) {
-            res.status(200).json({
-                "status": 200,
-                "message": "¡Registro de Resultado actualizado..!"
-            });
-        } else {
-            res.status(400).json({
-                "status": 400,
-                "message": "¡El resultado no fue actualizado"
-            });
-        }
-    } catch (e) {
-        res.status(500).json({
-            "status": 500,
-            "message": "Error en el servidor..! " + e
+    // await pool.commit();
+
+    res.status(200).json({
+        status: 200,
+        message: 'Actualización de resultados exitosa..!',
+    });
+    } catch (error) {
+    // await pool.rollback();
+
+    res.status(500).json({
+        status: 500,
+        message: 'Error en el servidor' + error,
         });
     }
 };
+

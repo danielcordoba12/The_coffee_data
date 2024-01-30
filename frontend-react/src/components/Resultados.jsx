@@ -1,248 +1,19 @@
-// import React,{useEffect,useState} from "react";
-// import api from "../services/api";
-// import { useNavigate } from "react-router-dom";
-// import Table from 'react-bootstrap/Table';
 
-// // import listarResultado from "../../public/js/resultados.js";
-
-
-
-// function Resultado() {
-//         const [showModal1, setShowModal1] = useState(true);
-//         const [showModal2, setShowModal2] = useState(true);
-//         const [showModal3, setShowModal3] = useState(true);
-//         const [index, setIndex] = useState(0);
-
-//         const hideAllModals = () => {
-//             setShowModal1(false);
-//             setShowModal2(false);
-//             setShowModal3(false);
-//             };
-
-
-//         // const [datos,setDatos] = useState(Array(18).fill({valor : '', analisis_id:'',varibles_id:'',fecha: ''}));
-
-//         const [datos, setDatos] = useState([]);
-
-//                               // Función para inicializar los datos
-//             const inicializarDatos = () => {
-//               const nuevosDatos = Array.from({length : 25},(_, index)=>({
-//                 valor: '' ,
-//                 analisis_id: 1,
-//                 variables_id: (index+1).toString(),
-//                 fecha: ''
-//               }))
-//               setDatos(nuevosDatos);
-
-//             };
-//             // const [datos, setDatos] = useState(
-//             //   Array.from({ length: 18 }, (_, index) => ({
-//             //     valor: '',
-//             //     analisis_id: 1,
-//             //     varibles_id: '',
-//             //     fecha: '2024-01-15T15:38:19.052Z',
-//             //   }))
-//             // );
-
-//                // Asignar valores del 1 al 18
-//               // for (let i = 0; i < nuevosDatos.length; i++) {
-//               //   nuevosDatos[i].valor = (i + 1).toString(); // Asigna el valor como una cadena
-//               // }
-
-
-//             useEffect(() => {
-//               // Llamar a la función para inicializar los datos cuando el componente se monta
-//               inicializarDatos();
-//             }, []);
-
-//         const GuardarResultados =  async () => {
-//             try {
-//                   const fechaActual = new Date().toISOString();
-//                                 // Mapear los datos y agregar el analisis_id
-//                   const datosConAnalisisId = datos.map((dato) => ({
-//                     ...dato,
-//                     analisis_id: 1, // Reemplaza "tuValorDeAnalisisId" con el valor real del analisis_id
-//                     fecha:fechaActual,
-//                   }));
-
-//                   // Actualizar el estado con los nuevos datos
-//                   setDatos(datosConAnalisisId);
-//                 const response = await fetch('http://localhost:4000/resultado/registrar',{
-//                     method : "POST",
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                     },
-//                     body: JSON.stringify(datosConAnalisisId),
-//             });
-//             if(response.status == 200) {
-//                 const result = await response.json ();
-//                 console.log("Resultado del servidor:" , result)
-//             }
-//             if(response.status == 400){
-//                 console.error('Error al procesar la solicitud' ,response.statusText );
-//             }
-//         }catch (error) {
-//             console.error("Error al procesar la solicitud", error);
-//         }
-//         };
-
-//         // let newDatos = [...datos];
-
-//         const camposEntrada = (index, field, value) => {
-//           if (index !== undefined && datos[index] !== undefined) {
-//             setDatos(prevDatos => {
-//               const newDatosCopy = [...prevDatos];
-
-//               // Verifica si la propiedad field existe en el objeto
-//               if (newDatosCopy[index].hasOwnProperty(field)) {
-//                 // Asigna el valor a la propiedad correspondiente
-//                 newDatosCopy[index][field] = value;
-//               }
-
-//               return newDatosCopy;
-//             });
-//           }
-//         };
-
-
-
-
-
-//         const datosMuestra = [
-//             { id: 'PesoC.P.S', label: 'Campo 1:' },
-//             { id: 'PesoCisco', label: 'Codigo externo' },
-//             { id: 'PesoAlmendra', label: 'Hola mundo' },
-//             { id: 'Peso_Defectos_Totales', label: 'Hola mundo' },
-//             { id: 'Peso_Almendra_Sana', label: 'Hola mundo' },
-//             { id: 'Negro_total', label: 'Hola mundo' },
-//             { id: 'vinagre', label: 'Hola mundo' },
-//             { id: 'Veteado', label: 'Hola mundo' },
-//             { id: 'Sobresecado', label: 'Hola mundo' },
-
-
-
-//             // Agrega los demás campos aquí
-//             ];
-
-//             const datosMuestra2 = [
-//             { id: 'Picado_Insectos', label: 'Tiempo de secado' },
-//             { id: 'Inmaduro', label: 'Presentacion' },
-//             { id: 'flojo', label: 'Presentacion' },
-//             { id: 'Malla18 ', label: 'Presentacion' },
-//             { id: 'Malla17', label: 'Presentacion' },
-//             { id: 'Malla16 ', label: 'Presentacion' },
-//             { id: 'presentacion', label: 'Presentacion' },
-//             { id: 'Humedad', label: 'Presentacion' },
-//             { id: 'MermaTrilla', label: 'Hola mundo' },
-
-
-//             // Agrega los demás campos aquí
-//             ];
-//             const datosMuestra3 = [
-//               { id: 'almendra_Sana', label: 'Tiempo de secado' },
-//               { id: 'Factor_Rendimiento', label: 'Tiempo de secado' },
-//               { id: 'Cardenillo', label: 'Presentacion' },
-//               { id: 'Cristalizado', label: 'Presentacion' },
-//               { id: 'ambar', label: 'Presentacion' },
-//               { id: 'mordido', label: 'Presentacion' },
-//               { id: 'averanado', label: 'Presentacion' },
-
-
-
-//               // Agrega los demás campos aquí
-//               ];
-
-//               const generarInputs = (datosArray, index) => {
-//                 const datos = datosArray[0];
-//                 return datos.map((dato, i) => (
-//                   <div className='container-input' key={`${index}-${i}-${dato.id}`}>
-//                     {dato.id === 'fecha_creacion' ? (
-//                       <input
-//                         type='date'
-//                         id={dato.id}
-//                         name={dato.id}
-//                         className= 'input '
-//                         placeholder=''
-//                         onChange={(e) => camposEntrada(index, 'variables_id', e.target.value)}
-//                       />
-//                     ) : (
-//                       <input
-//                         type='text'
-//                         id={dato.id}
-//                         name={dato.id}
-//                         className="input"
-//                         placeholder=''
-//                         onChange={(e) => {
-//                           console.log("Valor de entrada:", e.target.value);
-//                           camposEntrada(index, 'variables_id', e.target.value);
-//                         }}
-//                       />
-//                     )}
-//                     <label htmlFor={dato.id} className='label'>
-//                       {dato.label}
-//                     </label>
-//                   </div>
-//                 ));
-//               };
-
-
-
-
-
-
-//             // const FormularioMuestra = () => {
-//             //     return (
-//             //       <div className={`main-content-registrar ${showModal1 ? 'show' : ''}`} id='modalInfo1'>
-//             //         <h1 className='title-registrar-muestras'>Registrar Muestra</h1>
-
-//             //         <form className='formulario-muestra' method='post'>
-//             //           <div className='columna'>{generarInputs(datosMuestra)}</div>
-//             //           <div className='columna'>{generarInputs(datosMuestra2)}</div>
-//             //           <div className='columna'>{generarInputs(datosMuestra3)}</div>
-
-//             //           {/* Agrega los botones y otros elementos aquí */}
-
-//             //         </form>
-//             //       </div>
-//             //     );
-//             //   };
-//               return (
-//                 <div className={`main-content-registrar ${showModal1 ? 'show' : ''}`} id='modalInfo1'>
-//                   <h1 className='title-registrar-muestras'>Registrar Muestra</h1>
-
-//                   <form className='formulario-muestra' method='post'>
-//                     <div className='columna'>{generarInputs([datosMuestra], index)}</div>
-//                     <div className='columna'>{generarInputs([datosMuestra2], index)}</div>
-//                     <div className='columna'>{generarInputs([datosMuestra3], index)}</div>
-
-
-//                     <button className='btn-reg-mue' type='button' onClick={hideAllModals}>
-//                       Cancelar
-//                     </button>
-//                     <button className='button' type='button'  onClick={GuardarResultados}  >
-//                       Enviar
-//                     </button>
-//                   </form>
-//                 </div>
-//               );
-
-
-// }
-
-// export default Resultado;
 import React, { useEffect, useState } from "react";
 import '../style/RegistrarMuestra.css'
+import Sweet from "../helpers/Sweet";
 
 
 
 function Resultado() {
   const [datos, setDatos] = useState([]);
+  const [nuevosDatos, setNuevosDatos] = useState([]);
   const [resultado,setResultado] = useState([]);
   const [resultadoSellecionado,setResultadoSeleccionado] = useState([])
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
-  
+
 
 
 
@@ -259,33 +30,35 @@ function Resultado() {
 
   const toggleModal = (modalId) => {
     if (modalId === 1) {
-      console.log("modal" , modalId);
       setShowModal1(!showModal1);
     } else if (modalId === 2) {
-      console.log("modal" , modalId);
-
       setShowModal2(!showModal2);
     } else if (modalId === 3) {
-      console.log("modal" , modalId);
-
       setShowModal3(!showModal3);
     }
   };
+
   const hideAllModals = () => {
     setShowModal1(false);
     setShowModal2(false);
     setShowModal3(false);
-  }; 
+  };
 
+
+  useEffect(()=>{
+    listarResultado()
+  },[]);
 
 
   const inicializarDatos = () => {
       const nuevosDatos = Array.from({ length: 25 }, (_, index) => ({
         valor: "",
-      analisis_id: 1,
+      analisis_id: 3,
       variables_id: (index + 1).toString(),
       // variables_id: 1,
-      fecha: fechaActual,
+      fecha:"2024-01-27T00:40:33.000Z",
+      // fecha: fechaActual,
+
     }));
     setDatos(nuevosDatos);
   };
@@ -328,22 +101,70 @@ function Resultado() {
   ];
 
 
+
+  // const camposEntrada = (index, field, value) => {
+  //   setDatos((prevDatos) => {
+  //     // Si el índice no está definido o el objeto en ese índice no existe, crea un nuevo objeto.
+  //     if (index === undefined || prevDatos[index] === undefined) {
+  //       const nuevosDatos = [...prevDatos];
+  //       const nuevoObjeto = { valor: value, analisis_id: 3, variables_id: (index + 1).toString(), fecha: fechaActual };
+  //       nuevosDatos[index] = nuevoObjeto;
+  //       console.log("Nuevo estado1:", nuevosDatos);
+  //       return nuevosDatos;
+  //     }
+
+  //     // Si el índice y el objeto en ese índice ya existen, actualiza el valor del campo.
+  //     // const nuevosDatos = [...prevDatos];
+  //     // nuevosDatos[index] = { ...nuevosDatos[index], [field]: value };
+  //     // console.log("Nuevo estado:", nuevosDatos);
+  //     // return nuevosDatos;
+  //     // El anterio es el codigo a menudio funcionar
+  //         const nuevosDatos = Array.isArray(resultadoSellecionado) ? [...resultadoSellecionado] : [resultadoSellecionado];
+  //     nuevosDatos[index] = { ...nuevosDatos[index], [field]: value };
+  //     console.log("Nuevo estado2:", nuevosDatos);
+  //     return nuevosDatos;
+  //   });
+  // };
+
+
+  // const camposEntrada = (index, field, value) => {
+  //   setResultadoSeleccionado((resultadoSellecionado) => {
+  //     if (index === undefined || resultadoSellecionado[index] === undefined) {
+  //       const nuevosDatos = [...resultadoSellecionado];
+  //       const nuevoObjeto = { valor: value, analisis_id: 3, variables_id: (index + 1).toString(), fecha: fechaActual };
+  //       nuevosDatos[index] = nuevoObjeto;
+  //       console.log("Nuevo estado1:", nuevosDatos);
+  //       return nuevosDatos;
+  //     }
+
+  //     const nuevosDatos = resultadoSellecionado;
+  //     nuevosDatos[index] = { ...nuevosDatos[index], [field]: value };
+  //     console.log("Nuevo estado2:", nuevosDatos);
+  //     console.log("Resultado seleccionado:", resultadoSellecionado);
+
+  //     return nuevosDatos ;
+  //   });
+  // };
   const camposEntrada = (index, field, value) => {
-    if (index !== undefined && datos[index] !== undefined) {
-      setDatos((prevDatos) => {
-        const nuevosDatos = [...prevDatos];
-        nuevosDatos[index] = { ...nuevosDatos[index], [field]: value };
-        console.log("Nuevo estado:", nuevosDatos); // Agrega este console.log
-        return nuevosDatos;
-      });
-    }
+    setResultadoSeleccionado((resultadoSellecionado) => {
+      const nuevosDatos = resultadoSellecionado.map((dato, i) =>
+        i === index ? { ...dato, [field]: value } : dato
+      );
+      console.log("Nuevo estado:", nuevosDatos);
+      return nuevosDatos;
+    });
   };
-  const  soloValor = () => {
 
-        // console.log(resultado);
 
-      }
-    soloValor();
+  //     // Si el índice y el objeto en ese índice ya existen, actualiza el valor del campo.
+  //     const nuevosDatos = [...prevDatos];
+  //     nuevosDatos[index] = { ...nuevosDatos[index], [field]: value };
+  //     console.log("Nuevo estado:", nuevosDatos);
+  //     return nuevosDatos;
+  //   });
+  // };
+
+
 
   const generarInputs = () => {
     const filas = [];
@@ -373,10 +194,55 @@ function Resultado() {
           ))}
         </div>
       );
+      // console.log("este es el resultado seleccionado"+ resultado)
+    // console.log("este es dato" +JSON.stringify({datos}));
+
+
     }
 
     return filas;
   };
+  const generarInputs2 = () => {
+    const filas = [];
+    const numColumnas = 9;
+  
+    for (let i = 0; i < resultadoSellecionado.length; i += numColumnas) {
+      const fila = resultadoSellecionado.slice(i, i + numColumnas);
+  
+      filas.push(
+        <div className="columna" key={i}>
+          {fila.map((dato, j) => {
+            const index = i + j;
+  
+            return (
+              <div className="container-input" key={dato.variables_id}>
+                <input
+                  type="text"
+                  id={`input-${dato.variables_id}-${index}`}
+                  value={dato.valor || ''}
+                  className='input'
+                  placeholder=""
+                  onChange={(e) => {
+                    console.log("Input change detected");
+                    camposEntrada(index, "valor", e.target.value);
+                  }}
+                />
+                <label htmlFor={`input-${dato.variables_id}`} className='label'>
+                  {labelText[index]}
+                </label>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+  
+    return filas;
+  };
+
+
+
+
   const generarInputs3 = () => {
     const filas = [];
     const numColumnas = 9;
@@ -386,40 +252,42 @@ function Resultado() {
 
       filas.push(
         <div className="columna" key={i}>
-          {fila.map((dato, j) => (
-            // <div className={`main-content-registrar ${showModal1 ? 'show' :  ''}`}   id="modalInfo1 "   >
-              // <div className="columna">
+          {fila.map((dato, j) => {
+            const x = i + j ; // Inicia en 1 y llega hasta 25
+              // console.log(resultadoSellecionado[j])
+            return (
               <div className="container-input" key={dato.variables_id}>
+
                 <input
                   type="text"
-                  id={`input-${dato.variables_id}`}
-                  value={resultadoSellecionado.valor}
+                  id={`input-${datos.variables_id}-${x}`}
+                  value={resultadoSellecionado[x]?.valor || ''}
                   className='input'
                   placeholder=""
-                  onChange={(e) => camposEntrada(i + j, "valor", e.target.value)}
+                  readOnly
                 />
                 <label htmlFor={`input-${dato.variables_id}`} className='label'>
-                  {labelText[i + j ]}</label>
+                  {labelText[i + j]}
+                </label>
               </div>
-            // </div>
-          ))}
+            );
+          })}
         </div>
       );
     }
-    // console.log("Este es la informacion " , )
 
     return filas;
   };
-  
-    
-  
+
+
+
+
 
 
   const GuardarResultados = async () => {
     try {
       const datosConAnalisisId = datos.map((dato) => ({
         ...dato,
-        analisis_id: 1,
         fecha: fechaActual,
       }));
 
@@ -433,16 +301,18 @@ function Resultado() {
         },
         body: JSON.stringify({datosConAnalisisId}),
       });
-    console.log("hola mundo" + JSON.stringify({datosConAnalisisId}));
+    // console.log("hola mundo" + JSON.stringify({datosConAnalisisId}));
 
 
       if (response.status === 200) {
         const result = await response.json();
         console.log("Resultado del servidor:", result);
+        Sweet.registroFallido();
       }
 
       if (response.status === 400) {
         console.error("Error al procesar la solicitud", response.statusText);
+        Sweet.registroFallido();
       }
     } catch (error) {
       console.error("Error al procesar la solicitud", error);
@@ -466,26 +336,73 @@ function Resultado() {
       console.error("Error" + e);
     }
   }
-  listarResultado();
+  // listarResultado();
 
-    function buscarResultado(id) {
-          fetch(`http://localhost:4000/resultado/buscar/${id}`,{
-            method:'GET',
-            headers: {
-              'Content-type': 'application/json',
-            },
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              setResultadoSeleccionado(data[0]); })
-            .catch((error) => {
-              console.error(error);
-            });
+  function buscarResultado(id) {
+    fetch(`http://localhost:4000/resultado/buscar/${id}`,{
+      method:'GET',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // setResultadoSeleccionado(data); Este es la linea que funciona
+        // setResultadoSeleccionado({
+        //   ...data,
+        //   id:id,
+        //   // valor:resultadoSellecionado[j].valor,
+        // })
+        setResultadoSeleccionado(data)
+
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      // console.log(dato)
+  }
+
+  const actualizarResultado = (id) => {
+    // console.log("Respuesta desde el frontend")
+    const datosActualizados = resultadoSellecionado.map((dato) => ({
+      id: dato.id,
+      valor: dato.valor,
+      
+    }));
+
+    fetch(`http://localhost:4000/resultado/update/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ datosActualizados }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error('Actualización fallida');
         }
+      })
+      .then((result) => {
+        console.log("Resultado del servidor:", result);
+        Sweet.actualizacionExitosa();
+        hideAllModals();
+        listarResultado();
+      })
+      .catch((error) => {
+        console.error("Error al procesar la solicitud", error);
+        Sweet.actualizacionFallida();
+      });
+  };
+
+
+
   return (
-    <div>  
-      <div className={`main-content-registrar ${showModal1 ? 'show' :  ''}`}   id="modalInfo1 "   >
-      <h1 className="title-registrar-muestras">Registrar Muestra</h1>
+    <div>
+      <div className={`main-content-registrar ${showModal1 ? 'show' :  ''}`} id="modalInfo1" showModal={showModal1}>
+
+      <h1 className="title-registrar-muestras">Registrar Resultado</h1>
       <form className="formulario-muestra" method="post">
         {generarInputs()}
         <button className="button" type="button" onClick={GuardarResultados}>
@@ -493,38 +410,51 @@ function Resultado() {
         </button>
       </form>
     </div>
+
+
     
+
+    <div className={`main-content-registrar ${showModal2 ? 'show' :  ''}`} id="modalInfo2" showModal={showModal2}>
+
+      <h1 className="title-registrar-muestras">Actualizar Resultado</h1>
+      <form className="formulario-muestra" method="post">
+        {generarInputs2()}
+        <button className="button" type="button" onClick={() => actualizarResultado(resultadoSellecionado[3])}>
+          Actualizar
+        </button>
+      </form>
+    </div>
+
 
 <div>
 
-<div id="modalInfo3" className={`modal-info ${showModal3 ? 'show' : ''}`}  showModal={showModal3} >
-      <h1 className="title-registrar-muestras">Registrar Muestra</h1>
+<div className={`main-content-registrar ${showModal3 ? 'show' :  ''}`} id="modalInfo3" showModal={showModal3}>
+
+      <h1 className="title-registrar-muestras">Visualizar Muestra</h1>
       <form className="formulario-muestra" method="post">
         {generarInputs3()}
-        <button className="button" type="button" onClick={GuardarResultados}>
-          Enviar
-        </button>
+
       </form>
     </div>
 <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" />
 
 <div className="main-container">
   <button className="btn-reg-mue" onClick={() => setShowModal1(!showModal1)}>
-      Registrar muestra
+      Registrar resultado
   </button>
 
   <table className="table-muestra">
     <thead>
       <tr>
         <th>ID</th>
-        <th>Defecto</th>
+        <th>Muestra</th>
         <th>Cantidad</th>
         <th>analisis</th>
         <th>Fecha</th>
         <th>Fecha</th>
-        <th>Fecha</th>
+        <th>Actualizar</th>
         <th>Mas</th>
-        
+
 
       </tr>
     </thead>
@@ -533,9 +463,9 @@ function Resultado() {
               <tr key={task.id}>
                 <td>{task.id}</td>
                 {/* <td>{formatDate(task. fecha_creacion)}</td> */}
-                <td>{task.variable}</td>
+                <td>{task.muestra}</td>
                 <td>{task.valor}</td>
-                <td>{task.analisis}</td>
+                <td>{task.analisis_id}</td>
                 <td>{formatDate(task.fecha_creacion)}</td>
                 <td>
                 {task.estado === 1 ? (
@@ -557,17 +487,18 @@ function Resultado() {
                 <td>
                   <button className="btn-reg-mue"
                     onClick={() => {
-                      // toggleModal(2);
-                      buscarMuestra(task.id);
+                      toggleModal(2);
+                      buscarResultado(task.analisis_id);
                     }}
                     >
                   Editar</button>
                 </td>
+
                 <td>
                   <button
                                 type="button"
                                 className="btn-primary"
-                                onClick={() => { toggleModal(3) ,buscarResultado(task.id);} }
+                                onClick={() => { toggleModal(3), buscarResultado(task.analisis_id) ;} }
                             >Mas
                             </button>
                 </td>
