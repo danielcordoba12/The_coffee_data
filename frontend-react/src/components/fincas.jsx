@@ -9,6 +9,7 @@ const FincaView = () => {
     const [selectedFincaId, setSelectedFincaId] = useState(null);
     const [modalFinca, setModalFinca] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const fecha_creacion = useRef();
     const nombre = useRef();
@@ -117,6 +118,7 @@ const FincaView = () => {
         }
     };
 
+
     return (
         <>
             {modalFinca && <div className="overlay" onClick={closeEditarModal}></div>}
@@ -131,6 +133,25 @@ const FincaView = () => {
                 <button className="btn-registrar" onClick={openRegistrarModal}>
                     Registrar Finca
                 </button>
+                <div className="search-container">
+
+                     {/* icono de buscar */}
+                <svg x="0px" y="0px" viewBox="0 0 60 60" width="26" height="26" >
+                <path class="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
+                c0,9.8,8,17.8,17.8,17.8c4.4,0,8.4-1.6,11.5-4.2l16.1,16.1L54.8,51.4z M10.2,23.8C10.2,15.6,16.9,9,25.1,
+                9c8.2,0,14.8,6.7,14.8,14.8c0,8.2-6.7,14.8-14.8,14.8C16.9,38.7,10.2,32,10.2,23.8z">
+                </path>
+                </svg>
+
+                   
+                    <input
+                        type="text"
+                        placeholder="Buscar por nombre"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+
+                </div>
 
                 <table className="tableprincipal">
                     <thead>
@@ -147,29 +168,34 @@ const FincaView = () => {
                             <th>opciones</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        {fincas.map((task) => (
-                            <tr key={task.id} className="border-t">
-                                <td>{task.id}</td>
-                                <td>{task.fecha_creacion}</td>
-                                <td>{task.nombre}</td>
-                                <td>{task.longitud}</td>
-                                <td>{task.latitud}</td>
-                                <td>{task.nombre_usuario}</td>
-                                <td>{task.nombre_municipio}</td>
-                                <td>{task.estado === 1 ? "Activo" : "Desactivado"}</td>
-                                <td>{task.noombre_vereda}</td>
-                                <td>
-                                    <button
-                                        type="button"
-                                        className="btn-primary"
-                                        onClick={() => openEditarModal(task.id)}
-                                    >
-                                        Modificar
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                        {fincas
+                            .filter((task) =>
+                                task.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+                            )
+                            .map((task) => (
+                                <tr key={task.id} className="border-t">
+                                    <td>{task.id}</td>
+                                    <td>{task.fecha_creacion}</td>
+                                    <td>{task.nombre}</td>
+                                    <td>{task.longitud}</td>
+                                    <td>{task.latitud}</td>
+                                    <td>{task.nombre_usuario}</td>
+                                    <td>{task.nombre_municipio}</td>
+                                    <td>{task.estado === 1 ? "Activo" : "Desactivado"}</td>
+                                    <td>{task.noombre_vereda}</td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="btn-primary"
+                                            onClick={() => openEditarModal(task.id)}
+                                        >
+                                            Modificar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>
@@ -309,7 +335,7 @@ const FincaView = () => {
                         }}
                         method="post"
                     >
-                        
+
                         <div className="div-input">
                             <input type="date" id="fecha_creacion" name="fecha_creacion" ref={fecha_creacion} placeholder="" />
 
