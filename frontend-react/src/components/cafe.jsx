@@ -129,34 +129,34 @@ const Cafe = () => {
                 <thead>
                     <tr className="bg-gray-200">
                         <th>id</th>
-                        <th>estado</th>
                         <th>lote</th>
                         <th>variedad</th>
                         <th>opciones</th>
-
+                        <th>estado</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    {cafes.map((task) => (
-                        <tr key={task.id} className="border-t">
-                            <td>{task.id}</td>
-                            <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                            <td>{task.numero_lote}</td>
-                            <td>{task.nombre_variedad}</td>
+                    {cafes
+                        .map((task) => (
+                            <tr key={task.id} className="border-t">
+                                <td>{task.id}</td>
+                                <td>{task.numero_lote}</td>
+                                <td>{task.nombre_variedad}</td>
+                                <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
 
-                            <td>
-                                <button
-                                    type="button"
-                                    className="btn-primary"
-                                    onClick={() => openModal(task.id)}
-                                >
-                                    Modificar
-                                </button>
-                            </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        className="btn-primary"
+                                        onClick={() => openModal(task.id)}
+                                    >
+                                        Modificar
+                                    </button>
+                                </td>
 
-                        </tr>
-                    ))}
+                            </tr>
+                        ))}
                 </tbody>
             </table>
         </div>

@@ -32,10 +32,6 @@ function App(){
       <Route path='/' element={<Dashboard/>}>
         <Route path='/Resultado' element={<Resultado/>}/>
         <Route path='/finca/listar' element={<Finca/>}/>
-        {/* <Route path='/finca/registrar' element={<Registrar/>}/> */}
-        {/* <Route path='/finca/editar/:id' element={<EditarFinca/>}/> */}
-        {/* <Route path='/lote/listar' element={<Listarlote/>}/> */}
-        {/* <Route path='/lote/registrar' element={<Registrarlote/>}/> */}
         <Route path='/finca' element={<Finca/>}/>
         <Route path='/lote' element={<Lote/>}/>
         <Route path='/analisis/registrar' element={<RegistrarAnalisis/>}/>
@@ -45,15 +41,6 @@ function App(){
         <Route path='/usuario'  element={<Registrarusuarios/>}/>
         <Route path='/usuario/listar' element={<ListarUsuarios/>}/>
         <Route path='/usuario/actualizar/:id' element={<EditarUsuario/>}/>
-        {/* <Route path='/municipio/listar' element={<ListarMunicipio/>}/> */}
-        {/* <Route path='/municipio/registrar' element={<RegistrarMunicipio/>}/> */}
-        {/* <Route path='/municipio/editar/:id' element={<Editarmunicipio/>}/> */}
-        {/* <Route path='/variedad/listar' element={<ListarVariedad/>}/> */}
-        {/* <Route path='/variedad/registrar' element={<Registrarvariedad/>}/> */}
-        {/* <Route path='/variedad/editar/:id' element={<Editarvariedad/>}/> */}
-        {/* <Route path='/cafe/listar' element={<Listarcafe/>}/> */}
-        {/* <Route path='/cafe/editar/:id' element={<Editarcafe/>}/> */}
-        {/* <Route path='/cafe/registrar' element={<RegistrarCafe/>}/> */}
         <Route path='/municipio' element={<Municipio/>}/>
         <Route path='/variedad' element={<Variedad/>}/>
         <Route path='/cafe' element={<Cafe/>}/>
