@@ -18,6 +18,7 @@ import ListarUsuarios from './components/listarusuario'
 import RegistrarAnalisis from './components/Analisiss'
 import ListarAnalisis from './components/ListarAnalisis'
 import EditarAnalisis from './components/EditarAnalisis'
+import Grafica from './components/Grafica'
 
 
 
@@ -47,6 +48,7 @@ function App(){
         <Route path='/listar/muestra' element={<ListarMuestra/>}/>
         {/* <Route path='/ModalMuestra/:id' element={<ModalMuestra/>}/> */}
         <Route path='/editar/muestra/:id' element={<EditarMestra/>}/>
+        <Route path='/grafica' element={<Grafica/>}/>
 
 
         </Route>
