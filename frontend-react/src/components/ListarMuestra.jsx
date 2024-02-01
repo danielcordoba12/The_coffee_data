@@ -1,10 +1,8 @@
   import React, { useEffect, useRef, useState } from "react"
   import '../style/RegistrarMuestra.css';
-  import Api from "../services/api";
   import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
   import {faX }  from'@fortawesome/free-solid-svg-icons'
   // import '../style/RegistrarMuestra.css'
-  import { Link, json } from "react-router-dom";  
   import Sweet from "../helpers/Sweet";
 
 
@@ -588,15 +586,9 @@
                 </tbody>
         </table>
       </div>
-      {console.log(muestra + "Esta es lamuestra")}
 
 
       </div>
-  {/* //////////Buscar  Muestra/////////////////////////// */}
-
-
-
-
 
       </div>
 

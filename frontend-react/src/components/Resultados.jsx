@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import '../style/RegistrarMuestra.css'
 import Sweet from "../helpers/Sweet";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faX }  from'@fortawesome/free-solid-svg-icons'
+
 
 
 
@@ -176,8 +179,6 @@ function Resultado() {
       filas.push(
         <div className="columna" key={i}>
           {fila.map((dato, j) => (
-            // <div className={`main-content-registrar ${showModal1 ? 'show' :  ''}`}   id="modalInfo1 "   >
-              // <div className="columna">
               <div className="container-input" key={dato.variables_id}>
                 <input
                   type="text"
@@ -194,8 +195,7 @@ function Resultado() {
           ))}
         </div>
       );
-      // console.log("este es el resultado seleccionado"+ resultado)
-    // console.log("este es dato" +JSON.stringify({datos}));
+
 
 
     }
@@ -405,9 +405,15 @@ function Resultado() {
       <h1 className="title-registrar-muestras">Registrar Resultado</h1>
       <form className="formulario-muestra" method="post">
         {generarInputs()}
-        <button className="button" type="button" onClick={GuardarResultados}>
-          Enviar
-        </button>
+        <div className="buttons">
+          <button className="button button-aceptar" type="button" onClick={GuardarResultados}>
+            Enviar
+          </button>
+          
+          <button className="button button-cancel" type="button" onClick={hideAllModals}>
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
 
@@ -419,9 +425,15 @@ function Resultado() {
       <h1 className="title-registrar-muestras">Actualizar Resultado</h1>
       <form className="formulario-muestra" method="post">
         {generarInputs2()}
-        <button className="button" type="button" onClick={() => actualizarResultado(resultadoSellecionado[3])}>
-          Actualizar
-        </button>
+        <div className="buttons">
+          <button className="button button-aceptar" type="button" onClick={() => actualizarResultado(resultadoSellecionado[3])}>
+            Actualizar
+          </button>
+          
+          <button className="button button-cancel" type="button" onClick={hideAllModals}>
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
 
@@ -429,11 +441,19 @@ function Resultado() {
 <div>
 
 <div className={`main-content-registrar ${showModal3 ? 'show' :  ''}`} id="modalInfo3" showModal={showModal3}>
-
+      <div className="container-tittle">
       <h1 className="title-registrar-muestras">Visualizar Muestra</h1>
-      <form className="formulario-muestra" method="post">
-        {generarInputs3()}
 
+      </div>
+      <form className="formulario-muestra" method="post">
+
+        {generarInputs3()}
+        <div className="buttons">          
+          <button className="button button-cancel" type="button" onClick={hideAllModals}>
+            Cancelar
+          </button>
+        </div>
+        
       </form>
     </div>
 <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" />

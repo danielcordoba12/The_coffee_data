@@ -39,8 +39,9 @@
 
 
 .formulario-muestra  {
+  background-color: red;
   backdrop-filter: blur(10px);
-  background-color: #fff;
+  /* background-color: #fff; */ 
   padding: 15px;
   border-radius: 0px 0px 8px 8px;
   display: flex;
@@ -288,13 +289,47 @@ label {
   top: 12px ;
   right: 12px;
   cursor: pointer;
-  width: 30px; /* Ajusta el ancho del botón según tus necesidades */
-  height: 30px; /* Ajusta la altura del botón según tus necesidades */
+  width: 30px; 
+  height: 30px; 
   border-radius: 50%; 
-  background-color: red; /* Cambia el color de fondo según tus necesidades */
+  background-color: red; 
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
   color: white;
 }
+/* /////////////////////////////RESULTADOS/////////////////////////////// */
+/* Estilo para el contenedor de los botones */
+.buttons {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  /* transform: translateY(50%); */
+  margin: 20px; /* Ajusta el margen según sea necesario */
+}
+
+/* Estilo para los botones */
+.button {
+  margin-left: 10px; /* Espacio entre los botones */
+  padding: 10px 20px; /* Ajusta el espaciado interno de los botones según sea necesario */
+  background-color: #3498db; /* Color de fondo del botón */
+  color: white; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer;
+}
+.button-cancel{
+  background-color: red;
+}
+.button-cancel:hover{
+  background-color: rgb(189, 6, 6);
+}
+.button-aceptar:hover{
+  background-color: #187abb; 
+
+}
+
+
+
+
