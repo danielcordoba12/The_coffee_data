@@ -10,6 +10,8 @@ const FincaView = () => {
     const [modalFinca, setModalFinca] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [municipios, setMunicipios] = useState([]);
+    const [selectedMunicipio, setSelectedMunicipio] = useState("");
 
     const fecha_creacion = useRef();
     const nombre = useRef();
@@ -20,6 +22,20 @@ const FincaView = () => {
     const noombre_vereda = useRef();
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchMunicipios = async () => {
+            try {
+                const response = await Api.get("municipio/listar");
+                setMunicipios(response.data);
+                console.log("Municipios cargados:", response.data);
+            } catch (error) {
+                console.error("Error fetching municipios:", error);
+            }
+        };
+        fetchMunicipios();
+    }, []);
+
 
     useEffect(() => {
         const buscarFincas = async () => {
@@ -135,15 +151,15 @@ const FincaView = () => {
                 </button>
                 <div className="search-container">
 
-                     {/* icono de buscar */}
-                <svg x="0px" y="0px" viewBox="0 0 60 60" width="26" height="26" >
-                <path class="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
+                    {/* icono de buscar */}
+                    <svg x="0px" y="0px" viewBox="0 0 60 60" width="26" height="26" >
+                        <path class="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
                 c0,9.8,8,17.8,17.8,17.8c4.4,0,8.4-1.6,11.5-4.2l16.1,16.1L54.8,51.4z M10.2,23.8C10.2,15.6,16.9,9,25.1,
                 9c8.2,0,14.8,6.7,14.8,14.8c0,8.2-6.7,14.8-14.8,14.8C16.9,38.7,10.2,32,10.2,23.8z">
-                </path>
-                </svg>
+                        </path>
+                    </svg>
 
-                   
+
                     <input
                         type="text"
                         placeholder="Buscar por nombre"
@@ -329,7 +345,7 @@ const FincaView = () => {
                                 longitud: longitud.current.value,
                                 latitud: latitud.current.value,
                                 usuarios_id: usuarios_id.current.value,
-                                municipios_id: municipios_id.current.value,
+                                municipios_id: selectedMunicipio,  // Utilizar el municipio seleccionado
                                 noombre_vereda: noombre_vereda.current.value,
                             });
                         }}
@@ -358,9 +374,25 @@ const FincaView = () => {
                             <label for="usuarios_id">usuario</label>
                         </div>
                         <div className="div-input">
-                            <input type="number" id="municipios_id " name="municipios_id " ref={municipios_id} placeholder="" />
-                            <label for="municipios_id">municipio</label>
+                            
+                            <select
+                                id="municipios_id"
+                                name="municipios_id"
+                                value={selectedMunicipio}
+                                onChange={(e) => {
+                                    console.log("Municipio seleccionado:", e.target.value);
+                                    setSelectedMunicipio(e.target.value);
+                                }}
+                            >
+                                <option value="" disabled>Seleccione un municipio</option>
+                                {municipios.map((municipio) => (
+                                    <option key={municipio.id} value={municipio.id}>
+                                        {municipio.nombre}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
+
                         <div className="div-input">
                             <input type="text" id="noombre_vereda" name="noombre_vereda" ref={noombre_vereda} placeholder="" />
                             <label for="noombre_vereda">nombre vereda</label>
