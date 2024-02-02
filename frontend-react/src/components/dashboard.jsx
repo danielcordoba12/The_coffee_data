@@ -113,6 +113,17 @@ function Dashboard() {
                                     <p>Muestras</p>
                                 </Link>
                             </li>
+                            <li>
+                                <Link to={"/resultado"}>
+                                    <FontAwesomeIcon icon={faVials}  className="icon"/>
+                                    <p>Resultado</p>
+                                </Link>
+                            </li><li>
+                                <Link to={"/grafica"}>
+                                    <FontAwesomeIcon icon={faVials}  className="icon"/>
+                                    <p>Grafica</p>
+                                </Link>
+                            </li>
                         
                             <li className="li-dasboard">
                                 <Link to={"/municipio"} style={{ textDecoration: 'none', color: 'black !important' }}>

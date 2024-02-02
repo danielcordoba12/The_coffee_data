@@ -31,7 +31,7 @@ function App(){
     <>
       <Routes>
       <Route path='/' element={<Dashboard/>}>
-        <Route path='/Resultado' element={<Resultado/>}/>
+        <Route path='/resultado' element={<Resultado/>}/>
         <Route path='/finca/listar' element={<Finca/>}/>
         <Route path='/finca' element={<Finca/>}/>
         <Route path='/lote' element={<Lote/>}/>

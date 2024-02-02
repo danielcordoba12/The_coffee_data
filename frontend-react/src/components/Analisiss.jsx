@@ -8,7 +8,7 @@ const RegistrarAnalisis= () => {
     const tipo_analisis_id= useRef();
     const muestras_id = useRef();
     const usuarios_id =useRef();
-   
+
 
     const navigate = useNavigate()
 

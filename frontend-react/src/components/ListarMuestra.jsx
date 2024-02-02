@@ -545,10 +545,10 @@
                       <td>{task.tipo_molienda}</td>
                       <td>{task.estado}</td>
                       <td> 
-                      {task.estado === 1 ? (
+                      {task.estado === 0 ? (
                         <button
                         className="btn-tertiary"
-                        onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                        onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
                       >
                         Activar
                       </button>
@@ -556,7 +556,7 @@
                         ) : (
                           <button
                           className="btn-secondary"
-                          onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
+                          onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
                         >
                           Desactivar
                         </button>
