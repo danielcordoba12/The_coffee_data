@@ -73,13 +73,33 @@ import Sweet from "../helpers/Sweet";
         };
     
         try {
-          await Api.post("finca/registrar", fincaData, headers);
-          Sweet.registroExitoso();
-          closeRegistrarModal();
+          const data = await Api.post("finca/registrar", fincaData, headers);
+          if(data.data.status == false){
+            let keys = Object.keys(data.data.errors)
+            let h6Error = document.querySelectorAll(".h6-error");
+            for(let x = 0 ; x < h6Error.length; x++){
+                h6Error[x].remove()
+            }
+            console.log(data.data)
+            for(let x = 0 ; x < keys.length; x++){
+                let h6 = document.createElement("h6")
+                h6.innerHTML = data.data.errors[keys[x]]
+                h6.classList.add("h6-error")
+                if(document.getElementById(keys[x])){
+                    let parent = document.getElementById(keys[x]).parentNode
+                    parent.appendChild(h6)
+                }
+                
+            }
+          }
+          console.log(data.data)
+          /* Sweet.registroExitoso();
+          closeRegistrarModal(); */
           // Recargar la lista de fincas después del registro
           const response = await Api.get("finca/listar");
           setFincas(response.data);
-          location.href = "/finca"
+     /*      location.href = "/finca" */
+     
           
         } catch (error) {
           console.error("Error al registrar la finca:", error);
