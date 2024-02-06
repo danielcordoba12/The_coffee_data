@@ -34,10 +34,24 @@
     background-color: #2980b9;
     color: rgb(255, 255, 255);
   }
-  
+
+
+  /*  estilos del buscador  */
+
+  .box-search{
+    display: flex;
+    float: right;
+
+  }
+  .search{
+    background-color: black;
+    color: #968c8c;
+    display: flex;
+    margin-top: 10px;
+  }
+
 /* 
   //estilos fincas registrar// */
-
 
 .tabla2 {
     backdrop-filter: blur(10px);
