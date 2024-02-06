@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import Api from "../services/api";
 import { Link } from "react-router-dom";
 import '../style/listana.css'
+import Swal from "sweetalert2";
 
 
 const ListarAnalisis = () => {
@@ -21,6 +22,10 @@ const ListarAnalisis = () => {
     return (<>
         <img src="../../public/img/fondo.png" alt="" className="fondo2" />
         <div className="tablalistar">
+
+            <div className="box-search">
+
+           <input className="search" type="text" /></div>
             <h1 className="titu">Listar Análisis</h1>
             <br />
             <table className="tableprincipal">
