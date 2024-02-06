@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Api from "../services/api";
 import { useNavigate } from "react-router-dom";
 import '../style/analisis.css'
+import Sweet from "../helpers/Sweet";
 
 const RegistrarAnalisis= () => {
     const calidad = useRef();

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Api from "../services/api";
+import Sweet from "../helpers/Sweet";
 const EditarAnalisis = () => {
 
     const { id } = useParams();
@@ -23,20 +24,34 @@ const EditarAnalisis = () => {
     const handleEditUser1 = async () => {
         try {
             await Api.put(`/analisis/update/${id}`, analisis);
+            Sweet.actualizacionExitosa();
+            // Lista de analisis//
+            const response = await Api.get("/analisis/listar");
             navigate("/analisis/listar")
         } catch (error) {
             console.error('Error editando el analisis: ', error);
         }
-    }
+    };
     const handleEditUser2 = async () => {
-        try {
-            await Api.patch(`/analisis/desactivar/${id}`, analisis);
-            navigate("/analisis/listar")
-        } catch (error) {
-            console.error('Error desactivando el analisis: ', error);
+
+        const result = await Sweet.confimarDeshabilitar({});
+        if (result.isConfirmed){
+            try {
+                await Api.patch(`/analisis/desactivar/${id}`, analisis);
+               
+                navigate("/analisis/listar")
+               
+            } catch (error) {
+                console.error('Error desactivando el analisis: ', error);
+            }
+
         }
-    }
+        Sweet.deshabilitacionExitosa();
+      
+    };
     const handleEditUser3 = async () => {
+        const result = await Sweet.confimarHabilitar({});
+        
         try {
             await Api.patch(`/analisis/activar/${id}`, analisis);
             navigate("/analisis/listar")
