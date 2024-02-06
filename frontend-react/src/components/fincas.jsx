@@ -115,26 +115,7 @@ const FincaView = () => {
         setRegistrarModalOpen(false);
     };
 
-    const handleRegistrar = async (data) => {
-        const headers = {
-            headers: {
-                token: "xd",
-            },
-        };
-
-        try {
-            await Api.post("finca/registrar", data, headers);
-            Sweet.registroExitoso();
-            closeRegistrarModal();
-            // Recargar la lista de fincas después del registro
-            const response = await Api.get("finca/listar");
-            setFincas(response.data);
-        } catch (error) {
-            console.error("Error al registrar la finca:", error);
-        }
-    };
-
-
+    
     return (
         <>
             {modalFinca && <div className="overlay" onClick={closeEditarModal}></div>}
@@ -145,10 +126,9 @@ const FincaView = () => {
             <img src="../../public/img/fondo.png" alt="" className="fondo2" />
             <div className="tablalistar">
                 <h1 className="titu"> Listado de Fincas</h1>
-                {/* Botón para registrar finca */}
-                <button className="btn-registrar" onClick={openRegistrarModal}>
-                    Registrar Finca
-                </button>
+        <br />
+        <br />
+             
                 <div className="search-container">
 
                     {/* icono de buscar */}
@@ -325,93 +305,8 @@ const FincaView = () => {
                 </div>
             )}
 
-            {isRegistrarModalOpen && (
-                <div className="overlay" onClick={closeRegistrarModal}></div>
-            )}
-
-            {isRegistrarModalOpen && (
-                <div className="tabla2">
-                    <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-                        Registrar Finca
-                    </h1>
-
-                    <form
-                        className="contenido-regi"
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            handleRegistrar({
-                                fecha_creacion: fecha_creacion.current.value,
-                                nombre: nombre.current.value,
-                                longitud: longitud.current.value,
-                                latitud: latitud.current.value,
-                                usuarios_id: usuarios_id.current.value,
-                                municipios_id: selectedMunicipio,  // Utilizar el municipio seleccionado
-                                noombre_vereda: noombre_vereda.current.value,
-                            });
-                        }}
-                        method="post"
-                    >
-
-                        <div className="div-input">
-                            <input type="date" id="fecha_creacion" name="fecha_creacion" ref={fecha_creacion} placeholder="" />
-
-                        </div>
-
-                        <div className="div-input">
-                            <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
-                            <label for="nombre">Nombre</label>
-                        </div>
-                        <div className="div-input">
-                            <input type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
-                            <label for="longitud">Longitud</label>
-                        </div>
-                        <div className="div-input">
-                            <input type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
-                            <label for="latitud">Latitud</label>
-                        </div>
-                        <div className="div-input">
-                            <input type="number" id="usuarios_id " name="usuarios_id " ref={usuarios_id} placeholder="" />
-                            <label for="usuarios_id">usuario</label>
-                        </div>
-                        <div className="div-input">
-                            
-                            <select
-                                id="municipios_id"
-                                name="municipios_id"
-                                value={selectedMunicipio}
-                                onChange={(e) => {
-                                    console.log("Municipio seleccionado:", e.target.value);
-                                    setSelectedMunicipio(e.target.value);
-                                }}
-                            >
-                                <option value="" disabled>Seleccione un municipio</option>
-                                {municipios.map((municipio) => (
-                                    <option key={municipio.id} value={municipio.id}>
-                                        {municipio.nombre}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className="div-input">
-                            <input type="text" id="noombre_vereda" name="noombre_vereda" ref={noombre_vereda} placeholder="" />
-                            <label for="noombre_vereda">nombre vereda</label>
-                        </div>
-                        <button
-                            className="btn-blue"
-                            type="submit"
-                        >
-                            Registrar finca
-                        </button>
-                        <button
-                            className="close-modal-btn"
-                            onClick={closeRegistrarModal}
-                        >
-                            Cerrar
-                        </button>
-                    </form>
-                </div>
-            )}
+           
+            
         </>
     );
 };

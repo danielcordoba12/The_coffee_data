@@ -3,16 +3,20 @@ import Api from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import '../style/usuarios.css';
+import Sweet from "../helpers/Sweet";
+
 
 
     const ListarUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
+    const [idUsuario, setIdUsuario] = useState();
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
     const [fincas, setFincas] = useState([]);
     const [municipios, setMunicipios] = useState([]);
     const [selectedMunicipio, setSelectedMunicipio] = useState("");
 
-    const fecha_creacion = useRef();
+    
+    const usuarios_id = useRef();
     const nombre = useRef();
     const longitud = useRef();
     const latitud = useRef();
@@ -53,25 +57,35 @@ import '../style/usuarios.css';
     const closeRegistrarModal = () => {
         setRegistrarModalOpen(false);
     };
+   
     const handleRegistrar = async (data) => {
-        const headers = {
-            headers: {
-                token: "xd",
-            },
+        // Obtener el ID del usuario actualmente autenticado o ajustar según tu lógica
+      
+    
+        const fincaData = {
+          ...data
         };
-
+    
+        const headers = {
+          headers: {
+            token: "xd",
+          },
+        };
+    
         try {
-            await Api.post("finca/registrar", data, headers);
-            Sweet.registroExitoso();
-            closeRegistrarModal();
-            // Recargar la lista de fincas después del registro
-            const response = await Api.get("finca/listar");
-            setFincas(response.data);
+          await Api.post("finca/registrar", fincaData, headers);
+          Sweet.registroExitoso();
+          closeRegistrarModal();
+          // Recargar la lista de fincas después del registro
+          const response = await Api.get("finca/listar");
+          setFincas(response.data);
+          location.href = "/finca"
+          
         } catch (error) {
-            console.error("Error al registrar la finca:", error);
+          console.error("Error al registrar la finca:", error);
         }
-    };
-
+      };
+    
 
     return (
         <>
@@ -111,7 +125,7 @@ import '../style/usuarios.css';
                                             actualizar
                                         </button>
                                     </Link>
-                                    <button className="btn-registrar" onClick={openRegistrarModal}>
+                                    <button className="btn-registrar" onClick={()=>{setIdUsuario(usuario.id); openRegistrarModal()}}>
                                         Registrar Finca
                                     </button>
 
@@ -136,34 +150,35 @@ import '../style/usuarios.css';
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleRegistrar({
-                                fecha_creacion: fecha_creacion.current.value,
+                                
                                 nombre: nombre.current.value,
                                 longitud: longitud.current.value,
                                 latitud: latitud.current.value,
+                                usuarios_id: usuarios_id.current.value,
                                 municipios_id: selectedMunicipio,  // Utilizar el municipio seleccionado
-                                noombre_vereda: noombre_vereda.current.value,
+                                noombre_vereda: noombre_vereda.current.value
                             });
                         }}
                         method="post"
                     >
 
-                        <div className="div-input">
-                            <input type="date" id="fecha_creacion" name="fecha_creacion" ref={fecha_creacion} placeholder="" />
-
-                        </div>
+                       
 
                         <div className="div-input">
                             <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
-                            <label for="nombre">Nombre</label>
+                            <label htmlFor="nombre">Nombre</label>
                         </div>
                         <div className="div-input">
                             <input type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
-                            <label for="longitud">Longitud</label>
+                            <label htmlFor="longitud">Longitud</label>
                         </div>
                         <div className="div-input">
-                            <input type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
-                            <label for="latitud">Latitud</label>
+                            <input  type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
+                            <label htmlFor="latitud">Latitud</label>
                         </div>
+                     
+                            <input  value={idUsuario} type="hidden" id="usuarios_id" name="usuarios_id" ref={usuarios_id} placeholder="" />
+                    
                         <div className="div-input">
                             
                             <select
@@ -186,7 +201,7 @@ import '../style/usuarios.css';
 
                         <div className="div-input">
                             <input type="text" id="noombre_vereda" name="noombre_vereda" ref={noombre_vereda} placeholder="" />
-                            <label for="noombre_vereda">nombre vereda</label>
+                            <label htmlFor="noombre_vereda">nombre vereda</label>
                         </div>
                         <button
                             className="btn-blue"

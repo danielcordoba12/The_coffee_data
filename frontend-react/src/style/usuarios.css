@@ -125,3 +125,24 @@
   .div-input{
     position: relative;
   }
+
+  .btn-registrar {
+
+    display: inline-block;
+    width: 150px;
+    padding: 10px 20px;
+    background-color: rgb(130, 194, 46);
+    /* Color de fondo */
+    color: white;
+    /* Color del texto */
+    text-decoration: none;
+    /* Quitar subrayado del enlace */
+    border: none;
+    /* Quitar borde */
+    border-radius: 4px;
+    /* Añadir esquinas redondeadas */
+    cursor: pointer;
+    /* Cambiar cursor al pasar por encima */
+    font-size: 16px;
+    /* Tamaño del texto */
+  }

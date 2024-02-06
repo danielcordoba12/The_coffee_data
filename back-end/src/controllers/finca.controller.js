@@ -7,7 +7,7 @@ import { validationResult } from 'express-validator';
 export const listarFinca = async (req, res) => {
   try {
 
-    const [result] = await pool.query("SELECT f.id, f.fecha_creacion, f.nombre, f.longitud, f.latitud, u.nombre as nombre_usuario, m.nombre as nombre_municipio, f.estado, f.noombre_vereda  from fincas f join usuarios u on u.id = f.usuarios_id join municipios m on m.id = f.municipios_id order by f.estado desc");
+    const [result] = await pool.query("SELECT f.id, f.fecha_creacion, f.nombre, f.longitud, f.latitud, u.nombre as nombre_usuario, m.nombre as nombre_municipio, f.estado, f.noombre_vereda  from fincas f join usuarios u on u.id = f.usuarios_id join municipios m on m.id = f.municipios_id order by f.estado desc, f.fecha_creacion DESC");
     res.status(200).json(result);
 
 
@@ -33,15 +33,16 @@ export const buscarFinca = async (req, res) => {
 export const guardarFinca = async (req, res) => {
 
   try {
+    console.log(req.body)
     let error1 = validationResult(req);
     if (!error1.isEmpty()) {
       return res.status(400).json(error1);
     }
 
-    let { fecha_creacion, nombre, longitud, latitud, usuarios_id, municipios_id, noombre_vereda } = req.body;
+    let {  nombre, longitud, latitud, usuarios_id, municipios_id, noombre_vereda } = req.body;
 
-    let sql = `insert into fincas (fecha_creacion	,nombre,longitud,latitud,usuarios_id,municipios_id,noombre_vereda)
-            values ('${fecha_creacion}','${nombre}','${longitud}','${latitud}','${usuarios_id}','${municipios_id}','${noombre_vereda}')`;
+    let sql = `insert into fincas (nombre,longitud,latitud,usuarios_id,municipios_id,noombre_vereda)
+            values ('${nombre}','${longitud}','${latitud}','${usuarios_id}','${municipios_id}','${noombre_vereda}')`;
 
     const [rows] = await pool.query(sql);
 
@@ -55,7 +56,7 @@ export const guardarFinca = async (req, res) => {
     else {
       
       return res.status(401).json({
-        "status": 401,
+        "status": 200,
         "message": "no se registro con exito la finca"
       }
       );
@@ -64,7 +65,7 @@ export const guardarFinca = async (req, res) => {
 
   } catch (e) {
     return res.status(500).json({
-      "status": 500,
+      "status": 200,
       "message": "error en el servidor :" + e
     }
     );
@@ -83,9 +84,9 @@ export const actualizarFinca = async (req, res) => {
       return res.status(400).json(error1);
     }
     let id = req.params.id;
-    let { fecha_creacion, nombre, longitud, latitud, usuarios_id, municipios_id, noombre_vereda } = req.body;
+    let { nombre, longitud, latitud, usuarios_id, municipios_id, noombre_vereda } = req.body;
 
-    let sql = `update fincas set fecha_creacion='${fecha_creacion}',nombre='${nombre}',longitud='${longitud}',latitud='${latitud}',usuarios_id='${usuarios_id}',municipios_id='${municipios_id}',noombre_vereda='${noombre_vereda}'
+    let sql = `update fincas set nombre='${nombre}',longitud='${longitud}',latitud='${latitud}',usuarios_id='${usuarios_id}',municipios_id='${municipios_id}',noombre_vereda='${noombre_vereda}'
             where id=${id}`;
 
     const [rows] = await pool.query(sql);

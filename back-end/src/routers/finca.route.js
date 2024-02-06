@@ -9,7 +9,7 @@ const fincaRoute = Router();
 
 fincaRoute.get('/listar', listarFinca);
 fincaRoute.get('/buscar/:id', buscarFinca);
-fincaRoute.post('/registrar/',  guardarFinca,validarFinca);
+fincaRoute.post('/registrar',  guardarFinca);
 fincaRoute.put('/actualizar/:id', actualizarFinca);
 fincaRoute.patch('/desactivar/:id', desactivarFinca);
 fincaRoute.patch('/activar/:id', ActivarFinca);
