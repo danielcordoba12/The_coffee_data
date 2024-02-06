@@ -10,7 +10,7 @@
     const[muestra, setMuestra] = useState([]);
     const [showModal,setShowModal] = useState(false);
     // const [showModal2, setShowModal2] = useState(false);
-    const [showModal1, setShowModal1] = useState(false);
+    const [showModal1, setShowModal1] = useState(false);  
     const [showModal2, setShowModal2] = useState(false);
     const [showModal3, setShowModal3] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);

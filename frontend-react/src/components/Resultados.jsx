@@ -336,7 +336,7 @@ function Resultado() {
       console.error("Error" + e);
     }
   }
-  // listarResultado();
+
 
   function buscarResultado(id) {
     fetch(`http://localhost:4000/resultado/buscar/${id}`,{

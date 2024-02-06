@@ -1,13 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import ReactEchartsCore from 'echarts-for-react';
 import * as echarts from 'echarts';
-import '../style/grafica.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { ButtonGroup, ToggleButton } from 'react-bootstrap';
+import '../style/grafica.css';
+
 
 function Grafica() {
+
+  const [showModal1, setShowModal1] = useState(false);
+  const [showContainer, setShowContainer] = useState(false);
+  const [resultado, setResultado] = useState([]);
+
+
+
+  const toggleModal = () => {
+      setShowModal1(!showModal1);
+      setShowContainer(!showModal1)
+  };
+  // const hideAllModals = () => {
+  //   setShowModal1(false);
+  // };  
+
+
+
+  async function listarResultado(){
+    try{
+
+      const response = await fetch('http://localhost:4000/resultado/listar',{
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+      const data = await response.json();
+      setResultado(data)
+      // return data
+    }catch(e){
+      console.error("Error" + e);
+    }
+  }
+
+  useEffect(()=>{
+    listarResultado()
+  },[]);
+
     // Configura tus opciones de gráfico
-   const option = {
+  const option = {
   title: {
-    text: 'Stacked Line'
+    text: 'Resultados'
+
   },
   tooltip: {
     trigger: 'axis'
@@ -19,7 +61,7 @@ function Grafica() {
     left: '3%',
     right: '4%',
     bottom: '8%',
-    containLabel: true
+    containLabel: false
   },
   toolbox: {
     feature: {
@@ -38,37 +80,37 @@ function Grafica() {
     {
         name: 'Email',
         type: 'line',
-        stack: 'Total',
+        stack: 'a',
         data: [120, 132, 101, 134, 90, 230, 210]
     },
     {
         name: 'Union Ads',
         type: 'line',
-        stack: 'Total',
+        stack: 'b',
         data: [220, 182, 191, 234, 290, 330, 310]
     },
     {
         name: 'Video Ads',
         type: 'line',
-        stack: 'Total',
-        data: [150, 232, 201, 154, 190, 330, 410]
+        stack: 'c',
+        data: [150, 232, 201, 154, 190, 330,310]
     },
     {
         name: 'Direct',
         type: 'line',
-        stack: 'Total',
+        stack: 'd',
         data: [320, 332, 301, 334, 390, 330, 320]
     },
     {
         name: 'Search Engine',
         type: 'line',
-        stack: 'Total',
-        data: [820, 932, 901, 934, 1290, 1330, 1320]
+        stack: 'e',
+        data: [320, 332, 301, 334, 390, 330, 320]
     }
     
     ],
     textStyle: {
-        color: 'white',  // Cambia el color del texto
+        color: 'white',  // Cambia el color del texto 
     },
 };
 
@@ -76,7 +118,12 @@ function Grafica() {
         <>        
         <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" />
 
-        <div className="container"> {/* Aplica la clase "bg-blur" para el efecto */}
+
+        <button className="btn-reg-mue" onClick={() => toggleModal(1)}>
+          Graficas resultado
+        </button>
+        <div className={`container ${showContainer ? 'show' : ''}`}>
+      
         <ReactEchartsCore
             echarts={echarts}
             option={option}
@@ -85,10 +132,63 @@ function Grafica() {
             style={{ height: '700px', width: '100%' }}
             theme="light"
         />
-    </div>
+        </div>
+
+
+    <div className={`main-content-graficar ${showModal1 ? 'show' : ''}`} id="modalInfo1">
+
+
+  <table className="table-muestra">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Muestra</th>
+        <th>Cantidad</th>
+        <th>analisis</th>
+        <th>Graficar</th>
+
+
+
+      </tr>
+    </thead>
+    <tbody>
+            {resultado.map((task,index) => (
+              <tr key={task.id}>
+                <td>{task.id}</td>
+                {/* <td>{formatDate(task. fecha_creacion)}</td> */}
+                <td>{task.muestra}</td>
+                <td>{task.valor}</td>
+                <td>{task.analisis_id}</td>
+                <td>
+                  <ToggleButtonExample index={index} />
+                </td>
+
+              </tr>
+            ))}
+          </tbody>
+  </table>
+</div>
     </>
 
     );
+}
+
+function ToggleButtonExample({ index }) {
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <ToggleButton
+    className="mb-2"
+    id="toggle-check"
+    type="checkbox"
+    variant="outline-dark"
+    checked={checked}
+    value="1"
+    onChange={(e) => setChecked(e.currentTarget.checked)}
+  >
+    Checked
+  </ToggleButton>
+  );
 }
 
 export default Grafica;
