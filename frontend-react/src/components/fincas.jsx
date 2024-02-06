@@ -6,14 +6,14 @@ import Sweet from "../helpers/Sweet";
 
 const FincaView = () => {
     const [fincas, setFincas] = useState([]);
-    const [selectedFincaId, setSelectedFincaId] = useState(null);
+    const [idFinca, setIdFinca] = useState([]);
     const [modalFinca, setModalFinca] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
+    const [lotes, setLotes] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [municipios, setMunicipios] = useState([]);
-    const [selectedMunicipio, setSelectedMunicipio] = useState("");
 
-    const fecha_creacion = useRef();
+    const fincas_id = useRef();
     const nombre = useRef();
     const longitud = useRef();
     const latitud = useRef();
@@ -115,7 +115,54 @@ const FincaView = () => {
         setRegistrarModalOpen(false);
     };
 
-    
+    const handleRegistrar = async (data) => {
+        // Obtener el ID del usuario actualmente autenticado o ajustar según tu lógica
+
+
+        const LoteData = {
+            ...data
+        };
+
+        const headers = {
+            headers: {
+                token: "xd",
+            },
+        };
+
+        try {
+            const data = await Api.post("lote/registrar", LoteData, headers);
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            }
+            console.log(data.data)
+            /* Sweet.registroExitoso();
+            closeRegistrarModal(); */
+            // Recargar la lista de fincas después del registro
+            const response = await Api.get("lote/listar");
+            setLotes(response.data);
+            location.href = "/lote"
+
+
+        } catch (error) {
+            console.error("Error al registrar la finca:", error);
+        }
+    };
+
     return (
         <>
             {modalFinca && <div className="overlay" onClick={closeEditarModal}></div>}
@@ -126,9 +173,9 @@ const FincaView = () => {
             <img src="../../public/img/fondo.png" alt="" className="fondo2" />
             <div className="tablalistar">
                 <h1 className="titu"> Listado de Fincas</h1>
-        <br />
-        <br />
-             
+                <br />
+                <br />
+
                 <div className="search-container">
 
                     {/* icono de buscar */}
@@ -148,6 +195,7 @@ const FincaView = () => {
                     />
 
                 </div>
+                
 
                 <table className="tableprincipal">
                     <thead>
@@ -188,6 +236,9 @@ const FincaView = () => {
                                             onClick={() => openEditarModal(task.id)}
                                         >
                                             Modificar
+                                        </button>
+                                        <button className="btn-registrar" onClick={() => { setIdFinca(task.id); openRegistrarModal() }}>
+                                            Registrar Lote
                                         </button>
                                     </td>
                                 </tr>
@@ -305,8 +356,58 @@ const FincaView = () => {
                 </div>
             )}
 
-           
-            
+            {isRegistrarModalOpen && (
+                <div className="overlay" onClick={closeRegistrarModal}></div>
+            )}
+            {isRegistrarModalOpen && (
+                <div className="tabla2">
+                    <h1 className="text-center font-bold underline text-3xl p-3 m-2">
+                        Registrar Lote
+                    </h1>
+
+                    <form
+                        className="contenido-regi"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleRegistrar({
+                                nombre: nombre.current.value,
+                                latitud: latitud.current.value,
+                                longitud: longitud.current.value,
+                                fincas_id: fincas_id.current.value,
+                            });
+                        }}
+                        method="post"
+                    >
+
+
+                        <div className="div-input">
+                            <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
+                            <label htmlFor="nombre">Nombre</label>
+                        </div>
+                        <div className="div-input">
+                            <input type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
+                            <label htmlFor="latitud">Latitud</label>
+                        </div>
+                        <div className="div-input">
+                            <input type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
+                            <label htmlFor="longitud">Longitud</label>
+                        </div>
+                        <input value={idFinca} type="hidden" id="fincas_id " name="fincas_id " ref={fincas_id} placeholder="" />
+
+                        <button className="btn-register-lote"
+                            type="submit">Registrar lote</button>
+                        <button
+                            className="close-modal-btn"
+                            onClick={closeRegistrarModal}
+                        >
+                            Cerrar
+                        </button>
+                    </form>
+                </div>
+            )}
+
+
+
         </>
     );
 };
