@@ -98,7 +98,7 @@ import Sweet from "../helpers/Sweet";
           // Recargar la lista de fincas después del registro
           const response = await Api.get("finca/listar");
           setFincas(response.data);
-     /*      location.href = "/finca" */
+          location.href = "/finca" 
      
           
         } catch (error) {
