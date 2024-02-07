@@ -108,8 +108,12 @@ export const guardarFinca = async (req, res) => {
           "value": req.body.nombre,
           "referencia": "El nombre"
         },
-        "apellido": {
-          "value": req.body.apelido
+        // "apellido": {
+        //   "value": req.body.apelido
+        // },
+        "noombre_vereda": {
+          "value": req.body.noombre_vereda,
+          "referencia":"El nombre de la vereda"
         }
       },
       "normal": {
@@ -155,15 +159,15 @@ export const guardarFinca = async (req, res) => {
 
     if (rows.affectedRows > 0) {
       return res.status(200).json({
-        "status": 200,
+        "status": true,
         "message": "se registro con exito la finca"
       }
       );
     }
     else {
 
-      return res.status(401).json({
-        "status": 200,
+      return res.status(200).json({
+        "status": false,
         "message": "no se registro con exito la finca"
       }
       );

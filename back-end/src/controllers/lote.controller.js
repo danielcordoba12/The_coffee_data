@@ -28,13 +28,116 @@ export const buscarlote= async (req,res)=>{
     }
 };
 
-export const guardarlote = async(req, res) => {
-    try{
-        let error1 = validationResult(req);
-        if (!error1.isEmpty()){
-            return res.status(400).json(error1);
-        }
 
+function validate(data) {
+    try {
+      let keys = Object.keys(data);
+      let errros = {};
+      let result = {};
+      for (let x = 0; x < keys.length; x++) {
+        let inputs = Object.keys(data[keys[x]])
+        for (let e = 0; e < inputs.length; e++) {
+          let referencia = "El campo"
+          if (data[keys[x]][inputs[e]]["referencia"]) {
+            referencia = data[keys[x]][inputs[e]]["referencia"];
+          }
+          if (keys[x] == "string") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+              errros[inputs[e]] = referencia + " no puede estar vacío"
+            } else if (!(/[a-zA-Z]+$/).test(data[keys[x]][inputs[e]]["value"])) {
+              errros[inputs[e]] = referencia + " debe ser un string"
+            } else {
+              result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+            }
+          }
+          if (keys[x] == "normal") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+              errros[inputs[e]] = referencia + " no puede estar vacío"
+            } else {
+              result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+            }
+          }
+          if (keys[x] == "select") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+              errros[inputs[e]] = "Debe seleccionar una opción para " + referencia
+            } else {
+              let keysOptions = data[keys[x]][inputs[e]]["opciones"]
+              for (let o = 0; o < keysOptions.length; o++) { 
+           
+  
+                if (keysOptions[o] == data[keys[x]][inputs[e]]["value"]) {
+                  result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
+                  break
+                } else if (o == keysOptions.length) {
+                  errros[inputs[e]] = +"Debe seleccionar una opción válida para el " + referencia
+                }
+              }
+            }
+  
+          }
+        }
+      }
+      console.log(errros,result)
+      if (Object.keys(errros).length > 0) {
+        return {
+          status: false,
+          errors: errros
+        }
+      } else {
+        return {
+          status: true,
+          data: result
+        }
+      }
+  
+    } catch (e) {
+      console.log(e)
+    }
+  }
+export const guardarlote = async(req, res) => {
+   
+    try {
+      let data = {
+        "string": {
+          "nombre": {
+            "value": req.body.nombre,
+            "referencia": "El nombre"
+          },
+          // "apellido": {
+          //   "value": req.body.apelido
+          // },
+        //   "noombre_vereda": {
+        //     "value": req.body.noombre_vereda,
+        //     "referencia":"El nombre de la vereda"
+        //   }
+        },
+        "normal": {
+          "latitud": {
+            "value": req.body.latitud,
+            "referencia": "La latitud"
+          },
+          "longitud": {
+            "value": req.body.longitud,
+            "referencia": "la longitud"
+          }
+        }
+      }
+      let validateInputs = validate(data)
+      if (validateInputs.status == false) {
+        return res.status(200).json({
+          "status": false,
+          "errors": validateInputs.errors
+  
+        })
+      }
+  
+  
+      console.log(req.body)
+      let error1 = validationResult(req);
+      if (!error1.isEmpty()) {
+        return res.status(400).json(error1);
+      }
+  
     let {nombre,latitud,longitud,fincas_id } = req.body;
 
     let sql= `insert into lotes (nombre,latitud,longitud,fincas_id)
