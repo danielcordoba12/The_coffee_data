@@ -7,7 +7,7 @@ import Sweet from "../helpers/Sweet";
 
 
 
-    const ListarUsuarios = () => {
+const ListarUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
     const [idUsuario, setIdUsuario] = useState();
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
@@ -15,7 +15,7 @@ import Sweet from "../helpers/Sweet";
     const [municipios, setMunicipios] = useState([]);
     const [selectedMunicipio, setSelectedMunicipio] = useState("");
 
-    
+
     const usuarios_id = useRef();
     const nombre = useRef();
     const longitud = useRef();
@@ -48,7 +48,30 @@ import Sweet from "../helpers/Sweet";
             }
         };
         buscarUsuarios();
+
     }, []);
+    useEffect(() => {
+        let inputRegister = document.querySelectorAll(".input-register");
+        let h6Error = document.querySelectorAll(".h6-error");
+
+        for (let x = 0; x < inputRegister.length; x++) {
+            inputRegister[x].addEventListener("change", function () {
+                let h6Error = document.querySelectorAll(".h6-error");
+
+                if (h6Error[x]) {
+                    h6Error[x].style.display = "none"
+                }
+            })
+            inputRegister[x].addEventListener("input", function () {
+                let h6Error = document.querySelectorAll(".h6-error");
+
+                if (h6Error[x]) {
+                    h6Error[x].style.display = "none"
+                }
+            })
+        }
+
+    }, [isRegistrarModalOpen])
 
     const openRegistrarModal = () => {
         setRegistrarModalOpen(true);
@@ -57,59 +80,61 @@ import Sweet from "../helpers/Sweet";
     const closeRegistrarModal = () => {
         setRegistrarModalOpen(false);
     };
-   
+
     const handleRegistrar = async (data) => {
         // Obtener el ID del usuario actualmente autenticado o ajustar según tu lógica
-      
-    
+
+
         const fincaData = {
-          ...data
+            ...data
         };
-    
+
         const headers = {
-          headers: {
-            token: "xd",
-          },
+            headers: {
+                token: "xd",
+            },
         };
-    
+
         try {
-          const data = await Api.post("finca/registrar", fincaData, headers);
-          if(data.data.status == false){
-            let keys = Object.keys(data.data.errors)
-            let h6Error = document.querySelectorAll(".h6-error");
-            for(let x = 0 ; x < h6Error.length; x++){
-                h6Error[x].remove()
-            }
-            console.log(data.data)
-            for(let x = 0 ; x < keys.length; x++){
-                let h6 = document.createElement("h6")
-                h6.innerHTML = data.data.errors[keys[x]]
-                h6.classList.add("h6-error")
-                if(document.getElementById(keys[x])){
-                    let parent = document.getElementById(keys[x]).parentNode
-                    parent.appendChild(h6)
+            const data = await Api.post("finca/registrar", fincaData, headers);
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
                 }
-                
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                console.log(data.data)
+                Sweet.registroExitoso();
+                closeRegistrarModal();
+                // Recargar la lista de fincas después del registro
+                const response = await Api.get("finca/listar");
+                setFincas(response.data);
+                location.href = "/finca"
             }
-          }
-          console.log(data.data)
-          /* Sweet.registroExitoso();
-          closeRegistrarModal(); */
-          // Recargar la lista de fincas después del registro
-          const response = await Api.get("finca/listar");
-          setFincas(response.data);
-          location.href = "/finca" 
-     
-          
+
+
+
         } catch (error) {
-          console.error("Error al registrar la finca:", error);
+            console.error("Error al registrar la finca:", error);
         }
-      };
-    
+    };
+
 
     return (
         <>
-        {isRegistrarModalOpen && (
+            {isRegistrarModalOpen && (
                 <div className="overlay" onClick={closeRegistrarModal}></div>
             )}
             <img src="../../public/img/fondo.png" alt="" className="fondo2" />
@@ -145,7 +170,7 @@ import Sweet from "../helpers/Sweet";
                                             actualizar
                                         </button>
                                     </Link>
-                                    <button className="btn-registrar" onClick={()=>{setIdUsuario(usuario.id); openRegistrarModal()}}>
+                                    <button className="btn-registrar" onClick={() => { setIdUsuario(usuario.id); openRegistrarModal() }}>
                                         Registrar Finca
                                     </button>
 
@@ -170,7 +195,7 @@ import Sweet from "../helpers/Sweet";
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleRegistrar({
-                                
+
                                 nombre: nombre.current.value,
                                 longitud: longitud.current.value,
                                 latitud: latitud.current.value,
@@ -182,26 +207,27 @@ import Sweet from "../helpers/Sweet";
                         method="post"
                     >
 
-                       
+
 
                         <div className="div-input">
-                            <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
+                            <input className="input-register" type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
                             <label htmlFor="nombre">Nombre</label>
                         </div>
                         <div className="div-input">
-                            <input type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
+                            <input className="input-register" type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
                             <label htmlFor="longitud">Longitud</label>
                         </div>
                         <div className="div-input">
-                            <input  type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
+                            <input className="input-register" type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
                             <label htmlFor="latitud">Latitud</label>
                         </div>
-                     
-                            <input  value={idUsuario} type="hidden" id="usuarios_id" name="usuarios_id" ref={usuarios_id} placeholder="" />
-                    
+
+                        <input value={idUsuario} type="hidden" id="usuarios_id" name="usuarios_id" ref={usuarios_id} placeholder="" />
+
                         <div className="div-input">
-                            
+
                             <select
+                                className="input-register"
                                 id="municipios_id"
                                 name="municipios_id"
                                 value={selectedMunicipio}
@@ -220,7 +246,7 @@ import Sweet from "../helpers/Sweet";
                         </div>
 
                         <div className="div-input">
-                            <input type="text" id="noombre_vereda" name="noombre_vereda" ref={noombre_vereda} placeholder="" />
+                            <input className="input-register" type="text" id="noombre_vereda" name="noombre_vereda" ref={noombre_vereda} placeholder="" />
                             <label htmlFor="noombre_vereda">nombre vereda</label>
                         </div>
                         <button
