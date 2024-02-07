@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import Api from "../services/api";
 import { useNavigate } from "react-router-dom";
-import '../style/analisis.css'
 import Sweet from "../helpers/Sweet";
+import '../style/analisis.css';
+
 
 const RegistrarAnalisis= () => {
     const calidad = useRef();
@@ -64,9 +65,12 @@ const RegistrarAnalisis= () => {
                 <label htmlFor="usuarios_id">Usuarios</label>
             </div>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline"
-                type="submit">Registro Análisis</button>
+                type="submit">Registrar</button>
+            
         </form>
+        
     </>
+
     )
 }
 

@@ -161,6 +161,22 @@
     border-radius: 4px;
     cursor: pointer;
   }
+  .btn-registrar-d{
+    display: inline-block;
+    width: 150px;
+    padding: 10px 10px;
+    background-color: #4CAF50; 
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .btn-registrar-d:hover {
+    background-color: #56b15a;
+    /* Cambiar color de fondo al pasar por encima */
+  }
   
   .btn-secondary {
     background-color: #e74c3c;
@@ -210,9 +226,9 @@
   justify-content: center;
   text-align: center;
   font-weight: bold;  
+  letter-spacing: 0.1em;
   color: rgb(241, 241, 241);
   font-size: 1.5rem;
-  margin-bottom: 1rem;
 }
 
 
@@ -234,7 +250,8 @@
 }
 
 .tableprincipal th {
-  background-color: rgb(94, 79, 38); /* Color de fondo más claro para encabezados */
+  font-weight: normal;
+  background-color: rgba(36, 29, 7, 0.805)/* Color de fondo más claro para encabezados */
 }
 
 .tableprincipal tr{
