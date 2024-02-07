@@ -4,7 +4,38 @@
   import {faX }  from'@fortawesome/free-solid-svg-icons'
   // import '../style/RegistrarMuestra.css'
   import Sweet from "../helpers/Sweet";
+ 
 
+  async function verificarCodigo(codigo, data) {
+    try {
+      if (data && data.length > 0) {
+        for (const muestra of data) {
+          if (muestra.codigo === codigo) {
+            return true;
+          }
+        }
+        return false;
+      } else {
+        const response = await fetch('http://localhost:4000/muestra/listar', {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+          },
+        });
+        const newData = await response.json();
+  
+        for (const muestra of newData) {
+          if (muestra.codigo === codigo) {
+            return true;
+          }
+        }
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      return true;
+    }
+  }
 
   const Muestra = () => {
     const[muestra, setMuestra] = useState([]);
@@ -17,6 +48,9 @@
     const modalMuestraRef = useRef(null);
     let modalVisible = false; 
     const [muestraSeleccionada,setMuestraSeleccionada] = useState({});
+    const [codigo, setCodigo] = useState('');
+
+
 
     function formatDate(dateString) {
       if (!dateString) return ''; // Manejar el caso de valor nulo o indefinido
@@ -61,6 +95,35 @@
   };  
 
 
+    
+  useEffect(() => {
+    generarCodigoUnicoNoRepetido();
+  }, []);
+
+  const generarCodigoUnico = () => {
+    let parte1 = 'INF-';
+    let parte2 = Math.floor(Math.random() * 100); 
+    let parte3 = 'A';
+
+    parte3 = String.fromCharCode(parte3.charCodeAt(0) + parte2 % 26);
+
+    return parte1 + (parte2 < 10 ? '0' + parte2 : parte2) + parte3;
+  };
+
+  const generarCodigoUnicoNoRepetido = async () => {
+    let nuevoCodigo;
+    do {
+      nuevoCodigo = generarCodigoUnico();
+    } while (await verificarCodigo(nuevoCodigo));
+
+    console.log(nuevoCodigo);
+    setCodigo(nuevoCodigo);
+  };
+  
+
+
+
+
       
   async function listarMuestra(){
     try {
@@ -101,8 +164,10 @@
       let tiempo_secado = document.getElementById('tiempo_secado').value
       let presentacion = document.getElementById('presentacion').value
       let cafes_id = document.getElementById('cafes_id').value
+      console.log("este es data" ,cafes_id.value ,"d")
 
-      const  validacion = true
+
+      // const  validacion = true
 
 
       fetch('http://localhost:4000/muestra/registrar', {
@@ -116,13 +181,15 @@
         .then((res) => res.json())
         .then(data => {
 
+
             if(data.status == 200) {
               Sweet.registroExitoso();
+              hideAllModals();
+
             }
             if(data.status  == 400) {
               Sweet.registroFallido();
             }
-          hideAllModals();
           listarMuestra();
 
         })
@@ -130,6 +197,7 @@
           console.error("Error del servidor" + error);
         })
     }
+  
     function buscarMuestra(id) {
       fetch(`http://localhost:4000/muestra/buscar/${id}`,{
         method:'GET',
@@ -144,6 +212,7 @@
           console.error(error);
         });
     }
+    
     function desactivarMuestra(id){
       Sweet.confimarDeshabilitar().then((result) => {
         if(result.isConfirmed) {
@@ -234,8 +303,8 @@
 
     
     }
+  
     
-
     return (
       <div>
             <div id="modalInfo3" className={`modal-info ${showModal3 ? 'show' : ''}`}  showModal={showModal3} >
@@ -430,7 +499,7 @@
             <label htmlFor="fecha_creacion" className='label'>Campo 1:</label>
           </div>
           <div className='container-input'>
-            <input type="text" id="codigo_externo" name="codigo_externo" className='input' placeholder=''  />
+            <input type="text" id="codigo_externo" name="codigo_externo" className='input' placeholder='' value={codigo}  />
             <label htmlFor="codigo_externo" className='label'>Codigo externo</label>
           </div>
           <div className='container-input'>
@@ -514,6 +583,10 @@
         <button className="btn-reg-mue" onClick={() => setShowModal1(!showModal1)}>
             Registrar muestra
         </button>
+        <div>
+      <button onClick={generarCodigoUnicoNoRepetido}>Generar Código Único</button>
+        {codigo && <p>Código único generado: {codigo}</p>}
+      </div>
 
         <table className="table-muestra">
           <thead>
@@ -594,11 +667,6 @@
 
     );
   };
-
-
-
-
-
 
 
 
