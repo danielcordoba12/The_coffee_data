@@ -52,7 +52,17 @@ export const buscaranalisis = async (req, res) => {
 
 export const listarAnalisis = async(req,res)=>{
     try{
-            const[result]=await pool.query(`select * from analisis order by estado desc`);
+        const [result] = await pool.query(`SELECT usuarios.nombre AS nombre_usuario, 
+       fecha_analisis, 
+       calidad, 
+       tipos_analisis.nombre AS nombre_tipo_analisis, 
+        muestras_id
+        FROM usuarios, analisis, tipos_analisis
+        WHERE usuarios.id = analisis.usuarios_id 
+        AND tipos_analisis.id = analisis.tipo_analisis_id
+        ORDER BY analisis.estado DESC;
+;
+        `);
             res.status(200).json(result);
     
         }catch(err){

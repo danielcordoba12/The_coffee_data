@@ -5,7 +5,7 @@ import Sweet from "../helpers/Sweet";
 const EditarAnalisis = () => {
 
     const { id } = useParams();
-    const [analisis, setcafes] = useState({fecha_analisis: '',calidad: '', tipo_analisis_id: '', muestras_id: '',  usuarios_id: '' });
+    const [analisis, setcafes] = useState({ fecha_analisis: '', calidad: '', tipo_analisis_id: '', usuarios_id: '', muestras_id: '' });
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -38,7 +38,6 @@ const EditarAnalisis = () => {
         if (result.isConfirmed){
             try {
                 await Api.patch(`/analisis/desactivar/${id}`, analisis);
-               
                 navigate("/analisis/listar")
                
             } catch (error) {
@@ -51,14 +50,20 @@ const EditarAnalisis = () => {
     };
     const handleEditUser3 = async () => {
         const result = await Sweet.confimarHabilitar({});
-        
-        try {
-            await Api.patch(`/analisis/activar/${id}`, analisis);
-            navigate("/analisis/listar")
-        } catch (error) {
-            console.error('Error activando el analisis: ', error);
+        if (result.isConfirmed) {
+            try {
+                await Api.patch(`/analisis/activar/${id}`, analisis);
+                navigate("/analisis/listar")
+
+            } catch (error) {
+                console.error('Error activando el analisis: ', error);
+            }
+            
         }
-    }
+        Sweet.habilitacionExitosa();
+     
+       
+    };
 
     return (<>
         <img src="../../public/img/fondo.png" alt="" className="fondo2" />
@@ -93,7 +98,7 @@ const EditarAnalisis = () => {
                 />
                    <input
                     className="input-field" 
-                    type="number" placeholder="usuarios_id " 
+                    type="text" placeholder="nombre " 
                     value={analisis.usuarios_id} 
                     onChange={(e) => setcafes({ ...analisis, usuarios_id : e.target.value })}
                 />
