@@ -6,12 +6,14 @@ import Sweet from "../helpers/Sweet";
 
 const FincaView = () => {
     const [fincas, setFincas] = useState([]);
-    const [selectedFincaId, setSelectedFincaId] = useState(null);
+    const [idFinca, setIdFinca] = useState([]);
     const [modalFinca, setModalFinca] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
+    const [lotes, setLotes] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [municipios, setMunicipios] = useState([]);
 
-    const fecha_creacion = useRef();
+    const fincas_id = useRef();
     const nombre = useRef();
     const longitud = useRef();
     const latitud = useRef();
@@ -20,6 +22,20 @@ const FincaView = () => {
     const noombre_vereda = useRef();
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchMunicipios = async () => {
+            try {
+                const response = await Api.get("municipio/listar");
+                setMunicipios(response.data);
+                console.log("Municipios cargados:", response.data);
+            } catch (error) {
+                console.error("Error fetching municipios:", error);
+            }
+        };
+        fetchMunicipios();
+    }, []);
+
 
     useEffect(() => {
         const buscarFincas = async () => {
@@ -100,6 +116,13 @@ const FincaView = () => {
     };
 
     const handleRegistrar = async (data) => {
+        // Obtener el ID del usuario actualmente autenticado o ajustar según tu lógica
+
+
+        const LoteData = {
+            ...data
+        };
+
         const headers = {
             headers: {
                 token: "xd",
@@ -107,17 +130,38 @@ const FincaView = () => {
         };
 
         try {
-            await Api.post("finca/registrar", data, headers);
-            Sweet.registroExitoso();
-            closeRegistrarModal();
+            const data = await Api.post("lote/registrar", LoteData, headers);
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            }
+            console.log(data.data)
+            /* Sweet.registroExitoso();
+            closeRegistrarModal(); */
             // Recargar la lista de fincas después del registro
-            const response = await Api.get("finca/listar");
-            setFincas(response.data);
+            const response = await Api.get("lote/listar");
+            setLotes(response.data);
+            location.href = "/lote"
+
+
         } catch (error) {
             console.error("Error al registrar la finca:", error);
         }
     };
-
 
     return (
         <>
@@ -129,21 +173,20 @@ const FincaView = () => {
             <img src="../../public/img/fondo.png" alt="" className="fondo2" />
             <div className="tablalistar">
                 <h1 className="titu"> Listado de Fincas</h1>
-                {/* Botón para registrar finca */}
-                <button className="btn-registrar" onClick={openRegistrarModal}>
-                    Registrar Finca
-                </button>
+                <br />
+                <br />
+
                 <div className="search-container">
 
-                     {/* icono de buscar */}
-                <svg x="0px" y="0px" viewBox="0 0 60 60" width="26" height="26" >
-                <path class="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
+                    {/* icono de buscar */}
+                    <svg x="0px" y="0px" viewBox="0 0 60 60" width="26" height="26" >
+                        <path class="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
                 c0,9.8,8,17.8,17.8,17.8c4.4,0,8.4-1.6,11.5-4.2l16.1,16.1L54.8,51.4z M10.2,23.8C10.2,15.6,16.9,9,25.1,
                 9c8.2,0,14.8,6.7,14.8,14.8c0,8.2-6.7,14.8-14.8,14.8C16.9,38.7,10.2,32,10.2,23.8z">
-                </path>
-                </svg>
+                        </path>
+                    </svg>
 
-                   
+
                     <input
                         type="text"
                         placeholder="Buscar por nombre"
@@ -152,6 +195,7 @@ const FincaView = () => {
                     />
 
                 </div>
+                
 
                 <table className="tableprincipal">
                     <thead>
@@ -192,6 +236,9 @@ const FincaView = () => {
                                             onClick={() => openEditarModal(task.id)}
                                         >
                                             Modificar
+                                        </button>
+                                        <button className="btn-registrar" onClick={() => { setIdFinca(task.id); openRegistrarModal() }}>
+                                            Registrar Lote
                                         </button>
                                     </td>
                                 </tr>
@@ -312,11 +359,10 @@ const FincaView = () => {
             {isRegistrarModalOpen && (
                 <div className="overlay" onClick={closeRegistrarModal}></div>
             )}
-
             {isRegistrarModalOpen && (
                 <div className="tabla2">
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-                        Registrar Finca
+                        Registrar Lote
                     </h1>
 
                     <form
@@ -324,53 +370,32 @@ const FincaView = () => {
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleRegistrar({
-                                fecha_creacion: fecha_creacion.current.value,
                                 nombre: nombre.current.value,
-                                longitud: longitud.current.value,
                                 latitud: latitud.current.value,
-                                usuarios_id: usuarios_id.current.value,
-                                municipios_id: municipios_id.current.value,
-                                noombre_vereda: noombre_vereda.current.value,
+                                longitud: longitud.current.value,
+                                fincas_id: fincas_id.current.value,
                             });
                         }}
                         method="post"
                     >
 
-                        <div className="div-input">
-                            <input type="date" id="fecha_creacion" name="fecha_creacion" ref={fecha_creacion} placeholder="" />
-
-                        </div>
 
                         <div className="div-input">
                             <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
-                            <label for="nombre">Nombre</label>
-                        </div>
-                        <div className="div-input">
-                            <input type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
-                            <label for="longitud">Longitud</label>
+                            <label htmlFor="nombre">Nombre</label>
                         </div>
                         <div className="div-input">
                             <input type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
-                            <label for="latitud">Latitud</label>
+                            <label htmlFor="latitud">Latitud</label>
                         </div>
                         <div className="div-input">
-                            <input type="number" id="usuarios_id " name="usuarios_id " ref={usuarios_id} placeholder="" />
-                            <label for="usuarios_id">usuario</label>
+                            <input type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
+                            <label htmlFor="longitud">Longitud</label>
                         </div>
-                        <div className="div-input">
-                            <input type="number" id="municipios_id " name="municipios_id " ref={municipios_id} placeholder="" />
-                            <label for="municipios_id">municipio</label>
-                        </div>
-                        <div className="div-input">
-                            <input type="text" id="noombre_vereda" name="noombre_vereda" ref={noombre_vereda} placeholder="" />
-                            <label for="noombre_vereda">nombre vereda</label>
-                        </div>
-                        <button
-                            className="btn-blue"
-                            type="submit"
-                        >
-                            Registrar finca
-                        </button>
+                        <input value={idFinca} type="hidden" id="fincas_id " name="fincas_id " ref={fincas_id} placeholder="" />
+
+                        <button className="btn-register-lote"
+                            type="submit">Registrar lote</button>
                         <button
                             className="close-modal-btn"
                             onClick={closeRegistrarModal}
@@ -380,6 +405,9 @@ const FincaView = () => {
                     </form>
                 </div>
             )}
+
+
+
         </>
     );
 };

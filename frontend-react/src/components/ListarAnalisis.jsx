@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import Api from "../services/api";
 import { Link } from "react-router-dom";
 import '../style/listana.css'
+import Swal from "sweetalert2";
 
 
 const ListarAnalisis = () => {
@@ -21,17 +22,23 @@ const ListarAnalisis = () => {
     return (<>
         <img src="../../public/img/fondo.png" alt="" className="fondo2" />
         <div className="tablalistar">
-            <h1 className="titu">Listar Análisis</h1>
+
+            <div className="box-search">
+
+           <input className="search" type="text" /></div>
+            <h1 className="titu">Análisis</h1>
             <br />
             <table className="tableprincipal">
                 <thead>
                     <tr className="bg-gray-200">
-                        <th>Fecha</th>
-                        <th>Calidad</th>
-                        <th>Tipo Análisis</th>
-                        <th>Muestras</th>
-                        <th>Usuarios</th>
-                        <th>Estado</th>
+                        <th>FECHA</th>
+                        <th>CALIDAD</th>
+                        <th>TIPO ANALISIS </th>
+                        <th>MUESTRAS</th>
+                        <th>USUARIOS</th>
+                        <th>ESTADO</th>
+                        <th></th>
+                        <th></th>
 
             
                     </tr>
@@ -57,9 +64,21 @@ const ListarAnalisis = () => {
                                     </Link>
                                 </button>
                             </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    className="btn-registrar-d"
+                                    onClick={() => handleUpdate(task.id)}
+                                >
+                                    <Link to={`/analisis/registrar/`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        Nuevo Analisis
+                                    </Link>
+                                </button>
+                            </td>
+
 
                         </tr>
-                    ))}
+                            ))}
                 </tbody>
             </table>
         </div>

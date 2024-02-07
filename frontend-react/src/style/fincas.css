@@ -109,7 +109,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: rgb(30, 30, 30, 50%);
   border-bottom: 1px black solid;
-  max-height: 600px;
+  max-height: 900px;
   /* Altura máxima para la tabla */
   overflow-y: auto;
   /* Agrega scroll vertical si el contenido excede la altura máxima */
@@ -308,9 +308,40 @@ body.modal-open {
 
 
 /* estilos de registrar css*/
+.div-input {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+select {
+  background-color: transparent ;
+  color: white;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Estilo para desactivar la primera opción "Seleccione un municipio" */
+select option[disabled] {
+  color: #ffffff;
+}
+
+/* Estilo para las opciones del select */
+select option {
+  padding: 8px;
+  background-color: rgb(0, 0, 0, 0.5);
+}
+
 
 .btn-blue {
-  background-color: #007bff;
+  background-color: #000000;
   color: #fff;
   font-weight: bold;
   padding: 8px;
@@ -434,3 +465,6 @@ body.modal-open {
 
 
 
+.h6-error{
+  color: red;
+}
