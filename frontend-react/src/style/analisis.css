@@ -14,7 +14,23 @@
     border-collapse: collapse;
     margin-top: 20px; 
   }
-  
+
+
+  /* estilos de select para registrar un analisis */
+
+    .label-calidad{
+      display: flex;
+      position: relative;
+      margin-top: 34px;
+    }
+    select{
+      width: 70%;
+      top: -42px;
+      left: 74px;
+      display: flex;
+      position: relative;
+    }
+
   .table1 th,
   .table1 td {
     border: 1px solid #ddd;

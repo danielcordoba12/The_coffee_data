@@ -46,10 +46,13 @@ const RegistrarAnalisis= () => {
             <h1 className="text-center font-bold underline text-3xl p-3 m-2">Análisis</h1>
 
 
-
+            
             <div className="div-input">
-                <input type="text" id="calidad" name="calidad" ref={calidad} placeholder="" />
-                <label htmlFor="calidad">Calidad</label>
+                    <label  className="label-calidad" htmlFor="Calidad">Calidad</label>
+                    <select name="" id="Calidad" ref={calidad}>
+                        <option value="">Pendiente</option>
+                        <option value="">Prueba</option>
+                    </select>
             </div>
       
             <div className="div-input">
@@ -58,7 +61,7 @@ const RegistrarAnalisis= () => {
             </div>
             <div className="div-input">
                 <input type="number" id="Muestras " name=" muestras_id " ref={muestras_id} placeholder="" />
-                <label htmlFor=" muestras_id">Muestras</label>
+                <label htmlFor="muestras_id">Muestras</label>
             </div>
             <div className="div-input">
                     <input type="text" id="nombre_usuario" name="nombre_usuario" ref={nombre_usuario} placeholder="" />

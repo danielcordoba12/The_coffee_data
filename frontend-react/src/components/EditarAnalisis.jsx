@@ -5,7 +5,7 @@ import Sweet from "../helpers/Sweet";
 const EditarAnalisis = () => {
 
     const { id } = useParams();
-    const [analisis, setcafes] = useState({ fecha_analisis: '', calidad: '', tipo_analisis_id: '', usuarios_id: '', muestras_id: '' });
+    const [analisis, setcafes] = useState({ fecha_analisis: '' , calidad: '', nombre_tipo_analisis: '', nombre_usuario: '', muestras_id: '' });
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -72,7 +72,7 @@ const EditarAnalisis = () => {
             <div className="max-w-xs">
             <input
                 className="input-field"
-                type="timestamp"
+                type="date"
                 placeholder="fecha_analisis"
                 value={analisis.fecha_analisis}
                 onChange={(e) => setFincas({ ...analisis, fecha_analisis: e.target.value })}
@@ -86,9 +86,9 @@ const EditarAnalisis = () => {
                 />
                  <input
                     className="input-field" 
-                    type="number" placeholder="tipo_analisis_id " 
-                    value={analisis.tipo_analisis_id} 
-                    onChange={(e) => setcafes({ ...analisis, tipo_analisis_id : e.target.value })}
+                    type="text" placeholder="nombre_tipo_analisis " 
+                    value={analisis.nombre_tipo_analisis} 
+                    onChange={(e) => setcafes({ ...analisis, nombre_tipo_analisis : e.target.value })}
                 />
                 <input
                     className="input-field" 
@@ -99,8 +99,8 @@ const EditarAnalisis = () => {
                    <input
                     className="input-field" 
                     type="text" placeholder="nombre " 
-                    value={analisis.usuarios_id} 
-                    onChange={(e) => setcafes({ ...analisis, usuarios_id : e.target.value })}
+                    value={analisis.nombre_usuario} 
+                    onChange={(e) => setcafes({ ...analisis, nombre_usuario : e.target.value })}
                 />
                 
                 

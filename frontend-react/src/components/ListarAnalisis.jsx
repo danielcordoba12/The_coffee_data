@@ -72,7 +72,7 @@ const ListarAnalisis = () => {
                 <tbody>
                     {fincas.map((task) => (
                         <tr key={task.id} className="border-t">
-                             <td>{task.fecha_analisis}</td>
+                             <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td> 
                             <td>{task.calidad}</td>
                             <td>{task.nombre_tipo_analisis}</td>
                             <td>{task.muestras_id}</td>
@@ -94,7 +94,7 @@ const ListarAnalisis = () => {
                                 <button
                                     type="button"
                                     className="btn-registrar-d"
-                                    onClick={() => handleUpdate(task.id)}
+                                    onClick={() => handleUpdate(task.nombre_usuario)}
                                 >
                                     <Link to={`/analisis/registrar/`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         Nuevo Analisis
