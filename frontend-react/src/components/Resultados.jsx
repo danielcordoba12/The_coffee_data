@@ -56,7 +56,7 @@ function Resultado() {
   const inicializarDatos = () => {
       const nuevosDatos = Array.from({ length: 25 }, (_, index) => ({
         valor: "",
-      analisis_id: 3,
+      analisis_id: 5,
       variables_id: (index + 1).toString(),
       // variables_id: 1,
       fecha:"2024-01-27T00:40:33.000Z",
@@ -148,10 +148,26 @@ function Resultado() {
   //     return nuevosDatos ;
   //   });
   // };
+
+
+
+
+  
+
+  const camposEntrada2 = (index, field, value) => {
+    const nuevosDatos = datos.map((dato, i) =>
+      i === index ? { ...dato, [field]: value } : dato
+    );
+    setDatos(nuevosDatos);
+  };
+
   const camposEntrada = (index, field, value) => {
     setResultadoSeleccionado((resultadoSellecionado) => {
+      console.log("resulttados seleccionado", resultadoSellecionado);
       const nuevosDatos = resultadoSellecionado.map((dato, i) =>
+
         i === index ? { ...dato, [field]: value } : dato
+        
       );
       console.log("Nuevo estado:", nuevosDatos);
       return nuevosDatos;
@@ -159,15 +175,38 @@ function Resultado() {
   };
 
 
-  //     // Si el índice y el objeto en ese índice ya existen, actualiza el valor del campo.
-  //     const nuevosDatos = [...prevDatos];
-  //     nuevosDatos[index] = { ...nuevosDatos[index], [field]: value };
-  //     console.log("Nuevo estado:", nuevosDatos);
-  //     return nuevosDatos;
-  //   });
-  // };
 
 
+
+  // const generarInputs = () => {
+  //   const filas = [];
+  //   const numColumnas = 9;
+
+  //   for (let i = 0; i < datos.length; i += numColumnas) {
+  //     const fila = datos.slice(i, i + numColumnas);
+  //     filas.push(
+  //       <div className="columna" key={i}>
+  //         {fila.map((dato, j) => (
+  //             <div className="container-input" key={dato.variables_id}>
+  //               <input
+  //                 type="text"
+  //                 id={`input-${dato.variables_id}`}
+  //                 value={dato.valor}
+  //                 className='input'
+  //                 placeholder=""
+  //                 onChange={(e) => camposEntrada2(i + j, "valor", e.target.value)}
+  //               />
+  //               <label htmlFor={`input-${dato.variables_id}`} className='label'>
+  //                 {labelText[i + j ]}</label>
+  //             </div>
+  //           // </div>
+  //         ))}
+  //       </div>
+  //     );
+
+
+
+  //   }
 
   const generarInputs = () => {
     const filas = [];
@@ -175,7 +214,6 @@ function Resultado() {
 
     for (let i = 0; i < datos.length; i += numColumnas) {
       const fila = datos.slice(i, i + numColumnas);
-
       filas.push(
         <div className="columna" key={i}>
           {fila.map((dato, j) => (
@@ -186,7 +224,7 @@ function Resultado() {
                   value={dato.valor}
                   className='input'
                   placeholder=""
-                  onChange={(e) => camposEntrada(i + j, "valor", e.target.value)}
+                  onChange={(e) => camposEntrada2(i + j, "valor", e.target.value)}
                 />
                 <label htmlFor={`input-${dato.variables_id}`} className='label'>
                   {labelText[i + j ]}</label>
@@ -307,7 +345,8 @@ function Resultado() {
       if (response.status === 200) {
         const result = await response.json();
         console.log("Resultado del servidor:", result);
-        Sweet.registroFallido();
+        Sweet.registroExitoso();
+        hideAllModals()
       }
 
       if (response.status === 400) {
@@ -317,6 +356,7 @@ function Resultado() {
     } catch (error) {
       console.error("Error al procesar la solicitud", error);
     }
+    listarResultado();
 
   };
 
@@ -471,7 +511,7 @@ function Resultado() {
         <th>Cantidad</th>
         <th>analisis</th>
         <th>Fecha</th>
-        <th>Fecha</th>
+        {/* <th>Fecha</th> */}
         <th>Actualizar</th>
         <th>Mas</th>
 
@@ -487,23 +527,7 @@ function Resultado() {
                 <td>{task.valor}</td>
                 <td>{task.analisis_id}</td>
                 <td>{formatDate(task.fecha_creacion)}</td>
-                <td>
-                {task.estado === 1 ? (
-                    <button
-                      className="btn-secondary"
-                      // onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
-                    >
-                      Desactivar
-                    </button>
-                  ) : (
-                    <button
-                      className="btn-tertiary"
-                      // onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
-                    >
-                      Activar
-                    </button>
-                  )}
-                </td>
+
                 <td>
                   <button className="btn-reg-mue"
                     onClick={() => {

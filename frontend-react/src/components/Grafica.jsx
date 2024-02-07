@@ -6,6 +6,7 @@ import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import '../style/grafica.css';
 
 
+
 function Grafica() {
 
   const [showModal1, setShowModal1] = useState(false);
