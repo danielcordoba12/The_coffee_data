@@ -8,6 +8,7 @@ const FincaView = () => {
     const [fincas, setFincas] = useState([]);
     const [idFinca, setIdFinca] = useState([]);
     const [modalFinca, setModalFinca] = useState(null);
+    const [SelectedFincaId, setSelectedFincaId] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
     const [lotes, setLotes] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -66,7 +67,7 @@ const FincaView = () => {
 
     const handleEditUser1 = async () => {
         try {
-            await Api.put(`/finca/actualizar/${selectedFincaId}`, modalFinca);
+            await Api.put(`/finca/actualizar/${SelectedFincaId}`, modalFinca);
             Sweet.actualizacionExitosa();
             closeEditarModal();
             // Recargar la lista de fincas después de la actualización
@@ -81,7 +82,7 @@ const FincaView = () => {
         const result = await Sweet.confimarDeshabilitar({});
         if (result.isConfirmed) {
             try {
-                await Api.patch(`/finca/desactivar/${selectedFincaId}`, modalFinca);
+                await Api.patch(`/finca/desactivar/${SelectedFincaId}`, modalFinca);
                 closeEditarModal();
                 // Recargar la lista de fincas después de la desactivación
                 const response = await Api.get("finca/listar");
@@ -96,7 +97,7 @@ const FincaView = () => {
         const result = await Sweet.confimarHabilitar({});
         if (result.isConfirmed) {
             try {
-                await Api.patch(`/finca/activar/${selectedFincaId}`, modalFinca);
+                await Api.patch(`/finca/activar/${SelectedFincaId}`, modalFinca);
                 closeEditarModal();
                 // Recargar la lista de fincas después de la activación
                 const response = await Api.get("finca/listar");
@@ -106,6 +107,29 @@ const FincaView = () => {
             }
         }
     };
+
+    useEffect(() => {
+        let inputRegister = document.querySelectorAll(".input-register");
+        let h6Error = document.querySelectorAll(".h6-error");
+
+        for (let x = 0; x < inputRegister.length; x++) {
+            inputRegister[x].addEventListener("change", function () {
+                let h6Error = document.querySelectorAll(".h6-error");
+
+                if (h6Error[x]) {
+                    h6Error[x].style.display = "none"
+                }
+            })
+            inputRegister[x].addEventListener("input", function () {
+                let h6Error = document.querySelectorAll(".h6-error");
+
+                if (h6Error[x]) {
+                    h6Error[x].style.display = "none"
+                }
+            })
+        }
+
+    }, [isRegistrarModalOpen])
 
     const openRegistrarModal = () => {
         setRegistrarModalOpen(true);
@@ -128,6 +152,7 @@ const FincaView = () => {
                 token: "xd",
             },
         };
+        
 
         try {
             const data = await Api.post("lote/registrar", LoteData, headers);
@@ -148,14 +173,17 @@ const FincaView = () => {
                     }
 
                 }
+            }else{
+                console.log(data.data)
+                /* Sweet.registroExitoso();
+                closeRegistrarModal(); */
+                // Recargar la lista de fincas después del registro
+                const response = await Api.get("lote/listar");
+                setLotes(response.data);
+                location.href = "/lote"
             }
-            console.log(data.data)
-            /* Sweet.registroExitoso();
-            closeRegistrarModal(); */
-            // Recargar la lista de fincas después del registro
-            const response = await Api.get("lote/listar");
-            setLotes(response.data);
-            location.href = "/lote"
+
+           
 
 
         } catch (error) {
@@ -381,15 +409,15 @@ const FincaView = () => {
 
 
                         <div className="div-input">
-                            <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
+                            <input className="input-register" type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
                             <label htmlFor="nombre">Nombre</label>
                         </div>
                         <div className="div-input">
-                            <input type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
+                            <input className="input-register" type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
                             <label htmlFor="latitud">Latitud</label>
                         </div>
                         <div className="div-input">
-                            <input type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
+                            <input className="input-register" type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
                             <label htmlFor="longitud">Longitud</label>
                         </div>
                         <input value={idFinca} type="hidden" id="fincas_id " name="fincas_id " ref={fincas_id} placeholder="" />
