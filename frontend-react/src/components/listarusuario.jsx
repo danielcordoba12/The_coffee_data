@@ -225,7 +225,7 @@ const ListarUsuarios = () => {
                         <input value={idUsuario} type="hidden" id="usuarios_id" name="usuarios_id" ref={usuarios_id} placeholder="" />
 
                         <div className="div-input">
-
+                        
                             <select
                                 className="input-register"
                                 id="municipios_id"
@@ -235,6 +235,7 @@ const ListarUsuarios = () => {
                                     console.log("Municipio seleccionado:", e.target.value);
                                     setSelectedMunicipio(e.target.value);
                                 }}
+                                
                             >
                                 <option value="" disabled>Seleccione un municipio</option>
                                 {municipios.map((municipio) => (
