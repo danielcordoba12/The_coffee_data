@@ -89,12 +89,7 @@
 
       setShowModal3(!showModal3);
     }
-    else if (modalId === 4) {
-      console.log("modal" , modalId);
 
-      setShowModal4(!showModal4);
-      setShowModal1(!showModal1);
-    }
   };
   const hideAllModals = () => {
     setShowModal1(false);
@@ -187,7 +182,7 @@
       let tiempo_secado = document.getElementById('tiempo_secado').value
       let presentacion = document.getElementById('presentacion').value
       let cafes_id = document.getElementById('cafes_id').value
-      console.log("este es data" ,cafes_id.value ,"d")
+      // console.log("este es data" ,cafes_id.value ,"d")
 
 
       // const  validacion = true
@@ -333,9 +328,7 @@
 
       
       <div>
-          <div id="modalInfo4" className={`modal-info ${showModal4 ? 'show' : ''}`} showModal={showModal4}>
-            <h1>Hola mundo</h1>
-          </div>
+
 
 
 
@@ -527,10 +520,13 @@
         method="post" >
         <div className="columna">
         <div className='container-input'>
-            <input type="text" id="cafes_id" name="cafes_id" className='input' placeholder=''  />
+            {/* <input type="text" id="cafes_id" name="cafes_id" className='input' placeholder=''  /> */}
             <label htmlFor="cafes_id" >Cafe</label>
-            <button type="button" className="btn-primary" onClick={() => {toggleModal(4) }}>cafe</button> 
+            <select name="" id="" className="select-cafe">
+              <option value="" className='option-cafe'> Seleccione una opcion</option>
+              <option value="" className='option-cafe'> Seleccione una opcion</option>
 
+            </select>
 
           </div>
           <div className='container-input'>
@@ -621,22 +617,18 @@
         <button className="btn-reg-mue" onClick={() => setShowModal1(!showModal1)}>
             Registrar muestra
         </button>
-        <div>
-      <button onClick={generarCodigoUnicoNoRepetido}>Generar Código Único</button>
-        {codigo && <p>Código único generado: {codigo}</p>}
-      </div>
+
 
         <table className="table-muestra">
           <thead>
             <tr>
               <th>ID</th>
               <th>Fecha de creacion</th>
-              <th>Codigo externo</th>
-              <th>Consecutivo informe</th>
-              <th>Muestreo</th>
-              <th>Preparacion de la muestra</th>
-              <th>Cantidad</th>
-              <th>Tipo de molienda</th>
+              <th>Muestra</th>
+              <th>Propietario</th>
+              <th>Finca</th>
+              <th>Lote</th>
+              <th>Variedad</th>
               <th>Estado</th>
               <th>Estado</th>
               <th>Actualizar</th>
@@ -649,31 +641,30 @@
                       <td>{task.id}</td>
                       <td>{formatDate(task. fecha_creacion)}</td>
                       <td>{task.codigo_externo}</td>
-                      <td>{task.consecutivo_informe}</td>
-                      <td>{task.muestreo}</td>
-                      <td>{task.preparacion_muestra}</td>
-                      <td>{task.cantidad}</td>
-                      <td>{task.tipo_molienda}</td>
+                      <td>{task.usuario}</td>
+                      <td>{task.Finca}</td>
+                      <td>{task.Lote}</td>
+                      <td>{task.variedad}</td>
                       <td>{task.estado}</td>
                       <td> 
-                      {task.estado === 0 ? (
-                        <button
-                        className="btn-tertiary"
-                        onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
-                      >
-                        Activar
-                      </button>
-
-                      
-                        ) : (
+                        {task.estado === 0 ? (
                           <button
-                          className="btn-secondary"
-                          onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                          className="btn-tertiary"
+                          onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
                         >
-                          Desactivar
+                          Activar
                         </button>
-                          
-                        )}  
+
+                        
+                          ) : (
+                            <button
+                            className="btn-secondary"
+                            onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                          >
+                            Desactivar
+                          </button>
+                            
+                          )}  
                       </td>
                       <td>
                         <button className="btn-reg-mue"

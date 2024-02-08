@@ -93,6 +93,14 @@ label {
   color: white;
   outline: none;
 }
+.option-cafe{
+  border: none;
+}
+.select-cafe{
+  border-top: none;
+  border-left:none;
+  border-right: none;
+}
 
 .button {
   width: 115px;
