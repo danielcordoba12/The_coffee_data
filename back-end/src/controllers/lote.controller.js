@@ -6,7 +6,7 @@ export const listarlote= async (req,res)=>{
     try{
         
 
-        const[result]= await pool.query("select l.id, l.fecha_creacion, l.nombre, l.latitud, l.longitud, f.nombre as Nombre_Finca, l.estado from lotes l join fincas f on f.id = l.fincas_id order by l.estado desc, l.fecha_creacion DESC");
+        const[result]= await pool.query("select l.id, u.nombre as nombre_usuario, l.fecha_creacion, l.nombre, l.latitud, l.longitud, l.n_plantas, f.nombre as Nombre_Finca, l.estado from lotes l join fincas f on f.id = l.fincas_id join usuarios u on u.id = f.usuarios_id order by l.estado desc, l.fecha_creacion DESC");
         res.status(200).json(result);
 
 
@@ -138,10 +138,10 @@ export const guardarlote = async(req, res) => {
         return res.status(400).json(error1);
       }
   
-    let {nombre,latitud,longitud,fincas_id } = req.body;
+    let {nombre,latitud,longitud,n_plantas,fincas_id } = req.body;
 
-    let sql= `insert into lotes (nombre,latitud,longitud,fincas_id)
-                values('${nombre}','${latitud}','${longitud}','${fincas_id}')`;
+    let sql= `insert into lotes (nombre,latitud,longitud,n_plantas,fincas_id)
+                values('${nombre}','${latitud}','${longitud}','${n_plantas}','${fincas_id}')`;
 
     const [rows] = await pool.query(sql);
 
@@ -168,8 +168,8 @@ export const actualizarlote = async(req,res) => {
             return res.status(400).json(error1);
         }
         let id= req.params.id;
-        let {nombre,latitud,longitud,fincas_id} = req.body;
-        let sql= `update lotes set nombre='${nombre}',latitud='${latitud}',longitud='${longitud}',fincas_id='${fincas_id}' where id=${id}`;
+        let {nombre,latitud,longitud,n_plantas,fincas_id} = req.body;
+        let sql= `update lotes set nombre='${nombre}',latitud='${latitud}',longitud='${longitud}',n_plantas='${n_plantas}',fincas_id='${fincas_id}' where id=${id}`;
         const[rows] = await pool.query(sql);
         if(rows.affectedRows>0){
             res.status(200).json({"status":200, "message": "se actualizo con exito"});

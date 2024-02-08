@@ -7,9 +7,9 @@ import '../style/analisis.css';
 
 const RegistrarAnalisis= () => {
     const calidad = useRef();
-    const tipo_analisis_id= useRef();
+    const nombre_tipo_analisis = useRef();
     const muestras_id = useRef();
-    const usuarios_id =useRef();
+    const nombre_usuario =useRef();
 
 
     const navigate = useNavigate()
@@ -24,9 +24,9 @@ const RegistrarAnalisis= () => {
 
         const data = {
             calidad:calidad.current.value,
-            tipo_analisis_id:tipo_analisis_id.current.value,
+            nombre_tipo_analisis: nombre_tipo_analisis.current.value,
             muestras_id :muestras_id.current.value,
-            usuarios_id :usuarios_id.current.value,
+            nombre_usuario :nombre_usuario.current.value,
             
 
         };
@@ -46,23 +46,26 @@ const RegistrarAnalisis= () => {
             <h1 className="text-center font-bold underline text-3xl p-3 m-2">Análisis</h1>
 
 
-
+            
             <div className="div-input">
-                <input type="text" id="calidad" name="calidad" ref={calidad} placeholder="" />
-                <label htmlFor="calidad">Calidad</label>
+                    <label  className="label-calidad" htmlFor="Calidad">Calidad</label>
+                    <select name="" id="Calidad" ref={calidad}>
+                        <option value="">Pendiente</option>
+                        <option value="">Prueba</option>
+                    </select>
             </div>
       
             <div className="div-input">
-                <input type="number" id="tipo_analisis_id " name="tipo_analisis_id " ref={tipo_analisis_id} placeholder="" />
-                <label htmlFor="tipo_analisis_id">Tipo de Análisis</label>
+                    <input type="text" id="nombre_tipo_analisis " name="nombre_tipo_analisis " ref={nombre_tipo_analisis} placeholder="" />
+                    <label htmlFor="nombre_tipo_analisis">Tipo de Análisis</label>
             </div>
             <div className="div-input">
                 <input type="number" id="Muestras " name=" muestras_id " ref={muestras_id} placeholder="" />
-                <label htmlFor=" muestras_id">Muestras</label>
+                <label htmlFor="muestras_id">Muestras</label>
             </div>
             <div className="div-input">
-                <input type="text" id="usuarios_id" name="usuarios_id" ref={usuarios_id} placeholder="" />
-                <label htmlFor="usuarios_id">Usuarios</label>
+                    <input type="text" id="nombre_usuario" name="nombre_usuario" ref={nombre_usuario} placeholder="" />
+                <label htmlFor="nombre_usuario">Usuarios</label>
             </div>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline"
                 type="submit">Registrar</button>

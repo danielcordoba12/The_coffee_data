@@ -7,7 +7,33 @@ import Swal from "sweetalert2";
 
 const ListarAnalisis = () => {
     const [fincas, setFincas] = useState([]);
+    const [usuarios, setUsuarios] = useState([]);
+    const [tipos_analisis, setTipos] = useState([]);
 
+
+
+
+    function formatDate(dateString) {
+        if (!dateString) return ''; // Manejar el caso de valor nulo o indefinido
+        const fecha = new Date(dateString);
+        const year = fecha.getFullYear();
+        const month = String(fecha.getMonth() + 1).padStart(2, '0');
+        const day = String(fecha.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    useEffect(() => {
+        const buscarUsuarios = async () => {
+            try {
+                const response = await Api.get('analisis/listar');
+                setUsuarios(response.data);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        }
+        buscarUsuarios();
+    }, []);
+    
     useEffect(() => {
         const buscarFincas = async () => {
             try {
@@ -33,9 +59,9 @@ const ListarAnalisis = () => {
                     <tr className="bg-gray-200">
                         <th>FECHA</th>
                         <th>CALIDAD</th>
-                        <th>TIPO ANALISIS </th>
+                        <th>TIPO ANALISIS</th>
                         <th>MUESTRAS</th>
-                        <th>USUARIOS</th>
+                        <th>NOMBRE</th>
                         <th>ESTADO</th>
                         <th></th>
                         <th></th>
@@ -46,11 +72,11 @@ const ListarAnalisis = () => {
                 <tbody>
                     {fincas.map((task) => (
                         <tr key={task.id} className="border-t">
-                             <td>{task.fecha_analisis}</td>
+                             <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td> 
                             <td>{task.calidad}</td>
-                            <td>{task.tipo_analisis_id}</td>
+                            <td>{task.nombre_tipo_analisis}</td>
                             <td>{task.muestras_id}</td>
-                            <td>{task.usuarios_id}</td>
+                            <td>{task.nombre_usuario}</td>
                             <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                            
                             <td>
@@ -68,7 +94,7 @@ const ListarAnalisis = () => {
                                 <button
                                     type="button"
                                     className="btn-registrar-d"
-                                    onClick={() => handleUpdate(task.id)}
+                                    onClick={() => handleUpdate(task.nombre_usuario)}
                                 >
                                     <Link to={`/analisis/registrar/`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         Nuevo Analisis
