@@ -130,10 +130,11 @@ const lote = () => {
             <tr className="bg-gray-200">
               <th>id</th>
               <th>Fecha Creación</th>
-              <th>Nombre</th>
+              <th>Propietario</th>
+              <th>Finca</th>
+              <th>lote</th>
               <th>Longitud</th>
               <th>Latitud</th>
-              <th>Finca</th>
               <th>Estado</th>
               <th>opciones</th>
             </tr>
@@ -147,10 +148,11 @@ const lote = () => {
                 <tr key={task.id} className="border-t">
                   <td>{task.id}</td>
                   <td>{task.fecha_creacion}</td>
+                  <td>{task.nombre_usuario}</td>
+                  <td>{task.Nombre_Finca}</td>
                   <td>{task.nombre}</td>
                   <td>{task.longitud}</td>
                   <td>{task.latitud}</td>
-                  <td>{task.Nombre_Finca}</td>
                   <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                   <td>
                     <button
