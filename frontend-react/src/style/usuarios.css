@@ -146,3 +146,26 @@
     font-size: 16px;
     /* Tamaño del texto */
   }
+
+  .search-container {
+    position: absolute;
+    top: 66px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  .search-container input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #212121;
+    color: white;
+  }
+  
+  
+  
+  .search-container input::placeholder {
+    color: #ffffff; /* Placeholder blanco */
+  }
