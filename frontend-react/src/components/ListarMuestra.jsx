@@ -3,8 +3,9 @@
   import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
   import {faX }  from'@fortawesome/free-solid-svg-icons'
   // import '../style/RegistrarMuestra.css'
+  import Api from "../services/api";
   import Sweet from "../helpers/Sweet";
- 
+
 
   async function verificarCodigo(codigo, data) {
     try {
@@ -44,6 +45,7 @@
     const [showModal1, setShowModal1] = useState(false);  
     const [showModal2, setShowModal2] = useState(false);
     const [showModal3, setShowModal3] = useState(false);
+    const [showModal4, setShowModal4] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
     const modalMuestraRef = useRef(null);
     let modalVisible = false; 
@@ -62,9 +64,9 @@
     }
 
 
-    useEffect(()=>{
-      listarMuestra()
-    },[]);
+    // useEffect(()=>{
+    //   listarMuestra()
+    // },[]);
 
 
 
@@ -86,6 +88,12 @@
       console.log("modal" , modalId);
 
       setShowModal3(!showModal3);
+    }
+    else if (modalId === 4) {
+      console.log("modal" , modalId);
+
+      setShowModal4(!showModal4);
+      setShowModal1(!showModal1);
     }
   };
   const hideAllModals = () => {
@@ -121,28 +129,43 @@
   };
   
 
+  
 
+  useEffect(() => {
+    const listarMuestra = async () => {
+
+      try{
+        const response = await Api.get("muestra/listar");
+        setMuestra(response.data);
+        console.log("Muestras", response.data);
+      } catch (error) {
+        console.error("Error listando municipios", error);
+      }
+    };
+    listarMuestra();
+
+    }, [])
 
 
       
-  async function listarMuestra(){
-    try {
-      // console.log(Api)
-      const response = await  fetch('http://localhost:4000/muestra/listar', {
-        method: "get",
-        headers: {
-            "content-type": "application/json",
-        },
-      })
-      const data= await response.json();
-        setMuestra(data);
-        console.log(data)
+  // async function listarMuestra(){
+  //   try {
+  //     // console.log(Api)
+  //     const response = await  fetch('http://localhost:4000/muestra/listar', {
+  //       method: "get",
+  //       headers: {
+  //           "content-type": "application/json",
+  //       },
+  //     })
+  //     const data= await response.json();
+  //       setMuestra(data);
+  //       console.log(data)
 
-      }catch(e){
-        console.log(e + "error")
+  //     }catch(e){
+  //       console.log(e + "error")
 
-      }
-  }
+  //     }
+  // }
 
 
     function RegistrarMuestra(){
@@ -306,7 +329,16 @@
   
     
     return (
+
+
+      
       <div>
+          <div id="modalInfo4" className={`modal-info ${showModal4 ? 'show' : ''}`} showModal={showModal4}>
+            <h1>Hola mundo</h1>
+          </div>
+
+
+
             <div id="modalInfo3" className={`modal-info ${showModal3 ? 'show' : ''}`}  showModal={showModal3} >
     <form className="formulario-muestra"  method="post">
       <div className="btn-x" onClick={hideAllModals}>
@@ -494,9 +526,17 @@
       // onSubmit={handleSubmit}
         method="post" >
         <div className="columna">
+        <div className='container-input'>
+            <input type="text" id="cafes_id" name="cafes_id" className='input' placeholder=''  />
+            <label htmlFor="cafes_id" >Cafe</label>
+            <button type="button" className="btn-primary" onClick={() => {toggleModal(4) }}>cafe</button> 
+
+
+          </div>
           <div className='container-input'>
             <input type="date" id="fecha_creacion" name="fecha_creacion" className='input' placeholder='' />
             <label htmlFor="fecha_creacion" className='label'>Campo 1:</label>
+            
           </div>
           <div className='container-input'>
             <input type="text" id="codigo_externo" name="codigo_externo" className='input' placeholder='' value={codigo}  />
@@ -526,13 +566,14 @@
             <input type="text" id="tipo_fermentacion" name="tipo_fermentacion" className='input' placeholder=''   />
             <label htmlFor="tipo_fermentacion" className='label'>Tipo de fermentacion</label>
           </div>
+          
+        </div>
+
+        <div className="columna">
           <div className='container-input' >
             <input type="text" id="densidad_cafe_verde" name="densidad_cafe_verde" className='input' placeholder=''  />
             <label htmlFor="densidad_cafe_verde" className='label'>Densidad de cafe verde</label>
           </div>
-        </div>
-
-        <div className="columna">
           <div className='container-input'>
             <input type="date" id="fecha_procesamiento" name="fecha_procesamiento" className='input'  placeholder='' />
             <label htmlFor="fecha_procesamiento"  className='label'>Fecha de procesamiento</label>
@@ -561,10 +602,7 @@
             <input type="text" id="presentacion" name="presentacion" className='input' placeholder='' />
             <label htmlFor="presentacion" className='label'>Presentacion</label>
           </div>
-          <div className='container-input'>
-            <input type="text" id="cafes_id" name="cafes_id" className='input' placeholder='' />
-            <label htmlFor="cafes_id" >Cafe</label>
-          </div>
+          
           <button className="btn-reg-mue" type="button" onClick={hideAllModals}>
             Cancelar
         </button>
@@ -625,6 +663,7 @@
                       >
                         Activar
                       </button>
+
                       
                         ) : (
                           <button
@@ -653,6 +692,7 @@
                                   >Mas
                                   </button>
                       </td>
+
 
                     </tr>
                   ))}
