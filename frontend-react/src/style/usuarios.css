@@ -14,120 +14,124 @@
   overflow: hidden; /* Evitar que el contenido sobresalga del contenedor */
 }
 
-
 .table1 {
     width: 100%;
     border-collapse: collapse;
+}
 
-  }
-  
-  .table1 th,
-  .table1 td {
+.table1 th,
+.table1 td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
-  }
-  
-  .table1 th {
+}
+
+.table1 th {
     background-color: rgba(30,30,30);
     color: white;
-  }
-  
-  .table1 tr:hover {
+}
+
+.table1 tr:hover {
     background-color: #968c8c;
-  }
-  .border-t{
+}
+.border-t{
     background-color: #2980b9;
     color: rgb(255, 255, 255);
-  }
-  
-/* 
-  //estilos fincas registrar// */
+}
 
-
-.tabla2 {
-    backdrop-filter: blur(10px);
-    width: 350px;
-    margin: auto;
+/* Estilos para el modal de registro y actualización */
+.modal-registrar,
+.modal-actualizar {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 80%;
+    max-width: 400px;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: rgb(30, 30, 30, 50%);
-    border-bottom:1px black solid;
-  }
-  
-  .tabla2 h1 {
     color: white;
-    text-decoration: none   ;
-    text-align: center;
-    font-weight: bold;
- 
-    font-size: 1.5rem;
-    margin: 20px 0;
-  }
-  
-  .tabla2 div {
-    margin-bottom: 15px;
-  }
-  
-  .tabla2 input {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-registrar form,
+.modal-actualizar form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-registrar input,
+.modal-actualizar input,
+.modal-registrar select,
+.modal-actualizar select {
     width: 100%;
     padding: 10px;
-    /* border-bottom: 1px solid #ccc; */
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    background-color: transparent;
-    border: none;
-    border-bottom:1px rgb(153, 151, 151) solid;
-    color: white;
-    outline: none;
-  }
-  
-  /* Efecto del placeholder */
-  .tabla2 input + label {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    /* color: #ffffff; */
-    font-size: 16px;
-    pointer-events: none;
-    transition: transform 0.3s, font-size 0.3s, color 0.3s;
-    
-  }
-  
-  /* Placeholder transformado al enfocar el campo */
-  .tabla2 input:focus + label,
-  .tabla2 input:not(:placeholder-shown) + label {
-    transform: translateY(-100%) scale(1.2);
-    font-size: 12px;
-    color: rgb(255, 255, 255);
-    top: 10px;
-    transition: all 0.5s;
-  }
-  
-  .tabla2 button {
-    background-color: #3498db;
-    color: #fff;
-    font-weight: bold;
-    padding: 10px 15px;
+    margin: 5px 0;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .tabla2 button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    outline: none;
+}
+
+.modal-registrar,
+.modal-actualizar {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5); /* Cambiar el valor de opacidad */
+    width: 80%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.modal-registrar button:hover,
+.modal-actualizar button:hover {
     background-color: #2980b9;
-  }
-  
-  .div-input{
-    position: relative;
-  }
+}
 
-  .btn-registrar {
+.close-modal-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
 
+/* Estilos adicionales */
+
+.search-container {
+    position: absolute;
+    top: 66px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.search-container input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #212121;
+    color: white;
+}
+
+.search-container input::placeholder {
+    color: #ffffff; /* Placeholder blanco */
+}
+
+.btn-registrar {
     display: inline-block;
     width: 150px;
     padding: 10px 20px;
@@ -145,27 +149,4 @@
     /* Cambiar cursor al pasar por encima */
     font-size: 16px;
     /* Tamaño del texto */
-  }
-
-  .search-container {
-    position: absolute;
-    top: 66px;
-    right: 0;
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-  }
-  
-  .search-container input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #212121;
-    color: white;
-  }
-  
-  
-  
-  .search-container input::placeholder {
-    color: #ffffff; /* Placeholder blanco */
-  }
+}
