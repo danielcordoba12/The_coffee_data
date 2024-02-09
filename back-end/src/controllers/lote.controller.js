@@ -6,7 +6,7 @@ export const listarlote= async (req,res)=>{
     try{
         
 
-        const[result]= await pool.query("select l.id, u.nombre as nombre_usuario, l.fecha_creacion, l.nombre, l.latitud, l.longitud,l.n_plantas, l.n_plantas, f.nombre as Nombre_Finca, l.estado from lotes l join fincas f on f.id = l.fincas_id join usuarios u on u.id = f.usuarios_id order by l.estado desc, l.fecha_creacion DESC");
+        const[result]= await pool.query("select l.id, u.nombre as nombre_usuario, l.fecha_creacion, l.nombre, l.latitud, l.longitud, l.n_plantas, f.nombre as Nombre_Finca, l.estado from lotes l join fincas f on f.id = l.fincas_id join usuarios u on u.id = f.usuarios_id order by l.estado desc, l.fecha_creacion DESC");
         res.status(200).json(result);
 
 
@@ -16,7 +16,7 @@ export const listarlote= async (req,res)=>{
 };
 export const listarPorFinca= async (req,res)=>{
     try{
-        const[result]= await pool.query(`select l.id, l.fecha_creacion, l.nombre, l.latitud, l.longitud, f.nombre as nombre_finca,l.n_plantas, l.estado from lotes l join fincas f on f.id = l.fincas_id WHERE f.id = ${req.params.id} order by l.estado desc, l.fecha_creacion DESC`);
+        const[result]= await pool.query(`select l.n_plantas, var.nombre as nombre_variedad, l.id, l.fecha_creacion, l.nombre, l.latitud, l.longitud, f.nombre as nombre_finca, l.estado from lotes l join fincas f on f.id = l.fincas_id left JOIN cafes ca on ca.lotes_id = l.id  LEFT JOIN variedades var on var.id = ca.variedades_id WHERE f.id = ${req.params.id} GROUP BY l.id order by l.estado desc, l.fecha_creacion DESC`);
         res.status(200).json(result);
 
         console.log(result)
@@ -55,6 +55,8 @@ function validate(data) {
           if (keys[x] == "string") {
             if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
               errros[inputs[e]] = referencia + " no puede estar vacío"
+            } else if (!(/[a-zA-Z]+$/).test(data[keys[x]][inputs[e]]["value"])) {
+              errros[inputs[e]] = referencia + " debe ser un string"
             } else {
               result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
             }
