@@ -55,8 +55,6 @@ function validate(data) {
           if (keys[x] == "string") {
             if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
               errros[inputs[e]] = referencia + " no puede estar vacío"
-            } else if (!(/[a-zA-Z]+$/).test(data[keys[x]][inputs[e]]["value"])) {
-              errros[inputs[e]] = referencia + " debe ser un string"
             } else {
               result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
             }
