@@ -335,6 +335,8 @@ const FincaView = () => {
                                             <th>Finca</th>
                                             <th>Latitud</th>
                                             <th>Longitud</th>
+                                            <th>N° Plantas</th>
+                                            <th>Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -347,6 +349,9 @@ const FincaView = () => {
                                                     <td>{lote.nombre_finca}</td>
                                                     <td>{lote.latitud}</td>
                                                     <td>{lote.longitud}</td>
+                                                    <td>{lote.n_plantas}</td>
+                                                    <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+
                                                 </tr>
                                             })
                                         : <tr>
