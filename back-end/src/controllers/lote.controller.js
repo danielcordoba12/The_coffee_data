@@ -6,7 +6,7 @@ export const listarlote= async (req,res)=>{
     try{
         
 
-        const[result]= await pool.query("select l.id, u.nombre as nombre_usuario, l.fecha_creacion, l.nombre, l.latitud, l.longitud, l.n_plantas, f.nombre as Nombre_Finca, l.estado from lotes l join fincas f on f.id = l.fincas_id join usuarios u on u.id = f.usuarios_id order by l.estado desc, l.fecha_creacion DESC");
+        const[result]= await pool.query("select l.id, u.nombre as nombre_usuario, l.fecha_creacion, l.nombre, l.latitud, l.longitud,l.n_plantas, l.n_plantas, f.nombre as Nombre_Finca, l.estado from lotes l join fincas f on f.id = l.fincas_id join usuarios u on u.id = f.usuarios_id order by l.estado desc, l.fecha_creacion DESC");
         res.status(200).json(result);
 
 

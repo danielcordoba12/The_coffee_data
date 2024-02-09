@@ -24,9 +24,7 @@ const FincaView = () => {
     const nombre = useRef();
     const longitud = useRef();
     const latitud = useRef();
-    const usuarios_id = useRef();
-    const municipios_id = useRef();
-    const noombre_vereda = useRef();
+    const n_plantas = useRef();
 
     const navigate = useNavigate();
 
@@ -496,6 +494,7 @@ const FincaView = () => {
                                 latitud: latitud.current.value,
                                 longitud: longitud.current.value,
                                 fincas_id: fincas_id.current.value,
+                                n_plantas: n_plantas.current.value,
                             });
                         }}
                         method="post"
@@ -513,6 +512,10 @@ const FincaView = () => {
                         <div className="div-input">
                             <input className="input-register" type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
                             <label htmlFor="longitud">Longitud</label>
+                        </div>
+                        <div className="div-input">
+                            <input className="input-register" type="number" id="n_plantas" name="n_plantas" ref={n_plantas} placeholder="" />
+                            <label htmlFor="longitud">n_plantas</label>
                         </div>
                         <input value={idFinca} type="hidden" id="fincas_id " name="fincas_id " ref={fincas_id} placeholder="" />
 
