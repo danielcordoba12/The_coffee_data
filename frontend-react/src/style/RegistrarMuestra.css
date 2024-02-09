@@ -97,9 +97,18 @@ label {
   border: none;
 }
 .select-cafe{
+  /* background-color: red; */
+  display: flex;
   border-top: none;
   border-left:none;
   border-right: none;
+  outline: none;
+  left: 0;
+  width: 100%;
+}
+.label-cafe{
+  display: flex;
+  margin-left: 0;
 }
 
 .button {
@@ -140,7 +149,6 @@ label {
 .container-input{
     position: relative;
     padding: 12px;
-
 
   }
 

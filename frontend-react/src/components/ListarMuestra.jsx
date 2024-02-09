@@ -521,7 +521,7 @@
         <div className="columna">
         <div className='container-input'>
             {/* <input type="text" id="cafes_id" name="cafes_id" className='input' placeholder=''  /> */}
-            <label htmlFor="cafes_id" >Cafe</label>
+            <label htmlFor="cafes_id" className='label-cafe' >Cafe</label>
             <select name="" id="" className="select-cafe">
               <option value="" className='option-cafe'> Seleccione una opcion</option>
               <option value="" className='option-cafe'> Seleccione una opcion</option>
