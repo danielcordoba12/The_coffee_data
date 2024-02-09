@@ -46,7 +46,7 @@ const ListarAnalisis = () => {
         buscarFincas();
     }, []);
     return (<>
-        <img src="../../public/img/fondo.png" alt="" className="fondo2" />
+        <img src="../../public/img/fondo_coffee.jpg" alt="" className="fondo2" />
         <div className="tablalistar">
 
             <div className="box-search">
@@ -72,7 +72,7 @@ const ListarAnalisis = () => {
                 <tbody>
                     {fincas.map((task) => (
                         <tr key={task.id} className="border-t">
-                             <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td> 
+                            <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td> 
                             <td>{task.calidad}</td>
                             <td>{task.nombre_tipo_analisis}</td>
                             <td>{task.muestras_id}</td>
@@ -83,7 +83,7 @@ const ListarAnalisis = () => {
                                 <button
                                     type="button"
                                     className="btn-primary"
-                                    onClick={() => handleUpdate(task.id)}
+                                    onClick={() => handleEditUser1(task.id)}
                                 >
                                     <Link to={`/analisis/update/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         Modificar
@@ -94,10 +94,10 @@ const ListarAnalisis = () => {
                                 <button
                                     type="button"
                                     className="btn-registrar-d"
-                                    onClick={() => handleUpdate(task.nombre_usuario)}
+                                    onClick={() => handleUpdate(task.id)}
                                 >
                                     <Link to={`/analisis/registrar/`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                        Nuevo Analisis
+                                        Desactivar
                                     </Link>
                                 </button>
                             </td>

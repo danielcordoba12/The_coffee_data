@@ -14,6 +14,17 @@ export const listarlote= async (req,res)=>{
         res.status(500).json({ message:'erro en listarlote: '+err});
     }
 };
+export const listarPorFinca= async (req,res)=>{
+    try{
+        const[result]= await pool.query(`select l.n_plantas, var.nombre as nombre_variedad, l.id, l.fecha_creacion, l.nombre, l.latitud, l.longitud, f.nombre as nombre_finca, l.estado from lotes l join fincas f on f.id = l.fincas_id left JOIN cafes ca on ca.lotes_id = l.id  LEFT JOIN variedades var on var.id = ca.variedades_id WHERE f.id = ${req.params.id} GROUP BY l.id order by l.estado desc, l.fecha_creacion DESC`);
+        res.status(200).json(result);
+
+        console.log(result)
+
+    }catch(err){
+        res.status(500).json({ message:'erro en listarlote: '+err});
+    }
+};
 
 export const buscarlote= async (req,res)=>{
     try{
