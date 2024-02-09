@@ -97,7 +97,7 @@ const ListarAnalisis = () => {
                                     onClick={() => handleUpdate(task.id)}
                                 >
                                     <Link to={`/analisis/registrar/`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                        Nuevo Analisis
+                                        Desactivar
                                     </Link>
                                 </button>
                             </td>
