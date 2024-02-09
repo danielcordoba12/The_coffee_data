@@ -130,6 +130,7 @@ const Cafe = () => {
                     <tr className="bg-gray-200">
                         <th>id</th>
                         <th>Propietario</th>
+                        <th>finca</th>
                         <th>Municipio</th>
                         <th>lote</th>
                         <th>variedad</th>
@@ -144,6 +145,7 @@ const Cafe = () => {
                             <tr key={task.id} className="border-t">
                                 <td>{task.id}</td>
                                 <td>{task.nombre_usuario}</td>
+                                <td>{task.nombre_finca}</td>
                                 <td>{task.nombre_municipio}</td>
                                 <td>{task.numero_lote}</td>
                                 <td>{task.nombre_variedad}</td>
