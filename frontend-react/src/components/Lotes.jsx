@@ -108,7 +108,7 @@ const lote = () => {
 
           {/* icono de buscar */}
           <svg x="0px" y="0px" viewBox="0 0 60 60" width="26" height="26" >
-            <path class="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
+            <path className="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
                 c0,9.8,8,17.8,17.8,17.8c4.4,0,8.4-1.6,11.5-4.2l16.1,16.1L54.8,51.4z M10.2,23.8C10.2,15.6,16.9,9,25.1,
                 9c8.2,0,14.8,6.7,14.8,14.8c0,8.2-6.7,14.8-14.8,14.8C16.9,38.7,10.2,32,10.2,23.8z">
             </path>
@@ -130,10 +130,12 @@ const lote = () => {
             <tr className="bg-gray-200">
               <th>id</th>
               <th>Fecha Creación</th>
-              <th>Nombre</th>
+              <th>Propietario</th>
+              <th>Finca</th>
+              <th>lote</th>
               <th>Longitud</th>
               <th>Latitud</th>
-              <th>Finca</th>
+              <th>N° plantas</th>
               <th>Estado</th>
               <th>opciones</th>
             </tr>
@@ -147,10 +149,12 @@ const lote = () => {
                 <tr key={task.id} className="border-t">
                   <td>{task.id}</td>
                   <td>{task.fecha_creacion}</td>
+                  <td>{task.nombre_usuario}</td>
+                  <td>{task.Nombre_Finca}</td>
                   <td>{task.nombre}</td>
                   <td>{task.longitud}</td>
                   <td>{task.latitud}</td>
-                  <td>{task.Nombre_Finca}</td>
+                  <td>{task.n_plantas}</td>
                   <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                   <td>
                     <button

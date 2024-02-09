@@ -129,10 +129,13 @@ const Cafe = () => {
                 <thead>
                     <tr className="bg-gray-200">
                         <th>id</th>
+                        <th>Propietario</th>
+                        <th>finca</th>
+                        <th>Municipio</th>
                         <th>lote</th>
                         <th>variedad</th>
+                        <th>Estado</th>
                         <th>opciones</th>
-                        <th>estado</th>
 
                     </tr>
                 </thead>
@@ -141,6 +144,9 @@ const Cafe = () => {
                         .map((task) => (
                             <tr key={task.id} className="border-t">
                                 <td>{task.id}</td>
+                                <td>{task.nombre_usuario}</td>
+                                <td>{task.nombre_finca}</td>
+                                <td>{task.nombre_municipio}</td>
                                 <td>{task.numero_lote}</td>
                                 <td>{task.nombre_variedad}</td>
                                 <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>

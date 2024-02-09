@@ -2,25 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Api from "../services/api";
 import Sweet from "../helpers/Sweet";
+
 const EditarAnalisis = () => {
 
     const { id } = useParams();
-    const [analisis, setcafes] = useState({ fecha_analisis: '' , calidad: '', nombre_tipo_analisis: '', nombre_usuario: '', muestras_id: '' });
+    const [analisis, setAnalisis] = useState({ fecha_analisis: '' , calidad: '', nombre_tipo_analisis: '', nombre_usuario: '', muestras_id: '' });
     const navigate = useNavigate()
 
     useEffect(() => {
-        const buscaranalisis = async () => {
+        const buscaranalis = async () => {
             try {
-                const response = await Api.get(`/analisis/buscar/${id}`);
-                setcafes(response.data[0]);
+                const response = await Api.get(`/analisis/buscar${id}`);
+                setAnalisis(response.data[0]);
             } catch (error) {
                 console.error('Error en buscar ', error);
-
             }
         };
-        buscaranalisis();
+        buscaranalis();
     }, [id]);
-
     const handleEditUser1 = async () => {
         try {
             await Api.put(`/analisis/update/${id}`, analisis);
@@ -37,7 +36,7 @@ const EditarAnalisis = () => {
         const result = await Sweet.confimarDeshabilitar({});
         if (result.isConfirmed){
             try {
-                await Api.patch(`/analisis/desactivar/${id}`, analisis);
+                await Api.patch(`/analisis/desactivar/${id}`,analisis);
                 navigate("/analisis/listar")
                
             } catch (error) {
@@ -50,17 +49,13 @@ const EditarAnalisis = () => {
     };
     const handleEditUser3 = async () => {
         const result = await Sweet.confimarHabilitar({});
-        if (result.isConfirmed) {
-            try {
-                await Api.patch(`/analisis/activar/${id}`, analisis);
-                navigate("/analisis/listar")
+        try {
+            await Api.patch(`/analisis/activar/${id}`, analisis);
+            navigate("/analisis/listar")
 
-            } catch (error) {
-                console.error('Error activando el analisis: ', error);
-            }
-            
+        } catch (error) {
+            console.error('Error activando el analisis: ', error);
         }
-        Sweet.habilitacionExitosa();
      
        
     };
@@ -75,32 +70,32 @@ const EditarAnalisis = () => {
                 type="date"
                 placeholder="fecha_analisis"
                 value={analisis.fecha_analisis}
-                onChange={(e) => setFincas({ ...analisis, fecha_analisis: e.target.value })}
+                onChange={(e) => setAnalisis({ ...analisis, fecha_analisis: e.target.value })}
               />
             <input
                     className="input-field"
                     type="enum"
                     placeholder="calidad"
                     value={analisis.calidad}
-                    onChange={(e) => setcafes({ ...analisis, calidad: e.target.value })}
+                    onChange={(e) => setAnalisis({ ...analisis, calidad: e.target.value })}
                 />
                  <input
                     className="input-field" 
                     type="text" placeholder="nombre_tipo_analisis " 
                     value={analisis.nombre_tipo_analisis} 
-                    onChange={(e) => setcafes({ ...analisis, nombre_tipo_analisis : e.target.value })}
+                    onChange={(e) => setAnalisis({ ...analisis, nombre_tipo_analisis : e.target.value })}
                 />
                 <input
                     className="input-field" 
                     type="number" placeholder="muestras_id " 
                     value={analisis.muestras_id} 
-                    onChange={(e) => setcafes({ ...analisis, muestras_id : e.target.value })}
+                    onChange={(e) => setAnalisis({ ...analisis, muestras_id : e.target.value })}
                 />
                    <input
                     className="input-field" 
-                    type="text" placeholder="nombre " 
+                    type="text" placeholder="nombre" 
                     value={analisis.nombre_usuario} 
-                    onChange={(e) => setcafes({ ...analisis, nombre_usuario : e.target.value })}
+                    onChange={(e) => setAnalisis({ ...analisis, nombre_usuario : e.target.value })}
                 />
                 
                 

@@ -6,7 +6,7 @@ import {validationResult} from 'express-validator';
 export const listarcafe= async (req,res)=>{
     try{
   
-        const[result]= await pool.query("select c.id, c.estado, l.nombre as numero_lote, v.nombre as nombre_variedad from cafes c join lotes l on l.id = c.lotes_id join variedades v on v.id = c.variedades_id order by c.estado desc");
+        const[result]= await pool.query("select c.id,u.numero_documentos as documento,f.nombre as nombre_finca, u.nombre as nombre_usuario, m.nombre as nombre_municipio, c.estado, l.nombre as numero_lote, v.nombre as nombre_variedad from cafes c join lotes l on l.id = c.lotes_id join fincas f on f.id = l.fincas_id join usuarios u on u.id = f.usuarios_id join municipios m on m.id = f.municipios_id   join variedades v on v.id = c.variedades_id order by c.estado desc");
         res.status(200).json(result);
   
   

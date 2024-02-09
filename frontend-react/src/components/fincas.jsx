@@ -4,6 +4,7 @@ import Api from "../services/api";
 import "../style/fincas.css";
 import Sweet from "../helpers/Sweet";
 
+
 const FincaView = () => {
     const [fincas, setFincas] = useState([]);
     const [idFinca, setIdFinca] = useState([]);
@@ -13,14 +14,17 @@ const FincaView = () => {
     const [lotes, setLotes] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [municipios, setMunicipios] = useState([]);
+    const [isLotesModalOpen, setLotesModalOpen] = useState(false);
+    const [selectedFincaLotes, setSelectedFincaLotes] = useState(null);
+    const [modalLotes, setModalLotes] = useState({});
+    const [isLoadingLotes, setLoadingLotes] = useState(false);
+
 
     const fincas_id = useRef();
     const nombre = useRef();
     const longitud = useRef();
     const latitud = useRef();
-    const usuarios_id = useRef();
-    const municipios_id = useRef();
-    const noombre_vereda = useRef();
+    const n_plantas = useRef();
 
     const navigate = useNavigate();
 
@@ -139,6 +143,23 @@ const FincaView = () => {
         setRegistrarModalOpen(false);
     };
 
+    const openLotesModal = async (fincaId) => {
+        setSelectedFincaLotes(fincaId);
+        setLotesModalOpen(true);
+
+        try {
+            setLoadingLotes(true);
+            const response = await Api.get(`/lote/listarPorFinca/${fincaId}`);
+
+            setModalLotes(response.data);
+        } catch (error) {
+            console.error("Error fetching lotes:", error);
+        } finally {
+            setLoadingLotes(false);
+        }
+    };
+
+
     const handleRegistrar = async (data) => {
         // Obtener el ID del usuario actualmente autenticado o ajustar según tu lógica
 
@@ -152,7 +173,7 @@ const FincaView = () => {
                 token: "xd",
             },
         };
-        
+
 
         try {
             const data = await Api.post("lote/registrar", LoteData, headers);
@@ -173,7 +194,7 @@ const FincaView = () => {
                     }
 
                 }
-            }else{
+            } else {
                 console.log(data.data)
                 /* Sweet.registroExitoso();
                 closeRegistrarModal(); */
@@ -183,7 +204,7 @@ const FincaView = () => {
                 location.href = "/lote"
             }
 
-           
+
 
 
         } catch (error) {
@@ -208,7 +229,7 @@ const FincaView = () => {
 
                     {/* icono de buscar */}
                     <svg x="0px" y="0px" viewBox="0 0 60 60" width="26" height="26" >
-                        <path class="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
+                        <path className="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
                 c0,9.8,8,17.8,17.8,17.8c4.4,0,8.4-1.6,11.5-4.2l16.1,16.1L54.8,51.4z M10.2,23.8C10.2,15.6,16.9,9,25.1,
                 9c8.2,0,14.8,6.7,14.8,14.8c0,8.2-6.7,14.8-14.8,14.8C16.9,38.7,10.2,32,10.2,23.8z">
                         </path>
@@ -223,7 +244,7 @@ const FincaView = () => {
                     />
 
                 </div>
-                
+
 
                 <table className="tableprincipal">
                     <thead>
@@ -258,22 +279,93 @@ const FincaView = () => {
                                     <td>{task.estado === 1 ? "Activo" : "Desactivado"}</td>
                                     <td>{task.noombre_vereda}</td>
                                     <td>
-                                        <button
-                                            type="button"
-                                            className="btn-primary"
-                                            onClick={() => openEditarModal(task.id)}
-                                        >
-                                            Modificar
-                                        </button>
-                                        <button className="btn-registrar" onClick={() => { setIdFinca(task.id); openRegistrarModal() }}>
-                                            Registrar Lote
-                                        </button>
+                                        <div className="btn-group">
+                                            <button
+                                                type="button"
+                                                className="btn-primary"
+                                                onClick={() => openEditarModal(task.id)}
+                                            >
+                                                Modificar
+                                            </button>
+                                            <div className="btn-secondary">
+                                                Lotes
+                                                <div className="btn-subgroup up">
+                                                    <button
+                                                        type="button"
+                                                        className="btn-ver"
+                                                        onClick={() => openLotesModal(task.id)}
+                                                    >
+                                                        Ver Lotes
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        className="btn-ver"
+                                                        onClick={() => { setIdFinca(task.id); openRegistrarModal() }}
+                                                    >
+                                                        Registrar Lote
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
                     </tbody>
+
                 </table>
             </div>
+            {isLotesModalOpen && (
+                <div className="modal modal-ver-lotes" tabIndex="-1" role="dialog" style={{ display: isLotesModalOpen ? 'block' : 'none' }}>
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Lotes de la Finca</h5>
+                                <button type="button" className="close" onClick={() => setLotesModalOpen(false)}>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Finca</th>
+                                            <th>Latitud</th>
+                                            <th>Longitud</th>
+                                            <th>N° Plantas</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {Object.keys(modalLotes).length > 0 ?
+                                           modalLotes.map((lote) => {
+                                                console.log(lote)
+                                                return <tr key={lote.id}>
+                                                    <td>{lote.nombre}</td>
+                                                    <td>{lote.nombre_finca}</td>
+                                                    <td>{lote.latitud}</td>
+                                                    <td>{lote.longitud}</td>
+                                                    <td>{lote.n_plantas}</td>
+                                                    <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+
+                                                </tr>
+                                            })
+                                        : <tr>
+                                            <td className="text-center p-5" colSpan={1000000}>No hay nada para mostrar</td>
+                                        </tr> }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={() => setLotesModalOpen(false)}>Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
 
             {modalFinca && (
                 <div className="tabla3">
@@ -402,6 +494,7 @@ const FincaView = () => {
                                 latitud: latitud.current.value,
                                 longitud: longitud.current.value,
                                 fincas_id: fincas_id.current.value,
+                                n_plantas: n_plantas.current.value,
                             });
                         }}
                         method="post"
@@ -419,6 +512,10 @@ const FincaView = () => {
                         <div className="div-input">
                             <input className="input-register" type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
                             <label htmlFor="longitud">Longitud</label>
+                        </div>
+                        <div className="div-input">
+                            <input className="input-register" type="number" id="n_plantas" name="n_plantas" ref={n_plantas} placeholder="" />
+                            <label htmlFor="longitud">n_plantas</label>
                         </div>
                         <input value={idFinca} type="hidden" id="fincas_id " name="fincas_id " ref={fincas_id} placeholder="" />
 

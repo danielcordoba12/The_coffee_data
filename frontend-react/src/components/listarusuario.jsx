@@ -175,15 +175,24 @@ const ListarUsuarios = () => {
                             <input type="text" ref={numeroDocumento} placeholder="Número de Documento" required />
                         </div>
                         <div className="div-input">
-                            <input type="text" ref={telefono} placeholder="Teléfono" required />
-                        </div>
-                        <div className="div-input">
-                            <input type="email" ref={correo} placeholder="Correo Electrónico" required />
-                        </div>
-                        <div className="div-input">
-                            <select ref={estado}>
-                                <option value="1">Activo</option>
-                                <option value="0">Inactivo</option>
+                        
+                            <select
+                                className="input-register"
+                                id="municipios_id"
+                                name="municipios_id"
+                                value={selectedMunicipio}
+                                onChange={(e) => {
+                                    console.log("Municipio seleccionado:", e.target.value);
+                                    setSelectedMunicipio(e.target.value);
+                                }}
+                                
+                            >
+                                <option value="" disabled>Seleccione un municipio</option>
+                                {municipios.map((municipio) => (
+                                    <option key={municipio.id} value={municipio.id}>
+                                        {municipio.nombre}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <button type="submit">Registrar Usuario</button>
