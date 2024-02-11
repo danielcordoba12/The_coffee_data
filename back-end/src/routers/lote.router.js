@@ -20,4 +20,6 @@ loteRoute.patch('/activar/:id',Activarlote);
 
 loteRoute.get('/listarPorFinca/:id',listarPorFinca);
 
+
+
 export default  loteRoute;

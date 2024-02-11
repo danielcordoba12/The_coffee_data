@@ -11,6 +11,8 @@ const FincaView = () => {
     const [modalFinca, setModalFinca] = useState(null);
     const [SelectedFincaId, setSelectedFincaId] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
+    const [selectedLoteId, setSelectedLoteId] = useState(null);
+    const [modalLote, setModalLote] = useState(null);
     const [lotes, setLotes] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [municipios, setMunicipios] = useState([]);
@@ -69,6 +71,23 @@ const FincaView = () => {
         setModalFinca(null);
     };
 
+    const openModal = async (loteId) => {
+        setSelectedLoteId(loteId);
+        
+        try {
+            const response = await Api.get(`/lote/buscar/${loteId}`);
+            setModalLote(response.data);
+        } catch (error) {
+            console.error('Error buscando el Lote', error);
+        }
+    };
+
+    const closeModal = () => {
+        setSelectedLoteId(null);
+        setModalLote(null);
+        
+    };
+
     const handleEditUser1 = async () => {
         try {
             await Api.put(`/finca/actualizar/${SelectedFincaId}`, modalFinca);
@@ -108,6 +127,52 @@ const FincaView = () => {
                 setFincas(response.data);
             } catch (error) {
                 console.error("Error activando el Finca: ", error);
+            }
+        }
+    };
+
+    // editar el lote
+
+    const loteEditUser1 = async () => {
+        try {
+            await Api.put(`/lote/actualizar/${selectedLoteId}`, modalLote);
+            Sweet.actualizacionExitosa();
+            closeModal();
+            // Recargar la lista de lotes después de la actualización
+            const response = await Api.get("lote/listar");
+            setLotes(response.data);
+        } catch (error) {
+            console.error("Error editando el Lote: ", error);
+        }
+    };
+
+    const loteEditUser2 = async () => {
+        const result = await Sweet.confimarDeshabilitar({
+        });
+        if (result.isConfirmed) {
+            try {
+                await Api.patch(`/lote/desactivar/${selectedLoteId}`, modalLote);
+                closeModal();
+                // Recargar la lista de lotes después de la desactivación
+                const response = await Api.get("lote/listar");
+                setLotes(response.data);
+            } catch (error) {
+                console.error("Error desactivando el Lote: ", error);
+            }
+        }
+    };
+
+    const loteEditUser3 = async () => {
+        const result = await Sweet.confimarHabilitar({});
+        if (result.isConfirmed) {
+            try {
+                await Api.patch(`/lote/activar/${selectedLoteId}`, modalLote);
+                closeModal();
+                // Recargar la lista de lotes después de la activación
+                const response = await Api.get("lote/listar");
+                setLotes(response.data);
+            } catch (error) {
+                console.error("Error activando el Lote: ", error);
             }
         }
     };
@@ -318,7 +383,7 @@ const FincaView = () => {
             {isLotesModalOpen && (
                 <div className="modal modal-ver-lotes" tabIndex="-1" role="dialog" style={{ display: isLotesModalOpen ? 'block' : 'none' }}>
                     <div className="modal-dialog" role="document">
-                        <div className="modal-content">
+                        <div className="modal-contents">
                             <div className="modal-header">
                                 <h5 className="modal-title">Lotes de la Finca</h5>
                                 <button type="button" className="close" onClick={() => setLotesModalOpen(false)}>
@@ -334,13 +399,15 @@ const FincaView = () => {
                                             <th>Latitud</th>
                                             <th>Longitud</th>
                                             <th>N° Plantas</th>
+                                            <th>Variedad</th>
                                             <th>Estado</th>
+                                            <th>modificar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         {Object.keys(modalLotes).length > 0 ?
-                                           modalLotes.map((lote) => {
+                                            modalLotes.map((lote) => {
                                                 console.log(lote)
                                                 return <tr key={lote.id}>
                                                     <td>{lote.nombre}</td>
@@ -348,13 +415,21 @@ const FincaView = () => {
                                                     <td>{lote.latitud}</td>
                                                     <td>{lote.longitud}</td>
                                                     <td>{lote.n_plantas}</td>
+                                                    <td>{lote.nombre_variedad ? lote.nombre_variedad : <span className="span-no-registra"> No registra</span>}</td>
                                                     <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                                    <td><button
+                                                        type="button"
+                                                        className="btn-primary"
+                                                        onClick={() => openModal(lote.id)}
+                                                    >
+                                                        Modificar
+                                                    </button></td>
 
                                                 </tr>
                                             })
-                                        : <tr>
-                                            <td className="text-center p-5" colSpan={1000000}>No hay nada para mostrar</td>
-                                        </tr> }
+                                            : <tr>
+                                                <td className="text-center p-5" colSpan={1000000}>No hay nada para mostrar</td>
+                                            </tr>}
                                     </tbody>
                                 </table>
                             </div>
@@ -365,6 +440,7 @@ const FincaView = () => {
                     </div>
                 </div>
             )}
+        
 
 
             {modalFinca && (
@@ -530,6 +606,72 @@ const FincaView = () => {
                     </form>
                 </div>
             )}
+
+{modalLote && (
+        <div className="tabla3">
+          <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
+          <div className="max-w-xs">
+            <input
+              className="input-field" type="date" placeholder="fecha_creacion" value={modalLote.fecha_creacion} onChange={(e) => setModalLote({ ...modalLote, fecha_creacion: e.target.value })}
+            />
+            <input
+              className="input-field"
+              type="text"
+              placeholder="nombre"
+              value={modalLote.nombre}
+              onChange={(e) => setModalLote({ ...modalLote, nombre: e.target.value })}
+            />
+            <input
+              className="input-field"
+              type="text"
+              placeholder="longitud"
+              value={modalLote.longitud}
+              onChange={(e) => setModalLote({ ...modalLote, longitud: e.target.value })}
+            />
+            <input
+              className="input-field"
+              type="text"
+              placeholder="latitud"
+              value={modalLote.latitud}
+              onChange={(e) => setModalLote({ ...modalLote, latitud: e.target.value })}
+            />
+            <input
+              className="input-field"
+              type="number"
+              placeholder="fincas_id"
+              value={modalLote.fincas_id}
+              onChange={(e) => setModalLote({ ...modalLote, fincas_id: e.target.value })}
+            />
+            <button
+              className="btn-primary"
+              onClick={loteEditUser1}
+            >
+              Actualizar
+            </button>
+            {modalLote.estado === 1 ? (
+              <button
+                className="btn-secondary"
+                onClick={loteEditUser2}
+              >
+                Desactivar
+              </button>
+            ) : (
+              <button
+                className="btn-tertiary"
+                onClick={loteEditUser3}
+              >
+                Activar
+              </button>
+            )}
+            <button
+              className="close-modal-btn"
+              onClick={closeModal}
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
 
 
 

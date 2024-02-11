@@ -248,7 +248,7 @@ body.modal-open {
   background-color: rgb(37, 25, 25, 0.8);
   padding: 20px;
   border-radius: 8px;
-  z-index: 1000;
+  z-index: 1;
   max-height: 95%;
   max-width: 70%;
   /* Ajusta el ancho máximo según tus necesidades */
@@ -633,4 +633,29 @@ body {
 .modal-ver-lotes .modal-dialog{
   margin: unset;
   width: 100%;
+}
+
+.modal-contents {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+ 
+  color: var(--bs-modal-color);
+  pointer-events: auto;
+  background-color: var(--bs-modal-bg);
+  background-clip: padding-box;
+  border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
+  border-radius: var(--bs-modal-border-radius);
+  outline: 0;
+}
+
+.span-no-registra{
+  color: #d4d4d4;
+  font-weight: bolder;
+  text-decoration: line-through;
+}
+
+
+.modal-ver-lotes{
+  z-index: 2 !important;
 }
