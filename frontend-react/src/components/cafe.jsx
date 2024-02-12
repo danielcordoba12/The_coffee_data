@@ -225,7 +225,7 @@ const Cafe = () => {
                     Registrar Cafe
                 </h1>
 
-                <form
+                <form   
                     className="contenido-regi"
                     onSubmit={(e) => {
                         e.preventDefault();
