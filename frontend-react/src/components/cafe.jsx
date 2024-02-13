@@ -15,9 +15,12 @@ const Cafe = () => {
     const [filtroVariedades, setFiltroVariedades] = useState('');
     const [lote, setLotes] = useState([]);
     const [variedades, setvariedades] = useState([]);
+    const [dataSelect, setDataSelect] = useState({});
 
 
     const lotes_id = useRef();
+
+
     const variedades_id = useRef();
 
     const navigate = useNavigate()
@@ -37,17 +40,17 @@ const Cafe = () => {
 
     useEffect(() => {
         const buscarLotes = async () => {
-          try {
-            const response = await Api.get("lote/listar");
-            setLotes(response.data);
-          } catch (error) {
-            console.error("Error fetching tasks:", error);
-          }
+            try {
+                const response = await Api.get("lote/listar");
+                setLotes(response.data);
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
         };
         buscarLotes();
-      }, []);
+    }, []);
 
-      useEffect(() => {
+    useEffect(() => {
         const buscarvariedades = async () => {
             try {
                 const response = await Api.get('variedad/listar');
@@ -58,7 +61,7 @@ const Cafe = () => {
         }
         buscarvariedades();
     }, []);
-    
+
 
     const openModal = async (cafeId) => {
         setSelectedCafeId(cafeId);
@@ -125,12 +128,13 @@ const Cafe = () => {
     };
 
     const handleRegistrar = async (data) => {
+        console.log(data, "dataaaaaaa")
         const headers = {
             headers: {
                 token: "xd",
             },
         };
-        
+
         try {
             await Api.post("cafe/registrar", data, headers);
             Sweet.registroExitoso();
@@ -149,11 +153,11 @@ const Cafe = () => {
         setFiltro(event.target.value.toLowerCase());
         setMostrarOpciones(true);
     };
-    const handleClickOpcion = (lote) => {
-        // Actualizamos el filtro con el valor seleccionado
-        setFiltro(`${lote.id}-${lote.nombre_usuario}-${lote.Nombre_Finca}-${lote.nombre}`);
-        setMostrarOpciones(false);
-    };
+    /*     const handleClickOpcion = (lote) => {
+            // Actualizamos el filtro con el valor seleccionado
+            setFiltro(`${lote.id}-${lote.nombre_usuario}-${lote.Nombre_Finca}-${lote.nombre}`);
+            setMostrarOpciones(false);
+        }; */
 
     // este es el filtro de variedades
 
@@ -166,7 +170,78 @@ const Cafe = () => {
         setFiltroVariedades(`${variedades.id}-${variedades.nombre}`);
         setMostrarOpciones(false);
     };
+    function clearFocusInput(Element) {
+        let inputSearch = document.getElementById(Element)
 
+        if (inputSearch) {
+            
+            let divOptions = inputSearch.parentNode.querySelectorAll(".select-options-input");
+            if(divOptions.length > 0){
+                divOptions[0].style.display = "none"
+            }
+            let select = inputSearch.parentNode.querySelectorAll(".option-select-search")
+            for (let s = 0; s < select.length; s++) {
+                let elementValue = inputSearch.getAttribute("id")
+                
+                if(dataSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")){
+                    select[s].classList.add("option-select-focus")
+                }else{
+                    select[s].classList.remove("option-select-focus")
+                }
+                
+            }
+        }
+    }
+    useEffect(() => {
+
+        let inputSearch = document.querySelectorAll(".input-search")
+
+        if (inputSearch.length > 0) {
+            for (let s = 0; s < inputSearch.length; s++) {
+                inputSearch[s].addEventListener("blur",function(){
+                    let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-options-input");
+                    if(divOptions.length > 0){
+                       setTimeout(() => {
+                        divOptions[0].style.display = "none"
+                       }, 100);
+                    }
+
+                })
+                inputSearch[s].addEventListener("input", function () {
+                    let parent = inputSearch[s].parentNode
+                    if (parent) {
+                        let selectOptionsInput = parent.querySelectorAll(".select-options-input");
+                        if (selectOptionsInput[0]) {
+                            selectOptionsInput[0].style.display = "block"
+                            let options = selectOptionsInput[0].querySelectorAll("div");
+                            for (let o = 0; o < options.length; o++) {
+                                if (options[o].innerHTML.toLowerCase().includes(inputSearch[s].value.toLowerCase())) {
+                                    options[o].style.display = "block"
+                                } else {
+                                    options[o].style.display = "none"
+                                }
+                                if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
+                                    let focusSelect = document.querySelectorAll(".option-select-focus")
+                                    if (focusSelect.length > 0) {
+                                        console.log(focusSelect[0].classList)
+                                        focusSelect[0].classList.remove("option-select-focus")
+                                    }
+                                    inputSearch[s].value = options[o].innerHTML
+                                    if(!dataSelect[inputSearch[s].getAttribute("data-id")]){
+                                        dataSelect[inputSearch[s].getAttribute("data-id")] = {}
+                                    }
+                                    dataSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
+                                    options[o].classList.add("option-select-focus")
+                                } else {
+                                    options[o].classList.remove("option-select-focus")
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+        }
+    }, [isRegistrarModalOpen])
     return (<>
         {modalCafe && <div className="overlay" onClick={closeModal}></div>}
         {isRegistrarModalOpen && (
@@ -279,39 +354,30 @@ const Cafe = () => {
                     Registrar Cafe
                 </h1>
 
-                <form   
+                <form
                     className="contenido-regi"
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleRegistrar({
                             variedades_id: variedades_id.current.value,
-                            lotes_id: lotes_id.current.value.split('')[0]
+                            lotes_id: dataSelect.lotes_id.value
                         });
                     }}
                     method="post"
                 >
 
                     <div className="div-input">
-                        <input type="text" id="lotes_id" name="lotes_id" ref={lotes_id} value={filtro} onChange={filtrarOpciones} autoComplete="off" placeholder="" />
+                        <input className="input-search" type="text" id="lotes_id" />
                         <label htmlFor="lotes_id" className='label'>Lote</label>
-                        {mostrarOpciones && (
-                            <div className="custom-dropdown">
-                                {lote.map((lote) => (
-                                    (lote.nombre_usuario.toLowerCase().includes(filtro) ||
-                                    lote.Nombre_Finca.toLowerCase().includes(filtro) ||
-                                    lote.nombre.toLowerCase().includes(filtro)) && (
-                                        <div
-                                            key={lote.id}
-                                            className="custom-dropdown-option"
-                                            onClick={() => handleClickOpcion(lote)}
-                                        >
+                        <div className="select-options-input">
+                            {lote.map((key, index) => (
+                                (
 
-                                            {`${lote.id}-${lote.nombre_usuario}-${lote.Nombre_Finca}-${lote.nombre}`}
-                                        </div>
-                                    )
-                                ))}
-                            </div>
-                        )}
+                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : "";dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
+                                )
+                            ))}
+                        </div>
+
                     </div>
 
 
@@ -321,7 +387,7 @@ const Cafe = () => {
                         {mostrarOpciones && (
                             <div className="custom-dropdown">
                                 {variedades.map((variedades) => (
-                                    (variedades.nombre.toLowerCase().includes(filtroVariedades) ) && (
+                                    (variedades.nombre.toLowerCase().includes(filtroVariedades)) && (
                                         <div
                                             key={variedades.id}
                                             className="custom-dropdown-option"
