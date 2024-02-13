@@ -15,12 +15,8 @@ const Cafe = () => {
     const [filtroVariedades, setFiltroVariedades] = useState('');
     const [lote, setLotes] = useState([]);
     const [variedades, setvariedades] = useState([]);
-<<<<<<< HEAD
     const [dataSelect, setDataSelect] = useState({});
 
-=======
-    const [mostrarSegundoSelect, setMostrarSegundoSelect] = useState(false);
->>>>>>> development
 
     const lotes_id = useRef();
 
@@ -151,31 +147,6 @@ const Cafe = () => {
         }
     };
 
-
-
-    const filtrarOpciones = (event) => {
-        setFiltro(event.target.value.toLowerCase());
-        setMostrarOpciones(true);
-        setMostrarSegundoSelect(false);
-    };
-    /*     const handleClickOpcion = (lote) => {
-            // Actualizamos el filtro con el valor seleccionado
-            setFiltro(`${lote.id}-${lote.nombre_usuario}-${lote.Nombre_Finca}-${lote.nombre}`);
-            setMostrarOpciones(false);
-        }; */
-
-    // este es el filtro de variedades
-
-    const filtrarOpciones2 = (event) => {
-        setFiltroVariedades(event.target.value.toLowerCase());
-        setMostrarOpciones(true);
-    };
-    const handleClickOpcion2 = (variedades) => {
-        // Actualizamos el filtro con el valor seleccionado
-        setFiltroVariedades(`${variedades.id},${variedades.nombre}`);
-        setMostrarOpciones(false);
-        
-    };
     function clearFocusInput(Element) {
         let inputSearch = document.getElementById(Element)
 
@@ -385,28 +356,10 @@ const Cafe = () => {
                         </div>
 
                     </div>
-
-
                     <div className="div-input">
-                        <input type="text" id="variedades_id" name="variedades_id" ref={variedades_id} value={filtroVariedades} onChange={filtrarOpciones2} autoComplete="off" placeholder="" />
-                        <label htmlFor="variedades_id" className='label'>variedades</label>
-                        {mostrarSegundoSelect && (
-                            <div className="custom-dropdown">
-                                {variedades.map((variedades) => (
-                                    (variedades.nombre.toLowerCase().includes(filtroVariedades)) && (
-                                        <div
-                                            key={variedades.id}
-                                            className="custom-dropdown-option"
-                                            onClick={() => handleClickOpcion2(variedades)}
-                                        >
-
-                                            {`${variedades.id}-${variedades.nombre}`}
-                                        </div>
-                                    )
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                        <input type="number" id="variedades_id" name="variedades_id" ref={variedades_id} placeholder="" />
+                        <label htmlFor="variedades_id">Variedades</label>
+                    </div>          
 
                     <button className="btn-register-lote"
                         type="submit">Registrar Cafe</button>
