@@ -97,7 +97,7 @@ const ListarAnalisis = () => {
                                     className="btn-registrar-d"
                                   
                                 >
-                                    <Link to={`/analisis/registrar/`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <Link to={`/analisis/registrar`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         Registrar
                                     </Link>
                                 </button>

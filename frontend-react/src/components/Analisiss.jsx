@@ -35,8 +35,14 @@ const RegistrarAnalisis= () => {
             }
         }
         let fetch = Api.post("analisis/registrar", data, headers)
+        console.log(data)
         window.location = "/analisis/listar"
+
+
     }
+
+    
+
     return (
     <>
         <img src="../../public/img/fondo.png " alt="" className="fondo2" />

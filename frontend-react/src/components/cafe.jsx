@@ -15,12 +15,8 @@ const Cafe = () => {
     const [filtroVariedades, setFiltroVariedades] = useState('');
     const [lote, setLotes] = useState([]);
     const [variedades, setvariedades] = useState([]);
-<<<<<<< HEAD
     const [dataSelect, setDataSelect] = useState({});
 
-=======
-    const [mostrarSegundoSelect, setMostrarSegundoSelect] = useState(false);
->>>>>>> development
 
     const lotes_id = useRef();
 

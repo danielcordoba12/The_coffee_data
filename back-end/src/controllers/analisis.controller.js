@@ -11,7 +11,7 @@ export const guardarAnalisis = async (req,res)=>{
         let data = req.body;
         console.log('user',data);
         
-        let sql = 'INSERT INTO analisis(tipo_analisis_id, muestras_id, usuarios_id) VALUES (?,?,?)';
+        let sql = 'INSERT INTO analisis(tipo_analisis_id,muestras_id,usuarios_id) VALUES (?,?,?)';
         const [rows] = await pool.query(sql,[data.tipo_analisis_id,data.muestras_id,data.usuarios_id]);
 
         if(rows.affectedRows>0){
@@ -53,31 +53,34 @@ export const buscaranalisis = async (req, res) => {
 export const listarAnalisis = async(req,res)=>{
     try{
         const [result] = await pool.query(`SELECT   
-    a.id AS id_analisis,
-    m.consecutivo_informe AS consecutivo_informe,
-    a.fecha_analisis,
-    a.estado,
-    u.nombre AS nombre_propietario,
-    f.nombre AS nombre_fincas,
-    l.nombre AS nombre_lotes,
-    ta.nombre AS nombre_tipo_analisis
-FROM   
-    analisis a
-JOIN   
-    muestras m ON m.id = a.muestras_id
-JOIN   
-    cafes c ON c.id = m.cafes_id
-JOIN   
-    lotes l ON l.id = c.lotes_id
-JOIN   
-    fincas f ON f.id = l.fincas_id
-JOIN   
-    usuarios u ON u.id = f.usuarios_id 
-
-JOIN   
-    tipos_analisis ta ON ta.id = a.tipo_analisis_id
-GROUP BY   
-    a.id;`);
+        a.id AS id_analisis,
+        m.consecutivo_informe AS consecutivo_informe,
+        us.nombre AS nombre_usuario,
+        a.fecha_analisis,
+        a.estado,
+        u.nombre AS propietario,
+        f.nombre AS nombre_fincas,
+        l.nombre AS nombre_lotes,
+        ta.nombre AS nombre_tipo_analisis
+    FROM   
+        analisis a
+    JOIN   
+        muestras m ON m.id = a.muestras_id
+    JOIN   
+        cafes c ON c.id = m.cafes_id
+    JOIN   
+        lotes l ON l.id = c.lotes_id
+    JOIN   
+        fincas f ON f.id = l.fincas_id
+    JOIN   
+        usuarios u ON u.id = f.usuarios_id
+    JOIN   
+        usuarios us ON us.id = a.usuarios_id
+    JOIN   
+        tipos_analisis ta ON ta.id = a.tipo_analisis_id
+    GROUP BY   
+        a.id;
+    ;`);
             res.status(200).json(result);
     
         }catch(err){
