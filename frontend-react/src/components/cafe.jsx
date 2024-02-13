@@ -15,9 +15,12 @@ const Cafe = () => {
     const [filtroVariedades, setFiltroVariedades] = useState('');
     const [lote, setLotes] = useState([]);
     const [variedades, setvariedades] = useState([]);
+    const [dataSelect, setDataSelect] = useState({});
 
 
     const lotes_id = useRef();
+
+
     const variedades_id = useRef();
 
     const navigate = useNavigate()
@@ -37,17 +40,17 @@ const Cafe = () => {
 
     useEffect(() => {
         const buscarLotes = async () => {
-          try {
-            const response = await Api.get("lote/listar");
-            setLotes(response.data);
-          } catch (error) {
-            console.error("Error fetching tasks:", error);
-          }
+            try {
+                const response = await Api.get("lote/listar");
+                setLotes(response.data);
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
         };
         buscarLotes();
-      }, []);
+    }, []);
 
-      useEffect(() => {
+    useEffect(() => {
         const buscarvariedades = async () => {
             try {
                 const response = await Api.get('variedad/listar');
@@ -58,13 +61,13 @@ const Cafe = () => {
         }
         buscarvariedades();
     }, []);
-    
+
 
     const openModal = async (cafeId) => {
         setSelectedCafeId(cafeId);
         try {
             const response = await Api.get(`/cafe/buscar/${cafeId}`);
-            setModalCafe(response.data);
+            setModalCafe(response.data[0]);
         } catch (error) {
             console.error('Error buscando el cafe', error);
         }
@@ -125,12 +128,13 @@ const Cafe = () => {
     };
 
     const handleRegistrar = async (data) => {
+        console.log(data, "dataaaaaaa")
         const headers = {
             headers: {
                 token: "xd",
             },
         };
-        
+
         try {
             await Api.post("cafe/registrar", data, headers);
             Sweet.registroExitoso();
@@ -143,30 +147,78 @@ const Cafe = () => {
         }
     };
 
+    function clearFocusInput(Element) {
+        let inputSearch = document.getElementById(Element)
 
+        if (inputSearch) {
+            
+            let divOptions = inputSearch.parentNode.querySelectorAll(".select-options-input");
+            if(divOptions.length > 0){
+                divOptions[0].style.display = "none"
+            }
+            let select = inputSearch.parentNode.querySelectorAll(".option-select-search")
+            for (let s = 0; s < select.length; s++) {
+                let elementValue = inputSearch.getAttribute("id")
+                
+                if(dataSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")){
+                    select[s].classList.add("option-select-focus")
+                }else{
+                    select[s].classList.remove("option-select-focus")
+                }
+                
+            }
+        }
+    }
+    useEffect(() => {
 
-    const filtrarOpciones = (event) => {
-        setFiltro(event.target.value.toLowerCase());
-        setMostrarOpciones(true);
-    };
-    const handleClickOpcion = (lote) => {
-        // Actualizamos el filtro con el valor seleccionado
-        setFiltro(`${lote.id}-${lote.nombre_usuario}-${lote.Nombre_Finca}-${lote.nombre}`);
-        setMostrarOpciones(false);
-    };
+        let inputSearch = document.querySelectorAll(".input-search")
 
-    // este es el filtro de variedades
+        if (inputSearch.length > 0) {
+            for (let s = 0; s < inputSearch.length; s++) {
+                inputSearch[s].addEventListener("blur",function(){
+                    let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-options-input");
+                    if(divOptions.length > 0){
+                       setTimeout(() => {
+                        divOptions[0].style.display = "none"
+                       }, 100);
+                    }
 
-    const filtrarOpciones2 = (event) => {
-        setFiltroVariedades(event.target.value.toLowerCase());
-        setMostrarOpciones(true);
-    };
-    const handleClickOpcion2 = (variedades) => {
-        // Actualizamos el filtro con el valor seleccionado
-        setFiltroVariedades(`${variedades.id}-${variedades.nombre}`);
-        setMostrarOpciones(false);
-    };
-
+                })
+                inputSearch[s].addEventListener("input", function () {
+                    let parent = inputSearch[s].parentNode
+                    if (parent) {
+                        let selectOptionsInput = parent.querySelectorAll(".select-options-input");
+                        if (selectOptionsInput[0]) {
+                            selectOptionsInput[0].style.display = "block"
+                            let options = selectOptionsInput[0].querySelectorAll("div");
+                            for (let o = 0; o < options.length; o++) {
+                                if (options[o].innerHTML.toLowerCase().includes(inputSearch[s].value.toLowerCase())) {
+                                    options[o].style.display = "block"
+                                } else {
+                                    options[o].style.display = "none"
+                                }
+                                if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
+                                    let focusSelect = document.querySelectorAll(".option-select-focus")
+                                    if (focusSelect.length > 0) {
+                                        console.log(focusSelect[0].classList)
+                                        focusSelect[0].classList.remove("option-select-focus")
+                                    }
+                                    inputSearch[s].value = options[o].innerHTML
+                                    if(!dataSelect[inputSearch[s].getAttribute("data-id")]){
+                                        dataSelect[inputSearch[s].getAttribute("data-id")] = {}
+                                    }
+                                    dataSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
+                                    options[o].classList.add("option-select-focus")
+                                } else {
+                                    options[o].classList.remove("option-select-focus")
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+        }
+    }, [isRegistrarModalOpen])
     return (<>
         {modalCafe && <div className="overlay" onClick={closeModal}></div>}
         {isRegistrarModalOpen && (
@@ -205,7 +257,6 @@ const Cafe = () => {
                                 <td>{task.numero_lote}</td>
                                 <td>{task.nombre_variedad}</td>
                                 <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-
                                 <td>
                                     <button
                                         type="button"
@@ -224,7 +275,7 @@ const Cafe = () => {
 
         {modalCafe && (
             <div className="tabla3">
-                <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
+                <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Cafe</h1>
                 <div className="max-w-xs">
                     <input
                         className="input-field"
@@ -236,7 +287,7 @@ const Cafe = () => {
 
                     <input
                         className="input-field"
-                        type="number" placeholder="variedades_id "
+                        type="number" placeholder="variedades_id"
                         value={modalCafe.variedades_id}
                         onChange={(e) => setModalCafe({ ...modalCafe, variedades_id: e.target.value })}
                     />
@@ -280,62 +331,35 @@ const Cafe = () => {
                     Registrar Cafe
                 </h1>
 
-                <form   
+                <form
                     className="contenido-regi"
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleRegistrar({
                             variedades_id: variedades_id.current.value,
-                            lotes_id: lotes_id.current.value.split('')[0]
+                            lotes_id: dataSelect.lotes_id.value
                         });
                     }}
                     method="post"
                 >
 
                     <div className="div-input">
-                        <input type="text" id="lotes_id" name="lotes_id" ref={lotes_id} value={filtro} onChange={filtrarOpciones} autoComplete="off" placeholder="" />
+                        <input className="input-search" type="text" id="lotes_id" />
                         <label htmlFor="lotes_id" className='label'>Lote</label>
-                        {mostrarOpciones && (
-                            <div className="custom-dropdown">
-                                {lote.map((lote) => (
-                                    (lote.nombre_usuario.toLowerCase().includes(filtro) ||
-                                    lote.Nombre_Finca.toLowerCase().includes(filtro) ||
-                                    lote.nombre.toLowerCase().includes(filtro)) && (
-                                        <div
-                                            key={lote.id}
-                                            className="custom-dropdown-option"
-                                            onClick={() => handleClickOpcion(lote)}
-                                        >
+                        <div className="select-options-input">
+                            {lote.map((key, index) => (
+                                (
 
-                                            {`${lote.id}-${lote.nombre_usuario}-${lote.Nombre_Finca}-${lote.nombre}`}
-                                        </div>
-                                    )
-                                ))}
-                            </div>
-                        )}
+                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : "";dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
+                                )
+                            ))}
+                        </div>
+
                     </div>
-
-
                     <div className="div-input">
-                        <input type="text" id="variedades_id" name="variedades_id" ref={variedades_id} value={filtroVariedades} onChange={filtrarOpciones2} autoComplete="off" placeholder="" />
-                        <label htmlFor="variedades_id" className='label'>variedades</label>
-                        {mostrarOpciones && (
-                            <div className="custom-dropdown">
-                                {variedades.map((variedades) => (
-                                    (variedades.nombre.toLowerCase().includes(filtroVariedades) ) && (
-                                        <div
-                                            key={variedades.id}
-                                            className="custom-dropdown-option"
-                                            onClick={() => handleClickOpcion2(variedades)}
-                                        >
-
-                                            {`${variedades.id}-${variedades.nombre}`}
-                                        </div>
-                                    )
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                        <input type="number" id="variedades_id" name="variedades_id" ref={variedades_id} placeholder="" />
+                        <label htmlFor="variedades_id">Variedades</label>
+                    </div>          
 
                     <button className="btn-register-lote"
                         type="submit">Registrar Cafe</button>

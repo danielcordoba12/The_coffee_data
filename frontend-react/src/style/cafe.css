@@ -86,3 +86,37 @@
   .custom-dropdown-option{
     color: white;
   }
+
+  .select-invisible{
+    width: 0;
+    height: 0;
+  }
+  .select-options-input{
+    display: block;
+    position: absolute;
+    color: black;
+    background-color: white;
+    width: 100%;
+    z-index: 1;
+    top: 100%;
+    max-height: 100px;
+    overflow: auto;
+    text-align: left;
+    padding: 10px;
+    font-size: 11px;
+    display: none;
+  }
+  .select-options-input >div{
+    margin: 0 !important;
+    padding: 0 !important;
+    padding: 5px !important;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .select-options-input >div:hover{
+    background-color: #80808024;
+    display: block;
+  }
+  .option-select-focus{
+    background-color:rgb(61 194 145);
+  }

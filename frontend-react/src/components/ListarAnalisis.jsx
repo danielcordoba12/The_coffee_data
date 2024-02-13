@@ -12,6 +12,7 @@ const ListarAnalisis = () => {
 
 
 
+    
 
     function formatDate(dateString) {
         if (!dateString) return ''; // Manejar el caso de valor nulo o indefinido
@@ -39,6 +40,7 @@ const ListarAnalisis = () => {
             try {
                 const response = await Api.get('analisis/listar');
                 setFincas(response.data);
+                setTipos(response.data);
             } catch (error) {
                 console.error('Error fetching tasks:', error);
             }
@@ -49,18 +51,15 @@ const ListarAnalisis = () => {
         <img src="../../public/img/fondo_coffee.jpg" alt="" className="fondo2" />
         <div className="tablalistar">
 
-            <div className="box-search">
-
-           <input className="search" type="text" /></div>
             <h1 className="titu">Análisis</h1>
             <br />
             <table className="tableprincipal">
                 <thead>
                     <tr className="bg-gray-200">
+                        <th>ID</th>
                         <th>FECHA</th>
-                        <th>CALIDAD</th>
                         <th>TIPO ANALISIS</th>
-                        <th>MUESTRAS</th>
+                        <th>CONSECUTIVO INFORME</th>
                         <th>NOMBRE</th>
                         <th>ESTADO</th>
                         <th></th>
@@ -71,21 +70,21 @@ const ListarAnalisis = () => {
                 </thead>
                 <tbody>
                     {fincas.map((task) => (
-                        <tr key={task.id} className="border-t">
+                        <tr key={task.id_analisis} className="border-t">
+                             <td>{task.id_analisis}</td> 
                             <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td> 
-                            <td>{task.calidad}</td>
                             <td>{task.nombre_tipo_analisis}</td>
-                            <td>{task.muestras_id}</td>
+                            <td className="conse">{task.consecutivo_informe}</td>
                             <td>{task.nombre_usuario}</td>
-                            <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                            <td className="cont-estado">{task.estado === 1? 'Activo' : 'Desactivado'}</td>
                            
                             <td>
                                 <button
                                     type="button"
                                     className="btn-primary"
-                                    onClick={() => handleEditUser1(task.id)}
+                                   
                                 >
-                                    <Link to={`/analisis/update/${task.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <Link to={`/analisis/update/${task.id_analisis}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         Modificar
                                     </Link>
                                 </button>
@@ -94,10 +93,10 @@ const ListarAnalisis = () => {
                                 <button
                                     type="button"
                                     className="btn-registrar-d"
-                                    onClick={() => handleUpdate(task.id)}
+                                  
                                 >
                                     <Link to={`/analisis/registrar/`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                        Desactivar
+                                        Registrar
                                     </Link>
                                 </button>
                             </td>
