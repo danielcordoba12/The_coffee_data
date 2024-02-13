@@ -56,6 +56,8 @@
     const [muestraSeleccionada,setMuestraSeleccionada] = useState({});
     const [selectedCafeId, setSelectedCafeId] = useState(null);
     const [codigo, setCodigo] = useState('');
+    const [dataSelect, setDataSelect] = useState({});
+
 
 
     const codigo_externo = useRef(null);
@@ -167,17 +169,47 @@
       listarMuestra();
     }, []);
     
-  
-  const filtrarOpciones = (event) => {
-    setFiltro(event.target.value.toLowerCase());
-    setMostrarOpciones(true);
-  };
-  const handleClickOpcion = (cafe) => {
-    // Actualizamos el filtro con el valor seleccionado
-    setFiltro(`${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`);
-    setMostrarOpciones(false);
-  };
 
+   const inputRef = useRef(null);
+
+    const handleOptionClick = (key) => {
+        const textoSeleccionado = `${key.documento}, ${key.nombre_finca}, ${key.nombre_usuario}, ${key.numero_lote}, ${key.nombre_variedad}`;
+        inputRef.current.value = textoSeleccionado;
+    };
+    
+  // const filtrarOpciones = (event) => {
+  //   setFiltro(event.target.value.toLowerCase());
+  //   setMostrarOpciones(true);
+  // };
+  // const handleClickOpcion = (cafe) => {
+  //   // Actualizamos el filtro con el valor seleccionado
+  //   setFiltro(`${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`);
+  //   setMostrarOpciones(false);
+  // };
+
+
+  function clearFocusInput(Element) {
+    let inputSearch = document.getElementById(Element)
+
+    if (inputSearch) {
+        
+        let divOptions = inputSearch.parentNode.querySelectorAll(".select-options-input");
+        if(divOptions.length > 0){
+            divOptions[0].style.display = "none"
+        }
+        let select = inputSearch.parentNode.querySelectorAll(".option-select-search")
+        for (let s = 0; s < select.length; s++) {
+            let elementValue = inputSearch.getAttribute("id")
+            
+            if(dataSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")){
+                select[s].classList.add("option-select-focus")
+            }else{
+                select[s].classList.remove("option-select-focus")
+            }
+            
+        }
+    }
+}
 
       
   // async function listarMuestra(){
@@ -402,6 +434,57 @@
           console.error('Error buscando el cafe', error);
       }
   };
+
+  useEffect(() => {
+
+    let inputSearch = document.querySelectorAll(".input-search")
+
+    if (inputSearch.length > 0) {
+        for (let s = 0; s < inputSearch.length; s++) {
+            inputSearch[s].addEventListener("blur",function(){
+                let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-options-input");
+                if(divOptions.length > 0){
+                   setTimeout(() => {
+                    divOptions[0].style.display = "none"
+                   }, 100); 
+                }
+
+            })
+            inputSearch[s].addEventListener("input", function () {
+                let parent = inputSearch[s].parentNode
+                if (parent) {
+                    let selectOptionsInput = parent.querySelectorAll(".select-options-input");
+                    if (selectOptionsInput[0]) {
+                        selectOptionsInput[0].style.display = "block"
+                        let options = selectOptionsInput[0].querySelectorAll("div");
+                        for (let o = 0; o < options.length; o++) {
+                            if (options[o].innerHTML.toLowerCase().includes(inputSearch[s].value.toLowerCase())) {
+                                options[o].style.display = "block"
+                            } else {
+                                options[o].style.display = "none"
+                            }
+                            if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
+                                let focusSelect = document.querySelectorAll(".option-select-focus")
+                                if (focusSelect.length > 0) {
+                                    console.log(focusSelect[0].classList)
+                                    focusSelect[0].classList.remove("option-select-focus")
+                                }
+                                inputSearch[s].value = options[o].innerHTML
+                                if(!dataSelect[inputSearch[s].getAttribute("data-id")]){
+                                    dataSelect[inputSearch[s].getAttribute("data-id")] = {}
+                                }
+                                dataSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
+                                options[o].classList.add("option-select-focus")
+                            } else {
+                                options[o].classList.remove("option-select-focus")
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    }
+},[showModal1])
     
     return (
 
@@ -481,7 +564,21 @@
               <div className='value'>{muestraSeleccionada.estado}</div>
             </div>
             <div className='container-label'>
-            <label className='label-modal'>Cafe </label>
+              {/* <input className="input-search" type="text" id="lotes_id" />
+              <label htmlFor="lotes_id" className='label'>Lote</label>
+                  <div className="select-options-input">
+                        {lote.map((key, index) => (
+                            (
+
+                                // <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : "";dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
+                            )
+                        ))}
+                  </div> */}
+
+
+
+
+             <label className='label-modal'>Cafe </label>
                 {cafe.filter(cafe => cafe.id === muestraSeleccionada.cafes_id).map((cafe) => (
                     <div
                         key={cafe.id}
@@ -491,7 +588,7 @@
                         <div className='value'>{`${cafe.id}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}</div>
                     </div>
                 ))}
-
+ *
             </div>
           </td>
         </tr>
@@ -621,7 +718,8 @@
             tiempo_secado : tiempo_secado.current.value,
             presentacion : presentacion.current.value,
             // cafes_id : cafes_id.current.value,
-            cafes_id : cafes_id.current.value.split('')[0]
+            // cafes_id : cafes_id.current.value.split('')[0]
+            cafes_id : dataSelect.lotes_id.value
         });
     }}
       // onSubmit={handleSubmit}
@@ -629,7 +727,7 @@
       method="POST" >
       <div className="columna">
       <div className='container-input'>
-    <input
+    {/* <input
       type="text"
       className='input'
       placeholder=''
@@ -639,27 +737,19 @@
       value={filtro}
       onChange={filtrarOpciones}
       autoComplete="off" // Desactivar autocompletado
-    />
-    <label htmlFor="cafes_id" className='label'>Cafe</label>
-    {mostrarOpciones && (
-      <div className="custom-dropdown">
-        {cafe.map((cafe) => (
-          (cafe.documento.toLowerCase().includes(filtro) ||
-            cafe.nombre_usuario.toLowerCase().includes(filtro) ||
-            cafe.numero_lote.toLowerCase().includes(filtro) ||
-            cafe.nombre_variedad.toLowerCase().includes(filtro)) && (
-            <div
-              key={cafe.id}
-              className="custom-dropdown-option"
-              onClick={() => handleClickOpcion(cafe)}
-            >
-              
-              {`${cafe.id}-${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}
-            </div>
-          )
-        ))}
-      </div>
-    )}
+    /> */}
+    {/* <label htmlFor="cafes_id" className='label'>Cafe</label> */}
+    <input className="input-search" type="text" id="cafe_id" />
+                        <label htmlFor="cafe_id" className='label'>Lote</label>
+                        <div className="select-options-input" >
+                            {cafe.map((key, index) => (
+                                (
+
+                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("cafe_id").value = key.documento + ", " + key.nombre_finca + ", "+key.nombre_usuario + ", " + key.numero_lote + ", " + key.nombre_variedad; !dataSelect.cafe_id ? dataSelect.cafe_id = {} : "";dataSelect.cafe_id.value = key.id; clearFocusInput("cafe_id") }} key={key.id}>{key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad} hh</div>
+                                )
+                            ))}
+                        </div>
+
   </div>
         <div className='container-input'>
           <input type="date" id="fecha_creacion" name="fecha_creacion" className='input' ref={fecha_creacion} placeholder='' />
