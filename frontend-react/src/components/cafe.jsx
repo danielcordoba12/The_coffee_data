@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react"
 import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
 import Sweet from "../helpers/Sweet";
+import "../style/cafe.css";
 
 
 const Cafe = () => {
@@ -9,6 +10,11 @@ const Cafe = () => {
     const [selectedCafeId, setSelectedCafeId] = useState(null);
     const [modalCafe, setModalCafe] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
+    const [mostrarOpciones, setMostrarOpciones] = useState(false);
+    const [filtro, setFiltro] = useState('');
+    const [filtroVariedades, setFiltroVariedades] = useState('');
+    const [lote, setLotes] = useState([]);
+    const [variedades, setvariedades] = useState([]);
 
 
     const lotes_id = useRef();
@@ -28,6 +34,31 @@ const Cafe = () => {
         }
         buscarcafe();
     }, []);
+
+    useEffect(() => {
+        const buscarLotes = async () => {
+          try {
+            const response = await Api.get("lote/listar");
+            setLotes(response.data);
+          } catch (error) {
+            console.error("Error fetching tasks:", error);
+          }
+        };
+        buscarLotes();
+      }, []);
+
+      useEffect(() => {
+        const buscarvariedades = async () => {
+            try {
+                const response = await Api.get('variedad/listar');
+                setvariedades(response.data);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        }
+        buscarvariedades();
+    }, []);
+    
 
     const openModal = async (cafeId) => {
         setSelectedCafeId(cafeId);
@@ -99,7 +130,7 @@ const Cafe = () => {
                 token: "xd",
             },
         };
-
+        
         try {
             await Api.post("cafe/registrar", data, headers);
             Sweet.registroExitoso();
@@ -110,6 +141,30 @@ const Cafe = () => {
         } catch (error) {
             console.error("Error al registrar el cafe:", error);
         }
+    };
+
+
+
+    const filtrarOpciones = (event) => {
+        setFiltro(event.target.value.toLowerCase());
+        setMostrarOpciones(true);
+    };
+    const handleClickOpcion = (lote) => {
+        // Actualizamos el filtro con el valor seleccionado
+        setFiltro(`${lote.id}-${lote.nombre_usuario}-${lote.Nombre_Finca}-${lote.nombre}`);
+        setMostrarOpciones(false);
+    };
+
+    // este es el filtro de variedades
+
+    const filtrarOpciones2 = (event) => {
+        setFiltroVariedades(event.target.value.toLowerCase());
+        setMostrarOpciones(true);
+    };
+    const handleClickOpcion2 = (variedades) => {
+        // Actualizamos el filtro con el valor seleccionado
+        setFiltroVariedades(`${variedades.id}-${variedades.nombre}`);
+        setMostrarOpciones(false);
     };
 
     return (<>
@@ -230,21 +285,56 @@ const Cafe = () => {
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleRegistrar({
-                            lotes_id: lotes_id.current.value,
                             variedades_id: variedades_id.current.value,
+                            lotes_id: lotes_id.current.value.split('')[0]
                         });
                     }}
                     method="post"
                 >
 
                     <div className="div-input">
-                        <input type="number" id="lotes_id" name="lotes_id" ref={lotes_id} placeholder="" />
-                        <label for="lotes_id">Lotes</label>
+                        <input type="text" id="lotes_id" name="lotes_id" ref={lotes_id} value={filtro} onChange={filtrarOpciones} autoComplete="off" placeholder="" />
+                        <label htmlFor="lotes_id" className='label'>Lote</label>
+                        {mostrarOpciones && (
+                            <div className="custom-dropdown">
+                                {lote.map((lote) => (
+                                    (lote.nombre_usuario.toLowerCase().includes(filtro) ||
+                                    lote.Nombre_Finca.toLowerCase().includes(filtro) ||
+                                    lote.nombre.toLowerCase().includes(filtro)) && (
+                                        <div
+                                            key={lote.id}
+                                            className="custom-dropdown-option"
+                                            onClick={() => handleClickOpcion(lote)}
+                                        >
+
+                                            {`${lote.id}-${lote.nombre_usuario}-${lote.Nombre_Finca}-${lote.nombre}`}
+                                        </div>
+                                    )
+                                ))}
+                            </div>
+                        )}
                     </div>
 
+
                     <div className="div-input">
-                        <input type="number" id="variedades_id" name="variedades_id" ref={variedades_id} placeholder="" />
-                        <label for="variedades_id">variedad</label>
+                        <input type="text" id="variedades_id" name="variedades_id" ref={variedades_id} value={filtroVariedades} onChange={filtrarOpciones2} autoComplete="off" placeholder="" />
+                        <label htmlFor="variedades_id" className='label'>variedades</label>
+                        {mostrarOpciones && (
+                            <div className="custom-dropdown">
+                                {variedades.map((variedades) => (
+                                    (variedades.nombre.toLowerCase().includes(filtroVariedades) ) && (
+                                        <div
+                                            key={variedades.id}
+                                            className="custom-dropdown-option"
+                                            onClick={() => handleClickOpcion2(variedades)}
+                                        >
+
+                                            {`${variedades.id}-${variedades.nombre}`}
+                                        </div>
+                                    )
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     <button className="btn-register-lote"

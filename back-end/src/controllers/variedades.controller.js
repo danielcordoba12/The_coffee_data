@@ -7,7 +7,7 @@ import {validationResult} from 'express-validator';
 export const listarVariedad= async (req,res)=>{
   try{
 
-      const[result]= await pool.query("select * from variedades");
+      const[result]= await pool.query("select v.id, v.fecha_creacion, v.nombre from variedades v");
       res.status(200).json(result);
 
 
