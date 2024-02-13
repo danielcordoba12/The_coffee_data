@@ -54,6 +54,7 @@
     const modalMuestraRef = useRef(null);
     let modalVisible = false; 
     const [muestraSeleccionada,setMuestraSeleccionada] = useState({});
+    const [selectedCafeId, setSelectedCafeId] = useState(null);
     const [codigo, setCodigo] = useState('');
 
 
@@ -391,6 +392,16 @@
       }
       buscarcafe();
     }, []);
+
+    const openModal = async (cafeId) => {
+      setSelectedCafeId(cafeId);
+      try {
+          const response = await Api.get(`/cafe/buscar/${cafeId}`);
+          setModalCafe(response.data);
+      } catch (error) {
+          console.error('Error buscando el cafe', error);
+      }
+  };
     
     return (
 
@@ -470,8 +481,17 @@
               <div className='value'>{muestraSeleccionada.estado}</div>
             </div>
             <div className='container-label'>
-              <label className='label-modal'>Cafe</label>
-              <div className='value'>{muestraSeleccionada.cafes_id}</div>
+            <label className='label-modal'>Cafe </label>
+                {cafe.filter(cafe => cafe.id === muestraSeleccionada.cafes_id).map((cafe) => (
+                    <div
+                        key={cafe.id}
+                        className="custom-dropdown-option"
+                        // onClick={() => handleClickOpcion(lote)}
+                    >
+                        <div className='value'>{`${cafe.id}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}</div>
+                    </div>
+                ))}
+
             </div>
           </td>
         </tr>
@@ -790,7 +810,7 @@
                         <button
                                       type="button"
                                       className="btn-primary"
-                                      onClick={() => { toggleModal(3) ,buscarMuestra(task.id);}}
+                                      onClick={() => { toggleModal(3) ,buscarMuestra(task.id)}}
                                   >Mas
                                   </button>
                       </td>
