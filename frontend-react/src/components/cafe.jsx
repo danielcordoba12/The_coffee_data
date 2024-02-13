@@ -10,9 +10,6 @@ const Cafe = () => {
     const [selectedCafeId, setSelectedCafeId] = useState(null);
     const [modalCafe, setModalCafe] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
-    const [mostrarOpciones, setMostrarOpciones] = useState(false);
-    const [filtro, setFiltro] = useState('');
-    const [filtroVariedades, setFiltroVariedades] = useState('');
     const [lote, setLotes] = useState([]);
     const [variedades, setvariedades] = useState([]);
     const [dataSelect, setDataSelect] = useState({});
@@ -336,7 +333,7 @@ const Cafe = () => {
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleRegistrar({
-                            variedades_id: variedades_id.current.value,
+                            variedades_id: dataSelect.variedades_id.value,
                             lotes_id: dataSelect.lotes_id.value
                         });
                     }}
@@ -349,16 +346,21 @@ const Cafe = () => {
                         <div className="select-options-input">
                             {lote.map((key, index) => (
                                 (
-
                                     <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : "";dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
                                 )
                             ))}
                         </div>
-
                     </div>
                     <div className="div-input">
-                        <input type="number" id="variedades_id" name="variedades_id" ref={variedades_id} placeholder="" />
-                        <label htmlFor="variedades_id">Variedades</label>
+                    <input className="input-search" type="text" id="variedades_id" />
+                    <label htmlFor="variedades_id" className='label'>Variedad</label>
+                        <div className="select-options-input">
+                            {variedades.map((key, index) => (
+                                (
+                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : "";dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
+                                )
+                            ))}
+                        </div>
                     </div>          
 
                     <button className="btn-register-lote"
