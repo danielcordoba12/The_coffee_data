@@ -10,9 +10,6 @@ const Cafe = () => {
     const [selectedCafeId, setSelectedCafeId] = useState(null);
     const [modalCafe, setModalCafe] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
-    const [mostrarOpciones, setMostrarOpciones] = useState(false);
-    const [filtro, setFiltro] = useState('');
-    const [filtroVariedades, setFiltroVariedades] = useState('');
     const [lote, setLotes] = useState([]);
     const [variedades, setvariedades] = useState([]);
     const [dataSelect, setDataSelect] = useState({});
@@ -147,31 +144,6 @@ const Cafe = () => {
         }
     };
 
-
-
-    const filtrarOpciones = (event) => {
-        setFiltro(event.target.value.toLowerCase());
-        setMostrarOpciones(true);
-        setMostrarSegundoSelect(false);
-    };
-    /*     const handleClickOpcion = (lote) => {
-            // Actualizamos el filtro con el valor seleccionado
-            setFiltro(`${lote.id}-${lote.nombre_usuario}-${lote.Nombre_Finca}-${lote.nombre}`);
-            setMostrarOpciones(false);
-        }; */
-
-    // este es el filtro de variedades
-
-    const filtrarOpciones2 = (event) => {
-        setFiltroVariedades(event.target.value.toLowerCase());
-        setMostrarOpciones(true);
-    };
-    const handleClickOpcion2 = (variedades) => {
-        // Actualizamos el filtro con el valor seleccionado
-        setFiltroVariedades(`${variedades.id},${variedades.nombre}`);
-        setMostrarOpciones(false);
-        
-    };
     function clearFocusInput(Element) {
         let inputSearch = document.getElementById(Element)
 
@@ -361,7 +333,7 @@ const Cafe = () => {
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleRegistrar({
-                            variedades_id: variedades_id.current.value,
+                            variedades_id: dataSelect.variedades_id.value,
                             lotes_id: dataSelect.lotes_id.value
                         });
                     }}
@@ -374,35 +346,22 @@ const Cafe = () => {
                         <div className="select-options-input">
                             {lote.map((key, index) => (
                                 (
-
                                     <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : "";dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
                                 )
                             ))}
                         </div>
-
                     </div>
-
-
                     <div className="div-input">
-                        <input type="text" id="variedades_id" name="variedades_id" ref={variedades_id} value={filtroVariedades} onChange={filtrarOpciones2} autoComplete="off" placeholder="" />
-                        <label htmlFor="variedades_id" className='label'>variedades</label>
-                        {mostrarSegundoSelect && (
-                            <div className="custom-dropdown">
-                                {variedades.map((variedades) => (
-                                    (variedades.nombre.toLowerCase().includes(filtroVariedades)) && (
-                                        <div
-                                            key={variedades.id}
-                                            className="custom-dropdown-option"
-                                            onClick={() => handleClickOpcion2(variedades)}
-                                        >
-
-                                            {`${variedades.id}-${variedades.nombre}`}
-                                        </div>
-                                    )
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    <input className="input-search" type="text" id="variedades_id" />
+                    <label htmlFor="variedades_id" className='label'>Variedad</label>
+                        <div className="select-options-input">
+                            {variedades.map((key, index) => (
+                                (
+                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : "";dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
+                                )
+                            ))}
+                        </div>
+                    </div>          
 
                     <button className="btn-register-lote"
                         type="submit">Registrar Cafe</button>
