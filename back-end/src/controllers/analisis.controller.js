@@ -52,21 +52,54 @@ export const buscaranalisis = async (req, res) => {
 
 export const listarAnalisis = async(req,res)=>{
     try{
-        const [result] = await pool.query(`SELECT  analisis.id AS id_analisis,muestras.consecutivo_informe AS consecutivo_informe,usuarios.nombre AS nombre_usuario, 
-       fecha_analisis,analisis.estado,  
-       tipos_analisis.nombre AS nombre_tipo_analisis
-        FROM usuarios, analisis, tipos_analisis,muestras
-        WHERE usuarios.id = analisis.usuarios_id 
-        AND tipos_analisis.id = analisis.tipo_analisis_id
-        GROUP BY analisis.id;
-;
-        `);
+        const [result] = await pool.query(`SELECT   
+    a.id AS id_analisis,
+    m.consecutivo_informe AS consecutivo_informe,
+    a.fecha_analisis,
+    a.estado,
+    u.nombre AS nombre_propietario,
+    f.nombre AS nombre_fincas,
+    l.nombre AS nombre_lotes,
+    ta.nombre AS nombre_tipo_analisis
+FROM   
+    analisis a
+JOIN   
+    muestras m ON m.id = a.muestras_id
+JOIN   
+    cafes c ON c.id = m.cafes_id
+JOIN   
+    lotes l ON l.id = c.lotes_id
+JOIN   
+    fincas f ON f.id = l.fincas_id
+JOIN   
+    usuarios u ON u.id = f.usuarios_id 
+
+JOIN   
+    tipos_analisis ta ON ta.id = a.tipo_analisis_id
+GROUP BY   
+    a.id;`);
             res.status(200).json(result);
     
         }catch(err){
         res.status(500).json({
             menssage:'error en listar analisis de la base de datos:'+err
         })
+    }
+
+};
+
+export const listarPropietario = async (req, res) => {
+    try {
+        const [result] = await pool.query(` Select usuarios.nombre  AS propietario from fincas,usuarios where usuarios.id= fincas.usuarios_id`);
+
+
+        res.status(200).json(result);
+        
+    } catch {
+        res.status(500).json({
+            menssage: 'error en listar analisis de la base de datos:' + err
+        })
+        
     }
 };
 
@@ -161,7 +194,7 @@ export const actualizarAnalisis = async (req, res) => {
         let id = req.params.id;
         let data = req.body;
 
-        let sql = `UPDATE analisis SET tipo_analisis_id='${data.tipo_analisis_id}',muestras_id='${data.muestras_id}',usuarios_id='${data.usuarios_id}' WHERE id= ${id}`
+        let sql = `UPDATE analisis SET tipo_analisis_id='${data.tipo_analisis_id}',muestras_id='${data.muestras_id}',usuarios_id='${data.usuarios_id}'WHERE id= ${id}`
     
         // let sql = `update usuarios SET nombres ='${nombres}',direccion='${direccion}',telefono='${telefono}',correo ='${correo}' where  idusuario=${id}`;
 
