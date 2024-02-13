@@ -64,7 +64,7 @@ const Cafe = () => {
         setSelectedCafeId(cafeId);
         try {
             const response = await Api.get(`/cafe/buscar/${cafeId}`);
-            setModalCafe(response.data);
+            setModalCafe(response.data[0]);
         } catch (error) {
             console.error('Error buscando el cafe', error);
         }
@@ -205,7 +205,6 @@ const Cafe = () => {
                                 <td>{task.numero_lote}</td>
                                 <td>{task.nombre_variedad}</td>
                                 <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-
                                 <td>
                                     <button
                                         type="button"
@@ -224,7 +223,7 @@ const Cafe = () => {
 
         {modalCafe && (
             <div className="tabla3">
-                <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
+                <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Cafe</h1>
                 <div className="max-w-xs">
                     <input
                         className="input-field"
@@ -236,7 +235,7 @@ const Cafe = () => {
 
                     <input
                         className="input-field"
-                        type="number" placeholder="variedades_id "
+                        type="number" placeholder="variedades_id"
                         value={modalCafe.variedades_id}
                         onChange={(e) => setModalCafe({ ...modalCafe, variedades_id: e.target.value })}
                     />
