@@ -34,22 +34,6 @@
     background-color: #2980b9;
     color: rgb(255, 255, 255);
   }
-
-
-  /*  estilos del buscador  */
-
-  .box-search{
-    display: flex;
-    float: right;
-
-  }
-  .search{
-    background-color: black;
-    color: #968c8c;
-    display: flex;
-    margin-top: 10px;
-  }
-
 /* 
   //estilos fincas registrar// */
 
@@ -161,11 +145,12 @@
     border-radius: 4px;
     cursor: pointer;
   }
+  
   .btn-registrar-d{
     display: inline-block;
     width: 150px;
     padding: 10px 10px;
-    background-color:#6D2932; 
+    background-color:#2ecc70a4; 
     color: white;
     text-decoration: none;
     border: none;
@@ -174,7 +159,7 @@
     font-size: 16px;
   }
   .btn-registrar-d:hover {
-    background-color: #56b15a;
+    background-color: #18452bd7;
     /* Cambiar color de fondo al pasar por encima */
   }
   
@@ -243,26 +228,29 @@
   border: none;
 }
 
-.tableprincipal th,
-.tableprincipal td {
+.tableprincipal th{
   
   padding: 8px;
   text-align: left;
-  color: white;
 }
 
-.tableprincipal th {
+.tableprincipal th{
   font-weight: normal;
+  cursor: context-menu;
   background-color: rgba(36, 29, 7, 0.805)/* Color de fondo más claro para encabezados */
 }
 
 .tableprincipal tr{
   background-color: transparent;
+  cursor: context-menu;
   
+}
+td.cont-estado{
+  color:#969023;
 }
 
 .btn-primary {
-  background-color: #0099ff; /* Color de fondo del botón */
+  background-color: #4a5a65ad; /* Color de fondo del botón */
   color: #fff;
   font-weight: bold;
   padding: 8px 16px;
@@ -273,7 +261,7 @@
 }
 
 .btn-primary:hover {
-  background-color: #207bb5; /* Cambio de color al pasar el ratón */
+  background-color: #191b1dc8; /* Cambio de color al pasar el ratón */
 }
 
   

@@ -11,8 +11,8 @@ export const guardarAnalisis = async (req,res)=>{
         let data = req.body;
         console.log('user',data);
         
-        let sql = 'INSERT INTO analisis(calidad,tipo_analisis_id, muestras_id, usuarios_id) VALUES (?,?,?,?)';
-        const [rows] = await pool.query(sql,[data.calidad,data.tipo_analisis_id,data.muestras_id,data.usuarios_id]);
+        let sql = 'INSERT INTO analisis(tipo_analisis_id, muestras_id, usuarios_id) VALUES (?,?,?)';
+        const [rows] = await pool.query(sql,[data.tipo_analisis_id,data.muestras_id,data.usuarios_id]);
 
         if(rows.affectedRows>0){
             res.status(200).json({
@@ -52,15 +52,13 @@ export const buscaranalisis = async (req, res) => {
 
 export const listarAnalisis = async(req,res)=>{
     try{
-        const [result] = await pool.query(`SELECT usuarios.nombre AS nombre_usuario, 
-       fecha_analisis, 
-       calidad, 
-       tipos_analisis.nombre AS nombre_tipo_analisis, 
-        muestras_id
-        FROM usuarios, analisis, tipos_analisis
+        const [result] = await pool.query(`SELECT  analisis.id AS id_analisis,muestras.consecutivo_informe AS consecutivo_informe,usuarios.nombre AS nombre_usuario, 
+       fecha_analisis,analisis.estado,  
+       tipos_analisis.nombre AS nombre_tipo_analisis
+        FROM usuarios, analisis, tipos_analisis,muestras
         WHERE usuarios.id = analisis.usuarios_id 
         AND tipos_analisis.id = analisis.tipo_analisis_id
-        ORDER BY analisis.estado DESC;
+        GROUP BY analisis.id;
 ;
         `);
             res.status(200).json(result);
@@ -163,7 +161,7 @@ export const actualizarAnalisis = async (req, res) => {
         let id = req.params.id;
         let data = req.body;
 
-        let sql = `UPDATE analisis SET fecha_analisis='${data.fecha_analisis}',calidad='${data.calidad}',tipo_analisis_id='${data.tipo_analisis_id}',muestras_id='${data.muestras_id}',usuarios_id='${data.usuarios_id}' WHERE id= ${id}`
+        let sql = `UPDATE analisis SET tipo_analisis_id='${data.tipo_analisis_id}',muestras_id='${data.muestras_id}',usuarios_id='${data.usuarios_id}' WHERE id= ${id}`
     
         // let sql = `update usuarios SET nombres ='${nombres}',direccion='${direccion}',telefono='${telefono}',correo ='${correo}' where  idusuario=${id}`;
 
