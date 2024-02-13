@@ -93,6 +93,23 @@ label {
   color: white;
   outline: none;
 }
+.option-cafe{
+  border: none;
+}
+.select-cafe{
+  /* background-color: red; */
+  display: flex;
+  border-top: none;
+  border-left:none;
+  border-right: none;
+  outline: none;
+  left: 0;
+  width: 100%;
+}
+.label-cafe{
+  display: flex;
+  margin-left: 0;
+}
 
 .button {
   width: 115px;
@@ -112,7 +129,7 @@ label {
 .formulario-muestra input + label {
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: 20px;
   transform: translateY(-50%);
   color: #ffffff;
   font-size: 16px;
@@ -126,6 +143,7 @@ label {
   font-size: 12px;
   color: rgb(255, 255, 255);
   top: 10px;
+
   transition: all 0.5s;
 }
 
@@ -133,8 +151,17 @@ label {
     position: relative;
     padding: 12px;
 
-
   }
+.custom-dropdown{
+  background-color: rgb(0, 0, 0);
+  color:  white;
+  z-index: 25;
+  position: fixed;
+  width: 40%;
+  max-height: 110px;
+  overflow-y: auto;
+  cursor: pointer;
+}
 
 /* ================================listar muestra===============================0
 

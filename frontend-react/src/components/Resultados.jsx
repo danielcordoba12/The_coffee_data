@@ -17,6 +17,8 @@ function Resultado() {
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
 
+  const [filtro, setFiltro] = useState('');
+
 
 
 
@@ -233,10 +235,47 @@ function Resultado() {
           ))}
         </div>
       );
-
-
-
     }
+  
+
+  // Agregar el input y su label al final
+  filas.push(
+    <div className="columna" key="cafes_id">
+      <div className="container-input">
+        <input
+          type="text"
+          className='input'
+          placeholder=''
+          id="cafes_id"
+          name="cafes_id"
+          // ref={cafes_id}
+          // value={filtro}
+          // onChange={filtrarOpciones}
+          autoComplete="off"
+        />
+        <label htmlFor="cafes_id" className='label'>Cafe</label>
+        {/* {mostrarOpciones && (
+          <div className="custom-dropdown">
+            {cafe.map((cafe) => (
+              (cafe.documento.toLowerCase().includes(filtro) ||
+                cafe.nombre_usuario.toLowerCase().includes(filtro) ||
+                cafe.numero_lote.toLowerCase().includes(filtro) ||
+                cafe.nombre_variedad.toLowerCase().includes(filtro)) && (
+                <div
+                  key={cafe.id}
+                  className="custom-dropdown-option"
+                  onClick={() => handleClickOpcion(cafe)}
+                >
+                  {`${cafe.id}-${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}
+                </div>
+              )
+            ))}
+          </div>
+        )} */}
+      </div>
+    </div>
+  );
+    
 
     return filas;
   };
@@ -438,6 +477,16 @@ function Resultado() {
 
 
 
+  const filtrarOpciones = (event) => {
+    setFiltro(event.target.value.toLowerCase());
+    setMostrarOpciones(true);
+  };
+  // const handleClickOpcion = (cafe) => {
+  //   // Actualizamos el filtro con el valor seleccionado
+  //   setFiltro(`${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`);
+  //   setMostrarOpciones(false);
+  // };
+
   return (
     <div>
       <div className={`main-content-registrar ${showModal1 ? 'show' :  ''}`} id="modalInfo1" showModal={showModal1}>
@@ -445,6 +494,39 @@ function Resultado() {
       <h1 className="title-registrar-muestras">Registrar Resultado</h1>
       <form className="formulario-muestra" method="post">
         {generarInputs()}
+        <div className="container-input">
+         {/* <input
+          type="text"
+          className='input'
+          placeholder=''
+          id="cafes_id"
+          name="cafes_id" 
+          // ref={cafes_id}
+          // value={filtro}
+          // onChange={filtrarOpciones}
+          // autoComplete="off" // Desactivar autocompletado
+        />
+        {/* <label htmlFor="cafes_id" className='label'>Cafe</label> */}
+          {/* {mostrarOpciones && (
+            <div className="custom-dropdown">
+              {cafe.map((cafe) => (
+                (cafe.documento.toLowerCase().includes(filtro) ||
+                  cafe.nombre_usuario.toLowerCase().includes(filtro) ||
+                  cafe.numero_lote.toLowerCase().includes(filtro) ||
+                  cafe.nombre_variedad.toLowerCase().includes(filtro)) && (
+                  <div
+                    key={cafe.id}
+                    className="custom-dropdown-option"
+                    onClick={() => handleClickOpcion(cafe)}
+                  >
+                    
+                    {`${cafe.id}-${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}
+                  </div>
+                )
+              ))}
+            </div>
+          )} */}
+          </div>
         <div className="buttons">
           <button className="button button-aceptar" type="button" onClick={GuardarResultados}>
             Enviar
@@ -488,6 +570,7 @@ function Resultado() {
       <form className="formulario-muestra" method="post">
 
         {generarInputs3()}
+      
         <div className="buttons">          
           <button className="button button-cancel" type="button" onClick={hideAllModals}>
             Cancelar

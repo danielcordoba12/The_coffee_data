@@ -10,7 +10,6 @@ import Cafe from './components/cafe'
 import Municipio from './components/Municipio'
 import Variedad from './components/variedad'
 import ListarMuestra from './components/ListarMuestra'
-import ModalMuestra from './components/ModalMuestra'
 import EditarMestra from './components/EditarMuestra'
 import Registrarusuarios from './components/usuariosRegistrar'
 import EditarUsuario from './components/editarusuario'
@@ -46,7 +45,6 @@ function App(){
         <Route path='/variedad' element={<Variedad/>}/>
         <Route path='/cafe' element={<Cafe/>}/>
         <Route path='/listar/muestra' element={<ListarMuestra/>}/>
-        {/* <Route path='/ModalMuestra/:id' element={<ModalMuestra/>}/> */}
         <Route path='/editar/muestra/:id' element={<EditarMestra/>}/>
         <Route path='/grafica' element={<Grafica/>}/>
 

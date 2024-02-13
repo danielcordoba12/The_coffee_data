@@ -1,47 +1,49 @@
 import { pool } from "../database/conexion.js";
-import { validationResult } from "express-validator";
+// import { validationResult } from "express-validator";
 
 
-export const guardarMuestra = async (req, res) => {
-    try {
-        let error1 = validationResult(req);
-        if (!error1.isEmpty()){
-            return res.status(400).json(error1);
-        }
-        let data = req.body;
+    export const guardarMuestra = async (req, res) => {
+        try {
+            // let error1 = validationResult(req);
+            // if (!error1.isEmpty()){
+            //     return res.status(400).json(error1);
+            // }
+            let data = req.body;
+                console.log(data)
 
-        let sql = `INSERT INTO muestras ( fecha_creacion, codigo_externo, consecutivo_informe,muestreo, preparacion_muestra, cantidad, tipo_molienda, tipo_fermentacion, densidad_cafe_verde, fecha_procesamiento, tipo_tostion, tiempo_fermentacion, codigo_muestra, actividad_agua, tiempo_secado, presentacion, cafes_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
-        const [rows] = await pool.query(sql, [ data.fecha_creacion,data.codigo_externo,data.consecutivo_informe,data.muestreo,data.preparacion_muestra,data.cantidad,data.tipo_molienda,data.tipo_fermentacion,data.densidad_cafe_verde,data.fecha_procesamiento,data.tipo_tostion,data.tiempo_fermentacion,data.codigo_muestra,data.actividad_agua,data.tiempo_secado,data.presentacion,data.cafes_id ]); 
-        
-        if (rows.affectedRows > 0) {
-            res.status(200).json({
-                "status": 200,
-                "message": "La muestras se registro con exito"   
+            let sql = `INSERT INTO muestras ( fecha_creacion, codigo_externo, consecutivo_informe,muestreo, preparacion_muestra, cantidad, tipo_molienda, tipo_fermentacion, densidad_cafe_verde, fecha_procesamiento, tipo_tostion, tiempo_fermentacion, codigo_muestra, actividad_agua, tiempo_secado, presentacion, cafes_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+
+            const [rows] = await pool.query(sql, [ data.fecha_creacion,data.codigo_externo,data.consecutivo_informe,data.muestreo,data.preparacion_muestra,data.cantidad,data.tipo_molienda,data.tipo_fermentacion,data.densidad_cafe_verde,data.fecha_procesamiento,data.tipo_tostion,data.tiempo_fermentacion,data.codigo_muestra,data.actividad_agua,data.tiempo_secado,data.presentacion,data.cafes_id ]); 
+            
+            if (rows.affectedRows > 0) {
+                res.status(200).json({
+                    "status": 200,
+                    "message": "La muestras se registro con exito"   
+                }
+                );
+            } else {
+                res.status(401).json({
+                    "status": 401,
+                    "message": "La muestra no se registro"
+                }
+                );
+            }  
+        } catch (error) {
+            res.status(500).json({
+                "status": 500,
+                "message": "error en en el servidor" + error
             }
             );
-        } else {
-            res.status(401).json({
-                "status": 401,
-                "message": "La muestra no se registro"
-            }
-            );
-        }  
-    } catch (error) {
-        res.status(500).json({
-            "status": 500,
-            "message": "error en en el servidor" + error
+            
         }
-        );
-        
     }
-}
 export const actualizarMuestra = async (req, res) => {
     try {
-        let error1 = validationResult(req);
-        if (!error1.isEmpty()){
-            return res.status(400).json(error1);
-        }
+        // let error1 = validationResult(req);
+        // if (!error1.isEmpty()){
+        //     return res.status(400).json(error1);
+        // }
         let id = req.params.id;
         // let { fecha_creacion, cantidad,lotes_id} = req.body;
         let data = req.body;
@@ -93,11 +95,23 @@ export const buscarMuestra = async (req, res) => {
     }
 
 };
+// export const listarMuestras = async (req, res) => {
+
+//     try {
+//         // const [result] = await pool.query("SELECT m.id, m.fecha_creacion, m.cantidad, l.nombre as lote,f.nombre as finca, concat(u.nombre,' ',u.apellido)  as propietario,m.estado,m.cafes_id from muestras m join cafes c on m.cafes_id = c.id JOIN lotes l ON c.lotes_id = l.id JOIN fincas f ON l.fincas_id = f.id JOIN usuarios u ON f.usuarios_id = u.id ");
+//         const [result] =await pool.query("select * from muestras order by estado desc ");
+//         res.status(200).json(result);
+//     } catch (err) {
+//         res.status(500).json({
+//             massage: "Error en listar muestra :" + err
+//         });
+//     }
+// }
 export const listarMuestras = async (req, res) => {
 
     try {
         // const [result] = await pool.query("SELECT m.id, m.fecha_creacion, m.cantidad, l.nombre as lote,f.nombre as finca, concat(u.nombre,' ',u.apellido)  as propietario,m.estado,m.cafes_id from muestras m join cafes c on m.cafes_id = c.id JOIN lotes l ON c.lotes_id = l.id JOIN fincas f ON l.fincas_id = f.id JOIN usuarios u ON f.usuarios_id = u.id ");
-        const [result] =await pool.query("select * from muestras order by estado desc ");
+        const [result] =await pool.query("select m.id AS id, m.fecha_creacion,c.id AS cafe, l.nombre as Lote, f.nombre AS Finca,m.estado,m.codigo_externo, u.nombre AS usuario, v.nombre AS variedad from muestras as m JOIN cafes AS c ON m.cafes_id = c.id  JOIN lotes AS l ON c.lotes_id = l.id JOIN fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id  JOIN variedades AS v ON c.variedades_id = v.id");
         res.status(200).json(result);
     } catch (err) {
         res.status(500).json({
@@ -105,6 +119,8 @@ export const listarMuestras = async (req, res) => {
         });
     }
 }
+
+
 export const desactivarMuestra = async (req,res) =>{
     try {
         let id = req.params.id; 
