@@ -89,6 +89,48 @@
   cursor: pointer;
 }
 
+/*usuario-label*/
+/* Styles for the label */
+.usuario-label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+/* Styles for the custom dropdown */
+.custom-dropdown {
+  position: relative;
+  margin-top: 5px;
+  width: 100%;
+}
+
+/* Styles for the dropdown options */
+.custom-dropdown-option {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #000000;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-top: 2px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-dropdown-option:hover {
+  background-color: #1b1b1b;
+}
+
+/* Optional: Style for the selected option */
+.custom-dropdown-option.selected {
+  background-color: #3498db;
+  color: #000000;
+}
+
+/* Optional: Style for hiding dropdown when not needed */
+.custom-dropdown.hidden {
+  display: none;
+}
+
 /* listar fincas */
 
 
@@ -308,8 +350,17 @@ body.modal-open {
 
 
 /* estilos de registrar css*/
-.div-input {
-  margin-bottom: 16px;
+
+.input-register{
+  left: 0.1px;
+  top: 0.1px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+  box-sizing: border-box;
 }
 
 label {
@@ -318,15 +369,7 @@ label {
   font-weight: bold;
 }
 
-select {
-  background-color: transparent;
-  color: white;
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
+
 
 /* Estilo para desactivar la primera opción "Seleccione un municipio" */
 select option[disabled] {

@@ -20,6 +20,10 @@ const FincaView = () => {
     const [selectedFincaLotes, setSelectedFincaLotes] = useState(null);
     const [modalLotes, setModalLotes] = useState({});
     const [isLoadingLotes, setLoadingLotes] = useState(false);
+    const [fincaId, setFincaId] = useState(null);
+    const [filtro, setFiltro] = useState('');
+    const [usuario, setUsuario] = useState([]);
+    const [mostrarOpciones, setMostrarOpciones] = useState(false);
 
 
     const fincas_id = useRef();
@@ -56,6 +60,20 @@ const FincaView = () => {
         buscarFincas();
     }, []);
 
+
+    useEffect(() => {
+        const buscarUsuarios = async () => {
+            try {
+                const response = await Api.get('usuario/listarusuario');
+                setUsuario(response.data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+        buscarUsuarios();
+
+    }, []);
+
     const openEditarModal = async (fincaId) => {
         setSelectedFincaId(fincaId);
         try {
@@ -73,7 +91,7 @@ const FincaView = () => {
 
     const openModal = async (loteId) => {
         setSelectedLoteId(loteId);
-        
+
         try {
             const response = await Api.get(`/lote/buscar/${loteId}`);
             setModalLote(response.data);
@@ -85,7 +103,7 @@ const FincaView = () => {
     const closeModal = () => {
         setSelectedLoteId(null);
         setModalLote(null);
-        
+
     };
 
     const handleEditUser1 = async () => {
@@ -137,6 +155,7 @@ const FincaView = () => {
         try {
             await Api.put(`/lote/actualizar/${selectedLoteId}`, modalLote);
             Sweet.actualizacionExitosa();
+            openLotesModal(fincaId)
             closeModal();
             // Recargar la lista de lotes después de la actualización
             const response = await Api.get("lote/listar");
@@ -152,6 +171,7 @@ const FincaView = () => {
         if (result.isConfirmed) {
             try {
                 await Api.patch(`/lote/desactivar/${selectedLoteId}`, modalLote);
+                openLotesModal(fincaId)
                 closeModal();
                 // Recargar la lista de lotes después de la desactivación
                 const response = await Api.get("lote/listar");
@@ -167,6 +187,7 @@ const FincaView = () => {
         if (result.isConfirmed) {
             try {
                 await Api.patch(`/lote/activar/${selectedLoteId}`, modalLote);
+                openLotesModal(fincaId)
                 closeModal();
                 // Recargar la lista de lotes después de la activación
                 const response = await Api.get("lote/listar");
@@ -223,6 +244,18 @@ const FincaView = () => {
             setLoadingLotes(false);
         }
     };
+
+    /*usuarios filtro*/
+    const filtrarOpciones = (event) => {
+        setFiltro(event.target.value.toLowerCase());
+        setMostrarOpciones(true);
+    };
+    const handleClickOpcion = (usuario) => {
+        // Actualizamos el filtro con el valor seleccionado
+        setFiltro(`${usuario.numero_documentos}-${usuario.nombre}`);
+        setMostrarOpciones(false);
+    };
+
 
 
     const handleRegistrar = async (data) => {
@@ -358,7 +391,7 @@ const FincaView = () => {
                                                     <button
                                                         type="button"
                                                         className="btn-ver"
-                                                        onClick={() => openLotesModal(task.id)}
+                                                        onClick={() => { setFincaId(task.id); openLotesModal(task.id) }}
                                                     >
                                                         Ver Lotes
                                                     </button>
@@ -440,7 +473,7 @@ const FincaView = () => {
                     </div>
                 </div>
             )}
-        
+
 
 
             {modalFinca && (
@@ -488,27 +521,59 @@ const FincaView = () => {
                                 setModalFinca({ ...modalFinca, latitud: e.target.value })
                             }
                         />
+
                         <input
                             className="input-field"
-                            type="number"
+                            type="text"
                             placeholder="usuarios_id"
-                            value={modalFinca.usuarios_id}
-                            onChange={(e) =>
-                                setModalFinca({ ...modalFinca, usuarios_id: e.target.value })
-                            }
+                            value={filtro}
+                            onChange={filtrarOpciones}
+                            autoComplete="off"
                         />
-                        <input
-                            className="input-field"
-                            type="number"
-                            placeholder="municipios_id"
-                            value={modalFinca.municipios_id}
-                            onChange={(e) =>
-                                setModalFinca({
-                                    ...modalFinca,
-                                    municipios_id: e.target.value,
-                                })
-                            }
-                        />
+                        <div className="div-usuario">
+                        <label htmlFor="usuarios_id" className='usuario-label'>Usuario</label>
+                        {mostrarOpciones && (
+                            <div className="custom-dropdown">
+                                {usuario.map((usuario) => (
+                                    (usuario.numero_documentos.toLowerCase().includes(filtro) ||
+                                        usuario.nombre.toLowerCase().includes(filtro)) && (
+                                        <div
+                                            key={usuario.id}
+                                            className="custom-dropdown-option"
+                                            onClick={() => handleClickOpcion(usuario)}
+                                        >
+
+                                            {`${usuario.numero_documentos}-${usuario.nombre}`}
+                                        </div>
+                                    )
+                                ))}
+                            </div>
+                        )}
+                        </div>
+                        <div className="div-input">
+                            <select
+                                
+                                className="input-register"
+                                id="municipios_id"
+                                name="municipios_id"
+                                value={modalFinca.municipios_id}
+                                onChange={(e) => {
+                                    console.log("Municipio seleccionado:", e.target.value);
+                                    setModalFinca({
+                                        ...modalFinca,
+                                        municipios_id: e.target.value,
+                                    });
+                                }}
+                            >
+                                <option value="" disabled>Seleccione un municipio</option>
+                                {municipios.map((municipio) => (
+                                    <option key={municipio.id} value={municipio.id}>
+                                        {municipio.nombre}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
                         <input
                             className="input-field"
                             type="text"
@@ -607,71 +672,78 @@ const FincaView = () => {
                 </div>
             )}
 
-{modalLote && (
-        <div className="tabla3">
-          <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
-          <div className="max-w-xs">
-            <input
-              className="input-field" type="date" placeholder="fecha_creacion" value={modalLote.fecha_creacion} onChange={(e) => setModalLote({ ...modalLote, fecha_creacion: e.target.value })}
-            />
-            <input
-              className="input-field"
-              type="text"
-              placeholder="nombre"
-              value={modalLote.nombre}
-              onChange={(e) => setModalLote({ ...modalLote, nombre: e.target.value })}
-            />
-            <input
-              className="input-field"
-              type="text"
-              placeholder="longitud"
-              value={modalLote.longitud}
-              onChange={(e) => setModalLote({ ...modalLote, longitud: e.target.value })}
-            />
-            <input
-              className="input-field"
-              type="text"
-              placeholder="latitud"
-              value={modalLote.latitud}
-              onChange={(e) => setModalLote({ ...modalLote, latitud: e.target.value })}
-            />
-            <input
-              className="input-field"
-              type="number"
-              placeholder="fincas_id"
-              value={modalLote.fincas_id}
-              onChange={(e) => setModalLote({ ...modalLote, fincas_id: e.target.value })}
-            />
-            <button
-              className="btn-primary"
-              onClick={loteEditUser1}
-            >
-              Actualizar
-            </button>
-            {modalLote.estado === 1 ? (
-              <button
-                className="btn-secondary"
-                onClick={loteEditUser2}
-              >
-                Desactivar
-              </button>
-            ) : (
-              <button
-                className="btn-tertiary"
-                onClick={loteEditUser3}
-              >
-                Activar
-              </button>
+            {modalLote && (
+                <div className="tabla3">
+                    <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
+                    <div className="max-w-xs">
+
+                        <input
+                            className="input-field"
+                            type="text"
+                            placeholder="nombre"
+                            value={modalLote.nombre}
+                            onChange={(e) => setModalLote({ ...modalLote, nombre: e.target.value })}
+                        />
+                        <input
+                            className="input-field"
+                            type="text"
+                            placeholder="longitud"
+                            value={modalLote.longitud}
+                            onChange={(e) => setModalLote({ ...modalLote, longitud: e.target.value })}
+                        />
+                        <input
+                            className="input-field"
+                            type="text"
+                            placeholder="latitud"
+                            value={modalLote.latitud}
+                            onChange={(e) => setModalLote({ ...modalLote, latitud: e.target.value })}
+                        />
+                        <input
+                            className="input-field"
+                            type="number"
+                            placeholder="n_plantas"
+                            value={modalLote.n_plantas}
+                            onChange={(e) =>
+                                setModalLote({ ...modalLote, n_plantas: e.target.value })
+                            }
+                        />
+                        <input
+                            className="input-field"
+                            type="hidden"
+                            placeholder="fincas_id"
+                            value={modalLote.fincas_id}
+                            onChange={(e) => setModalLote({ ...modalLote, fincas_id: e.target.value })}
+                        />
+                        <button
+                            className="btn-primary"
+                            onClick={loteEditUser1}
+                        >
+                            Actualizar
+                        </button>
+                        {modalLote.estado === 1 ? (
+                            <button
+                                className="btn-secondary"
+                                onClick={loteEditUser2}
+                            >
+                                Desactivar
+                            </button>
+                        ) : (
+                            <button
+                                className="btn-tertiary"
+                                onClick={loteEditUser3}
+                            >
+                                Activar
+                            </button>
+                        )}
+                        <button
+                            className="close-modal-btn"
+                            onClick={closeModal}
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
             )}
-            <button
-              className="close-modal-btn"
-              onClick={closeModal}
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      )}
 
 
 

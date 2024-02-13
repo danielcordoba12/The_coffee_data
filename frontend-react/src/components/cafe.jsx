@@ -15,7 +15,7 @@ const Cafe = () => {
     const [filtroVariedades, setFiltroVariedades] = useState('');
     const [lote, setLotes] = useState([]);
     const [variedades, setvariedades] = useState([]);
-
+    const [mostrarSegundoSelect, setMostrarSegundoSelect] = useState(false);
 
     const lotes_id = useRef();
     const variedades_id = useRef();
@@ -148,11 +148,13 @@ const Cafe = () => {
     const filtrarOpciones = (event) => {
         setFiltro(event.target.value.toLowerCase());
         setMostrarOpciones(true);
+        setMostrarSegundoSelect(false);
     };
     const handleClickOpcion = (lote) => {
         // Actualizamos el filtro con el valor seleccionado
-        setFiltro(`${lote.id}-${lote.nombre_usuario}-${lote.Nombre_Finca}-${lote.nombre}`);
+        setFiltro(`${lote.id},${lote.nombre_usuario},${lote.Nombre_Finca},${lote.nombre}`);
         setMostrarOpciones(false);
+        setMostrarSegundoSelect(true);
     };
 
     // este es el filtro de variedades
@@ -163,8 +165,9 @@ const Cafe = () => {
     };
     const handleClickOpcion2 = (variedades) => {
         // Actualizamos el filtro con el valor seleccionado
-        setFiltroVariedades(`${variedades.id}-${variedades.nombre}`);
+        setFiltroVariedades(`${variedades.id},${variedades.nombre}`);
         setMostrarOpciones(false);
+        
     };
 
     return (<>
@@ -318,7 +321,7 @@ const Cafe = () => {
                     <div className="div-input">
                         <input type="text" id="variedades_id" name="variedades_id" ref={variedades_id} value={filtroVariedades} onChange={filtrarOpciones2} autoComplete="off" placeholder="" />
                         <label htmlFor="variedades_id" className='label'>variedades</label>
-                        {mostrarOpciones && (
+                        {mostrarSegundoSelect && (
                             <div className="custom-dropdown">
                                 {variedades.map((variedades) => (
                                     (variedades.nombre.toLowerCase().includes(filtroVariedades) ) && (
