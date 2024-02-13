@@ -15,8 +15,12 @@ const Cafe = () => {
     const [filtroVariedades, setFiltroVariedades] = useState('');
     const [lote, setLotes] = useState([]);
     const [variedades, setvariedades] = useState([]);
+<<<<<<< HEAD
     const [dataSelect, setDataSelect] = useState({});
 
+=======
+    const [mostrarSegundoSelect, setMostrarSegundoSelect] = useState(false);
+>>>>>>> development
 
     const lotes_id = useRef();
 
@@ -152,6 +156,7 @@ const Cafe = () => {
     const filtrarOpciones = (event) => {
         setFiltro(event.target.value.toLowerCase());
         setMostrarOpciones(true);
+        setMostrarSegundoSelect(false);
     };
     /*     const handleClickOpcion = (lote) => {
             // Actualizamos el filtro con el valor seleccionado
@@ -167,8 +172,9 @@ const Cafe = () => {
     };
     const handleClickOpcion2 = (variedades) => {
         // Actualizamos el filtro con el valor seleccionado
-        setFiltroVariedades(`${variedades.id}-${variedades.nombre}`);
+        setFiltroVariedades(`${variedades.id},${variedades.nombre}`);
         setMostrarOpciones(false);
+        
     };
     function clearFocusInput(Element) {
         let inputSearch = document.getElementById(Element)
@@ -384,7 +390,7 @@ const Cafe = () => {
                     <div className="div-input">
                         <input type="text" id="variedades_id" name="variedades_id" ref={variedades_id} value={filtroVariedades} onChange={filtrarOpciones2} autoComplete="off" placeholder="" />
                         <label htmlFor="variedades_id" className='label'>variedades</label>
-                        {mostrarOpciones && (
+                        {mostrarSegundoSelect && (
                             <div className="custom-dropdown">
                                 {variedades.map((variedades) => (
                                     (variedades.nombre.toLowerCase().includes(filtroVariedades)) && (
