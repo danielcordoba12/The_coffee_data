@@ -1,9 +1,10 @@
-
 import React, { useEffect, useState } from "react";
 import '../style/RegistrarMuestra.css'
 import Sweet from "../helpers/Sweet";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faX }  from'@fortawesome/free-solid-svg-icons'
+import Api from "../services/api";
+
 
 
 
@@ -13,6 +14,7 @@ function Resultado() {
   const [nuevosDatos, setNuevosDatos] = useState([]);
   const [resultado,setResultado] = useState([]);
   const [resultadoSellecionado,setResultadoSeleccionado] = useState([])
+  const [analisis , setAnalisi] = useState([])
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
@@ -72,6 +74,87 @@ function Resultado() {
     inicializarDatos();
   }, []);
 
+  
+
+  function clearFocusInput(Element) {
+    let inputSearch = document.getElementById(Element)
+
+    if (inputSearch) {
+        
+        let divOptions = inputSearch.parentNode.querySelectorAll(".select-options-cafe");
+        if(divOptions.length > 0){
+            divOptions[0].style.display = "none"
+        }
+        let select = inputSearch.parentNode.querySelectorAll(".option-select-cafe")
+        for (let s = 0; s < select.length; s++) {
+            let elementValue = inputSearch.getAttribute("id")
+            
+            if(dataSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")){
+                select[s].classList.add("option-select-cafe")
+            }else{
+                select[s].classList.remove("option-select-cafe")
+            }
+            
+        }
+    }
+}
+
+
+
+
+
+useEffect(() => {
+
+  let inputSearch = document.querySelectorAll(".input-search-cafe")
+
+  if (inputSearch.length > 0) {
+      for (let s = 0; s < inputSearch.length; s++) {
+          inputSearch[s].addEventListener("blur",function(){
+              let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-options-cafe");
+              if(divOptions.length > 0){
+                 setTimeout(() => {
+                  divOptions[0].style.display = "none"
+                 }, 100); 
+              }
+
+          })
+          inputSearch[s].addEventListener("input", function () {
+              let parent = inputSearch[s].parentNode
+              if (parent) {
+                  let selectOptionsInput = parent.querySelectorAll(".select-options-cafe");
+                  if (selectOptionsInput[0]) {
+                      selectOptionsInput[0].style.display = "block"
+                      let options = selectOptionsInput[0].querySelectorAll("div");
+                      for (let o = 0; o < options.length; o++) {
+                          if (options[o].innerHTML.toLowerCase().includes(inputSearch[s].value.toLowerCase())) {
+                              options[o].style.display = "block"
+                          } else {
+                              options[o].style.display = "none"
+                          }
+                          if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
+                              let focusSelect = document.querySelectorAll(".option-select-cafe")
+                              if (focusSelect.length > 0) {
+                                  console.log(focusSelect[0].classList)
+                                  focusSelect[0].classList.remove("option-select-cafe")
+                              }
+                              inputSearch[s].value = options[o].innerHTML
+                              if(!dataSelect[inputSearch[s].getAttribute("data-id")]){
+                                  dataSelect[inputSearch[s].getAttribute("data-id")] = {}
+                              }
+                              dataSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
+                              options[o].classList.add("option-select-cafe")
+                          } else {
+                              options[o].classList.remove("option-select-cafe")
+                          }
+                      }
+                  }
+              }
+          })
+      }
+  }
+},[showModal1])
+
+
   const labelText = [
     'value: Peso C.P.S (g)',
     'Humedad (%)',
@@ -102,6 +185,7 @@ function Resultado() {
     'Malla 17 (g)',
     'Malla 14 (g)',
     'Malla 16 (g)',
+    'analisis'
     // Otras mallas o campos pueden agregarse según sea necesario
   ];
 
@@ -180,6 +264,12 @@ function Resultado() {
 
 
 
+
+
+
+
+  //////////////////////////////7Respaldo de generar inputs/////////////////////////////////////////////////
+
   // const generarInputs = () => {
   //   const filas = [];
   //   const numColumnas = 9;
@@ -205,80 +295,101 @@ function Resultado() {
   //         ))}
   //       </div>
   //     );
-
-
-
   //   }
+  
 
+  // // Agregar el input y su label al final
+  // filas.push(
+  //   <div className="columna" key="cafes_id">
+  //     <div className="container-input">
+  //       <input
+  //         type="text"
+  //         className='input'
+  //         placeholder=''
+  //         id="cafes_id"
+  //         name="cafes_id"
+  //         // ref={cafes_id}
+  //         // value={filtro}
+  //         // onChange={filtrarOpciones}
+  //         autoComplete="off"
+  //       />
+  //       <label htmlFor="cafes_id" className='label'>Analisis</label>
+  //       {/* {mostrarOpciones && (
+  //         <div className="custom-dropdown">
+  //           {cafe.map((cafe) => (
+  //             (cafe.documento.toLowerCase().includes(filtro) ||
+  //               cafe.nombre_usuario.toLowerCase().includes(filtro) ||
+  //               cafe.numero_lote.toLowerCase().includes(filtro) ||
+  //               cafe.nombre_variedad.toLowerCase().includes(filtro)) && (
+  //               <div
+  //                 key={cafe.id}
+  //                 className="custom-dropdown-option"
+  //                 onClick={() => handleClickOpcion(cafe)}
+  //               >
+  //                 {`${cafe.id}-${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}
+  //               </div>
+  //             )
+  //           ))}
+  //         </div>
+  //       )} */}
+  //     </div>
+  //   </div>
+  // );
+
+  // return filas;
+  // };
+  
+  ///////////////////////////////////////////////////77Fin de respaldo/////////////////////////////////////////////////////
   const generarInputs = () => {
     const filas = [];
     const numColumnas = 9;
-
+  
     for (let i = 0; i < datos.length; i += numColumnas) {
       const fila = datos.slice(i, i + numColumnas);
       filas.push(
         <div className="columna" key={i}>
           {fila.map((dato, j) => (
-              <div className="container-input" key={dato.variables_id}>
-                <input
-                  type="text"
-                  id={`input-${dato.variables_id}`}
-                  value={dato.valor}
-                  className='input'
-                  placeholder=""
-                  onChange={(e) => camposEntrada2(i + j, "valor", e.target.value)}
-                />
-                <label htmlFor={`input-${dato.variables_id}`} className='label'>
-                  {labelText[i + j ]}</label>
-              </div>
-            // </div>
+            <div className="container-input" key={dato.variables_id}>
+              <input
+                type="text"
+                id={`input-${dato.variables_id}`}
+                value={dato.valor}
+                className="input"
+                placeholder=""
+                onChange={(e) => camposEntrada2(i + j, "valor", e.target.value)}
+              />
+              <label htmlFor={`input-${dato.variables_id}`} className="label">
+                {labelText[i + j]}
+              </label>
+            </div>
           ))}
         </div>
       );
     }
   
-
-  // Agregar el input y su label al final
-  filas.push(
-    <div className="columna" key="cafes_id">
-      <div className="container-input">
-        <input
-          type="text"
-          className='input'
-          placeholder=''
-          id="cafes_id"
-          name="cafes_id"
-          // ref={cafes_id}
-          // value={filtro}
-          // onChange={filtrarOpciones}
-          autoComplete="off"
-        />
-        <label htmlFor="cafes_id" className='label'>Cafe</label>
-        {/* {mostrarOpciones && (
-          <div className="custom-dropdown">
-            {cafe.map((cafe) => (
-              (cafe.documento.toLowerCase().includes(filtro) ||
-                cafe.nombre_usuario.toLowerCase().includes(filtro) ||
-                cafe.numero_lote.toLowerCase().includes(filtro) ||
-                cafe.nombre_variedad.toLowerCase().includes(filtro)) && (
-                <div
-                  key={cafe.id}
-                  className="custom-dropdown-option"
-                  onClick={() => handleClickOpcion(cafe)}
-                >
-                  {`${cafe.id}-${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}
-                </div>
-              )
-            ))}
-          </div>
-        )} */}
+    // Agregar una columna separada para el análisis
+    filas.push(
+      <div className="columna" key="analisis">
+        <div className="container-input">
+        <input className="input-search-cafe " type="text" id="cafe_id" />
+                        <label htmlFor="cafe_id" className='label'>Analisis</label>
+                        <div className="select-options-cafe" >
+                            {analisis.map((key, index) => (
+                                (
+                                    <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafe_id").value = key.consecutivo_informe ;  "";dataSelect.cafe_id.value = key.id; clearFocusInput("cafe_id") }} key={key.id_analisis}>{key.consecutivo_informe+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
+                                )
+                            ))}
+                        </div>
+        </div>
       </div>
-    </div>
-  );
-    
-
+    );
+  
     return filas;
   };
+  
+  
+  
+  
   const generarInputs2 = () => {
     const filas = [];
     const numColumnas = 9;
@@ -476,6 +587,18 @@ function Resultado() {
   };
 
 
+  useEffect(() => {
+    const buscarUsuarios = async () => {
+        try {
+            const response = await Api.get('analisis/listar');
+            setAnalisi(response.data);
+            console.log("Soy data de analisis", response.data);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
+    }
+    buscarUsuarios();
+}, []);
 
   const filtrarOpciones = (event) => {
     setFiltro(event.target.value.toLowerCase());
