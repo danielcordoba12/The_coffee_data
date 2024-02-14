@@ -81,12 +81,6 @@ const EditarAnalisis = () => {
                     value={analisis.usuarios_id} 
                     onChange={(e) => setAnalisis({ ...analisis, usuarios_id : e.target.value })}
                 />
-                 <input
-                    className="input-field" 
-                    type="number" placeholder="propietario" 
-                    value={analisis.propietario} 
-                    onChange={(e) => setAnalisis({ ...analisis, propietario : e.target.value })}
-                />
                 
                 <button className="btn-primary" onClick={handleEditUser1}>
                 Actualizar

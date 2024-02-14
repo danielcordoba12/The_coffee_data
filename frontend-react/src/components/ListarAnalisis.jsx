@@ -63,6 +63,9 @@ const ListarAnalisis = () => {
                         <th>ASIGNACIÓN</th>
                         <th>ESTADO</th>
                         <th>PROPIETARIO</th>
+                        <th>FINCA</th>
+                        <th>LOTE</th>
+
                         <th></th>
                         <th></th>
 
@@ -79,6 +82,8 @@ const ListarAnalisis = () => {
                             <td>{task.nombre_usuario}</td>
                             <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                             <td>{task.propietario}</td> 
+                            <td>{task.nombre_fincas}</td> 
+                            <td>{task.nombre_lotes}</td> 
                            
                             <td>
                                 <button
