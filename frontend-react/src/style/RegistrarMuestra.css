@@ -162,7 +162,47 @@ label {
   overflow-y: auto;
   cursor: pointer;
 }
+.input-search-cafe{
+  background-color: transparent;
+  border-right: none;
+  border-top: none;
+  border-left: none;
 
+  width: 100%;
+  color:  white;
+  outline: none;
+}
+
+.select-options-cafe{
+  display: block;
+  position: absolute;
+  color: white;
+  background-color: rgb(0, 0, 0);
+  width: 100%;
+  z-index: 1;
+  top: 100%;
+  max-height: 100px;
+  overflow: auto;
+  text-align: left;
+  padding: 10px;
+  font-size: 11px;
+  display: none;
+}
+.select-options-cafe>div{
+  margin: 0 !important;
+  padding: 0 !important;
+  padding: 5px !important;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.select-options-cafe>div:hover{
+  background-color: #80808024;
+  display: block;
+}
+.select-options-cafe>div:hover{
+  background-color: #80808024;
+  display: block;
+}
 
 
 /* ================================listar muestra===============================0
