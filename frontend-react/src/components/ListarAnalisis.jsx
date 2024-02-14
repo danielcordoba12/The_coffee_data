@@ -23,6 +23,12 @@ const ListarAnalisis = () => {
         return `${year}-${month}-${day}`;
     }
 
+
+
+    const openRegistrarAnalisisModal = () => {
+        setaRegistrarModalOpen(true);
+    };
+ 
     useEffect(() => {
         const buscarUsuarios = async () => {
             try {
@@ -97,14 +103,8 @@ const ListarAnalisis = () => {
                                 </button>
                             </td>
                             <td>
-                                <button
-                                    type="button"
-                                    className="btn-registrar-d"
-                                  
-                                >
-                                    <Link to={`/analisis/registrar`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                        Registrar
-                                    </Link>
+                                <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
+                                    Registrar cafe
                                 </button>
                             </td>
 
