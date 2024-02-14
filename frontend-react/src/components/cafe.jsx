@@ -177,7 +177,7 @@ const Cafe = () => {
                     if(divOptions.length > 0){
                        setTimeout(() => {
                         divOptions[0].style.display = "none"
-                       }, 100);
+                       }, 110);
                     }
 
                 })
