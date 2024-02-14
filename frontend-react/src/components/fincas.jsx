@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
 import "../style/fincas.css";
 import Sweet from "../helpers/Sweet";
+import $ from "jquery";
 
 
 const FincaView = () => {
@@ -62,6 +63,9 @@ const FincaView = () => {
 
 
     useEffect(() => {
+        $("body").on("click", ".td-id", function () {
+            alert("xd")
+        })
         const buscarUsuarios = async () => {
             try {
                 const response = await Api.get('usuario/listarusuario');
@@ -299,7 +303,7 @@ const FincaView = () => {
                 // Recargar la lista de fincas después del registro
                 const response = await Api.get("lote/listar");
                 setLotes(response.data);
-                location.href = "/lote"
+                location.href = "/finca"
             }
 
 
@@ -367,7 +371,7 @@ const FincaView = () => {
                             )
                             .map((task) => (
                                 <tr key={task.id} className="border-t">
-                                    <td>{task.id}</td>
+                                    <td className="td-id">{task.id}</td>
                                     <td>{task.fecha_creacion}</td>
                                     <td>{task.nombre}</td>
                                     <td>{task.longitud}</td>
@@ -531,28 +535,28 @@ const FincaView = () => {
                             autoComplete="off"
                         />
                         <div className="div-usuario">
-                        <label htmlFor="usuarios_id" className='usuario-label'>Usuario</label>
-                        {mostrarOpciones && (
-                            <div className="custom-dropdown">
-                                {usuario.map((usuario) => (
-                                    (usuario.numero_documentos.toLowerCase().includes(filtro) ||
-                                        usuario.nombre.toLowerCase().includes(filtro)) && (
-                                        <div
-                                            key={usuario.id}
-                                            className="custom-dropdown-option"
-                                            onClick={() => handleClickOpcion(usuario)}
-                                        >
+                            <label htmlFor="usuarios_id" className='usuario-label'>Usuario</label>
+                            {mostrarOpciones && (
+                                <div className="custom-dropdown">
+                                    {usuario.map((usuario) => (
+                                        (usuario.numero_documentos.toLowerCase().includes(filtro) ||
+                                            usuario.nombre.toLowerCase().includes(filtro)) && (
+                                            <div
+                                                key={usuario.id}
+                                                className="custom-dropdown-option"
+                                                onClick={() => handleClickOpcion(usuario)}
+                                            >
 
-                                            {`${usuario.numero_documentos}-${usuario.nombre}`}
-                                        </div>
-                                    )
-                                ))}
-                            </div>
-                        )}
+                                                {`${usuario.numero_documentos}-${usuario.nombre}`}
+                                            </div>
+                                        )
+                                    ))}
+                                </div>
+                            )}
                         </div>
                         <div className="div-input">
                             <select
-                                
+
                                 className="input-register"
                                 id="municipios_id"
                                 name="municipios_id"

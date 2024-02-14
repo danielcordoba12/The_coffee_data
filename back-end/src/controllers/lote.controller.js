@@ -110,10 +110,7 @@ export const guardarlote = async(req, res) => {
     try {
       let data = {
         "string": {
-          "nombre": {
-            "value": req.body.nombre,
-            "referencia": "El nombre"
-          },
+          
           // "apellido": {
           //   "value": req.body.apelido
           // },
@@ -126,6 +123,10 @@ export const guardarlote = async(req, res) => {
           "latitud": {
             "value": req.body.latitud,
             "referencia": "La latitud"
+          },
+          "nombre": {
+            "value": req.body.nombre,
+            "referencia": "El nombre"
           },
           "longitud": {
             "value": req.body.longitud,
