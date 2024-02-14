@@ -744,8 +744,7 @@
                         <div className="select-options-input" >
                             {cafe.map((key, index) => (
                                 (
-
-                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("cafe_id").value = key.documento + ", " + key.nombre_finca + ", "+key.nombre_usuario + ", " + key.numero_lote + ", " + key.nombre_variedad; !dataSelect.cafe_id ? dataSelect.cafe_id = {} : "";dataSelect.cafe_id.value = key.id; clearFocusInput("cafe_id") }} key={key.id}>{key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad} hh</div>
+                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("cafe_id").value = key.documento + ", " + key.nombre_finca + ", "+key.nombre_usuario + ", " + key.numero_lote + ", " + key.nombre_variedad;  "";dataSelect.cafe_id.value = key.id; clearFocusInput("cafe_id") }} key={key.id}>{key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad} </div>
                                 )
                             ))}
                         </div>
