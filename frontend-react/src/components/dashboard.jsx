@@ -11,11 +11,24 @@ function Dashboard() {
         
         if (menuDesplegado == true){
             nav.style.width = 90 + "px";
+            // mainConterDasboard.style.overflow= "hidden";
+            // tooltipLi.style.opacity= "1";
+
             menuDesplegado = !menuDesplegado;
+            // tooltip_li.style.display = "none" ;
+
+
 
         }else {
-            nav.style.width = 220 + "px";
+            nav.style.width = 520 + "px";
+            // mainConterDasboard.style.overflow= "hidden";
+            // tooltipLi.style.opacity= "0";    
+            
+
             menuDesplegado = !menuDesplegado;
+
+
+
 
         }
 
@@ -24,7 +37,7 @@ function Dashboard() {
     return(
         <>
 
-        <div className="main-container-dasboard">
+        <div className="main-container-dasboard" id="mainConterDasboard">
 
             <div className="nav-header">
                 <div className="header">
@@ -70,14 +83,14 @@ function Dashboard() {
                 <nav className="nav" id="nav">
                     <div className="lista-items">
                     <FontAwesomeIcon icon={faBars} className="icon-menu" id="iconMenu" onClick={DesplegarMenu} />
-                        <ul>
+                        <ul id='listaItemsUl' className='listaItemsUl'>
                             <li className="first-icon">
                                 
                                 <FontAwesomeIcon icon={faHelmetSafety} className="icon " />
                                 <p id="paragraph">Administrador</p>
                             </li>
 
-                            <li>
+                            <li className="first-icon">
                                 <Link to={"/Usuario/listar"}>
                                     <FontAwesomeIcon icon={faUsers}  className="icon"/>
                                     <p id="paragraph">Usuarios</p>
@@ -131,8 +144,10 @@ function Dashboard() {
                             <li className="li-dasboard">
                                 <Link to={"/municipio"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                     <FontAwesomeIcon icon={faSliders} className="icon"/>
-                                    <p>Municipios</p>
-                                    <h3 className='tooltip-li'>Municipios</h3>
+                                    <p className='paragraf-li'   id="paragrafLi">Municipios</p>
+                                    {/* <div className='main-tooltip-li'> */}
+                                        <h3 className='tooltip-li' id='tooltipLi'>Municipios</h3>
+                                    {/* </div>     */}
                                 </Link>
                             </li>
                             <li className="li-dasboard">

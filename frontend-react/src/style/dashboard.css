@@ -44,16 +44,36 @@
     transition: all 800ms 
 
 }
+.nav{
+    background-color: red;
+
+}
+.lista-items{
+
+    background-color: aqua;
+}
 
 .lista-items ul{
+
     display: flex;
     flex-direction: column;
     gap: 10px;
     overflow: hidden;
+    background-color: rgb(248, 152, 27);
+    /* margin-left: 100; */
+    
+
 }
 
 .lista-items ul li p{
     margin-top: 1rem;
+
+}
+.lista-items ul li {
+    margin-top: 1rem;
+    background-color: blueviolet;
+
+
 }
 .icon-menu{
     font-size: 1.5em;
@@ -137,14 +157,16 @@
 
 /* /////////////////////////////////////////////////////LISTA ITEMS////////////////////////////////////////////////// */
 .lista-items{
-    /* display: table-column-group; */
-    /* display: block;
+    /* 
+    display: table-column-group;
+    display: block;
     align-items: center;
     justify-content: center;
-    text-align: center; */
+    text-align: center; 
+    position: relative; */
     width: 100%;
-    /* position: relative; */
-}
+
+} 
 .nav ul li a ,.first-icon{
     display: inline-flex;
     align-items: center;
@@ -192,21 +214,51 @@
 .first-icon{
     margin-top: 22px;
 }
+.main-tooltip-li{
+    width: 12px;
+    height: 12px;
+}
+
+/* .tooltip-li{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+} */
+.li-dasboard ul li .tooltip-li{
+    background-color: rgb(98, 0, 255);
+    margin-top:12px ;
+}
+
+.container-outlet ul li .h3{
+    background-color: darkblue;
+}
+
 .lista-items h3 {
-    background-color: red;
-    overflow-wrap: unset;
+    background-color: rgb(6, 2, 10);
+    /* overflow-wrap: unset; */
     position: relative;
     /* left: -280px; */
-    font-size: 1.3em;
-    transform: translate(-280px, 0px);
+    font-size: 1em;
+    /* transform: translate(-280px, 0px); */
     transition: transform 0.4s ease,0.4s ease ;
     opacity: 0;
-
+    position: fixed;
+}
+.lista-items li .tooltip-li{
+    transform: translate(0px, 0px);
+    /* background-color: rgb(0, 225, 255); */
+    /* position: fixed; */
+    margin-top: 9px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    height: 50px;
+    align-items: center;
 }
 .lista-items li:hover .tooltip-li{
-    transform: translate(-30px, 0px);
-    background-color: red;
+    transform: translate(46px, 0px);
+    background-color: rgba(70, 68, 68, 0.918);
     opacity: 1;
-
-    
 }
