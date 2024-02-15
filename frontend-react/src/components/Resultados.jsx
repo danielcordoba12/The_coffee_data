@@ -7,8 +7,6 @@ import Api from "../services/api";
 
 
 
-
-
 function Resultado() {
   const [datos, setDatos] = useState([]);
   const [nuevosDatos, setNuevosDatos] = useState([]);

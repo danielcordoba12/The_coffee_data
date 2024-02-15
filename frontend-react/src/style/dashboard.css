@@ -13,7 +13,7 @@
     /* width: 1820px;
      */
     width: 100%;
-     height: 120px;
+    height: 120px;
     position: relative;
     /* height: 820px; */
 
@@ -191,4 +191,22 @@
 }
 .first-icon{
     margin-top: 22px;
+}
+.lista-items h3 {
+    background-color: red;
+    overflow-wrap: unset;
+    position: relative;
+    /* left: -280px; */
+    font-size: 1.3em;
+    transform: translate(-280px, 0px);
+    transition: transform 0.4s ease,0.4s ease ;
+    opacity: 0;
+
+}
+.lista-items li:hover .tooltip-li{
+    transform: translate(-30px, 0px);
+    background-color: red;
+    opacity: 1;
+
+    
 }

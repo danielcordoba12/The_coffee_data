@@ -117,11 +117,14 @@ function Dashboard() {
                                 <Link to={"/resultado"}>
                                     <FontAwesomeIcon icon={faVials}  className="icon"/>
                                     <p>Resultado</p>
+                                    <h3 className='tooltip-li'>Resultado</h3>
                                 </Link>
-                            </li><li>
+                            </li>
+                            <li>
                                 <Link to={"/grafica"}>
                                     <FontAwesomeIcon icon={faVials}  className="icon"/>
                                     <p>Grafica</p>
+                                    <h3 className='tooltip-li'>Grafica</h3>
                                 </Link>
                             </li>
                         
@@ -129,6 +132,7 @@ function Dashboard() {
                                 <Link to={"/municipio"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                     <FontAwesomeIcon icon={faSliders} className="icon"/>
                                     <p>Municipios</p>
+                                    <h3 className='tooltip-li'>Municipios</h3>
                                 </Link>
                             </li>
                             <li className="li-dasboard">
