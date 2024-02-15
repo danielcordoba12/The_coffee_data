@@ -60,8 +60,12 @@ const ListarAnalisis = () => {
                         <th>FECHA</th>
                         <th>TIPO ANALISIS</th>
                         <th>CONSECUTIVO INFORME</th>
-                        <th>NOMBRE</th>
+                        <th>ASIGNACIÓN</th>
                         <th>ESTADO</th>
+                        <th>PROPIETARIO</th>
+                        <th>FINCA</th>
+                        <th>LOTE</th>
+
                         <th></th>
                         <th></th>
 
@@ -76,7 +80,10 @@ const ListarAnalisis = () => {
                             <td>{task.nombre_tipo_analisis}</td>
                             <td className="conse">{task.consecutivo_informe}</td>
                             <td>{task.nombre_usuario}</td>
-                            <td className="cont-estado">{task.estado === 1? 'Activo' : 'Desactivado'}</td>
+                            <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                            <td>{task.propietario}</td> 
+                            <td>{task.nombre_fincas}</td> 
+                            <td>{task.nombre_lotes}</td> 
                            
                             <td>
                                 <button
@@ -95,7 +102,7 @@ const ListarAnalisis = () => {
                                     className="btn-registrar-d"
                                   
                                 >
-                                    <Link to={`/analisis/registrar/`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <Link to={`/analisis/registrar`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         Registrar
                                     </Link>
                                 </button>

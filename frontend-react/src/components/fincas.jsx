@@ -3,6 +3,18 @@ import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
 import "../style/fincas.css";
 import Sweet from "../helpers/Sweet";
+import $ from "jquery";
+import jQuery from "jquery";
+import "bootstrap"
+import "../../node_modules/datatables.net";
+import "../../node_modules/datatables.net-dt/css/dataTables.dataTables.min.css";
+import "../../node_modules/datatables.net-dt/css/dataTables.dataTables.css";
+import '../../node_modules/datatables.net-responsive';
+import '../../node_modules/datatables.net-responsive/js/dataTables.responsive';
+import '../../node_modules/datatables.net-responsive-dt';
+import '../../node_modules/datatables.net-responsive-dt/css/responsive.dataTables.min.css';
+import '../../node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css';
+import '../../node_modules/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
 
 
 const FincaView = () => {
@@ -62,6 +74,7 @@ const FincaView = () => {
 
 
     useEffect(() => {
+
         const buscarUsuarios = async () => {
             try {
                 const response = await Api.get('usuario/listarusuario');
@@ -299,7 +312,7 @@ const FincaView = () => {
                 // Recargar la lista de fincas después del registro
                 const response = await Api.get("lote/listar");
                 setLotes(response.data);
-                location.href = "/lote"
+                location.href = "/finca"
             }
 
 
@@ -310,108 +323,119 @@ const FincaView = () => {
         }
     };
 
+    const dataTableRef = useRef(null);
+    const initializeDataTable = (fincas) => {
+        $(document).ready(function () {
+            $(dataTableRef.current).DataTable({
+                lengthMenu: [5, 10, 20, 30, 40, 50],
+                processing: true,
+                pageLength: 5,
+                language: {
+                    processing: "Procesando datos...",
+                },
+                responsive: true,
+            });
+        });
+
+        return () => {
+            $(dataTableRef.current).DataTable().destroy(true);
+        };
+    };
+
+    useEffect(() => {
+        if (fincas.length > 0) {
+            initializeDataTable(fincas);
+        }
+    }, [fincas]);
     return (
         <>
+            <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
             {modalFinca && <div className="overlay" onClick={closeEditarModal}></div>}
             {isRegistrarModalOpen && (
                 <div className="overlay" onClick={closeRegistrarModal}></div>
             )}
 
-            <img src="../../public/img/fondo.png" alt="" className="fondo2" />
-            <div className="tablalistar">
-                <h1 className="titu"> Listado de Fincas</h1>
+            {/* <img src="../../public/img/fondo.png" alt="" className="fondo2" /> */}
+            <div className="container-listado">
+                <h4 className="titu"> Listado de Fincas</h4>
                 <br />
                 <br />
 
-                <div className="search-container">
 
-                    {/* icono de buscar */}
-                    <svg x="0px" y="0px" viewBox="0 0 60 60" width="26" height="26" >
-                        <path className="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
-                c0,9.8,8,17.8,17.8,17.8c4.4,0,8.4-1.6,11.5-4.2l16.1,16.1L54.8,51.4z M10.2,23.8C10.2,15.6,16.9,9,25.1,
-                9c8.2,0,14.8,6.7,14.8,14.8c0,8.2-6.7,14.8-14.8,14.8C16.9,38.7,10.2,32,10.2,23.8z">
-                        </path>
-                    </svg>
+                <div className="container-fluid w-full">
 
 
-                    <input
-                        type="text"
-                        placeholder="Buscar por nombre"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                    <table className="table table-stripped table-bordered border display reponsive nowrap b-4" ref={dataTableRef}>
 
-                </div>
+                        <thead>
+                            <tr className="bg-gray-200">
+                                <th>id</th>
+                                <th>Fecha Creación</th>
+                                <th>Nombre</th>
+                                <th>Longitud</th>
+                                <th>Latitud</th>
+                                <th>usuario</th>
+                                <th>municipio</th>
+                                <th>Estado</th>
+                                <th>Nombre Vereda</th>
+                                <th>opciones</th>
+                            </tr>
+                        </thead>
 
+                        <tbody>
+                            {fincas
+                                .filter((task) =>
+                                    task.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+                                )
+                                .map((task) => (
+                                    <tr key={task.id} className="border-t">
+                                        <td className="td-id">{task.id}</td>
+                                        <td>{task.fecha_creacion}</td>
+                                        <td>{task.nombre}</td>
+                                        <td>{task.longitud}</td>
+                                        <td>{task.latitud}</td>
+                                        <td>{task.nombre_usuario}</td>
+                                        <td>{task.nombre_municipio}</td>
+                                        <td>{task.estado === 1 ? "Activo" : "Desactivado"}</td>
+                                        <td>{task.noombre_vereda}</td>
+                                        <td>
+                                            <div className="btn-group">
+                                                <button
+                                                    type="button"
+                                                    className="btn-actu"
+                                                    onClick={() => openEditarModal(task.id)}
+                                                >
+                                                    Modificar
+                                                </button>
+                                                <div className="btn-secondary">
+                                                    Lotes
+                                                    <div className="btn-subgroup up">
+                                                        <button
+                                                            type="button"
+                                                            className="btn-ver"
+                                                            onClick={() => { setFincaId(task.id); openLotesModal(task.id) }}
+                                                        >
+                                                            Ver Lotes
+                                                        </button>
 
-                <table className="tableprincipal">
-                    <thead>
-                        <tr className="bg-gray-200">
-                            <th>id</th>
-                            <th>Fecha Creación</th>
-                            <th>Nombre</th>
-                            <th>Longitud</th>
-                            <th>Latitud</th>
-                            <th>usuario</th>
-                            <th>municipio</th>
-                            <th>Estado</th>
-                            <th>Nombre Vereda</th>
-                            <th>opciones</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {fincas
-                            .filter((task) =>
-                                task.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-                            )
-                            .map((task) => (
-                                <tr key={task.id} className="border-t">
-                                    <td>{task.id}</td>
-                                    <td>{task.fecha_creacion}</td>
-                                    <td>{task.nombre}</td>
-                                    <td>{task.longitud}</td>
-                                    <td>{task.latitud}</td>
-                                    <td>{task.nombre_usuario}</td>
-                                    <td>{task.nombre_municipio}</td>
-                                    <td>{task.estado === 1 ? "Activo" : "Desactivado"}</td>
-                                    <td>{task.noombre_vereda}</td>
-                                    <td>
-                                        <div className="btn-group">
-                                            <button
-                                                type="button"
-                                                className="btn-primary"
-                                                onClick={() => openEditarModal(task.id)}
-                                            >
-                                                Modificar
-                                            </button>
-                                            <div className="btn-secondary">
-                                                Lotes
-                                                <div className="btn-subgroup up">
-                                                    <button
-                                                        type="button"
-                                                        className="btn-ver"
-                                                        onClick={() => { setFincaId(task.id); openLotesModal(task.id) }}
-                                                    >
-                                                        Ver Lotes
-                                                    </button>
-
-                                                    <button
-                                                        type="button"
-                                                        className="btn-ver"
-                                                        onClick={() => { setIdFinca(task.id); openRegistrarModal() }}
-                                                    >
-                                                        Registrar Lote
-                                                    </button>
+                                                        <button
+                                                            type="button"
+                                                            className="btn-ver"
+                                                            onClick={() => { setIdFinca(task.id); openRegistrarModal() }}
+                                                        >
+                                                            Registrar Lote
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                    </tbody>
+                                        </td>
+                                    </tr>
+                                ))}
+                        </tbody>
 
-                </table>
+                    </table>
+                </div>
             </div>
             {isLotesModalOpen && (
                 <div className="modal modal-ver-lotes" tabIndex="-1" role="dialog" style={{ display: isLotesModalOpen ? 'block' : 'none' }}>
@@ -424,6 +448,7 @@ const FincaView = () => {
                                 </button>
                             </div>
                             <div className="modal-body">
+
                                 <table className="table">
                                     <thead>
                                         <tr>
@@ -452,7 +477,7 @@ const FincaView = () => {
                                                     <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                                                     <td><button
                                                         type="button"
-                                                        className="btn-primary"
+                                                        className="btn-actu"
                                                         onClick={() => openModal(lote.id)}
                                                     >
                                                         Modificar
@@ -477,7 +502,7 @@ const FincaView = () => {
 
 
             {modalFinca && (
-                <div className="tabla3">
+                <div className="tabla-editar">
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                         Editar Finca
                     </h1>
@@ -531,28 +556,28 @@ const FincaView = () => {
                             autoComplete="off"
                         />
                         <div className="div-usuario">
-                        <label htmlFor="usuarios_id" className='usuario-label'>Usuario</label>
-                        {mostrarOpciones && (
-                            <div className="custom-dropdown">
-                                {usuario.map((usuario) => (
-                                    (usuario.numero_documentos.toLowerCase().includes(filtro) ||
-                                        usuario.nombre.toLowerCase().includes(filtro)) && (
-                                        <div
-                                            key={usuario.id}
-                                            className="custom-dropdown-option"
-                                            onClick={() => handleClickOpcion(usuario)}
-                                        >
+                            <label htmlFor="usuarios_id" className='usuario-label'>Usuario</label>
+                            {mostrarOpciones && (
+                                <div className="custom-dropdown">
+                                    {usuario.map((usuario) => (
+                                        (usuario.numero_documentos.toLowerCase().includes(filtro) ||
+                                            usuario.nombre.toLowerCase().includes(filtro)) && (
+                                            <div
+                                                key={usuario.id}
+                                                className="custom-dropdown-option"
+                                                onClick={() => handleClickOpcion(usuario)}
+                                            >
 
-                                            {`${usuario.numero_documentos}-${usuario.nombre}`}
-                                        </div>
-                                    )
-                                ))}
-                            </div>
-                        )}
+                                                {`${usuario.numero_documentos}-${usuario.nombre}`}
+                                            </div>
+                                        )
+                                    ))}
+                                </div>
+                            )}
                         </div>
                         <div className="div-input">
                             <select
-                                
+
                                 className="input-register"
                                 id="municipios_id"
                                 name="municipios_id"
@@ -587,7 +612,7 @@ const FincaView = () => {
                             }
                         />
                         <button
-                            className="btn-primary"
+                            className="btn-actu"
                             onClick={handleEditUser1}
                         >
                             Actualizar
@@ -621,7 +646,7 @@ const FincaView = () => {
                 <div className="overlay" onClick={closeRegistrarModal}></div>
             )}
             {isRegistrarModalOpen && (
-                <div className="tabla2">
+                <div className="tabla-regis">
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                         Registrar Lote
                     </h1>
@@ -660,7 +685,7 @@ const FincaView = () => {
                         </div>
                         <input value={idFinca} type="hidden" id="fincas_id " name="fincas_id " ref={fincas_id} placeholder="" />
 
-                        <button className="btn-register-lote"
+                        <button className="btn-actu"
                             type="submit">Registrar lote</button>
                         <button
                             className="close-modal-btn"
@@ -673,7 +698,7 @@ const FincaView = () => {
             )}
 
             {modalLote && (
-                <div className="tabla3">
+                <div className="tabla-editar">
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
                     <div className="max-w-xs">
 
@@ -715,7 +740,7 @@ const FincaView = () => {
                             onChange={(e) => setModalLote({ ...modalLote, fincas_id: e.target.value })}
                         />
                         <button
-                            className="btn-primary"
+                            className="btn-actu"
                             onClick={loteEditUser1}
                         >
                             Actualizar

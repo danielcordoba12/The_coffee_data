@@ -18,35 +18,36 @@ import RegistrarAnalisis from './components/Analisiss'
 import ListarAnalisis from './components/ListarAnalisis'
 import EditarAnalisis from './components/EditarAnalisis'
 import Grafica from './components/Grafica'
+import TablePrueba from './components/TablePrueba'
 
 
 
 
 
 
-
-function App(){
-  return(
+function App() {
+  return (
     <>
       <Routes>
-      <Route path='/' element={<Dashboard/>}>
-        <Route path='/resultado' element={<Resultado/>}/>
-        <Route path='/finca/listar' element={<Finca/>}/>
-        <Route path='/finca' element={<Finca/>}/>
-        <Route path='/lote' element={<Lote/>}/>
-        <Route path='/analisis/registrar' element={<RegistrarAnalisis/>}/>
-        <Route path='/analisis/update/:id' element={<EditarAnalisis/>}/>
-        <Route path='/analisis/listar' element={<ListarAnalisis/>}/>
-        <Route path='/login'  element={<LoginForm/>}/>
-        <Route path='/usuario'  element={<Registrarusuarios/>}/>
-        <Route path='/usuario/listar' element={<ListarUsuarios/>}/>
-        <Route path='/usuario/actualizar/:id' element={<EditarUsuario/>}/>
-        <Route path='/municipio' element={<Municipio/>}/>
-        <Route path='/variedad' element={<Variedad/>}/>
-        <Route path='/cafe' element={<Cafe/>}/>
-        <Route path='/listar/muestra' element={<ListarMuestra/>}/>
-        <Route path='/editar/muestra/:id' element={<EditarMestra/>}/>
-        <Route path='/grafica' element={<Grafica/>}/>
+        <Route path='/xd' element={<TablePrueba />} />
+        <Route path='/' element={<Dashboard />}>
+          <Route path='/resultado' element={<Resultado />} />
+          <Route path='/finca/listar' element={<Finca />} />
+          <Route path='/finca' element={<Finca />} />
+          <Route path='/lote' element={<Lote />} />
+          <Route path='/analisis/registrar' element={<RegistrarAnalisis />} />
+          <Route path='/analisis/update/:id' element={<EditarAnalisis />} />
+          <Route path='/analisis/listar' element={<ListarAnalisis />} />
+          <Route path='/login' element={<LoginForm />} />
+          <Route path='/usuario' element={<Registrarusuarios />} />
+          <Route path='/usuario/listar' element={<ListarUsuarios />} />
+          <Route path='/usuario/actualizar/:id' element={<EditarUsuario />} />
+          <Route path='/municipio' element={<Municipio />} />
+          <Route path='/variedad' element={<Variedad />} />
+          <Route path='/cafe' element={<Cafe />} />
+          <Route path='/listar/muestra' element={<ListarMuestra />} />
+          <Route path='/editar/muestra/:id' element={<EditarMestra />} />
+          <Route path='/grafica' element={<Grafica />} />
 
 
         </Route>

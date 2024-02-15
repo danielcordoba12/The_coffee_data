@@ -7,7 +7,7 @@ import '../style/listana.css';
 const EditarAnalisis = () => {
 
     const { id} = useParams();
-    const [analisis, setAnalisis] = useState({tipo_analisis_id: '', muestras_id: '', usuarios_id: '' });
+    const [analisis, setAnalisis] = useState({ tipo_analisis_id: '', muestras_id: '', usuarios_id: '', propietario:'', });
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -81,7 +81,6 @@ const EditarAnalisis = () => {
                     value={analisis.usuarios_id} 
                     onChange={(e) => setAnalisis({ ...analisis, usuarios_id : e.target.value })}
                 />
-                
                 
                 <button className="btn-primary" onClick={handleEditUser1}>
                 Actualizar

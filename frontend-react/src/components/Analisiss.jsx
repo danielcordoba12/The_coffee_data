@@ -35,7 +35,9 @@ const RegistrarAnalisis= () => {
             }
         }
         let fetch = Api.post("analisis/registrar", data, headers)
+        console.log(data)
         window.location = "/analisis/listar"
+        
     }
     return (
     <>

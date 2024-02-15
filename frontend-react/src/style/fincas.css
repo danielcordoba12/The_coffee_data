@@ -56,7 +56,7 @@
   border-radius: 4px;
 }
 
-.btn-primary {
+.btn-actu {
   background-color: #3498db;
   color: #fff;
   font-weight: bold;
@@ -157,15 +157,6 @@
   /* Agrega scroll vertical si el contenido excede la altura máxima */
 }
 
-.titu {
-  justify-content: center;
-  text-align: center;
-  font-weight: bold;
-  color: rgb(241, 241, 241);
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
 
 /* styles.css */
 
@@ -195,7 +186,7 @@
 
 }
 
-.btn-primary {
+.btn-actu {
   background-color: #0099ff;
   /* Color de fondo del botón */
   color: #fff;
@@ -208,7 +199,7 @@
   /* Efecto de transición al pasar el ratón */
 }
 
-.btn-primary:hover {
+.btn-actu:hover {
   background-color: #207bb5;
   /* Cambio de color al pasar el ratón */
 }
@@ -257,7 +248,7 @@ body {
 
 
 
-.btn-primary {
+.btn-actu {
   background-color: #007bff;
   color: #fff;
   padding: 8px 16px;
@@ -282,15 +273,15 @@ body.modal-open {
 }
 
 
-.tabla3 {
+.tabla-editar {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(37, 25, 25, 0.8);
+  background-color: rgb(255, 255, 255);
   padding: 20px;
   border-radius: 8px;
-  z-index: 1;
+  z-index: 1001;
   max-height: 95%;
   max-width: 70%;
   /* Ajusta el ancho máximo según tus necesidades */
@@ -299,12 +290,67 @@ body.modal-open {
   text-align: center;
   /* Centra el contenido */
 }
+.tabla-editar h1 {
+  color: rgb(0, 0, 0);
+  text-decoration: none   ;
+  text-align: center;
+  font-weight: bold;
 
-.tabla3 h1 {
-  font-size: 1.5em;
+  font-size: 1.5rem;
+  margin: 20px 0;
+}
+
+.tabla-editar div {
+  margin-bottom: 15px;
+}
+
+.tabla-editar input {
+  width: 100%;
+  padding: 10px;
+  /* border-bottom: 1px solid #ccc; */
+  box-sizing: border-box;
   margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom:1px rgb(153, 151, 151) solid;
+  color: rgb(0, 0, 0);
+  outline: none;
+}
+
+/* Efecto del placeholder */
+.tabla-editar input + label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #ffffff;
+  font-size: 16px;
+  pointer-events: none;
+  transition: transform 0.3s, font-size 0.3s, color 0.3s;
+  
+}
+
+/* Placeholder transformado al enfocar el campo */
+.tabla-editar input:focus + label,
+.tabla-editar input:not(:placeholder-shown) + label {
+  transform: translateY(-100%) scale(1.2);
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+  top: 10px;
+  transition: all 0.5s;
+}
+
+.tabla-editar button {
   color: #fff;
-  /* Ajusta el color del texto según tus necesidades */
+  font-weight: bold;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tabla-editar button:hover {
+  background-color: #2980b9;
 }
 
 .input-field {
@@ -361,13 +407,90 @@ body.modal-open {
   border-radius: 5px;
   margin-top: 5px;
   box-sizing: border-box;
+  background-color: rgb(234, 241, 243);
+  color: gray;
 }
 
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
+.tabla-regis {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1001;
+  max-height: 95%;
+  max-width: 70%;
+  /* Ajusta el ancho máximo según tus necesidades */
+  width: 400px;
+  /* Ajusta el ancho según tus necesidades */
+  text-align: center;
+  /* Centra el contenido */
 }
+.tabla-regis h1 {
+  color: rgb(0, 0, 0);
+  text-decoration: none   ;
+  text-align: center;
+  font-weight: bold;
+
+  font-size: 1.5rem;
+  margin: 20px 0;
+}
+
+.tabla-regis div {
+  margin-bottom: 15px;
+}
+
+.tabla-regis input {
+  width: 100%;
+  padding: 10px;
+  /* border-bottom: 1px solid #ccc; */
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom:1px rgb(153, 151, 151) solid;
+  color: rgb(0, 0, 0);
+  outline: none;
+}
+
+/* Efecto del placeholder */
+.tabla-regis input + label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #000000;
+  font-size: 16px;
+  pointer-events: none;
+  transition: transform 0.3s, font-size 0.3s, color 0.3s;
+  
+}
+
+/* Placeholder transformado al enfocar el campo */
+.tabla-regis input:focus + label,
+.tabla-regis input:not(:placeholder-shown) + label {
+  transform: translateY(-100%) scale(1.2);
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+  top: 10px;
+  transition: all 0.5s;
+}
+
+.tabla-regis button {
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tabla-regis button:hover {
+  background-color: #2980b9;
+}
+
 
 
 
@@ -414,31 +537,7 @@ select option {
 
 
 
-.tabla2 {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(37, 25, 25, 0.8);
-  padding: 20px;
-  border-radius: 8px;
-  z-index: 1000;
-  max-height: 98%;
-  max-width: 70%;
-  /* Ajusta el ancho máximo según tus necesidades */
-  width: 40px;
-  /* Ajusta el ancho según tus necesidades */
-  text-align: center;
-  /* Centra el contenido */
-  margin: 0 auto;
-}
 
-.tabla2 h1 {
-  font-size: 1.5em;
-  margin-bottom: 1px;
-  color: #fff;
-  /* Ajusta el color del texto según tus necesidades */
-}
 
 .input-field {
   width: 100%;
@@ -457,28 +556,8 @@ select option {
   margin-right: 10px;
 }
 
-.close-modal-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #dc3545;
-  color: #fff;
-  padding: 8px 16px;
-  border: none;
-  cursor: pointer;
-}
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  /* Fondo semitransparente */
-  z-index: 999;
-  /* Valor superior al z-index del modal */
-}
+
 
 
 /*busqueda fincas*/
@@ -576,18 +655,7 @@ body {
   margin: 0 auto;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .modal {
   background-color: #fff;
@@ -701,4 +769,24 @@ body {
 
 .modal-ver-lotes{
   z-index: 2 !important;
+}
+
+.button-estado{
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: unset;
+  color: white;
+}
+.button-activo{
+  background-color: green;
+}
+.container-listado{
+  background-color: white;
+}
+.titu {   justify-content: center;
+text-align: center;
+/* font-weight: bold; */
+letter-spacing: 0.1em;
+color: rgb(157 16 16);
+font-size: 1.5rem;
 }
