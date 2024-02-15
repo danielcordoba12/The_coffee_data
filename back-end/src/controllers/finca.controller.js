@@ -7,7 +7,7 @@ import { validationResult } from 'express-validator';
 export const listarFinca = async (req, res) => {
   try {
 
-    const [result] = await pool.query("SELECT f.id, f.fecha_creacion, f.nombre, f.longitud, f.latitud, u.nombre as nombre_usuario, m.nombre as nombre_municipio, f.estado, f.noombre_vereda  from fincas f join usuarios u on u.id = f.usuarios_id join municipios m on m.id = f.municipios_id order by f.estado desc, f.fecha_creacion DESC");
+    const [result] = await pool.query("SELECT f.id, f.fecha_creacion, f.nombre, f.longitud, f.latitud, u.nombre as nombre_usuario, m.nombre as nombre_municipio, f.estado, f.noombre_vereda from fincas f join usuarios u on u.id = f.usuarios_id join municipios m on m.id = f.municipios_id order by f.estado desc, f.fecha_creacion DESC");
     res.status(200).json(result);
 
 
@@ -123,7 +123,8 @@ export const guardarFinca = async (req, res) => {
         },
         "longitud": {
           "value": req.body.longitud
-        }
+        },
+       
       },
       "select": {
         "municipios_id": {
@@ -134,6 +135,7 @@ export const guardarFinca = async (req, res) => {
       }
 
     }
+    console.log(data,"xddd");
     let validateInputs = validate(data)
     if (validateInputs.status == false) {
       return res.status(200).json({
