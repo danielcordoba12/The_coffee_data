@@ -148,9 +148,7 @@ const Cafe = () => {
             await Api.post("cafe/registrar", data, headers);
             Sweet.registroExitoso();
             closeRegistrarModal();
-            // Recargar la lista de cafes después del registro
-            const response = await Api.get("cafe/listar");
-            setCafes(response.data);
+            location.href = "/cafe"
         } catch (error) {
             console.error("Error al registrar el cafe:", error);
         }
