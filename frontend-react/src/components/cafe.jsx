@@ -9,7 +9,6 @@ import "datatables.net";
 import "datatables.net-dt/css/dataTables.dataTables.min.css";
 import "datatables.net-dt/css/dataTables.dataTables.css";
 import 'datatables.net-responsive';
-import 'datatables.net-responsive/js/dataTables.responsive';
 import 'datatables.net-responsive-dt';
 import 'datatables.net-responsive-dt/css/responsive.dataTables.min.css';
 import 'datatables.net-responsive-dt/css/responsive.dataTables.css';
@@ -168,7 +167,7 @@ const Cafe = () => {
             }
             let select = inputSearch.parentNode.querySelectorAll(".option-select-search")
             for (let s = 0; s < select.length; s++) {
-                let elementValue = inputSearch.getAttribute("id")
+                let elementvalue = inputSearch.getAttribute("id")
 
                 if (dataSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")) {
                     select[s].classList.add("option-select-focus")
@@ -263,64 +262,60 @@ const Cafe = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
 
-        {modalCafe && <div className="overlay" onClick={closeModal}></div>}
-        {isRegistrarModalOpen && (
-            <div className="overlay" onClick={closeRegistrarModal}></div>
-        )}
-        
+
 
         <div className="bgr-c">
-        <div className="container-list-cafe">
-            <h1 className="title-cafe"> Listado de  cafe</h1>
+            <div className="container-list-cafe">
+                <h1 className="title-cafe"> Listado de  cafe</h1>
 
 
 
-            <div className="container-fluid w-full">
+                <div className="container-fluid w-full">
 
-                <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
-                    <thead>
-                        <tr className="bg-gray-200">
-                            <th>id</th>
-                            <th>Propietario</th>
-                            <th>finca</th>
-                            <th>Municipio</th>
-                            <th>lote</th>
-                            <th>variedad</th>
-                            <th>Estado</th>
-                            <th>opciones</th>
+                    <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                        <thead>
+                            <tr className="bg-gray-200">
+                                <th>id</th>
+                                <th>Propietario</th>
+                                <th>finca</th>
+                                <th>Municipio</th>
+                                <th>lote</th>
+                                <th>variedad</th>
+                                <th>Estado</th>
+                                <th>opciones</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cafes
-                            .map((task) => (
-                                <tr key={task.id} className="border-t">
-                                    <td>{task.id}</td>
-                                    <td>{task.nombre_usuario}</td>
-                                    <td>{task.nombre_finca}</td>
-                                    <td>{task.nombre_municipio}</td>
-                                    <td>{task.numero_lote}</td>
-                                    <td>{task.nombre_variedad}</td>
-                                    <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                    <td>
-                                        <button
-                                            type="button"
-                                            className="btn-act-cafe"
-                                            onClick={() => openModal(task.id)}
-                                        >
-                                            Modificar
-                                        </button>
-                                        <button to="/cafe/registrar" className="btn-registrar-lote" onClick={openRegistrarModal}>
-                                            Registrar cafe
-                                        </button>
-                                    </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cafes
+                                .map((task) => (
+                                    <tr key={task.id} className="border-t">
+                                        <td>{task.id}</td>
+                                        <td>{task.nombre_usuario}</td>
+                                        <td>{task.nombre_finca}</td>
+                                        <td>{task.nombre_municipio}</td>
+                                        <td>{task.numero_lote}</td>
+                                        <td>{task.nombre_variedad}</td>
+                                        <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                className="btn-act-cafe"
+                                                onClick={() => openModal(task.id)}
+                                            >
+                                                Modificar
+                                            </button>
+                                            <button to="/cafe/registrar" className="btn-registrar-lote" onClick={openRegistrarModal}>
+                                                Registrar cafe
+                                            </button>
+                                        </td>
 
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
         </div>
 
         {modalCafe && (
@@ -373,58 +368,58 @@ const Cafe = () => {
         )}
 
         {isRegistrarModalOpen && (
-            <div className="overlay" onClick={closeRegistrarModal}></div>
-        )}
-        {isRegistrarModalOpen && (
-            <div className="tabla2">
-                <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-                    Registrar Cafe
-                </h1>
+            <div className="div-modal">
+                <div onClick={closeRegistrarModal} className="fondo-modal"></div>
+                <div className="table-register-cafe">
+                    <h1 className="text-center font-bold underline text-3xl p-3 m-2">
+                        Registrar Cafe
+                    </h1>
 
-                <form
-                    className="contenido-regi"
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        handleRegistrar({
-                            variedades_id: dataSelect.variedades_id.value,
-                            lotes_id: dataSelect.lotes_id.value
-                        });
-                    }}
-                    method="post"
-                >
-
-                    <div className="div-input">
-                        <input className="input-search" type="text" id="lotes_id" />
-                        <label htmlFor="lotes_id" className='label'>Lote</label>
-                        <div className="select-options-input">
-                            {lote.map((key, index) => (
-                                (
-                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
-                                )
-                            ))}
-                        </div>
-                    </div>
-                    <div className="div-input">
-                        <input className="input-search" type="text" id="variedades_id" />
-                        <label htmlFor="variedades_id" className='label'>Variedad</label>
-                        <div className="select-options-input">
-                            {variedades.map((key, index) => (
-                                (
-                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
-                                )
-                            ))}
-                        </div>
-                    </div>
-
-                    <button className="btn-register-lote"
-                        type="submit">Registrar Cafe</button>
-                    <button
-                        className="close-modal-btn"
-                        onClick={closeRegistrarModal}
+                    <form
+                        className="contenido-regi"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleRegistrar({
+                                variedades_id: dataSelect.variedades_id.value,
+                                lotes_id: dataSelect.lotes_id.value
+                            });
+                        }}
+                        method="post"
                     >
-                        Cerrar
-                    </button>
-                </form>
+
+                        <div className="div-input">
+                            <input className="input-search" type="text" id="lotes_id" />
+                            <label htmlFor="lotes_id" className='label'>Lote</label>
+                            <div className="select-options-input">
+                                {lote.map((key, index) => (
+                                    (
+                                        <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
+                                    )
+                                ))}
+                            </div>
+                        </div>
+                        <div className="div-input">
+                            <input className="input-search" type="text" id="variedades_id" />
+                            <label htmlFor="variedades_id" className='label'>Variedad</label>
+                            <div className="select-options-input">
+                                {variedades.map((key, index) => (
+                                    (
+                                        <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
+                                    )
+                                ))}
+                            </div>
+                        </div>
+
+                        <button className="btn-register-lote"
+                            type="submit">Registrar Cafe</button>
+                        <button
+                            className="close-modal-btn"
+                            onClick={closeRegistrarModal}
+                        >
+                            Cerrar
+                        </button>
+                    </form>
+                </div>
             </div>
         )}
 
