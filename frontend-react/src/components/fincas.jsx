@@ -356,9 +356,9 @@ const FincaView = () => {
                 <div className="overlay" onClick={closeRegistrarModal}></div>
             )}
 
-            <img src="../../public/img/fondo.png" alt="" className="fondo2" />
-            <div className="tablalistar">
-                <h1 className="titu"> Listado de Fincas</h1>
+            {/* <img src="../../public/img/fondo.png" alt="" className="fondo2" /> */}
+            <div className="container-listado">
+                <h4 className="titu"> Listado de Fincas</h4>
                 <br />
                 <br />
 
@@ -403,7 +403,7 @@ const FincaView = () => {
                                             <div className="btn-group">
                                                 <button
                                                     type="button"
-                                                    className="btn-primary"
+                                                    className="btn-actu"
                                                     onClick={() => openEditarModal(task.id)}
                                                 >
                                                     Modificar
@@ -477,7 +477,7 @@ const FincaView = () => {
                                                     <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                                                     <td><button
                                                         type="button"
-                                                        className="btn-primary"
+                                                        className="btn-actu"
                                                         onClick={() => openModal(lote.id)}
                                                     >
                                                         Modificar
@@ -502,7 +502,7 @@ const FincaView = () => {
 
 
             {modalFinca && (
-                <div className="tabla3">
+                <div className="tabla-editar">
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                         Editar Finca
                     </h1>
@@ -612,7 +612,7 @@ const FincaView = () => {
                             }
                         />
                         <button
-                            className="btn-primary"
+                            className="btn-actu"
                             onClick={handleEditUser1}
                         >
                             Actualizar
@@ -646,10 +646,11 @@ const FincaView = () => {
                 <div className="overlay" onClick={closeRegistrarModal}></div>
             )}
             {isRegistrarModalOpen && (
-                <div className="tabla2">
+                <div className="tabla-regis">
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                         Registrar Lote
                     </h1>
+                    <img src="../../public/img/reg.jfif" alt="" className="imagen-reg" />
 
                     <form
                         className="contenido-regi"
@@ -666,7 +667,7 @@ const FincaView = () => {
                         method="post"
                     >
 
-
+                        <div className="input-container">
                         <div className="div-input">
                             <input className="input-register" type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
                             <label htmlFor="nombre">Nombre</label>
@@ -685,7 +686,7 @@ const FincaView = () => {
                         </div>
                         <input value={idFinca} type="hidden" id="fincas_id " name="fincas_id " ref={fincas_id} placeholder="" />
 
-                        <button className="btn-register-lote"
+                        <button className="btn-actu"
                             type="submit">Registrar lote</button>
                         <button
                             className="close-modal-btn"
@@ -693,12 +694,14 @@ const FincaView = () => {
                         >
                             Cerrar
                         </button>
+                        </div>
                     </form>
                 </div>
+                
             )}
 
             {modalLote && (
-                <div className="tabla3">
+                <div className="tabla-editar">
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
                     <div className="max-w-xs">
 
@@ -740,7 +743,7 @@ const FincaView = () => {
                             onChange={(e) => setModalLote({ ...modalLote, fincas_id: e.target.value })}
                         />
                         <button
-                            className="btn-primary"
+                            className="btn-actu"
                             onClick={loteEditUser1}
                         >
                             Actualizar

@@ -3,6 +3,19 @@ import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
 import Sweet from "../helpers/Sweet";
 import "../style/cafe.css";
+import $ from "jquery";
+import "bootstrap"
+import "datatables.net";
+import "datatables.net-dt/css/dataTables.dataTables.min.css";
+import "datatables.net-dt/css/dataTables.dataTables.css";
+import 'datatables.net-responsive';
+import 'datatables.net-responsive/js/dataTables.responsive';
+import 'datatables.net-responsive-dt';
+import 'datatables.net-responsive-dt/css/responsive.dataTables.min.css';
+import 'datatables.net-responsive-dt/css/responsive.dataTables.css';
+import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
+import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
+import 'datatables.net-bs5';
 
 
 const Cafe = () => {
@@ -148,21 +161,21 @@ const Cafe = () => {
         let inputSearch = document.getElementById(Element)
 
         if (inputSearch) {
-            
+
             let divOptions = inputSearch.parentNode.querySelectorAll(".select-options-input");
-            if(divOptions.length > 0){
+            if (divOptions.length > 0) {
                 divOptions[0].style.display = "none"
             }
             let select = inputSearch.parentNode.querySelectorAll(".option-select-search")
             for (let s = 0; s < select.length; s++) {
                 let elementValue = inputSearch.getAttribute("id")
-                
-                if(dataSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")){
+
+                if (dataSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")) {
                     select[s].classList.add("option-select-focus")
-                }else{
+                } else {
                     select[s].classList.remove("option-select-focus")
                 }
-                
+
             }
         }
     }
@@ -172,12 +185,12 @@ const Cafe = () => {
 
         if (inputSearch.length > 0) {
             for (let s = 0; s < inputSearch.length; s++) {
-                inputSearch[s].addEventListener("blur",function(){
+                inputSearch[s].addEventListener("blur", function () {
                     let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-options-input");
-                    if(divOptions.length > 0){
-                       setTimeout(() => {
-                        divOptions[0].style.display = "none"
-                       }, 110);
+                    if (divOptions.length > 0) {
+                        setTimeout(() => {
+                            divOptions[0].style.display = "none"
+                        }, 150);
                     }
 
                 })
@@ -201,7 +214,7 @@ const Cafe = () => {
                                         focusSelect[0].classList.remove("option-select-focus")
                                     }
                                     inputSearch[s].value = options[o].innerHTML
-                                    if(!dataSelect[inputSearch[s].getAttribute("data-id")]){
+                                    if (!dataSelect[inputSearch[s].getAttribute("data-id")]) {
                                         dataSelect[inputSearch[s].getAttribute("data-id")] = {}
                                     }
                                     dataSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
@@ -215,59 +228,99 @@ const Cafe = () => {
                 })
             }
         }
-    }, [isRegistrarModalOpen])
+    }, [isRegistrarModalOpen]);
+
+    const dataTableRef = useRef(null);
+    const initializeDataTable = (Cafes) => {
+        $(document).ready(function () {
+            $(dataTableRef.current).DataTable({
+                lengthMenu: [5, 10, 20, 30, 40, 50],
+                processing: true,
+                pageLength: 5,
+                language: {
+                    processing: "Procesando datos...",
+                },
+                responsive: true,
+            });
+        });
+
+        return () => {
+            $(dataTableRef.current).DataTable().destroy(true);
+        };
+    };
+
+    useEffect(() => {
+        if (cafes.length > 0) {
+            initializeDataTable(cafes);
+        }
+    }, [cafes]);
+
+
+
     return (<>
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+
         {modalCafe && <div className="overlay" onClick={closeModal}></div>}
         {isRegistrarModalOpen && (
             <div className="overlay" onClick={closeRegistrarModal}></div>
         )}
-        <img src="../../public/img/fondo.png" alt="" className="fondo2" />
-        <div className="tablalistar">
-            <h1 className="titu"> Listado de  cafe</h1>
+        
 
-            <button to="/cafe/registrar" className="btn-registrar-lote" onClick={openRegistrarModal}>
-                Registrar cafe
-            </button>
+        <div className="bgr-c">
+        <div className="container-list-cafe">
+            <h1 className="title-cafe"> Listado de  cafe</h1>
 
-            <table className="tableprincipal">
-                <thead>
-                    <tr className="bg-gray-200">
-                        <th>id</th>
-                        <th>Propietario</th>
-                        <th>finca</th>
-                        <th>Municipio</th>
-                        <th>lote</th>
-                        <th>variedad</th>
-                        <th>Estado</th>
-                        <th>opciones</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    {cafes
-                        .map((task) => (
-                            <tr key={task.id} className="border-t">
-                                <td>{task.id}</td>
-                                <td>{task.nombre_usuario}</td>
-                                <td>{task.nombre_finca}</td>
-                                <td>{task.nombre_municipio}</td>
-                                <td>{task.numero_lote}</td>
-                                <td>{task.nombre_variedad}</td>
-                                <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                <td>
-                                    <button
-                                        type="button"
-                                        className="btn-primary"
-                                        onClick={() => openModal(task.id)}
-                                    >
-                                        Modificar
-                                    </button>
-                                </td>
 
-                            </tr>
-                        ))}
-                </tbody>
-            </table>
+            <div className="container-fluid w-full">
+
+                <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                    <thead>
+                        <tr className="bg-gray-200">
+                            <th>id</th>
+                            <th>Propietario</th>
+                            <th>finca</th>
+                            <th>Municipio</th>
+                            <th>lote</th>
+                            <th>variedad</th>
+                            <th>Estado</th>
+                            <th>opciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cafes
+                            .map((task) => (
+                                <tr key={task.id} className="border-t">
+                                    <td>{task.id}</td>
+                                    <td>{task.nombre_usuario}</td>
+                                    <td>{task.nombre_finca}</td>
+                                    <td>{task.nombre_municipio}</td>
+                                    <td>{task.numero_lote}</td>
+                                    <td>{task.nombre_variedad}</td>
+                                    <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="btn-act-cafe"
+                                            onClick={() => openModal(task.id)}
+                                        >
+                                            Modificar
+                                        </button>
+                                        <button to="/cafe/registrar" className="btn-registrar-lote" onClick={openRegistrarModal}>
+                                            Registrar cafe
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
         </div>
 
         {modalCafe && (
@@ -346,22 +399,22 @@ const Cafe = () => {
                         <div className="select-options-input">
                             {lote.map((key, index) => (
                                 (
-                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : "";dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
+                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
                                 )
                             ))}
                         </div>
                     </div>
                     <div className="div-input">
-                    <input className="input-search" type="text" id="variedades_id" />
-                    <label htmlFor="variedades_id" className='label'>Variedad</label>
+                        <input className="input-search" type="text" id="variedades_id" />
+                        <label htmlFor="variedades_id" className='label'>Variedad</label>
                         <div className="select-options-input">
                             {variedades.map((key, index) => (
                                 (
-                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : "";dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
+                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
                                 )
                             ))}
                         </div>
-                    </div>          
+                    </div>
 
                     <button className="btn-register-lote"
                         type="submit">Registrar Cafe</button>
