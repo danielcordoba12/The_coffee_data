@@ -1,38 +1,61 @@
 import '../style/dashboard.css'
+import { useState } from 'react';
 import { Outlet,Link } from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUser,faHelmetSafety,faBars,faUsers,faToolbox,faMagnifyingGlassChart,faChartColumn,faPhone,faSliders,faVials, }  from'@fortawesome/free-solid-svg-icons'
 
 
+
 function Dashboard() {
-    let menuDesplegado = false;
+    const [menuDesplegado, setMenuDesplegado] = useState(false);
+    const [tooltipHovered, setTooltipHovered] = useState(false);
 
-    const DesplegarMenu= () =>{
+    const menuWidth = menuDesplegado ? '220px' : '55px';
+
+    const DesplegarMenu = () => {
+        setMenuDesplegado(!menuDesplegado);
+    };
+
+    // const DesplegarMenu= () =>{
         
-        if (menuDesplegado == true){
-            nav.style.width = 90 + "px";
-            // mainConterDasboard.style.overflow= "hidden";
-            // tooltipLi.style.opacity= "1";
+    //     if (menuDesplegado == true){
+    //         nav.style.width = 55 + "px";
+    //         // mainConterDasboard.style.overflow= "hidden";
+    //         // tooltipLi.style.opacity= "1";
 
-            menuDesplegado = !menuDesplegado;
-            // tooltip_li.style.display = "none" ;
+    //         menuDesplegado = !menuDesplegado;
+    //         // tooltip_li.style.display = "none" ;
 
 
 
-        }else {
-            nav.style.width = 520 + "px";
-            // mainConterDasboard.style.overflow= "hidden";
-            // tooltipLi.style.opacity= "0";    
+    //     }else {
+    //         nav.style.width = 520 + "px";
+    //         // mainConterDasboard.style.overflow= "hidden";
+    //         // tooltipLi.style.opacity= "0";    
             
 
-            menuDesplegado = !menuDesplegado;
+    //         menuDesplegado = !menuDesplegado;
 
 
 
 
-        }
+    //     }
 
-    };
+        
+        
+    // };
+    function Tooltip({ children, content, className }) {
+        const [isHovered, setIsHovered] = useState(false);
+    
+        return (
+            <div className={className} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                {children}
+                {isHovered && <span className="tooltip-content">{content}</span>}
+            </div>
+        );
+    }
+    
+      
 
     return(
         <>
@@ -80,7 +103,7 @@ function Dashboard() {
             </div>
             <div className="container-outlet">
 
-                <nav className="nav" id="nav">
+                <nav className={`nav ${menuDesplegado ? 'menu-desplegado' : ''}`} id="nav" style={{ width: menuWidth }}>
                     <div className="lista-items">
                     <FontAwesomeIcon icon={faBars} className="icon-menu" id="iconMenu" onClick={DesplegarMenu} />
                         <ul id='listaItemsUl' className='listaItemsUl'>
@@ -143,13 +166,17 @@ function Dashboard() {
                         
                             <li className="li-dasboard">
                                 <Link to={"/municipio"} style={{ textDecoration: 'none', color: 'black !important' }}>
-                                    <FontAwesomeIcon icon={faSliders} className="icon"/>
-                                    <p className='paragraf-li'   id="paragrafLi">Municipios</p>
-                                    {/* <div className='main-tooltip-li'> */}
-                                        <h3 className='tooltip-li' id='tooltipLi'>Municipios</h3>
-                                    {/* </div>     */}
+                                    <FontAwesomeIcon icon={faSliders} className="icon" />
+                                    <p className='paragraf-li' id="paragrafLi">Municipios</p>
+                                    {!menuDesplegado && (
+                                        <Tooltip className="tooltip" content="Contenido del tooltip">
+                                            <p className='paragraf-li' id="paragrafLi">Municipios</p>
+                                        </Tooltip>
+                                    
+                                    )}
                                 </Link>
                             </li>
+
                             <li className="li-dasboard">
                                 <Link to={"/variedad"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                     <FontAwesomeIcon icon={faSliders} className="icon"/>
