@@ -650,6 +650,7 @@ const FincaView = () => {
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                         Registrar Lote
                     </h1>
+                    <img src="../../public/img/reg.jfif" alt="" className="imagen-reg" />
 
                     <form
                         className="contenido-regi"
@@ -666,7 +667,7 @@ const FincaView = () => {
                         method="post"
                     >
 
-
+                        <div className="input-container">
                         <div className="div-input">
                             <input className="input-register" type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
                             <label htmlFor="nombre">Nombre</label>
@@ -693,8 +694,10 @@ const FincaView = () => {
                         >
                             Cerrar
                         </button>
+                        </div>
                     </form>
                 </div>
+                
             )}
 
             {modalLote && (
