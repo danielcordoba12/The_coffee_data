@@ -1,4 +1,4 @@
-/* Estilos CSS para la tabla con clase table1 */
+Estilos CSS para la tabla con clase table1
 
 .fondo2 {
     z-index: -999;
@@ -209,13 +209,16 @@
       border-bottom:1px black solid;
 }
 
-.titu {
+.titleanalisis{
   justify-content: center;
-  text-align: center;
-  font-weight: bold;  
+  text-align: left;
+  left: 50px;
+  font-weight: bold; 
+  position: relative; 
+  font-family: Arial, Helvetica, sans-serif;
   letter-spacing: 0.1em;
   color: rgb(241, 241, 241);
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 

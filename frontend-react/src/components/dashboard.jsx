@@ -102,7 +102,7 @@ function Dashboard() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/analisis/listar"}>
+                                <Link to={"/analisis"}>
                                     <FontAwesomeIcon icon={faPhone}className="icon" />
                                     <p>Analisis</p>
                                 </Link>
