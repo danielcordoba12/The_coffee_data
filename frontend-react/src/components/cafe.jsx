@@ -303,7 +303,7 @@ const Cafe = () => {
                                                 className="btn-act-cafe"
                                                 onClick={() => openModal(task.id)}
                                             >
-                                                Modificar
+                                                Modificarr
                                             </button>
                                             <button to="/cafe/registrar" className="btn-registrar-lote" onClick={openRegistrarModal}>
                                                 Registrar cafe
