@@ -358,7 +358,7 @@ const FincaView = () => {
 
             {/* <img src="../../public/img/fondo.png" alt="" className="fondo2" /> */}
             <div className="container-listado">
-                <h4 className="titu"> Listado de Fincas</h4>
+                <h4 className="titulo-listado"> Listado de Fincas</h4>
                 <br />
                 <br />
 
@@ -438,10 +438,13 @@ const FincaView = () => {
                 </div>
             </div>
             {isLotesModalOpen && (
+                <div className="modal-div-fin">
                 <div className="modal modal-ver-lotes" tabIndex="-1" role="dialog" style={{ display: isLotesModalOpen ? 'block' : 'none' }}>
+                    <div className="fondo-over" onClick={() => setLotesModalOpen(false)} ></div>
                     <div className="modal-dialog" role="document">
                         <div className="modal-contents">
                             <div className="modal-header">
+
                                 <h5 className="modal-title">Lotes de la Finca</h5>
                                 <button type="button" className="close" onClick={() => setLotesModalOpen(false)}>
                                     <span aria-hidden="true">&times;</span>
@@ -496,6 +499,7 @@ const FincaView = () => {
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             )}
 
@@ -650,7 +654,7 @@ const FincaView = () => {
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                         Registrar Lote
                     </h1>
-                    <img src="../../public/img/reg.jfif" alt="" className="imagen-reg" />
+                
 
                     <form
                         className="contenido-regi"
@@ -689,10 +693,10 @@ const FincaView = () => {
                         <button className="btn-actu"
                             type="submit">Registrar lote</button>
                         <button
-                            className="close-modal-btn"
+                            className="close-modal"
                             onClick={closeRegistrarModal}
                         >
-                            Cerrar
+                            x
                         </button>
                         </div>
                     </form>
@@ -701,7 +705,10 @@ const FincaView = () => {
             )}
 
             {modalLote && (
-                <div className="tabla-editar">
+                <div className="div-modal-edit" >
+                    <div className="overlay" onClick={closeModal} ></div>
+                    <div className="tabla-editar">
+                    
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
                     <div className="max-w-xs">
 
@@ -764,12 +771,13 @@ const FincaView = () => {
                             </button>
                         )}
                         <button
-                            className="close-modal-btn"
+                            className="close-modal"
                             onClick={closeModal}
                         >
-                            Cerrar
+                            ✕
                         </button>
                     </div>
+                </div>
                 </div>
             )}
 
