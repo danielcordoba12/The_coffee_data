@@ -70,21 +70,53 @@ const Variedad = () => {
                 token: "xd",
             },
         };
-
+    
         try {
-            await Api.post("variedad/registrar", data, headers);
-            Sweet.registroExitoso();
-            closeRegistrarModal();
-            // Recargar la lista de fincas después del registro
-            const response = await Api.get("variedad/listar");
-            setvariedades(response.data);
+            const response = await Api.post("variedad/registrar", data, headers);
+    
+            if (response.data.status === false) {
+                let keys = Object.keys(response.data.errors);
+                let h6Error = document.querySelectorAll(".h6-error");
+    
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove();
+                }
+    
+                console.log(response.data);
+    
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6");
+                    h6.innerHTML = response.data.errors[keys[x]];
+                    h6.classList.add("h6-error");
+    
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode;
+                        parent.appendChild(h6);
+                    }
+                }
+            } else {
+                console.log(response.data);
+                /* Sweet.registroExitoso();
+                closeRegistrarModal(); */
+                // Recargar la lista de variedades después del registro
+                const variedadesResponse = await Api.get("variedad/listar");
+                setvariedades(variedadesResponse.data);
+                location.href = "/variedad";
+            }
         } catch (error) {
-            console.error("Error al registrar el variedad:", error);
+            console.error("Error al registrar la finca:", error);
         }
     };
 
-
-
+    function formatDate(dateString) {
+        if (!dateString) return ''; // Manejar el caso de valor nulo o indefinido
+        const fecha = new Date(dateString);
+        const year = fecha.getFullYear();
+        const month = String(fecha.getMonth() + 1).padStart(2, '0');
+        const day = String(fecha.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+    
     return (<>
 
         {modalVar && <div className="overlay" onClick={closeModal}></div>}
@@ -140,7 +172,7 @@ const Variedad = () => {
                   .map((task) => (
                         <tr key={task.id} className="border-t">
                             <td>{task.id}</td>
-                            <td>{task.fecha_creacion}</td>
+                            <td>{formatDate(task.fecha_creacion)}</td>
                             <td>{task.nombre}</td>
                             <td>
                                 <button
