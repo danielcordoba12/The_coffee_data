@@ -269,8 +269,12 @@ const Cafe = () => {
 
 
                 <div className="container-fluid w-full">
+                    <button to="/cafe/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
+                        Registrar cafe
+                    </button>
 
                     <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+
                         <thead>
                             <tr className="bg-gray-200">
                                 <th>id</th>
@@ -303,9 +307,7 @@ const Cafe = () => {
                                             >
                                                 Modificarr
                                             </button>
-                                            <button to="/cafe/registrar" className="btn-registrar-lote" onClick={openRegistrarModal}>
-                                                Registrar cafe
-                                            </button>
+
                                         </td>
 
                                     </tr>
@@ -317,50 +319,55 @@ const Cafe = () => {
         </div>
 
         {modalCafe && (
-            <div className="tabla3">
-                <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Cafe</h1>
-                <div className="max-w-xs">
-                    <input
-                        className="input-field"
-                        type="number"
-                        placeholder="lotes_id"
-                        value={modalCafe.lotes_id}
-                        onChange={(e) => setModalCafe({ ...modalCafe, lotes_id: e.target.value })}
-                    />
+            <div className="div-modal">
+                <div onClick={closeModal} className="fondo-modal"></div>
+                <div className="table-register-cafe">
+                    <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Cafe</h1>
+                    <div className="max-w-xs">
+                        <input
+                            className="input-field"
+                            type="number"
+                            
+                            placeholder="lotes_id"
+                            value={modalCafe.lotes_id}
+                            onChange={(e) => setModalCafe({ ...modalCafe, lotes_id: e.target.value })}
+                        />
+                        
 
-                    <input
-                        className="input-field"
-                        type="number" placeholder="variedades_id"
-                        value={modalCafe.variedades_id}
-                        onChange={(e) => setModalCafe({ ...modalCafe, variedades_id: e.target.value })}
-                    />
-                    <button
-                        className="btn-primary"
-                        onClick={handleEditUser1}
-                    >
-                        Actualizar
-                    </button>
-                    {modalCafe.estado === 1 ? (
+                        <input
+                            className="input-field"
+                            type="number" placeholder="variedades_id"
+                            value={modalCafe.variedades_id}
+                            onChange={(e) => setModalCafe({ ...modalCafe, variedades_id: e.target.value })}
+                        />
                         <button
-                            className="btn-secondary"
-                            onClick={handleEditUser2}
+                            className="btn-register-cafe"
+                            onClick={handleEditUser1}
                         >
-                            Desactivar
+                            Actualizar
                         </button>
-                    ) : (
+                        {modalCafe.estado === 1 ? (
+                            <button
+                                className="btn-secondary"
+                                onClick={handleEditUser2}
+                            >
+                                Desactivar
+                            </button>
+                        ) : (
+                            <button
+                                className="btn-tertiary"
+                                onClick={handleEditUser3}
+                            >
+                                Activar
+                            </button>
+                        )}
                         <button
-                            className="btn-tertiary"
-                            onClick={handleEditUser3}
+                            className="close-modal-cafe"
+                            onClick={closeModal}
                         >
-                            Activar
+                            x
                         </button>
-                    )}
-                    <button
-                        className="close-modal-btn"
-                        onClick={closeModal}
-                    >
-                        Cerrar
-                    </button>
+                    </div>
                 </div>
             </div>
         )}
@@ -369,7 +376,7 @@ const Cafe = () => {
             <div className="div-modal">
                 <div onClick={closeRegistrarModal} className="fondo-modal"></div>
                 <div className="table-register-cafe">
-                    <h1 className="text-center font-bold underline text-3xl p-3 m-2">
+                    <h1 className="">
                         Registrar Cafe
                     </h1>
 
@@ -387,7 +394,7 @@ const Cafe = () => {
 
                         <div className="div-input">
                             <input className="input-search" type="text" id="lotes_id" />
-                            <label htmlFor="lotes_id" className='label'>Lote</label>
+                            <label htmlFor="lotes_id" >Lote</label>
                             <div className="select-options-input">
                                 {lote.map((key, index) => (
                                     (
@@ -398,7 +405,7 @@ const Cafe = () => {
                         </div>
                         <div className="div-input">
                             <input className="input-search" type="text" id="variedades_id" />
-                            <label htmlFor="variedades_id" className='label'>Variedad</label>
+                            <label htmlFor="variedades_id" >Variedad</label>
                             <div className="select-options-input">
                                 {variedades.map((key, index) => (
                                     (
@@ -408,13 +415,13 @@ const Cafe = () => {
                             </div>
                         </div>
 
-                        <button className="btn-register-lote"
+                        <button className="btn-register-cafe"
                             type="submit">Registrar Cafe</button>
                         <button
-                            className="close-modal-btn"
+                            className="close-modal-cafe"
                             onClick={closeRegistrarModal}
                         >
-                            Cerrar
+                            X
                         </button>
                     </form>
                 </div>
