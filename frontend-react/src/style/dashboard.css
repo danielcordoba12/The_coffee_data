@@ -6,7 +6,7 @@
 
     /* overflow: hidden; */
     display: flex;
-    flex-direction: column; /* Apila los elementos verticalmente */
+    flex-direction: column;
     height: 100vh;
 }
 .content-container {
@@ -236,19 +236,28 @@
     margin-top:12px ;
 } */
 .tooltip {
-    position: relative;
-    display: inline-block;
+    position: absolute;
+    background-color: rgba(211, 21, 21, 0.7);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    z-index: 999;
+    top: calc(100% + 5px); /* Posiciona el tooltip debajo del elemento */
+    left: 50%; /* Lo coloca en el centro horizontalmente */
+    transform: translateX(-50%); /* Lo ajusta para que esté centrado horizontalmente */
+    display: none; /* Inicialmente oculto */
 }
-
 .tooltip-content {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s;
-    /* Resto de estilos */
+    position: absolute; /* Cambia la posición según tu diseño */
+    background-color: rgba(0, 0, 0, 0.8); /* Color de fondo del tooltip */
+    color: white; /* Color del texto del tooltip */
+    padding: 5px; /* Espacio interno del tooltip */
+    border-radius: 5px; /* Borde redondeado */
+    z-index: 9999; /* Asegura que esté por encima de otros elementos */
+    left: 50px;
 }
 
-.tooltip:hover .tooltip-content {
-    visibility: visible;
-    opacity: 1;
+.li-dasboard:hover .tooltip {
+    display: block; /* Muestra el tooltip cuando se hace hover en el contenedor */
 }
-

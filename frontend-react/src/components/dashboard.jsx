@@ -8,7 +8,9 @@ import {faUser,faHelmetSafety,faBars,faUsers,faToolbox,faMagnifyingGlassChart,fa
 
 function Dashboard() {
     const [menuDesplegado, setMenuDesplegado] = useState(false);
+    const [showTooltip, setShowTooltip] = useState(false);
     const [tooltipHovered, setTooltipHovered] = useState(false);
+    const [tooltipStates, setTooltipStates] = useState({});
 
     const menuWidth = menuDesplegado ? '220px' : '55px';
 
@@ -16,6 +18,43 @@ function Dashboard() {
         setMenuDesplegado(!menuDesplegado);
     };
 
+
+
+    const handleTooltipEnter = (index) => {
+        setTooltipStates({ ...tooltipStates, [index]: true });
+    };
+
+    const handleTooltipLeave = (index) => {
+        setTooltipStates({ ...tooltipStates, [index]: false });
+    };
+
+
+    function Tooltip({ children, content, className }) {
+        return (
+            <div
+                className={className}
+                onMouseEnter={() => setTooltipHovered(true)}
+                onMouseLeave={() => setTooltipHovered(false)}
+            >
+                {children}
+                {tooltipHovered && <span className="tooltip-content">{content}</span>}
+            </div>
+        );
+    }   
+
+    const items = [
+        { label: "Administrador", icon: faHelmetSafety, to: "/", tooltipContent: "Administrador", className: "first-icon" },
+        { label: "Usuarios", icon: faUsers, to: "/Usuario/listar", tooltipContent: "Ver usuarios" },
+        { label: "Fincas", icon: faToolbox, to: "/finca", tooltipContent: "Ver fincas" },
+        { label: "Lotes", icon: faMagnifyingGlassChart, to: "/lote", tooltipContent: "Ver lotes" },
+        { label: "Cafe", icon: faChartColumn, to: "/cafe", tooltipContent: "Ver café" },
+        { label: "Analisis", icon: faPhone, to: "/analisis/listar", tooltipContent: "Ver análisis" },
+        { label: "Muestras", icon: faVials, to: "/listar/muestra", tooltipContent: "Ver muestras" },
+        { label: "Resultado", icon: faVials, to: "/resultado", tooltipContent: "Ver resultados" },
+        { label: "Grafica", icon: faVials, to: "/grafica", tooltipContent: "Ver gráficas" },
+        { label: "Municipios", icon: faSliders, to: "/municipio", tooltipContent: "Ver municipios", className: "li-dasboard" },
+        { label: "Variedad", icon: faSliders, to: "/variedad", tooltipContent: "Ver variedades", className: "li-dasboard" },
+    ];
     // const DesplegarMenu= () =>{
         
     //     if (menuDesplegado == true){
@@ -43,17 +82,28 @@ function Dashboard() {
 
         
         
-    // };
-    function Tooltip({ children, content, className }) {
-        const [isHovered, setIsHovered] = useState(false);
+        // // };
+        // function Tooltip({ children, content, className }) {
+        //     return (
+        //         <div
+        //             className={className}
+        //             onMouseEnter={() => setTooltipHovered(true)}
+        //             onMouseLeave={() => setTooltipHovered(false)}
+        //         >
+        //             {children}
+        //             {tooltipHovered && <span className="tooltip-content">{content}</span>}
+        //         </div>
+        //     );
+        // }
+        const handleMouseEnter = () => {
+            if (!menuDesplegado) {
+                setShowTooltip(true);
+            }
+        };
     
-        return (
-            <div className={className} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-                {children}
-                {isHovered && <span className="tooltip-content">{content}</span>}
-            </div>
-        );
-    }
+        const handleMouseLeave = () => {
+            setShowTooltip(false);
+        };
     
       
 
@@ -107,7 +157,7 @@ function Dashboard() {
                     <div className="lista-items">
                     <FontAwesomeIcon icon={faBars} className="icon-menu" id="iconMenu" onClick={DesplegarMenu} />
                         <ul id='listaItemsUl' className='listaItemsUl'>
-                            <li className="first-icon">
+                            {/* <li className="first-icon">
                                 
                                 <FontAwesomeIcon icon={faHelmetSafety} className="icon " />
                                 <p id="paragraph">Administrador</p>
@@ -119,17 +169,19 @@ function Dashboard() {
                                     <p id="paragraph">Usuarios</p>
                                 </Link>
                             </li>
-                            <li>
-                                <Link to={"/finca"}>
-                                    <FontAwesomeIcon icon={faToolbox} className="icon"/>
-                                    <p>Fincas</p>
-                                </Link>
+                            <li onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
+                                    <Link to={"/finca"}>
+                                        <FontAwesomeIcon icon={faToolbox} className="icon" />
+                                        <p>Fincas</p>
+                                    </Link>
+                                    {showTooltip && <span className="tooltip-content">Fincas</span>}
                             </li>
-                            <li>
-                                <Link to={"/lote"}>
-                                    <FontAwesomeIcon icon={faMagnifyingGlassChart} className="icon"/>
-                                    <p>Lotes</p>
-                                </Link>
+                            <li onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
+                                    <Link to={"/finca"}>
+                                        <FontAwesomeIcon icon={faToolbox} className="icon" />
+                                        <p>Lotes</p>
+                                    </Link>
+                                    {showTooltip && <span className="tooltip-content">Lotes</span>}
                             </li>
                             <li>
                                 <Link to={"/cafe"}>
@@ -153,29 +205,29 @@ function Dashboard() {
                                 <Link to={"/resultado"}>
                                     <FontAwesomeIcon icon={faVials}  className="icon"/>
                                     <p>Resultado</p>
-                                    <h3 className='tooltip-li'>Resultado</h3>
-                                </Link>
+                                    {/* <h3 className='tooltip-li'>Resultado</h3> */}
+
+                                {/* </Link>
                             </li>
                             <li>
                                 <Link to={"/grafica"}>
                                     <FontAwesomeIcon icon={faVials}  className="icon"/>
                                     <p>Grafica</p>
-                                    <h3 className='tooltip-li'>Grafica</h3>
+                                    {/* <h3 className='tooltip-li'>Grafica</h3> */}
+                                    {/*
                                 </Link>
                             </li>
                         
-                            <li className="li-dasboard">
-                                <Link to={"/municipio"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                            <li className="li-dasboard" onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
+                                <Link to={"/municipio"}>
                                     <FontAwesomeIcon icon={faSliders} className="icon" />
                                     <p className='paragraf-li' id="paragrafLi">Municipios</p>
-                                    {!menuDesplegado && (
-                                        <Tooltip className="tooltip" content="Contenido del tooltip">
-                                            <p className='paragraf-li' id="paragrafLi">Municipios</p>
-                                        </Tooltip>
-                                    
-                                    )}
                                 </Link>
+                                {!showTooltip && (
+                                    <span className="tooltip">Contenido del tooltip</span>
+                                )}
                             </li>
+
 
                             <li className="li-dasboard">
                                 <Link to={"/variedad"} style={{ textDecoration: 'none', color: 'black !important' }}>
@@ -183,11 +235,21 @@ function Dashboard() {
                                     <p>Variedad</p>
                                 </Link>
                             </li>
+                                */}
                             
-                            
+                            {items.map((item, index) => (
+                                    <li key={index} className={item.className}>
+                                        <Link to={item.to}>
+                                            <Tooltip content={item.tooltipContent} className="tooltip">
+                                                <FontAwesomeIcon icon={item.icon} className="icon" />
+                                            </Tooltip>
+                                            <p>{item.label}</p>
+                                        </Link>
+                                    </li>
+                                ))}
 
 
-                        </ul>
+                        </ul> 
             </div>
 
             </nav>
