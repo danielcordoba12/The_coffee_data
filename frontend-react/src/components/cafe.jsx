@@ -9,7 +9,6 @@ import "datatables.net";
 import "datatables.net-dt/css/dataTables.dataTables.min.css";
 import "datatables.net-dt/css/dataTables.dataTables.css";
 import 'datatables.net-responsive';
-import 'datatables.net-responsive/js/dataTables.responsive';
 import 'datatables.net-responsive-dt';
 import 'datatables.net-responsive-dt/css/responsive.dataTables.min.css';
 import 'datatables.net-responsive-dt/css/responsive.dataTables.css';
@@ -138,7 +137,11 @@ const Cafe = () => {
     };
 
     const handleRegistrar = async (data) => {
-        console.log(data, "dataaaaaaa")
+        const CafeData = {
+            ...data
+        };
+
+
         const headers = {
             headers: {
                 token: "xd",
@@ -146,12 +149,34 @@ const Cafe = () => {
         };
 
         try {
-            await Api.post("cafe/registrar", data, headers);
-            Sweet.registroExitoso();
-            closeRegistrarModal();
-            // Recargar la lista de cafes después del registro
-            const response = await Api.get("cafe/listar");
-            setCafes(response.data);
+            const data = await Api.post("cafe/registrar", CafeData, headers);
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                console.log(data.data)
+                /* Sweet.registroExitoso();
+                closeRegistrarModal(); */
+                // Recargar la lista de fincas después del registro
+                const response = await Api.get("cafe/listar");
+                setCafes(response.data);
+                location.href = "/cafe"
+            }
+
         } catch (error) {
             console.error("Error al registrar el cafe:", error);
         }
@@ -168,7 +193,7 @@ const Cafe = () => {
             }
             let select = inputSearch.parentNode.querySelectorAll(".option-select-search")
             for (let s = 0; s < select.length; s++) {
-                let elementValue = inputSearch.getAttribute("id")
+                let elementvalue = inputSearch.getAttribute("id")
 
                 if (dataSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")) {
                     select[s].classList.add("option-select-focus")
@@ -263,168 +288,171 @@ const Cafe = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
 
-        {modalCafe && <div className="overlay" onClick={closeModal}></div>}
-        {isRegistrarModalOpen && (
-            <div className="overlay" onClick={closeRegistrarModal}></div>
-        )}
-        
+
 
         <div className="bgr-c">
-        <div className="container-list-cafe">
-            <h1 className="title-cafe"> Listado de  cafe</h1>
+            <div className="container-list-cafe">
+                <h1 className="title-cafe"> Listado de  cafe</h1>
 
 
 
-            <div className="container-fluid w-full">
+                <div className="container-fluid w-full">
+                    <button to="/cafe/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
+                        Registrar cafe
+                    </button>
 
-                <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
-                    <thead>
-                        <tr className="bg-gray-200">
-                            <th>id</th>
-                            <th>Propietario</th>
-                            <th>finca</th>
-                            <th>Municipio</th>
-                            <th>lote</th>
-                            <th>variedad</th>
-                            <th>Estado</th>
-                            <th>opciones</th>
+                    <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cafes
-                            .map((task) => (
-                                <tr key={task.id} className="border-t">
-                                    <td>{task.id}</td>
-                                    <td>{task.nombre_usuario}</td>
-                                    <td>{task.nombre_finca}</td>
-                                    <td>{task.nombre_municipio}</td>
-                                    <td>{task.numero_lote}</td>
-                                    <td>{task.nombre_variedad}</td>
-                                    <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                    <td>
-                                        <button
-                                            type="button"
-                                            className="btn-act-cafe"
-                                            onClick={() => openModal(task.id)}
-                                        >
-                                            Modificar
-                                        </button>
-                                        <button to="/cafe/registrar" className="btn-registrar-lote" onClick={openRegistrarModal}>
-                                            Registrar cafe
-                                        </button>
-                                    </td>
+                        <thead>
+                            <tr className="bg-gray-200">
+                                <th>id</th>
+                                <th>Propietario</th>
+                                <th>finca</th>
+                                <th>Municipio</th>
+                                <th>lote</th>
+                                <th>variedad</th>
+                                <th>Estado</th>
+                                <th>opciones</th>
 
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cafes
+                                .map((task) => (
+                                    <tr key={task.id} className="border-t">
+                                        <td>{task.id}</td>
+                                        <td>{task.nombre_usuario}</td>
+                                        <td>{task.nombre_finca}</td>
+                                        <td>{task.nombre_municipio}</td>
+                                        <td>{task.numero_lote}</td>
+                                        <td>{task.nombre_variedad}</td>
+                                        <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                className="btn-act-cafe"
+                                                onClick={() => openModal(task.id)}
+                                            >
+                                                Modificar
+                                            </button>
+
+                                        </td>
+
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
         </div>
 
         {modalCafe && (
-            <div className="tabla3">
-                <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Cafe</h1>
-                <div className="max-w-xs">
-                    <input
-                        className="input-field"
-                        type="number"
-                        placeholder="lotes_id"
-                        value={modalCafe.lotes_id}
-                        onChange={(e) => setModalCafe({ ...modalCafe, lotes_id: e.target.value })}
-                    />
+            <div className="div-modal">
+                <div onClick={closeModal} className="fondo-modal"></div>
+                <div className="table-register-cafe">
+                    <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Cafe</h1>
+                    <div className="max-w-xs">
+                        <input
+                            className="input-field"
+                            type="number"
+                            
+                            placeholder="lotes_id"
+                            value={modalCafe.lotes_id}
+                            onChange={(e) => setModalCafe({ ...modalCafe, lotes_id: e.target.value })}
+                        />
+                        
 
-                    <input
-                        className="input-field"
-                        type="number" placeholder="variedades_id"
-                        value={modalCafe.variedades_id}
-                        onChange={(e) => setModalCafe({ ...modalCafe, variedades_id: e.target.value })}
-                    />
-                    <button
-                        className="btn-primary"
-                        onClick={handleEditUser1}
-                    >
-                        Actualizar
-                    </button>
-                    {modalCafe.estado === 1 ? (
+                        <input
+                            className="input-field"
+                            type="number" placeholder="variedades_id"
+                            value={modalCafe.variedades_id}
+                            onChange={(e) => setModalCafe({ ...modalCafe, variedades_id: e.target.value })}
+                        />
                         <button
-                            className="btn-secondary"
-                            onClick={handleEditUser2}
+                            className="btn-register-cafe"
+                            onClick={handleEditUser1}
                         >
-                            Desactivar
+                            Actualizar
                         </button>
-                    ) : (
+                        {modalCafe.estado === 1 ? (
+                            <button
+                                className="btn-desactivar"
+                                onClick={handleEditUser2}
+                            >
+                                Desactivar
+                            </button>
+                        ) : (
+                            <button
+                                className="btn-activar"
+                                onClick={handleEditUser3}
+                            >
+                                Activar
+                            </button>
+                        )}
                         <button
-                            className="btn-tertiary"
-                            onClick={handleEditUser3}
+                            className="close-modal-cafe"
+                            onClick={closeModal}
                         >
-                            Activar
+                            x
                         </button>
-                    )}
-                    <button
-                        className="close-modal-btn"
-                        onClick={closeModal}
-                    >
-                        Cerrar
-                    </button>
+                    </div>
                 </div>
             </div>
         )}
 
         {isRegistrarModalOpen && (
-            <div className="overlay" onClick={closeRegistrarModal}></div>
-        )}
-        {isRegistrarModalOpen && (
-            <div className="tabla2">
-                <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-                    Registrar Cafe
-                </h1>
+            <div className="div-modal">
+                <div onClick={closeRegistrarModal} className="fondo-modal"></div>
+                <div className="table-register-cafe">
+                    <h1 className="">
+                        Registrar Cafe
+                    </h1>
 
-                <form
-                    className="contenido-regi"
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        handleRegistrar({
-                            variedades_id: dataSelect.variedades_id.value,
-                            lotes_id: dataSelect.lotes_id.value
-                        });
-                    }}
-                    method="post"
-                >
-
-                    <div className="div-input">
-                        <input className="input-search" type="text" id="lotes_id" />
-                        <label htmlFor="lotes_id" className='label'>Lote</label>
-                        <div className="select-options-input">
-                            {lote.map((key, index) => (
-                                (
-                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
-                                )
-                            ))}
-                        </div>
-                    </div>
-                    <div className="div-input">
-                        <input className="input-search" type="text" id="variedades_id" />
-                        <label htmlFor="variedades_id" className='label'>Variedad</label>
-                        <div className="select-options-input">
-                            {variedades.map((key, index) => (
-                                (
-                                    <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
-                                )
-                            ))}
-                        </div>
-                    </div>
-
-                    <button className="btn-register-lote"
-                        type="submit">Registrar Cafe</button>
-                    <button
-                        className="close-modal-btn"
-                        onClick={closeRegistrarModal}
+                    <form
+                        className="contenido-regi"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleRegistrar({
+                                variedades_id: dataSelect.variedades_id.value,
+                                lotes_id: dataSelect.lotes_id.value
+                            });
+                        }}
+                        method="post"
                     >
-                        Cerrar
-                    </button>
-                </form>
+
+                        <div className="div-input">
+                            <input className="input-search" type="text" id="lotes_id" />
+                            <label htmlFor="lotes_id" >Lote</label>
+                            <div className="select-options-input">
+                                {lote.map((key, index) => (
+                                    (
+                                        <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
+                                    )
+                                ))}
+                            </div>
+                        </div>
+                        <div className="div-input">
+                            <input className="input-search" type="text" id="variedades_id" />
+                            <label htmlFor="variedades_id" >Variedad</label>
+                            <div className="select-options-input">
+                                {variedades.map((key, index) => (
+                                    (
+                                        <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
+                                    )
+                                ))}
+                            </div>
+                        </div>
+
+                        <button className="btn-register-cafe"
+                            type="submit">Registrar Cafe</button>
+                        <button
+                            className="close-modal-cafe"
+                            onClick={closeRegistrarModal}
+                        >
+                            X
+                        </button>
+                    </form>
+                </div>
             </div>
         )}
 

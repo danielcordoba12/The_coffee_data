@@ -16,17 +16,88 @@ export const listarVariedad = async (req, res) => {
     }
 };
 
+function validate(data) {
+    try {
+      let keys = Object.keys(data);
+      let errros = {};
+      let result = {};
+      for (let x = 0; x < keys.length; x++) {
+        let inputs = Object.keys(data[keys[x]])
+        for (let e = 0; e < inputs.length; e++) {
+          let referencia = "El campo"
+          if (data[keys[x]][inputs[e]]["referencia"]) {
+            referencia = data[keys[x]][inputs[e]]["referencia"];
+          }
+          if (keys[x] == "string") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+              errros[inputs[e]] = referencia + " no puede estar vacío"
+            } else if (!(/[a-zA-Z]+$/).test(data[keys[x]][inputs[e]]["value"])) {
+              errros[inputs[e]] = referencia + " debe ser un string"
+            } else {
+              result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+            }
+          }
+          if (keys[x] == "normal") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+              errros[inputs[e]] = referencia + " no puede estar vacío"
+            } else {
+              result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+            
+            }
+  
+          }
+        }
+      }
+      console.log(errros,result)
+      if (Object.keys(errros).length > 0) {
+        return {
+          status: false,
+          errors: errros
+        }
+      } else {
+        return {
+          status: true,
+          data: result
+        }
+      }
+  
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
 export const guardarVariedad = async (req, res) => {
 
     try {
+        let data = {
+          "string": {
+            "nombre": {
+              "value": req.body.nombre,
+              "referencia": "El nombre"
+            }
+          }
+    
+        }
+        console.log(data,"xddd");
+        let validateInputs = validate(data)
+        if (validateInputs.status == false) {
+          return res.status(200).json({
+            "status": false,
+            "errors": validateInputs.errors
+    
+          })
+        }
+    
+    
+        console.log(req.body)
         let error1 = validationResult(req);
         if (!error1.isEmpty()) {
-            return res.status(400).json(error1);
+          return res.status(400).json(error1);
         }
-        let { fecha_creacion, nombre } = req.body;
+        let { nombre } = req.body;
 
-        let sql = `insert into variedades (fecha_creacion,nombre)
-            values ('${fecha_creacion}','${nombre}')`;
+        let sql = `insert into variedades (nombre)
+            values ('${nombre}')`;
 
         const [rows] = await pool.query(sql);
 

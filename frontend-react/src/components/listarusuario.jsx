@@ -331,7 +331,7 @@ const ListarUsuarios = () => {
             {isRegistrarModalOpen && (
                 <>
                     <div className="overlay" onClick={closeRegistrarModal}></div>
-                    <div className="tabla2">
+                    <div className="tabla-regis-finca">
                         <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                             Registrar Finca
                         </h1>
@@ -389,8 +389,8 @@ const ListarUsuarios = () => {
                             <button className="btn-blue" type="submit">
                                 Registrar finca
                             </button>
-                            <button className="close-modal-btn" onClick={closeRegistrarModal}>
-                                Cerrar
+                            <button className="close-modal-x" onClick={closeRegistrarModal}>
+                            x
                             </button>
                         </form>
                     </div>
