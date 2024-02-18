@@ -76,8 +76,6 @@ const Analisis = () => {
         }
         buscarUsuarios();
     }, []);
-
-
     const openModal = async (anaId) => {
         setselectAnalisisid(anaId);
         try {
@@ -89,7 +87,7 @@ const Analisis = () => {
     };
     const handleEditUser1 = async () => {
         try {
-            await Api.put(`analisis/update/${selectAnalisisid}`, modalAnalisis);
+            await Api.put(`/analisis/update/${selectAnalisisid}`,modalAnalisis);
             Sweet.actualizacionExitosa();
             closeModal();
             // Recargar la lista de analisis después de la actualización
@@ -101,6 +99,7 @@ const Analisis = () => {
     };
     const handleEditUser2 = async () => {
         const result = await Sweet.confimarDeshabilitar({
+            
         });
         if (result.isConfirmed) {
             try {
