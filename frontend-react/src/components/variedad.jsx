@@ -1,7 +1,21 @@
 import React, { useEffect, useState, useRef } from "react"
 import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
+import '../style/variedad.css';
 import Sweet from "../helpers/Sweet";
+import $ from "jquery";
+import "bootstrap"
+import "datatables.net";
+import "datatables.net-dt/css/dataTables.dataTables.min.css";
+import "datatables.net-dt/css/dataTables.dataTables.css";
+import 'datatables.net-responsive';
+import 'datatables.net-responsive-dt';
+import 'datatables.net-responsive-dt/css/responsive.dataTables.min.css';
+import 'datatables.net-responsive-dt/css/responsive.dataTables.css';
+import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
+import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
+import 'datatables.net-bs5';
+
 
 
 
@@ -108,6 +122,31 @@ const Variedad = () => {
         }
     };
 
+    const dataTableRef = useRef(null);
+    const initializeDataTable = (variedades) => {
+        $(document).ready(function () {
+            $(dataTableRef.current).DataTable({
+                lengthMenu: [5, 10, 20, 30, 40, 50],
+                processing: true,
+                pageLength: 5,
+                language: {
+                    processing: "Procesando datos...",
+                },
+                responsive: true,
+            });
+        });
+
+        return () => {
+            $(dataTableRef.current).DataTable().destroy(true);
+        };
+    };
+
+    useEffect(() => {
+        if (variedades.length > 0) {
+            initializeDataTable(variedades);
+        }
+    }, [variedades]);
+
     function formatDate(dateString) {
         if (!dateString) return ''; // Manejar el caso de valor nulo o indefinido
         const fecha = new Date(dateString);
@@ -119,41 +158,23 @@ const Variedad = () => {
     
     return (<>
 
-        {modalVar && <div className="overlay" onClick={closeModal}></div>}
-        {isRegistrarModalOpen && (
-            <div className="overlay" onClick={closeRegistrarModal}></div>
-        )}
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
 
-        <img src="../../public/img/fondo.png" alt="" className="fondo2" />
-        <div className="tablalistar">
-            <h1 className="titu"> Listado de  variedades</h1>
 
-            <button to="/variedad/registrar" className="btn-registrar-lote" onClick={openRegistrarModal}>
-                Registrar variedades
+
+<div className="bgr-v">
+    <div className="container-list-variedad">
+        <h1 className="title-variedad"> Listado de  variedad</h1>
+
+
+
+        <div className="container-fluid w-full">
+            <button to="/variedad/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
+                Registrar variedad
             </button>
 
-            <div className="search-container">
-
-          {/* icono de buscar */}
-          <svg x="0px" y="0px" viewBox="0 0 60 60" width="26" height="26" >
-            <path class="st0" fill="#ffffff" d="M54.8,51.4L38.7,35.3c2.6-3.1,4.2-7.1,4.2-11.5C42.9,14,34.9,6,25.1,6C15.2,6,7.2,14,7.2,23.8
-                c0,9.8,8,17.8,17.8,17.8c4.4,0,8.4-1.6,11.5-4.2l16.1,16.1L54.8,51.4z M10.2,23.8C10.2,15.6,16.9,9,25.1,
-                9c8.2,0,14.8,6.7,14.8,14.8c0,8.2-6.7,14.8-14.8,14.8C16.9,38.7,10.2,32,10.2,23.8z">
-            </path>
-          </svg>
-
-          <input
-            type="text"
-            placeholder="Buscar variedad"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-
-        </div>
-
-            <br />
-            <table className="tableprincipal">
+            <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                 <thead>
                     <tr className="bg-gray-200">
                         <th>id</th>
@@ -177,7 +198,7 @@ const Variedad = () => {
                             <td>
                                 <button
                                     type="button"
-                                    className="btn-primary"
+                                    className="btn-act-variedad"
                                     onClick={() => openModal(task.id)}
                                 >
                                     Modificar
@@ -189,14 +210,18 @@ const Variedad = () => {
                 </tbody>
             </table>
         </div >
+    </div >
+</div >
 
         {modalVar && (
-            <div className="tabla3">
+            <div className="div-modal">
+            <div onClick={closeModal} className="fondo-modal"></div>
+            <div className="table-register-variedad">
                 <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Variedad</h1>
                 <div className="max-w-xs">
                     <input
                         className="input-field"
-                        type="date" placeholder="fecha_creacion"
+                        type="hidden" placeholder="fecha_creacion"
                         value={modalVar.fecha_creacion}
                         onChange={(e) => setModalVar({ ...modalVar, fecha_creacion: e.target.value })}
                     />
@@ -208,26 +233,27 @@ const Variedad = () => {
                         onChange={(e) => setModalVar({ ...modalVar, nombre: e.target.value })}
                     />
                     <button
-                        className="btn-primary"
+                        className="btn-act-variedad"
                         onClick={handleEditUser1}
                     >
                         Actualizar
                     </button>
                     <button
-                        className="close-modal-btn"
+                        className="close-modal-variedad"
                         onClick={closeModal}
                     >
-                        Cerrar
+                        X
                     </button>
                 </div>
             </div>
-        )}
+        </div>     
+
+          )}
 
         {isRegistrarModalOpen && (
-            <div className="overlay" onClick={closeRegistrarModal}></div>
-        )}
-        {isRegistrarModalOpen && (
-            <div className="tabla2">
+            <div className="div-modal">
+            <div onClick={closeRegistrarModal} className="fondo-modal"></div>
+            <div className="table-register-variedad">
                 <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                     Registrar Variedad
                 </h1>
@@ -238,7 +264,6 @@ const Variedad = () => {
                         e.preventDefault();
                         handleRegistrar({
                             nombre: nombre.current.value,
-                            fecha_creacion: fecha_creacion.current.value,
                         });
                     }}
                     method="post"
@@ -246,22 +271,20 @@ const Variedad = () => {
 
                     <div className="div-input">
                         <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
-                        <label for="nombre">Nombre</label>
+                        <label htmlFor="nombre">Nombre</label>
                     </div>
 
-                    <div className="div-input">
-                        <input type="date" id="fecha_creacion" name="fecha_creacion" ref={fecha_creacion} placeholder="" />
-                    </div>
                     
-                    <button className="btn-register-lote"
+                    <button className="btn-register-variedad"
                         type="submit">Registrar Variedad</button>
                     <button
-                        className="close-modal-btn"
+                        className="close-modal-variedad"
                         onClick={closeRegistrarModal}
                     >
-                        Cerrar
+                        X
                     </button>
                 </form>
+            </div>
             </div>
         )}
 

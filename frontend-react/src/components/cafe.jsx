@@ -137,7 +137,11 @@ const Cafe = () => {
     };
 
     const handleRegistrar = async (data) => {
-        console.log(data, "dataaaaaaa")
+        const CafeData = {
+            ...data
+        };
+
+
         const headers = {
             headers: {
                 token: "xd",
@@ -145,10 +149,34 @@ const Cafe = () => {
         };
 
         try {
-            await Api.post("cafe/registrar", data, headers);
-            Sweet.registroExitoso();
-            closeRegistrarModal();
-            location.href = "/cafe"
+            const data = await Api.post("cafe/registrar", CafeData, headers);
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                console.log(data.data)
+                /* Sweet.registroExitoso();
+                closeRegistrarModal(); */
+                // Recargar la lista de fincas después del registro
+                const response = await Api.get("cafe/listar");
+                setCafes(response.data);
+                location.href = "/cafe"
+            }
+
         } catch (error) {
             console.error("Error al registrar el cafe:", error);
         }
@@ -305,7 +333,7 @@ const Cafe = () => {
                                                 className="btn-act-cafe"
                                                 onClick={() => openModal(task.id)}
                                             >
-                                                Modificarr
+                                                Modificar
                                             </button>
 
                                         </td>
@@ -348,14 +376,14 @@ const Cafe = () => {
                         </button>
                         {modalCafe.estado === 1 ? (
                             <button
-                                className="btn-secondary"
+                                className="btn-desactivar"
                                 onClick={handleEditUser2}
                             >
                                 Desactivar
                             </button>
                         ) : (
                             <button
-                                className="btn-tertiary"
+                                className="btn-activar"
                                 onClick={handleEditUser3}
                             >
                                 Activar
