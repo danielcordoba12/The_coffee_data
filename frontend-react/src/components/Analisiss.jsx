@@ -5,9 +5,6 @@ import { useNavigate } from "react-router-dom";
 import '../style/analisis.css';
 
 
-
-
-
 const Analisis = () => {
     
     const [analisis, setAnalisis] = useState([]);
@@ -182,11 +179,11 @@ const Analisis = () => {
 
         if (inputSearch) {
 
-            let divOptions = inputSearch.parentNode.querySelectorAll(".select-options-input");
+            let divOptions = inputSearch.parentNode.querySelectorAll(".select-option-input-d");
             if (divOptions.length > 0) {
                 divOptions[0].style.display = "none"
             }
-            let select = inputSearch.parentNode.querySelectorAll(".option-select-search")
+            let select = inputSearch.parentNode.querySelectorAll(".option-select-ana")
             for (let s = 0; s < select.length; s++) {
                 let elementValue = inputSearch.getAttribute("id")
 
@@ -201,12 +198,12 @@ const Analisis = () => {
     }
     useEffect(() => {
 
-        let inputSearch = document.querySelectorAll(".input-search")
+        let inputSearch = document.querySelectorAll(".input-search-d")
 
         if (inputSearch.length > 0) {
             for (let s = 0; s < inputSearch.length; s++) {
                 inputSearch[s].addEventListener("blur", function () {
-                    let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-options-input");
+                    let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-option-input-d");
                     if (divOptions.length > 0) {
                         setTimeout(() => {
                             divOptions[0].style.display = "none"
@@ -217,7 +214,7 @@ const Analisis = () => {
                 inputSearch[s].addEventListener("input", function () {
                     let parent = inputSearch[s].parentNode
                     if (parent) {
-                        let selectOptionsInput = parent.querySelectorAll(".select-options-input");
+                        let selectOptionsInput = parent.querySelectorAll(".select-option-input-d");
                         if (selectOptionsInput[0]) {
                             selectOptionsInput[0].style.display = "block"
                             let options = selectOptionsInput[0].querySelectorAll("div");
@@ -253,36 +250,39 @@ const Analisis = () => {
 
     return (
         <>
-        {modalAnalisis && <div className="overlay" onClick={closeModal}></div>}
+        {modalAnalisis && <div className="overlay-d" onClick={closeModal}></div>}
         {aRegistrarModalOpen && (
-            <div className="overlay" onClick={closeRegistrarAnalisisModal}></div>
+            <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
             )}
             
-        <div className="tablaprincipal">
-            <h1 className="titleanalisis">Analisis</h1>
-
+        <div className="tablaAnalisis">
+            <div className="contTile">
+            <h1 className="titleanalisis">Análisis</h1> 
+        
             <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
                 Añadir
             </button>
+            </div>
+          
 
-            <table className="tablaprincipal">
-                <thead>
-                    <tr className="bg-gray-200">
+            <table>
+                <thead className="analisis">
+                    <tr className="encabezado">
                         <th>id</th>
                         <th>Fecha</th>
-                        <th>Tipo Análisis</th>
-                        <th>Consecutivo Informe</th>
-                        <th>Asignación</th>
-                        <th>Estado</th>
-                        <th>Propietario</th>
-                        <th>Finca</th>
-                        <th>Lote</th>
+                        <th>Tipo Análisis </th>
+                        <th>Consecutivo Informe </th>
+                        <th>Asignación </th>
+                        <th>Estado </th>
+                        <th>Propietario </th>
+                        <th>Finca </th>
+                        <th>Lote </th>
 
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="cuerpodatos">
                     {analisis.map((task) => (
-                            <tr key={task.id_analisis} className="border-t">
+                            <tr key={task.id_analisis}>
                                 <td>{task.id_analisis}</td>
                                 <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td>
                                 <td>{task.nombre_tipo_analisis}</td>
@@ -295,7 +295,7 @@ const Analisis = () => {
                                 <td>
                                     <button
                                         type="button"
-                                        className="btn-primary"
+                                        className="btn-actualizar-mod"
                                         onClick={() => openModal(task.id_analisis)}
                                     >
                                         Modificar
@@ -309,9 +309,10 @@ const Analisis = () => {
         </div>
 
         {modalAnalisis && (
-            <div className="tabla3">
-                <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Analisis</h1>
-                <div className="max-w-xs">
+            <div className="tablaEditAna">
+                <h1 className="titleEditAna">Editar</h1>
+                <div className="Editcampos">
+                    <label htmlFor="" className="labelEdit">Tipo Análisis</label>
                     <input
                         className="input-field"
                         type="number"
@@ -319,13 +320,14 @@ const Analisis = () => {
                         value={modalAnalisis.tipo_analisis_id}
                         onChange={(e) => setModalAnalisis({ ...modalAnalisis, tipo_analisis_id: e.target.value })}
                     />
-
+                        <label htmlFor="" className="labelEdit">Codigo Muestra</label>
                     <input
                         className="input-field"
                         type="number" placeholder="muestras_id"
                         value={modalAnalisis.muestras_id}
                         onChange={(e) => setModalAnalisis({ ...modalAnalisis, muestras_id: e.target.value })}
                     />
+                        <label htmlFor="" className="labelEdit">Usuario</label>
                      <input
                         className="input-field"
                         type="number" placeholder="usuarios_id"
@@ -333,31 +335,31 @@ const Analisis = () => {
                         onChange={(e) => setModalAnalisis({ ...modalAnalisis, usuarios_id: e.target.value })}
                     />
                     <button
-                        className="btn-primary"
+                        className="btn-actualizar-d"
                         onClick={handleEditUser1}
                     >
                         Actualizar
                     </button>
                     {modalAnalisis.estado === 1 ? (
                         <button
-                            className="btn-secondary"
+                            className="btn-desactivar-d"
                             onClick={handleEditUser2}
                         >
                             Desactivar
                         </button>
                     ) : (
                         <button
-                            className="btn-tertiary"
+                            className="btn-activar-d"
                             onClick={handleEditUser3}
                         >
                             Activar
-                        </button>
+                        </button> 
                     )}
                     <button
-                        className="close-modal-btn"
+                        className="close-modal-Edit"
                         onClick={closeModal}
                     >
-                        Cerrar
+                        X
                     </button>
                 </div>
             </div>
@@ -366,16 +368,16 @@ const Analisis = () => {
 
             
             {aRegistrarModalOpen && (
-                <div className="overlay" onClick={closeRegistrarAnalisisModal}></div>
+                <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
             )}
             {aRegistrarModalOpen && (
-                <div className="tabla2">
-                    <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-                        Registrar Analisis
+                <div className="contRegistrarAna">
+                    <h1 className="titleRegistrar">
+                        Registrar Análisis
                     </h1>
 
                     <form
-                        className="contenido-regi"
+                        className="formRegiAna"
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleRegistrarAnalisis({
@@ -387,9 +389,9 @@ const Analisis = () => {
                         method="post"
                     >
                         
-                        <div className="div-input">
+                        <div className="div-input-d">
                            
-                            <label htmlFor="tipo_analisis_id" className='label'>Tipos Analisis</label>
+                            <label className="tipe-ana" htmlFor="tipo_analisis_id" >Tipo de Analisis</label>
                             <select name="tipo_analisis" id="1">
                                 <option value="1" id="1">
                                     Fisico
@@ -397,36 +399,36 @@ const Analisis = () => {
                             </select>
                             
                         </div>
-                        <div className="div-input">
-                            <input className="input-search" type="text" id="muestras_id" />
-                            <label htmlFor="muestras_id" className='label'>Muestras</label>
-                            <div className="select-options-input">
+                        <div className="div-input-d">
+                            <input className="input-search-d" type="text" id="muestras_id" />
+                            <label htmlFor="muestras_id" >Muestra</label>
+                            <div className="select-option-input-d">
                                 {muestras.map((key1, index) => (
                                     (
-                                        <div className="option-select-search" data-id={key1.id} onClick={() => { document.getElementById("muestras_id").value = key1.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : "";datasSelect.muestras_id.value = key1.id; clearFocusInput("muestras_id") }} key1={key1.id}>{key1.codigo_externo}</div>
+                                        <div className="option-select-ana" data-id={key1.id} onClick={() => { document.getElementById("muestras_id").value = key1.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : "";datasSelect.muestras_id.value = key1.id; clearFocusInput("muestras_id") }} key1={key1.id}>{key1.codigo_externo}</div>
                                     )
                                 ))}
                             </div>
                         </div>
-                        <div className="div-input">
-                            <input className="input-search" type="text" id="usuarios_id" />
+                        <div className="div-input-d">
+                            <input className="input-search-d" type="text" id="usuarios_id" />
                             <label htmlFor="usuarios_id" className='label'>Usuarios</label>
-                            <div className="select-options-input">
+                            <div className="select-option-input-d">
                                 {usuarios.map((key, index) => (
                                     (
-                                        <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.usuarios_id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
+                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.usuarios_id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
                                     )
                                 ))}
                             </div>
                         </div>
 
                         <button className="btn-register-d"
-                            type="submit">Registrar Analisis</button>
+                            type="submit">Registrar</button>
                         <button
-                            className="close-modal-btn"
+                            className="close-modal-Ana"
                             onClick={closeRegistrarAnalisisModal}
                         >
-                            Cerrar
+                            X
                         </button>
                     </form>
                 </div>
