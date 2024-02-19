@@ -251,13 +251,13 @@ body {
 
 
 
-.btn-actu {
+/* .btn-actu {
   background-color: #007bff;
   color: #fff;
   padding: 8px 16px;
   border: none;
   cursor: pointer;
-}
+} */
 
 .btn-registrar {
   display: block;
@@ -485,7 +485,7 @@ body.modal-open {
 }
 
 .tabla-regis button:hover {
-  background-color: #ffffff;
+  background-color: #207bb5;
 }
 
 
@@ -814,4 +814,22 @@ body {
 
 .tabla-regis-finca{
   background-color: red;
+}
+div.dt-container div.dt-search label {
+  font-weight: normal;
+  white-space: nowrap;
+  text-align: left;
+  color: rgb(0, 0, 0);
+}
+
+/* .container-listado{
+  background-color: #ebf0f5;
+
+}
+.container-outlet{
+  background-color: #ebf0f5;
+} */
+
+select option{
+  color: #000000;
 }
