@@ -74,6 +74,16 @@ function validate(data) {
           }
 
         }
+        if (keys[x] == "float") {
+          // Validación para float
+          if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+            errros[inputs[e]] = referencia + " no puede estar vacío";
+          } else if (!/^-?\d+(\.\d+)?$/.test(data[keys[x]][inputs[e]]["value"])) {
+            errros[inputs[e]] = referencia + " debe ser un número decimal";
+          } else {
+            result[inputs[e]] = parseFloat(data[keys[x]][inputs[e]]["value"]);
+          }
+        }
       }
     }
     console.log(errros,result)
@@ -116,21 +126,21 @@ export const guardarFinca = async (req, res) => {
           "referencia":"El nombre de la vereda"
         }
       },
-      "normal": {
-        "latitud": {
-          "value": req.body.latitud,
-          "referencia": "La latitud"
-        },
-        "longitud": {
-          "value": req.body.longitud
-        },
-       
-      },
       "select": {
         "municipios_id": {
           "value": req.body.municipios_id,
           "opciones": opcionesMunicipios,
           "referencia": "el municipio"
+        }
+      },
+      "float": {
+        "latitud": {
+          "value": req.body.latitud,
+          "referencia": "La latitud"
+        },
+        "longitud": {
+          "value": req.body.longitud,
+          "referencia": "la longitud"
         }
       }
 

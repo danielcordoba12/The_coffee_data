@@ -614,14 +614,14 @@ const FincaView = () => {
                         </button>
                         {modalFinca.estado === 1 ? (
                             <button
-                                className="btn-secondary"
+                                className="btn-desactivar-finca"
                                 onClick={handleEditUser2}
                             >
                                 Desactivar
                             </button>
                         ) : (
                             <button
-                                className="btn-tertiary"
+                                className="btn-activar-finca"
                                 onClick={handleEditUser3}
                             >
                                 Activar
@@ -748,14 +748,14 @@ const FincaView = () => {
                         </button>
                         {modalLote.estado === 1 ? (
                             <button
-                                className="btn-secondary"
+                                className="btn-desactivar-finca"
                                 onClick={loteEditUser2}
                             >
                                 Desactivar
                             </button>
                         ) : (
                             <button
-                                className="btn-tertiary"
+                                className="btn-activar-finca"
                                 onClick={loteEditUser3}
                             >
                                 Activar

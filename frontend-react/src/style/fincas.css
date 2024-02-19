@@ -66,29 +66,32 @@
   border-radius: 4px;
   cursor: pointer;
 }
-
-.btn-secondary {
+.btn-desactivar-finca{
   background-color: #e74c3c;
-  color: #fff;
-  font-weight: bold;
-  padding: 8px 16px;
-  margin: 8px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 4px ;
+    border: #007bff;
+    outline: none;
+    margin: 8px;
 }
-
-.btn-tertiary {
-  background-color: #2ecc71;
-  color: #fff;
-  font-weight: bold;
-  padding: 8px 16px;
-  margin: 8px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.btn-desactivar-finca:hover{
+  background-color: #f63c27 !important;
 }
-
+.btn-activar-finca{
+  background-color: rgb(73, 191, 73);
+    color: #fff;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 4px ;
+    border: #007bff;
+    outline: none;
+    margin: 8px;
+}
+.btn-activar-finca:hover{
+  background-color: #20f05b !important;
+}
 /*usuario-label*/
 /* Styles for the label */
 .usuario-label {
