@@ -347,6 +347,16 @@ const FincaView = () => {
             initializeDataTable(fincas);
         }
     }, [fincas]);
+
+    function formatDate(dateString) {
+        if (!dateString) return ''; // Manejar el caso de valor nulo o indefinido
+        const fecha = new Date(dateString);
+        const year = fecha.getFullYear();
+        const month = String(fecha.getMonth() + 1).padStart(2, '0');
+        const day = String(fecha.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+    
     return (
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
@@ -358,7 +368,7 @@ const FincaView = () => {
 
             {/* <img src="../../public/img/fondo.png" alt="" className="fondo2" /> */}
             <div className="container-listado">
-                <h4 className="titu"> Listado de Fincas</h4>
+                <h4 className="titulo-listado"> Listado de Fincas</h4>
                 <br />
                 <br />
 
@@ -391,7 +401,7 @@ const FincaView = () => {
                                 .map((task) => (
                                     <tr key={task.id} className="border-t">
                                         <td className="td-id">{task.id}</td>
-                                        <td>{task.fecha_creacion}</td>
+                                        <td>{formatDate(task.fecha_creacion)}</td>
                                         <td>{task.nombre}</td>
                                         <td>{task.longitud}</td>
                                         <td>{task.latitud}</td>
@@ -438,10 +448,13 @@ const FincaView = () => {
                 </div>
             </div>
             {isLotesModalOpen && (
+                <div className="modal-div-fin">
                 <div className="modal modal-ver-lotes" tabIndex="-1" role="dialog" style={{ display: isLotesModalOpen ? 'block' : 'none' }}>
+                    <div className="fondo-over" onClick={() => setLotesModalOpen(false)} ></div>
                     <div className="modal-dialog" role="document">
                         <div className="modal-contents">
                             <div className="modal-header">
+
                                 <h5 className="modal-title">Lotes de la Finca</h5>
                                 <button type="button" className="close" onClick={() => setLotesModalOpen(false)}>
                                     <span aria-hidden="true">&times;</span>
@@ -497,6 +510,7 @@ const FincaView = () => {
                         </div>
                     </div>
                 </div>
+                </div>
             )}
 
 
@@ -509,7 +523,7 @@ const FincaView = () => {
                     <div className="max-w-xs">
                         <input
                             className="input-field"
-                            type="date"
+                            type="hidden"
                             placeholder="fecha_creacion"
                             value={modalFinca.fecha_creacion}
                             onChange={(e) =>
@@ -549,32 +563,13 @@ const FincaView = () => {
 
                         <input
                             className="input-field"
-                            type="text"
-                            placeholder="usuarios_id"
-                            value={filtro}
-                            onChange={filtrarOpciones}
-                            autoComplete="off"
+                            type="hidden"
+                            placeholder="usuarios_id "
+                            value={modalFinca.usuarios_id }
+                            onChange={(e) =>
+                                setModalFinca({ ...modalFinca, usuarios_id : e.target.value })
+                            }
                         />
-                        <div className="div-usuario">
-                            <label htmlFor="usuarios_id" className='usuario-label'>Usuario</label>
-                            {mostrarOpciones && (
-                                <div className="custom-dropdown">
-                                    {usuario.map((usuario) => (
-                                        (usuario.numero_documentos.toLowerCase().includes(filtro) ||
-                                            usuario.nombre.toLowerCase().includes(filtro)) && (
-                                            <div
-                                                key={usuario.id}
-                                                className="custom-dropdown-option"
-                                                onClick={() => handleClickOpcion(usuario)}
-                                            >
-
-                                                {`${usuario.numero_documentos}-${usuario.nombre}`}
-                                            </div>
-                                        )
-                                    ))}
-                                </div>
-                            )}
-                        </div>
                         <div className="div-input">
                             <select
 
@@ -633,10 +628,10 @@ const FincaView = () => {
                             </button>
                         )}
                         <button
-                            className="close-modal-btn"
+                            className="close-modal"
                             onClick={closeEditarModal}
                         >
-                            Cerrar
+                            x
                         </button>
                     </div>
                 </div>
@@ -650,6 +645,7 @@ const FincaView = () => {
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                         Registrar Lote
                     </h1>
+                
 
                     <form
                         className="contenido-regi"
@@ -666,7 +662,7 @@ const FincaView = () => {
                         method="post"
                     >
 
-
+                        <div className="input-container">
                         <div className="div-input">
                             <input className="input-register" type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
                             <label htmlFor="nombre">Nombre</label>
@@ -688,17 +684,22 @@ const FincaView = () => {
                         <button className="btn-actu"
                             type="submit">Registrar lote</button>
                         <button
-                            className="close-modal-btn"
+                            className="close-modal"
                             onClick={closeRegistrarModal}
                         >
-                            Cerrar
+                            x
                         </button>
+                        </div>
                     </form>
                 </div>
+                
             )}
 
             {modalLote && (
-                <div className="tabla-editar">
+                <div className="div-modal-edit" >
+                    <div className="overlay" onClick={closeModal} ></div>
+                    <div className="tabla-editar">
+                    
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
                     <div className="max-w-xs">
 
@@ -761,12 +762,13 @@ const FincaView = () => {
                             </button>
                         )}
                         <button
-                            className="close-modal-btn"
+                            className="close-modal"
                             onClick={closeModal}
                         >
-                            Cerrar
+                            ✕
                         </button>
                     </div>
+                </div>
                 </div>
             )}
 

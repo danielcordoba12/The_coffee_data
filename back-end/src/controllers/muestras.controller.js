@@ -2,20 +2,198 @@ import { pool } from "../database/conexion.js";
 // import { validationResult } from "express-validator";
 
 
+function validate(data) {
+    try {
+    let keys = Object.keys(data);
+    let errros = {};
+    let result = {};
+    for (let x = 0; x < keys.length; x++) {
+    let inputs = Object.keys(data[keys[x]])
+        for (let e = 0; e < inputs.length; e++) {
+        let referencia = "El campo"
+        if (data[keys[x]][inputs[e]]["referencia"]) {
+            referencia = data[keys[x]][inputs[e]]["referencia"];
+        }
+        if (keys[x] == "string") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+                errros[inputs[e]] = referencia + " no puede estar vacío"
+            } else if (!(/[a-zA-Z]+$/).test(data[keys[x]][inputs[e]]["value"])) {
+                errros[inputs[e]] = referencia + " debe ser un string"
+            } else {
+                result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+            }
+        }
+            if (keys[x] == "normal") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+                errros[inputs[e]] = referencia + " no puede estar vacío"
+            } else {
+                result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+            }
+            }
+            if (keys[x] == "select") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+                errros[inputs[e]] = "Debe seleccionar una opción para " + referencia
+            } else {
+                let keysOptions = data[keys[x]][inputs[e]]["opciones"]
+                for (let o = 0; o < keysOptions.length; o++) { 
+        
+
+                if (keysOptions[o] == data[keys[x]][inputs[e]]["value"]) {
+                    result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
+                    break
+                } else if (o == keysOptions.length) {
+                    errros[inputs[e]] = +"Debe seleccionar una opción válida para el " + referencia
+                }
+                }
+            }
+
+            }
+        }
+    }
+    console.log(errros,result)
+    if (Object.keys(errros).length > 0) {
+        return {
+            status: false,
+            errors: errros
+        }
+    } else {
+        return {
+            status: true,
+            data: result
+        }
+    }
+
+    } catch (e) {
+        console.log(e)
+    }
+}
+        
     export const guardarMuestra = async (req, res) => {
+
+        const [muestra] = await pool.query("SELECT id FROM cafes");
+        let opcionesMuestra = [];
+        for (let x = 0; x < muestra.length; x++) {
+        opcionesMuestra.push(muestra[x]["id"])
+        }
+        console.log(opcionesMuestra)
+
         try {
+
+            let data = {
+                "string": {
+                    "fecha_creacion": {
+                        "value": req.body.fecha_creacion,
+                        "referencia": "La fecha de creación"
+                    },
+                    "codigo_externo": {
+                        "value": req.body.codigo_externo,
+                        "referencia": "El código externo"
+                    },
+                    "consecutivo_informe": {
+                        "value": req.body.consecutivo_informe,
+                        "referencia": "El consecutivo de informe"
+                    },
+                    "muestreo": {
+                        "value": req.body.muestreo,
+                        "referencia": "El muestreo"
+                    },
+                    "preparacion_muestra": {
+                        "value": req.body.preparacion_muestra,
+                        "referencia": "La preparación de la muestra"
+                    },
+                    "cantidad": {
+                        "value": req.body.cantidad,
+                        "referencia": "La cantidad"
+                    },
+                    "tipo_molienda": {
+                        "value": req.body.tipo_molienda,
+                        "referencia": "El tipo de molienda"
+                    },
+                    "tipo_fermentacion": {
+                        "value": req.body.tipo_fermentacion,
+                        "referencia": "El tipo de fermentación"
+                    },
+                    "densidad_cafe_verde": {
+                        "value": req.body.densidad_cafe_verde,
+                        "referencia": "La densidad del café verde"
+                    },
+                    "fecha_procesamiento": {
+                        "value": req.body.fecha_procesamiento,
+                        "referencia": "La fecha de procesamiento"
+                    },
+                    "tipo_tostion": {
+                        "value": req.body.tipo_tostion,
+                        "referencia": "El tipo de tostión"
+                    },
+                    "tiempo_fermentacion": {
+                        "value": req.body.tiempo_fermentacion,
+                        "referencia": "El tiempo de fermentación"
+                    },
+                    "codigo_muestra": {
+                        "value": req.body.codigo_muestra,
+                        "referencia": "El código de muestra"
+                    },
+                    "actividad_agua": {
+                        "value": req.body.actividad_agua,
+                        "referencia": "La actividad del agua"
+                    },
+                    "tiempo_secado": {
+                        "value": req.body.tiempo_secado,
+                        "referencia": "El tiempo de secado"
+                    },
+                    "presentacion": {
+                        "value": req.body.presentacion,
+                        "referencia": "La presentación"
+                    },
+                    "codigo_externo":{
+                        "value": req.body.codigo_externo,
+                        "referencia":"El codigo externo"
+                    },
+                    "cafes_id":{
+                        "cafes_id": {
+                            "value": req.body.cafe_id,
+                            "opciones": opcionesMuestra,
+                            "referencia": "La muestra"
+                        }
+                    }
+
+                }
+            };
+            
+            console.log(data,"xddd");
+            let validateInputs = validate(data)
+            if (validateInputs.status == false) {
+                return res.status(200).json({
+                    "status": false,
+                    "errors": validateInputs.errors
+
+                })
+            }
+
+            console.log(req.body)
+            let error1 = validationResult(req);
+                if (!error1.isEmpty()) {
+                    return res.status(400).json(error1);
+            }
+
+
+
             // let error1 = validationResult(req);
             // if (!error1.isEmpty()){
             //     return res.status(400).json(error1);
             // }
-            let data = req.body;
-                console.log(data)
+            // let data = req.body;
+            //     console.log(data)
+            let { fecha_creacion, codigo_externo, consecutivo_informe, muestreo, preparacion_muestra, cantidad, tipo_molienda, tipo_fermentacion, densidad_cafe_verde, fecha_procesamiento, tipo_tostion, tiempo_fermentacion, codigo_muestra, actividad_agua, tiempo_secado, presentacion, cafes_id } = req.body;
 
 
             let sql = `INSERT INTO muestras ( fecha_creacion, codigo_externo, consecutivo_informe,muestreo, preparacion_muestra, cantidad, tipo_molienda, tipo_fermentacion, densidad_cafe_verde, fecha_procesamiento, tipo_tostion, tiempo_fermentacion, codigo_muestra, actividad_agua, tiempo_secado, presentacion, cafes_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
-            const [rows] = await pool.query(sql, [ data.fecha_creacion,data.codigo_externo,data.consecutivo_informe,data.muestreo,data.preparacion_muestra,data.cantidad,data.tipo_molienda,data.tipo_fermentacion,data.densidad_cafe_verde,data.fecha_procesamiento,data.tipo_tostion,data.tiempo_fermentacion,data.codigo_muestra,data.actividad_agua,data.tiempo_secado,data.presentacion,data.cafes_id ]); 
+            // const [rows] = await pool.query(sql, [ data.fecha_creacion,data.codigo_externo,data.consecutivo_informe,data.muestreo,data.preparacion_muestra,data.cantidad,data.tipo_molienda,data.tipo_fermentacion,data.densidad_cafe_verde,data.fecha_procesamiento,data.tipo_tostion,data.tiempo_fermentacion,data.codigo_muestra,data.actividad_agua,data.tiempo_secado,data.presentacion,data.cafes_id ]); 
             
+            const [rows] = await pool.query(sql, [ fecha_creacion,codigo_externo,consecutivo_informe,muestreo,preparacion_muestra,data.cantidad,tipo_molienda,tipo_fermentacion,densidad_cafe_verde,fecha_procesamiento,tipo_tostion,tiempo_fermentacion,codigo_muestra,actividad_agua,tiempo_secado,presentacion,cafes_id ]); 
+
+
             if (rows.affectedRows > 0) {
                 res.status(200).json({
                     "status": 200,
