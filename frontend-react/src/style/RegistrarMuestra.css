@@ -20,7 +20,7 @@
 .main-content-registrar {
   z-index: 12;
   font-family: Arial, sans-serif;
-  display: none ;
+  display: flex;
   flex-direction: column;
   position: fixed;
   /* backdrop-filter: blur(16px);   */
@@ -308,8 +308,7 @@
 .main-content-actualizar {
   z-index: 12;
   font-family: Arial, sans-serif;
-  display: none ;
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
   position: fixed;
   /* background-color: red; */

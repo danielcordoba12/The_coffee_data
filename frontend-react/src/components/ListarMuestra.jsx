@@ -310,9 +310,10 @@ const RegistrarMuestra = async (data) => {
           token: "xd",
       },
   };
-
+alert("ahh")
   try {
       const data = await Api.post("muestra/registrar", muestraData, headers);
+      console.log(data,"ahhhh")
       if (data.data.status == false) {
           let keys = Object.keys(data.data.errors)
           let h6Error = document.querySelectorAll(".h6-error");
@@ -324,7 +325,7 @@ const RegistrarMuestra = async (data) => {
               h6.innerHTML = data.data.errors[keys[x]]
               h6.classList.add("h6-error")
               if (document.getElementById(keys[x])) {
-                console.log("hola");
+                console.log("Si se enontro a", keys[x]);
                   let parent = document.getElementById(keys[x]).parentNode
                   parent.appendChild(h6)
               }
@@ -488,7 +489,7 @@ const RegistrarMuestra = async (data) => {
             Sweet.actualizacionFallida();
 
           }
-          hideAllModals();
+          // hideAllModals();
           listarMuestra();
           // setUpdateModal(false);
           // removeModalBackdrop();
@@ -526,21 +527,27 @@ const RegistrarMuestra = async (data) => {
       }
   };
 
+  useEffect(()=>{
+    window.addEventListener("click",function(e){
+      let divOptions = document.querySelectorAll(".div-input-search-select");
+      for (let s = 0; s < divOptions.length; s++) {
+        if(!e.target == divOptions[s] || !divOptions[s].contains(e.target)){
+          let options = divOptions[s].querySelectorAll(".select-options-cafe")
+          console.log(options[0])
+          if(options.length> 0){
+            options[0].style.display = "none"
+          } 
+        }
+      }
+    })
+  },[])
   useEffect(() => {
 
     let inputSearch = document.querySelectorAll(".input-search-cafe")
 
     if (inputSearch.length > 0) {
         for (let s = 0; s < inputSearch.length; s++) {
-            inputSearch[s].addEventListener("blur",function(){
-                let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-options-cafe");
-                if(divOptions.length > 0){
-                  setTimeout(() => {
-                    divOptions[0].style.display = "none"
-                  }, 100); 
-                }
 
-            })
             inputSearch[s].addEventListener("input", function () {
                 let parent = inputSearch[s].parentNode
                 if (parent) {
@@ -715,7 +722,7 @@ const RegistrarMuestra = async (data) => {
 
 </div>
 
-        <div className= {`main-content-actualizar ${showModal2 ? 'show' : ''}`}  id="modalInfo2" >
+{showModal2 ?  <div className= {`main-content-actualizar `}  id="modalInfo2" >
           <h1 className='title-registrar-muestras'>Editar Muestra</h1>
 
     <form className="formulario-muestra info-complete"  >
@@ -807,11 +814,12 @@ const RegistrarMuestra = async (data) => {
 
 
     </form>
-  </div>
-        {/* Registrar Muestra */}
-        <div className={`main-content-registrar ${showModal1 ? 'show' :  ''}`}   id="modalInfo1 "   >
+  </div>: ""}
+       
+       {showModal1 ?
+        <div className={`main-content-registrar`}   id="modalInfo1 "   >
         {/* {showModal && ( */}
-          
+           {/* Registrar Muestra */}
           {/* // <div className="main-content-registrar" > */}
     <h1 className='title-registrar-muestras'>Registrar Muestra</h1>
 
@@ -835,13 +843,13 @@ const RegistrarMuestra = async (data) => {
               actividad_agua : actividad_agua.current.value,
               tiempo_secado : tiempo_secado.current.value,
               presentacion : presentacion.current.value,
-              cafes_id: dataSelect.cafes_id.value
+              cafes_id: dataSelect.cafes_id ? dataSelect.cafes_id.value : "" 
         });
     }}
       
       method="POST" >
       <div className="columna">
-      <div className='container-input'>
+      <div className='container-input div-input-search-select'>
 
                   <input className="input-search-cafe " type="text" id="cafes_id" />
       
@@ -849,7 +857,7 @@ const RegistrarMuestra = async (data) => {
                         <div className="select-options-cafe" >
                             {cafe.map((key, index) => (
                                 (
-                                    <div className="option-select-cafe" data-id={key.id} onClick={() => { document.getElementById("cafes_id").value = key.documento + ", " + key.nombre_finca + ", "+key.nombre_usuario + ", " + key.numero_lote + ", " + key.nombre_variedad; !dataSelect.cafes_id ? dataSelect.cafes_id = {} : ""; dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id}>{key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad} </div>
+                                    <div className="option-select-cafe" data-id={key.id} onClick={() => { console.log(key.id); document.getElementById("cafes_id").value = key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad; !dataSelect.cafes_id ? dataSelect.cafes_id = {} : ""; dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id}>{key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad} </div>
                                 )
                             ))}
                         </div>
@@ -934,7 +942,8 @@ const RegistrarMuestra = async (data) => {
 
 
     </form>
-  </div>        
+  </div>        : ""}
+        
   {/* )} */}
         
         
