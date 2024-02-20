@@ -1,9 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useRef} from 'react';
 import ReactEchartsCore from 'echarts-for-react';
 import * as echarts from 'echarts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import '../style/grafica.css';
+import esES from "../languages/es-ES.json"
+import $ from "jquery";
+import "bootstrap";
+import "datatables.net";
+import "datatables.net-bs5";
+import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+import "datatables.net-responsive";
+import "datatables.net-responsive-bs5";
+import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+
 
 
 
@@ -12,7 +22,17 @@ function Grafica() {
   const [showModal1, setShowModal1] = useState(false);
   const [showContainer, setShowContainer] = useState(false);
   const [resultado, setResultado] = useState([]);
+  const tableRef = useRef();
 
+
+  function formatDate(dateString) {
+    if (!dateString) return ''; // Manejar el caso de valor nulo o indefinido
+    const fecha = new Date(dateString);
+    const year = fecha.getFullYear();
+    const month = String(fecha.getMonth() + 1).padStart(2, '0');
+    const day = String(fecha.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
 
   const toggleModal = () => {
@@ -22,7 +42,36 @@ function Grafica() {
   // const hideAllModals = () => {
   //   setShowModal1(false);
   // };  
+  useEffect(()=> {
+    if (resultado.length > 0 ) {
+      if($.fn.DataTable.isDataTable(tableRef.current)) {
+        $(tableRef.current).DataTable().destroy();
+      }
+      $(tableRef.current).DataTable({
+        columnDefs:[
+          {
+            targets:-1,
+            responsivePriority:1
+          },
+          {
+            targets:-2,
+            responsivePriority:1
+          },
+          {
+            targets:-3,
+            responsivePriority:1
+          }
+        ],
+        responsive:true,
+        language: esES,
+        lengthMenu:[
+          [7,10,50,-1],
+          ['7 Filas','10 Filas','50 Filas','Ver Todo']
+        ]
+      });
 
+    }
+  },[resultado])
 
 
   async function listarResultado(){
@@ -117,7 +166,7 @@ function Grafica() {
 
     return (
         <>        
-        <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" />
+        {/* <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" /> */}
 
 
         <button className="btn-reg-mue" onClick={() => toggleModal(1)}>
@@ -131,44 +180,53 @@ function Grafica() {
             notMerge={true}
             lazyUpdate={true}
             style={{ height: '700px', width: '100%' }}
-            theme="light"
+            theme="dark"
         />
         </div>
 
 
     <div className={`main-content-graficar ${showModal1 ? 'show' : ''}`} id="modalInfo1">
 
+    <div className="container-fluid w-full">
 
-  <table className="table-muestra">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Muestra</th>
-        <th>Cantidad</th>
-        <th>analisis</th>
-        <th>Graficar</th>
+    <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+        ref={tableRef}
+        cellPadding={0}
+        width= "100%">
+        <thead>
+          <tr>
+          <th>ID</th>
+          <th>Muestra</th>
+          <th>Cantidad</th>
+          <th>Usuario</th>
+          <th>Finca</th>
+          <th>Lote</th>
+          <th>Tipo analisis</th>
+          <th>Fecha</th>
 
+          </tr>
+        </thead>
+        <tbody>
+                {resultado.map((task,index) => (
+                  <tr key={task.id}>
+                    <td>{task.muestra}</td>
+                    <td>{task.valor}</td>
+                    <td>{task.usuario}</td>
+                    <td>{task.finca}</td>
+                    <td>{task.lote}</td>
+                    <td>{task.tipo_analisis}</td>
+                    <td>{formatDate(task.fecha_creacion)}</td>
+                    <td>
+                      <ToggleButtonExample index={index} />
+                    </td>
 
-
-      </tr>
-    </thead>
-    <tbody>
-            {resultado.map((task,index) => (
-              <tr key={task.id}>
-                <td>{task.id}</td>
-                {/* <td>{formatDate(task. fecha_creacion)}</td> */}
-                <td>{task.muestra}</td>
-                <td>{task.valor}</td>
-                <td>{task.analisis_id}</td>
-                <td>
-                  <ToggleButtonExample index={index} />
-                </td>
-
-              </tr>
-            ))}
-          </tbody>
-  </table>
+                  </tr>
+                ))}
+              </tbody>
+      </table>
 </div>
+</div>
+
     </>
 
     );

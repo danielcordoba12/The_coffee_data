@@ -738,9 +738,11 @@ useEffect(() => {
           <th>ID</th>
           <th>Muestra</th>
           <th>Cantidad</th>
-          <th>analisis</th>
+          <th>Usuario</th>
+          <th>Finca</th>
+          <th>Lote</th>
+          <th>Tipo analisis</th>
           <th>Fecha</th>
-          {/* <th>Fecha</th> */}
           <th>Actualizar</th>
           <th>Mas</th>
 
@@ -754,7 +756,10 @@ useEffect(() => {
                   {/* <td>{formatDate(task. fecha_creacion)}</td> */}
                   <td>{task.muestra}</td>
                   <td>{task.valor}</td>
-                  <td>{task.analisis_id}</td>
+                  <td>{task.usuario}</td>
+                  <td>{task.finca}</td>
+                  <td>{task.lote}</td>
+                  <td>{task.tipo_analisis}</td>
                   <td>{formatDate(task.fecha_creacion)}</td>
 
                   <td>
