@@ -2,9 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import Api from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Sweet from "../helpers/Sweet";
+import Swal from 'sweetalert2';
 import "../style/usuarios.css";
 import api from "../services/api";
+import Sweet from "../helpers/Sweet";
 
 const ListarUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -12,16 +13,12 @@ const ListarUsuarios = () => {
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
     const [userUpdate, setUserUpdate] = useState([]);
     const [formStatus, setFormStatus] = useState(0);
-
-
-    const [isRegistrarUsuarioModalOpen, setRegistrarUsuarioModalOpen] = useState(false); // Nuevo estado para el modal de registro de usuarios
+    const [isRegistrarUsuarioModalOpen, setRegistrarUsuarioModalOpen] = useState(false);
     const [fincas, setFincas] = useState([]);
     const [municipios, setMunicipios] = useState([]);
     const [selectedMunicipio, setSelectedMunicipio] = useState("");
-
-
-
     const usuarios_id = useRef();
+    const id = useRef();
     const nombre = useRef();
     const apellido = useRef();
     const telefono = useRef();
@@ -36,10 +33,7 @@ const ListarUsuarios = () => {
     const latitud = useRef();
     const municipios_id = useRef();
     const noombre_vereda = useRef();
-
     const navigate = useNavigate();
-
-
 
     useEffect(() => {
         const fetchMunicipios = async () => {
@@ -57,6 +51,7 @@ const ListarUsuarios = () => {
         const buscarUsuarios = async () => {
             try {
                 const response = await Api.get('usuario/listarusuario');
+                console.log(response);
                 setUsuarios(response.data);
                 console.log(response, "useeeer")
             } catch (error) {
@@ -65,8 +60,6 @@ const ListarUsuarios = () => {
         };
         buscarUsuarios();
     }, []);
-
-
 
     useEffect(() => {
         let inputRegister = document.querySelectorAll(".input-register");
@@ -99,16 +92,15 @@ const ListarUsuarios = () => {
         setRegistrarModalOpen(false);
     };
 
-    const openRegistrarUsuarioModal = () => { // Función para abrir el modal de registro de usuarios
+    const openRegistrarUsuarioModal = () => {
         setRegistrarUsuarioModalOpen(true);
     };
 
-    const closeRegistrarUsuarioModal = () => { // Función para cerrar el modal de registro de usuarios
+    const closeRegistrarUsuarioModal = () => {
         setRegistrarUsuarioModalOpen(false);
     };
 
     const handleSubmit = async (e, status, id) => {
-
         e.preventDefault();
 
         const data = {
@@ -121,28 +113,39 @@ const ListarUsuarios = () => {
             tipo_documento: tipo_documento.current.value,
             rol: rol.current.value,
             cargo: cargo.current.value,
-
-
-
         };
-        console.log(data);
+
         const headers = {
             headers: {
                 token: "xd"
             }
-        }
+        };
+        
         let method = "post"
         let route = ""
-        if (status == 1) {
+        
+        if (status === 1) {
             route = "usuario/registrar"
-        } else if (status == 2 && id) {
+        } else if (status === 2 && id) {
             route = "usuario/actualizar/" + id
             method = "put"
         }
-        let fetch = await Api[method](route, data, headers)
-        console.log(fetch)
 
-    }
+        try {
+            const response = await Api[method](route, data, headers);
+            if (response.data.status === false) {
+                Sweet.registroFallido();
+                console.error('Error al procesar la solicitud:', response.data.message);
+            } else {
+                Sweet.registroExitoso();
+                console.log('Solicitud procesada correctamente:', response.data.message);
+                // Recargar la página después de registrar o actualizar
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Error al procesar la solicitud:', error);
+        }
+    };
 
     const handleRegistrar = async (data) => {
         const fincaData = {
@@ -183,12 +186,14 @@ const ListarUsuarios = () => {
             console.error("Error al registrar la finca:", error);
         }
     };
+
     async function buscarUsuario(id) {
         if (id) {
             const response = await Api.get("/usuario/buscarusuario/" + id);
             setUserUpdate(response.data)
         }
     }
+
     async function setInput(value, id) {
         let input = document.getElementById(id)
         console.log(input)
@@ -199,24 +204,13 @@ const ListarUsuarios = () => {
 
     return (
         <>
-
-
-
-
-
-
-            {/* Tabla de usuarios */}
             <img src="../../public/img/fondo.png" alt="" className="fondo2" />
             <div className="tablalistar">
                 <h1 className="titu">Usuarios</h1>
                 <br />
-
                 <button className="btn-registrar" onClick={() => { setFormStatus(1); setRegistrarUsuarioModalOpen(true); setUserUpdate([]); openRegistrarUsuarioModal }}>
                     Registrar Usuario
                 </button>
-
-
-
                 <table className="tableprincipal">
                     <thead>
                         <tr>
@@ -233,19 +227,18 @@ const ListarUsuarios = () => {
                     <tbody>
                         {usuarios.map((usuario) => (
                             <tr key={usuario.id}>
+
                                 <td>{usuario.id}</td>
                                 <td>{usuario.nombre}</td>
                                 <td>{usuario.apellido}</td>
                                 <td>{usuario.numero_documentos}</td>
                                 <td>{usuario.telefono}</td>
                                 <td>{usuario.correo_electronico}</td>
-                                <td>{usuario.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                <td>{usuario.estado === 1 ? 'desactivado' : 'Activo'}</td>
                                 <td>
-
                                     <button type="button" className="btn-primary" onClick={() => { setFormStatus(2), setRegistrarUsuarioModalOpen(true), buscarUsuario(usuario.id ? usuario.id : "") }}>
                                         actualizar
                                     </button>
-
                                     <button className="btn-registrar" onClick={() => { setIdUsuario(usuario.id); openRegistrarModal() }}>
                                         Registrar Finca
                                     </button>
@@ -256,12 +249,10 @@ const ListarUsuarios = () => {
                 </table>
             </div>
 
-
-
             {isRegistrarUsuarioModalOpen && (
                 <>
                     <div className="overlay" onClick={closeRegistrarUsuarioModal}></div>
-                    <div className="tabla2" >
+                    <div className="tabla-regis-finca" >
                         <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                             Registrar Usuario
                         </h1>
@@ -282,7 +273,7 @@ const ListarUsuarios = () => {
                                 <label htmlFor="numero_documentos">Número de documentos</label>
                             </div>
                             <div className="div-input">
-                                <input defaultValue={userUpdate[0] ? userUpdate[0].Teléfono : ""} type="text" id="telefono" name="telefono" ref={telefono} placeholder="" />
+                                <input defaultValue={userUpdate[0] ? userUpdate[0].telefono : ""} type="text" id="telefono" name="telefono" ref={telefono} placeholder="" />
                                 <label htmlFor="telefono">Teléfono</label>
                             </div>
                             <div className="div-input">
@@ -302,32 +293,27 @@ const ListarUsuarios = () => {
                                 <label htmlFor="rol">Rol</label>
                             </div>
                             <div className="div-input">
-                                <input  defaultValue={userUpdate[0] ? userUpdate[0].cargo : ""} type="text" id="cargo" name="cargo" ref={cargo} placeholder="" />
+                                <input defaultValue={userUpdate[0] ? userUpdate[0].cargo : ""} type="text" id="cargo" name="cargo" ref={cargo} placeholder="" />
                                 <label htmlFor="cargo">Cargo</label>
                             </div>
-                            {formStatus == 1 ?
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline" type="submit">
+                            {formStatus === 1 ?
+                                <button className="btn-blue" type="submit">
                                     Registrar Usuario
                                 </button>
-                                : formStatus == 2 ?
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline" type="submit">
+                                : formStatus === 2 ?
+                                    <button className="btn-blue" type="submit">
                                         Actualziar usuario
                                     </button>
                                     : ""
-
                             }
-                            <button className="close-modal-btn" onClick={closeRegistrarUsuarioModal}>
-                                Cerrar
+                            <button className="close-modal-x" onClick={closeRegistrarUsuarioModal}>
+                                x
                             </button>
                         </form>
                     </div>
                 </>
             )}
 
-
-
-
-            {/* Renderizado condicional del modal de registro de fincas */}
             {isRegistrarModalOpen && (
                 <>
                     <div className="overlay" onClick={closeRegistrarModal}></div>
@@ -390,7 +376,7 @@ const ListarUsuarios = () => {
                                 Registrar finca
                             </button>
                             <button className="close-modal-x" onClick={closeRegistrarModal}>
-                            x
+                                x
                             </button>
                         </form>
                     </div>

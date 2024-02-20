@@ -1,22 +1,19 @@
-*{
+* {
     padding: 0;
     margin: 0;
 }
 
-
-/* body {
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-
-
-} */
+}
 
 .fondo {
     position: fixed;
     top: 0;
-    left:  0;
+    left: 0;
     width: 100%;
 }
 
@@ -26,13 +23,10 @@ header {
     left: 0;
     width: 100%;
     padding: 20px 100px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 99;
-
-
 }
 
 .logo {
@@ -49,7 +43,6 @@ header {
     text-decoration: none;
     font-weight: 500;
     margin-left: 40px;
-
 }
 
 .navigation a::after {
@@ -76,7 +69,6 @@ header {
     height: 50px;
     background: white;
     border: unset;
-    /* border: 2px solid #fff; */
     outline: none;
     border-radius: 6px;
     cursor: pointer;
@@ -84,16 +76,15 @@ header {
     color: black;
     font-weight: 500;
     margin-left: 40px;
-    transition: .5s ;
-
+    transition: .5s;
 }
 
 .navigation .btnlogin-popup:hover {
-background: rgb(235, 235, 235);
-color: #1f1f1f;
+    background: rgb(235, 235, 235);
+    color: #1f1f1f;
 }
 
-.wrapper{
+.wrapper {
     position: relative;
     width: 400px;
     height: 400px;
@@ -101,64 +92,48 @@ color: #1f1f1f;
     border: 2px solid white;
     border-radius: 20px;
     backdrop-filter: blur(20px);
-    box-shadow: 0 0 30px rgb(0, 0, 0 .5);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     transform: scale(0);
-    transition: transform 0.5s ease,height .2s ease;
+    transition: transform 0.5s ease, height .2s ease;
 }
 
 .wrapper.active-popup {
     transform: scale(1);
 }
 
-
-
-
 .wrapper.active {
     height: 520px;
 }
 
-.wrapper.active .form-box.login{
+.wrapper.active .form-box.login {
     transition: none;
     transform: translateX(-400px);
-
 }
 
-.wrapper .form-box.login{
+.wrapper .form-box.login {
     transition: transform .18s ease;
     transform: translateX(0);
-
 }
 
-
-.wrapper.active .form-box.register{
+.wrapper.active .form-box.register {
     transition: transform .18s ease;
     transform: translateX(0);
-
 }
-
 
 .wrapper .form-box {
     width: 100%;
     padding: 40px;
-
-
-
 }
 
-
-
-.wrapper .form-box.register{
+.wrapper .form-box.register {
     position: absolute;
     transform: translateX(400px);
     transition: none;
-
 }
-
-
 
 .wrapper .icon-close {
     position: absolute;
@@ -176,17 +151,12 @@ color: #1f1f1f;
     border-top-right-radius: 20px;
     cursor: pointer;
     z-index: 1;
-
 }
-
-
-
 
 .form-box h2 {
     font-size: 2em;
     color: #162938;
     text-align: center;
-
 }
 
 .input-box {
@@ -196,7 +166,6 @@ color: #1f1f1f;
     height: 50px;
     border-bottom: 2px solid black;
     margin: 30px 0;
-
 }
 
 .input-box label {
@@ -212,7 +181,7 @@ color: #1f1f1f;
 }
 
 .input-box input:focus~label,
-.input-box input:focus~label {
+.input-box input:not(:placeholder-shown)~label {
     top: -5px;
 }
 
@@ -226,10 +195,7 @@ color: #1f1f1f;
     color: #162938;
     font-weight: 600;
     padding: 0 35px 0 5px;
-
 }
-
-
 
 .input-box .icon {
     position: absolute;
@@ -253,15 +219,13 @@ color: #1f1f1f;
     margin-right: 3px;
 }
 
-.remenber-forgot a{
+.remember-forgot a {
     color: #ffffff;
     text-decoration: none;
-
 }
 
-.remember-forgot hover {
+.remember-forgot a:hover {
     text-decoration: underline;
-
 }
 
 .btn {
@@ -272,11 +236,9 @@ color: #1f1f1f;
     outline: none;
     border-radius: 6px;
     cursor: pointer;
-
     font-weight: 500;
     color: #ffffff;
 }
-
 
 .login-register {
     font-size: 1em;
@@ -284,22 +246,14 @@ color: #1f1f1f;
     text-align: center;
     font-weight: 500;
     margin: 25px 0 10px;
-
-
 }
 
-.login-register p a{
+.login-register p a {
     accent-color: #ffffff;
     text-decoration: none;
     font-weight: 600;
-
 }
 
-.login-register p a:hover{
-
+.login-register p a:hover {
     text-decoration: underline;
-
 }
-
-
-

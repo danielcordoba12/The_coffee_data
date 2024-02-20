@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom'
 import Muestra from './components/Resultados'
 import Dashboard from './components/dashboard'
 import Finca from './components/fincas'
-import LoginForm from './components/login'
 import Resultado from './components/Resultados'
 import Lote from './components/Lotes'
 import Cafe from './components/cafe'
@@ -39,7 +38,6 @@ function App() {
           <Route path='/analisis' element={<Analisis />} />
           {/* <Route path='/analisis/update/:id' element={<EditarAnalisis />} />
           <Route path='/analisis/listar' element={<ListarAnalisis />} /> */}
-          <Route path='/login' element={<LoginForm />} />
           <Route path='/usuario' element={<Registrarusuarios />} />
           <Route path='/usuario/listar' element={<ListarUsuarios />} />
           <Route path='/usuario/actualizar/:id' element={<EditarUsuario />} />

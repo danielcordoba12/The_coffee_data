@@ -1,46 +1,39 @@
-import React, { useState, useEffect } from "react";
-import '../style/loginfrom.css';
+import React, { useState } from "react";
+import "../../style/loginfrom.css";
+import "../../../public/js/loginfrom.js";
 import { faUser, faHelmetSafety, faClockRotateLeft, faMugSaucer, faToolbox, faMagnifyingGlassChart, faChartColumn, faPhone, faSliders } from '@fortawesome/free-solid-svg-icons';
-import api from "../services/api";
+import api from "../../services/api";
+import Sweet from "../../helpers/Sweet";
 
 const LoginForm = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
+    const [documento, setDocumento] = useState("");
+    const [contraseña, setContraseña] = useState("");
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aquí puedes agregar la lógica de validación antes de enviar la solicitud al servidor
-        if (email.trim() === "" || password.trim() === "") {
-            alert("Por favor ingresa correo electrónico y contraseña");
-            return;
-        }
-
-        // Lógica de autenticación (enviar solicitud al servidor, etc.)
-        api.login(email, password)
-            .then(response => {
-                // Manejar la respuesta del servidor (por ejemplo, redireccionar a la página de inicio)
-            })
-            .catch(error => {
-                // Manejar errores (por ejemplo, mostrar un mensaje de error al usuario)
-            });
-    };
-
-    useEffect(() => {
-        window.addEventListener("load", function () {
-            let sourcers = document.getElementById("sourcers");
-            let script = document.createElement("script");
-            script.src = "../public/js/loginfrom.js";
-            sourcers.appendChild(script)
+        fetch("http://localhost:5173/validacion/validar", {
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                numero_documentos: documento,
+                user_password: contraseña,
+            }),
         })
-    }, [])
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.status === 200){
+                console.log(data.token);
+                localStorage.setItem("token" , data.token);
+                window.location.reload();
+            } else {
+                Sweet.error(data.message);
+            }
+        });
+        
+        console.log("documento", documento);
+        console.log("contraseña", contraseña);
+    }
 
     return (
         <>
@@ -63,14 +56,14 @@ const LoginForm = () => {
                     <h2><img src="img/nombrelogo.png" alt="logo " width="250px" /></h2>
                     <form onSubmit={handleSubmit}>
                         <div className="input-box">
-                            <span className="icon"><ion-icon name="mail-outline"></ion-icon></span>
-                            <input type="email" required value={email} onChange={handleEmailChange} />
-                            <label>Correo</label>
+                            <span className="icon"><ion-icon name="numero_documentos"></ion-icon></span>
+                            <input type="text" required value={documento} onChange={(e) => setDocumento(e.target.value)} />
+                            <label>documento</label>
                         </div>
                         <div className="input-box">
                             <span className="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                            <input type="password" required value={password} onChange={handlePasswordChange} />
-                            <label>Contraseña</label>
+                            <input type="password" required value={contraseña} onChange={(e) => setContraseña(e.target.value)} />
+                            <label>contraseña</label>
                         </div>
                         <div className="remember-forgot">
                             <label>
