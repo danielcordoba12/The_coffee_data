@@ -59,14 +59,36 @@ const Variedad = () => {
 
     const handleEditUser1 = async () => {
         try {
-            await Api.put(`/variedad/actualizar/${selectedVarId}`, modalVar);
-            Sweet.actualizacionExitosa();
-            closeModal();
+            const data = await Api.put(`/variedad/actualizar/${selectedVarId}`, modalVar);
+            console.log(data, "variedad")
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                Sweet.actualizacionExitosa();
+                
+                closeModal();
+            }
+
             // Recargar la lista de lotes después de la actualización
             const response = await Api.get("variedad/listar");
             setvariedades(response.data);
         } catch (error) {
-            console.error("Error editando el variedad: ", error);
+            console.error("Error editando la variedad: ", error);
         }
     };
 
@@ -225,13 +247,15 @@ const Variedad = () => {
                         value={modalVar.fecha_creacion}
                         onChange={(e) => setModalVar({ ...modalVar, fecha_creacion: e.target.value })}
                     />
+                    <div>
                     <input
                         className="input-field"
+                        id="nombre"
                         type="text"
                         placeholder="nombre"
                         value={modalVar.nombre}
                         onChange={(e) => setModalVar({ ...modalVar, nombre: e.target.value })}
-                    />
+                    /></div>
                     <button
                         className="btn-act-variedad"
                         onClick={handleEditUser1}
