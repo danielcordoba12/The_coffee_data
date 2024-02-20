@@ -197,7 +197,7 @@ export const actualizarAnalisis = async (req, res) => {
         let id = req.params.id;
         let data = req.body;
 
-        let sql = `UPDATE analisis SET tipo_analisis_id='${data.tipo_analisis_id}',muestras_id='${data.muestras_id}',usuarios_id='${data.usuarios_id}'WHERE id= ${id}`
+        let sql = `UPDATE analisis SET muestras_id='${data.muestras_id}',usuarios_id='${data.usuarios_id}'WHERE id= ${id}`
     
         // let sql = `update usuarios SET nombres ='${nombres}',direccion='${direccion}',telefono='${telefono}',correo ='${correo}' where  idusuario=${id}`;
 

@@ -33,6 +33,20 @@
   cursor: pointer;
 }
 
+.input-edit-ana{
+  left: 0.1px;
+  top: 0.1px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  background-color: rgb(234, 241, 243);
+  color: rgba(128, 128, 128, 0.743);
+}
+
 .titleanalisis{
 justify-content: center;
 text-align: left;
@@ -122,7 +136,6 @@ background-color:#0b2e4be2;
 display: inline-table;
 justify-content: center;
 align-items: center;
-position: fixed;
 top: 125px;
 left: 100px;
 width: 93%;

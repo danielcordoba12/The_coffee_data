@@ -8,6 +8,10 @@ import '../style/analisis.css';
 const Analisis = () => {
     
     const [analisis, setAnalisis] = useState([]);
+    const [ModalTipoAnalisis, setModalTipoAnalisis] = useState(null);
+    const [ModalMuestras, setModalMuestras] = useState(null);
+    const [muestraId, setMuestraId] = useState(null);
+    const [SelectedMuestraId, setSelectedMuestraId] = useState(null);
     const [selectAnalisisid, setselectAnalisisid] = useState(null);
     const [modalAnalisis, setModalAnalisis] = useState(null);
     const [aRegistrarModalOpen, setaRegistrarModalOpen] = useState(false)
@@ -125,8 +129,14 @@ const Analisis = () => {
         }
     };
 
+    const handleClickOpcion = (usuario) => {
+        // Actualizamos el filtro con el valor seleccionado
+        setFiltro(`${usuario.numero_documentos}-${usuario.nombre}`);
+        setMostrarOpciones(false);
+    };
 
-    
+ 
+
     function formatDate(dateString) {
         if (!dateString) return ''; // Manejar el caso de valor nulo o indefinido
         const fecha = new Date(dateString);
@@ -316,24 +326,59 @@ const Analisis = () => {
                     <input
                         className="input-field"
                         type="number"
-                        placeholder="tipo_analisis_id"
+                        placeholder="Fisico"
                         value={modalAnalisis.tipo_analisis_id}
                         onChange={(e) => setModalAnalisis({ ...modalAnalisis, tipo_analisis_id: e.target.value })}
                     />
-                        <label htmlFor="" className="labelEdit">Codigo Muestra</label>
-                    <input
-                        className="input-field"
-                        type="number" placeholder="muestras_id"
-                        value={modalAnalisis.muestras_id}
-                        onChange={(e) => setModalAnalisis({ ...modalAnalisis, muestras_id: e.target.value })}
-                    />
+                      <label htmlFor="" className="labelEdit">Muestra</label>
+                        <div className="div-input-d">
+                            <select
+
+                                className="input-edit-ana"
+                                id="muestras_id"
+                                name="muestras_id"
+                                value={modalAnalisis.muestras_id}
+                                onChange={(e) => {
+                                    console.log("Muestra seleccionada:", e.target.value);
+                                    setModalMuestras({
+                                        ...modalAnalisis,
+                                        muestras_id: e.target.value,
+                                    });
+                                }}
+                            >
+                                <option value="" disabled>Seleccione una Muestra</option>
+                                {muestras.map((muestras) => (
+                                    <option key={muestras_id} value={muestras_id}>
+                                        {muestras.codigo_externo}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                         <label htmlFor="" className="labelEdit">Usuario</label>
-                     <input
-                        className="input-field"
-                        type="number" placeholder="usuarios_id"
-                        value={modalAnalisis.usuarios_id}
-                        onChange={(e) => setModalAnalisis({ ...modalAnalisis, usuarios_id: e.target.value })}
-                    />
+                        <div className="div-input-d">
+                            <select
+
+                                className="input-edit-ana"
+                                id="usuarios_id"
+                                name="usuarios_id"
+                                value={modalAnalisis.usuarios_id}
+                                onChange={(e) => {
+                                    console.log("Usuario seleccionado:", e.target.value);
+                                    setModalMuestras({
+                                        ...modalAnalisis,
+                                        usuarios_id: e.target.value,
+                                    });
+                                }}
+                            >
+                                <option value="" disabled>Seleccione un Usuario</option>
+                                {usuarios.map((usuarios) => (
+                                    <option key={usuarios_id} value={usuarios_id}>
+                                        {usuarios.nombre}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                   
                     <button
                         className="btn-actualizar-d"
                         onClick={handleEditUser1}
