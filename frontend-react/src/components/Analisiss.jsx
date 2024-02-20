@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Api from "../services/api";
 import Sweet from "../helpers/Sweet";
 import { useNavigate } from "react-router-dom";
@@ -185,27 +185,25 @@ const Analisis = () => {
 
 
     function clearFocusInput(Element) {
-        let inputSearch = document.getElementById(Element)
-
+        let inputSearch = document.getElementById(Element);
+    
         if (inputSearch) {
-
             let divOptions = inputSearch.parentNode.querySelectorAll(".select-option-input-d");
             if (divOptions.length > 0) {
-                divOptions[0].style.display = "none"
+                divOptions[0].style.display = "none";
             }
-            let select = inputSearch.parentNode.querySelectorAll(".option-select-ana")
+            let select = inputSearch.parentNode.querySelectorAll(".option-select-ana");
             for (let s = 0; s < select.length; s++) {
-                let elementValue = inputSearch.getAttribute("id")
-
-                if (datasSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")) {
-                    select[s].classList.add("option-select-focus")
+                let elementValue = inputSearch.value;
+    
+                if (datasSelect[inputSearch.getAttribute("data-id")].value == select[s].getAttribute("data-id")) {
+                    select[s].classList.add("option-select-focus");
                 } else {
-                    select[s].classList.remove("option-select-focus")
+                    select[s].classList.remove("option-select-focus");
                 }
-
             }
         }
-    }
+    }   
     useEffect(() => {
 
         let inputSearch = document.querySelectorAll(".input-search-d")
@@ -427,8 +425,9 @@ const Analisis = () => {
                             e.preventDefault();
                             handleRegistrarAnalisis({
                 
+                                tipo_analisis_id: datasSelect.tipo_analisis_id.value,
                                 muestras_id: datasSelect.muestras_id.value,
-                                usuarios_id: datasSelect.usuarios_id.value
+                                usuarios_id: datasSelect.usuarios_id.value,
                             });
                         }}
                         method="post"
@@ -437,8 +436,8 @@ const Analisis = () => {
                         <div className="div-input-d">
                            
                             <label className="tipe-ana" htmlFor="tipo_analisis_id" >Tipo de Analisis</label>
-                            <select name="tipo_analisis" id="1">
-                                <option value="1" id="1">
+                            <select name="tipo_analisis" id="tipo_analisis">
+                                <option value="1" id="tipo_analisis_id">
                                     Fisico
                                 </option>
                             </select>
@@ -448,9 +447,9 @@ const Analisis = () => {
                             <input className="input-search-d" type="text" id="muestras_id" />
                             <label htmlFor="muestras_id" >Muestra</label>
                             <div className="select-option-input-d">
-                                {muestras.map((key1, index) => (
+                                {muestras.map((key, index) => (
                                     (
-                                        <div className="option-select-ana" data-id={key1.id} onClick={() => { document.getElementById("muestras_id").value = key1.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : "";datasSelect.muestras_id.value = key1.id; clearFocusInput("muestras_id") }} key1={key1.id}>{key1.codigo_externo}</div>
+                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : "";datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key1={key.id}>{key.codigo_externo}</div>
                                     )
                                 ))}
                             </div>

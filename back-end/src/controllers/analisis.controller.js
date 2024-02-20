@@ -8,11 +8,11 @@ export const guardarAnalisis = async (req,res)=>{
         if (!error1.isEmpty()){
             return res.status(400).json(error1);
         }
-        let data = req.body;
-        console.log('user',data);
+        let {tipo_analisis_id,muestras_id,usuarios_id} = req.body
         
-        let sql = 'INSERT INTO analisis(tipo_analisis_id,muestras_id,usuarios_id) VALUES (?,?,?)';
-        const [rows] = await pool.query(sql,[data.tipo_analisis_id,data.muestras_id,data.usuarios_id]);
+        let sql = `INSERT INTO analisis(tipo_analisis_id,muestras_id,usuarios_id)
+                    values('${tipo_analisis_id}','${muestras_id}','${usuarios_id}')`;
+        const [rows] = await pool.query(sql);
 
         if(rows.affectedRows>0){
             res.status(200).json({
