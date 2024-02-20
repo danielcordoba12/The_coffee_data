@@ -14,7 +14,7 @@
   import "datatables.net-responsive";
   import "datatables.net-responsive-bs5";
   import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
-  
+
 
   async function verificarCodigo(codigo, data) {
     try {
@@ -277,7 +277,6 @@
   //     }
   // }
   useEffect(() => {
-    console.log("hola desde la validacion ");
     let inputRegister = document.querySelectorAll(".input-register");
     let h6Error = document.querySelectorAll(".h6-error");
 
@@ -311,7 +310,6 @@ const RegistrarMuestra = async (data) => {
           token: "xd",
       },
   };
-alert("ahh")
   try {
       const data = await Api.post("muestra/registrar", muestraData, headers);
       console.log(data,"ahhhh")

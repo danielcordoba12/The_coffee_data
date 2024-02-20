@@ -23,6 +23,24 @@ function validate(data) {
                 result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
             }
         }
+        if (keys[x] == "varchar") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+                errros[inputs[e]] = referencia + " no puede estar vacío"
+            } else if (!(/^[a-zA-Z0-9-]+$/).test(data[keys[x]][inputs[e]]["value"])) {
+                errros[inputs[e]] = referencia + " debe ser un varchar"
+            } else {
+                result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+            }
+        }
+        if (keys[x] == "int") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+                errros[inputs[e]] = referencia + " no puede estar vacío"
+            } else if (!(/^[a-zA-Z0-9-]+$/).test(data[keys[x]][inputs[e]]["value"])) {
+                errros[inputs[e]] = referencia + " debe ser un varchar"
+            } else {
+                result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+            }
+        }
             if (keys[x] == "normal") {
             if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
                 errros[inputs[e]] = referencia + " no puede estar vacío"
@@ -80,15 +98,18 @@ function validate(data) {
         try {
 
             let data = {
+                "varchar":{
+                    "codigo_externo": {
+                        "value": req.body.codigo_externo,
+                        "referencia": "El código externo"
+                    },
+                },
                 "string": {
                     "fecha_creacion": {
                         "value": req.body.fecha_creacion,
                         "referencia": "La fecha de creación"
                     },
-                    "codigo_externo": {
-                        "value": req.body.codigo_externo,
-                        "referencia": "El código externo"
-                    },
+                    
                     "consecutivo_informe": {
                         "value": req.body.consecutivo_informe,
                         "referencia": "El consecutivo de informe"
@@ -145,10 +166,10 @@ function validate(data) {
                         "value": req.body.presentacion,
                         "referencia": "La presentación"
                     },
-                    "codigo_externo":{
-                        "value": req.body.codigo_externo,
-                        "referencia":"El codigo externo"
-                    },
+                    // "codigo_externo":{
+                    //     "value": req.body.codigo_externo,
+                    //     "referencia":"El codigo externo"
+                    // },
                     "cafes_id":{
                         "cafes_id": {
                             "value": req.body.cafe_id,

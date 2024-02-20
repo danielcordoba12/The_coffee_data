@@ -18,7 +18,7 @@ import RegistrarAnalisis from './components/Analisiss'
 import ListarAnalisis from './components/ListarAnalisis'
 import EditarAnalisis from './components/EditarAnalisis'
 import Grafica from './components/Grafica'
-import TablePrueba from './components/TablePrueba'
+
 
 
 
@@ -29,7 +29,6 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/xd' element={<TablePrueba />} />
         <Route path='/' element={<Dashboard />}>
           <Route path='/resultado' element={<Resultado />} />
           <Route path='/finca/listar' element={<Finca />} />
