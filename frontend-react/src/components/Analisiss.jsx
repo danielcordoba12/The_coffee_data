@@ -17,6 +17,7 @@ const Analisis = () => {
     const [aRegistrarModalOpen, setaRegistrarModalOpen] = useState(false)
     const [tipos_analisis, settipoAnalisis] = useState([]);
     const [muestras, setMuestra] = useState([]);
+    const [tipo_analisis, settipo_analisis] = useState([]);
     const [usuarios, setUsuario] = useState([]);
     const [datasSelect, setDataSelect] = useState({});
 
@@ -70,6 +71,7 @@ const Analisis = () => {
         const buscarUsuarios = async () => {
             try {
                 const response = await Api.get('usuario/listarusuario');
+                console.log(response,"usuariissss")
                 setUsuario(response.data);
             } catch (error) {
                 console.error('Error fetching tasks:', error);
@@ -90,7 +92,7 @@ const Analisis = () => {
         try {
             await Api.put(`/analisis/update/${selectAnalisisid}`,modalAnalisis);
             Sweet.actualizacionExitosa();
-            closeModal();
+            closeModalEdit();
             // Recargar la lista de analisis después de la actualización
             const response = await Api.get("analisis/listar");
             setAnalisis(response.data);
@@ -105,7 +107,7 @@ const Analisis = () => {
         if (result.isConfirmed) {
             try {
                 await Api.patch(`analisis/desactivar/${selectAnalisisid}`, modalAnalisis);
-                closeModal();
+                closeModalEdit();
                 // Recargar la lista de Analisis después de la desactivación
                 const response = await Api.get("analisis/listar");
                 setAnalisis(response.data);
@@ -119,7 +121,7 @@ const Analisis = () => {
         if (result.isConfirmed) {
             try {
                 await Api.patch(`/analisis/activar/${selectAnalisisid}`, modalAnalisis);
-                closeModal();
+                closeModalEdit();
                 // Recargar la lista de analisis después de la activación
                 const response = await Api.get("analisis/listar");
                 setAnalisis(response.data);
@@ -149,7 +151,7 @@ const Analisis = () => {
 
 
 
-    const closeModal = () => {
+    const closeModalEdit = () => {
         setselectAnalisisid(null);
         setModalAnalisis(null);
     };
@@ -169,11 +171,11 @@ const Analisis = () => {
                 token: "xd",
             },
         };
-
         try {
-            await Api.post("analisis/registrar", data, headers);
+            const data1 = await Api.post("analisis/registrar", data, headers);
+            console.log(data1,"tiposssssss")
             Sweet.registroExitoso();
-            closeRegistrarModal();
+            closeRegistrarAnalisisModal();
             // Recargar la lista de analisis después del registro
             const response = await Api.get("analisis/listar");
             setAnalisis(response.data);
@@ -260,7 +262,7 @@ const Analisis = () => {
 
     return (
         <>
-        {modalAnalisis && <div className="overlay-d" onClick={closeModal}></div>}
+        {modalAnalisis && <div className="overlay-d" onClick={closeModalEdit}></div>}
         {aRegistrarModalOpen && (
             <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
             )}
@@ -296,7 +298,7 @@ const Analisis = () => {
                                 <td>{task.id_analisis}</td>
                                 <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td>
                                 <td>{task.nombre_tipo_analisis}</td>
-                                <td className="conse" >{task.consecutivo_informe}</td>
+                                <td className="conse" >{task.codigo_externo}</td>
                                 <td>{task.nombre_usuario}</td>
                                 <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                                 <td>{task.propietario}</td>
@@ -322,14 +324,6 @@ const Analisis = () => {
             <div className="tablaEditAna">
                 <h1 className="titleEditAna">Editar</h1>
                 <div className="Editcampos">
-                    <label htmlFor="" className="labelEdit">Tipo Análisis</label>
-                    <input
-                        className="input-field"
-                        type="number"
-                        placeholder="Fisico"
-                        value={modalAnalisis.tipo_analisis_id}
-                        onChange={(e) => setModalAnalisis({ ...modalAnalisis, tipo_analisis_id: e.target.value })}
-                    />
                       <label htmlFor="" className="labelEdit">Muestra</label>
                         <div className="div-input-d">
                             <select
@@ -340,7 +334,7 @@ const Analisis = () => {
                                 value={modalAnalisis.muestras_id}
                                 onChange={(e) => {
                                     console.log("Muestra seleccionada:", e.target.value);
-                                    setModalMuestras({
+                                    setModalAnalisis({
                                         ...modalAnalisis,
                                         muestras_id: e.target.value,
                                     });
@@ -348,13 +342,13 @@ const Analisis = () => {
                             >
                                 <option value="" disabled>Seleccione una Muestra</option>
                                 {muestras.map((muestras) => (
-                                    <option key={muestras_id} value={muestras_id}>
+                                    <option key={muestras.id} value={muestras.id}>
                                         {muestras.codigo_externo}
                                     </option>
                                 ))}
                             </select>
-                        </div>
-                        <label htmlFor="" className="labelEdit">Usuario</label>
+                        </div><br />
+                        <label htmlFor="" className="labelEdit">Asignación</label>
                         <div className="div-input-d">
                             <select
 
@@ -364,15 +358,15 @@ const Analisis = () => {
                                 value={modalAnalisis.usuarios_id}
                                 onChange={(e) => {
                                     console.log("Usuario seleccionado:", e.target.value);
-                                    setModalMuestras({
+                                    setModalAnalisis({
                                         ...modalAnalisis,
                                         usuarios_id: e.target.value,
                                     });
                                 }}
                             >
-                                <option value="" disabled>Seleccione un Usuario</option>
+                                <option  value="" disabled>Seleccione un Usuario</option>
                                 {usuarios.map((usuarios) => (
-                                    <option key={usuarios_id} value={usuarios_id}>
+                                    <option key={usuarios.id} value={usuarios.id}>
                                         {usuarios.nombre}
                                     </option>
                                 ))}
@@ -402,7 +396,7 @@ const Analisis = () => {
                     )}
                     <button
                         className="close-modal-Edit"
-                        onClick={closeModal}
+                        onClick={closeModalEdit}
                     >
                         X
                     </button>
@@ -427,41 +421,43 @@ const Analisis = () => {
                             e.preventDefault();
                             handleRegistrarAnalisis({
                 
-                                muestras_id: datasSelect.muestras_id.value,
-                                usuarios_id: datasSelect.usuarios_id.value
+                                tipo_analisis_id: datasSelect.tipo_analisis_id,
+                                muestras_id: datasSelect.muestras_id,
+                                usuarios_id: datasSelect.usuarios_id
                             });
                         }}
                         method="post"
                     >
                         
                         <div className="div-input-d">
-                           
-                            <label className="tipe-ana" htmlFor="tipo_analisis_id" >Tipo de Analisis</label>
-                            <select name="tipo_analisis" id="1">
-                                <option value="1" id="1">
-                                    Fisico
-                                </option>
-                            </select>
-                            
-                        </div>
-                        <div className="div-input-d">
-                            <input className="input-search-d" type="text" id="muestras_id" />
-                            <label htmlFor="muestras_id" >Muestra</label>
+                            <input className="input-search-d" type="text" id="tipo_analisis_id" ref={tipo_analisis_id} />
+                            <label htmlFor="  tipo_analisis_id" >Fisico</label>
                             <div className="select-option-input-d">
-                                {muestras.map((key1, index) => (
+                                {tipo_analisis.map((key, index) => (
                                     (
-                                        <div className="option-select-ana" data-id={key1.id} onClick={() => { document.getElementById("muestras_id").value = key1.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : "";datasSelect.muestras_id.value = key1.id; clearFocusInput("muestras_id") }} key1={key1.id}>{key1.codigo_externo}</div>
+                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("tipo_analisis_id").value = key.nombre_tipo_analisis; !datasSelect.tipo_analisis_id ? datasSelect.tipo_analisis_id = {} : ""; datasSelect.tipo_analisis_id.value = key.id; clearFocusInput("tipo_analisis_id") }} key={key.id}>{key.nombre_tipo_analisis}</div>
                                     )
                                 ))}
                             </div>
                         </div>
                         <div className="div-input-d">
-                            <input className="input-search-d" type="text" id="usuarios_id" />
+                            <input className="input-search-d" type="text" id="muestras_id"ref={muestras_id} />
+                            <label htmlFor="muestras_id" >Muestra</label>
+                            <div className="select-option-input-d">
+                                {muestras.map((key, index) => (
+                                    (
+                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : "";datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
+                                    )
+                                ))}
+                            </div>
+                        </div>
+                        <div className="div-input-d">
+                            <input className="input-search-d" type="text" id="usuarios_id" ref={usuarios_id} />
                             <label htmlFor="usuarios_id" className='label'>Usuarios</label>
                             <div className="select-option-input-d">
-                                {usuarios.map((key, index) => (
+                                {usuarios.map((key, index) =>(
                                     (
-                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.usuarios_id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
+                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
                                     )
                                 ))}
                             </div>

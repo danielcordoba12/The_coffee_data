@@ -9,7 +9,7 @@
   position: relative;
   float: right;
   right: -15px;
-  top: 12px;
+  top: 59px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -19,6 +19,10 @@
 }
 
 
+.div-input-d{
+  color: #808080;
+}
+
 .btn-activar-d {
   background-color:#0B2E4B;
   color: #fff;
@@ -26,7 +30,7 @@
   padding: 8px 16px;
   margin: 8px;
   float: right;
-  top: 12px;
+  top: 60px;
   position: relative;
   border: none;
   border-radius: 4px;
@@ -103,7 +107,7 @@ font-weight: bold;
 padding: 8px 16px;
 border: none;
 left: 90px;
-top: 20px;
+top: 70px;
 margin-bottom: 14px;
 border-radius: 4px;
 cursor: pointer;
@@ -228,7 +232,7 @@ font-weight: bold;
   z-index: 9;
 }
 .input-search-d{
-  background-color: #207bb5;
+  background-color:rgb(255, 255, 255);
 }
 .select-option-input-d{
   display: block;
@@ -316,8 +320,10 @@ font-weight: bold;
 }
 
 .input-search-d{
-  color:  black;
+  color: #808080;
+  background-color: whitesmoke;
 }
+
 .div-input-d{
   color: black;
   position: relative;
@@ -384,7 +390,10 @@ select{
   color: #808080;
   text-align: left;
   display: flex;
-  left: -123px;
+  left: 10px;
+  top: -1px;
+  position: relative;
+
 
 }
 .close-modal-Edit{
