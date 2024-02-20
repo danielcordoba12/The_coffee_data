@@ -174,8 +174,8 @@ const Municipio = () => {
 
 
                     <div className="container-fluid w-full">
-                        <button to="/Municipio/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
-                            Registrar Municipio
+                        <button to="/Municipio/registrar" className="btn-añadir-municipio" onClick={openRegistrarModal}>
+                            Añadir 
                         </button>
 
                         <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>

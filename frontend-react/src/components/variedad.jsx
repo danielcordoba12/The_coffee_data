@@ -192,8 +192,8 @@ const Variedad = () => {
 
 
         <div className="container-fluid w-full">
-            <button to="/variedad/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
-                Registrar variedad
+            <button to="/variedad/registrar" className="btn-añadir-variedad" onClick={openRegistrarModal}>
+                Añadir
             </button>
 
             <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
