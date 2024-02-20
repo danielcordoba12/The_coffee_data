@@ -661,9 +661,10 @@ useEffect(() => {
   return (
     <div>
       <div className={`main-content-registrar ${showModal1 ? 'show' :  ''}`} id="modalInfo1" showModal={showModal1}>
+      <h1 className='title-registrar-resultado'>Registrar resultado</h1> 
 
-      <h1 className="title-registrar-muestras">Registrar Resultado</h1>
       <form className="formulario-muestra" method="post">
+        
         {generarInputs()}
   
         <div className="buttons">
@@ -683,27 +684,29 @@ useEffect(() => {
 
     <div className={`main-content-registrar ${showModal2 ? 'show' :  ''}`} id="modalInfo2" showModal={showModal2}>
 
-      <h1 className="title-registrar-muestras">Actualizar Resultado</h1>
-      <form className="formulario-muestra" method="post">
-        {generarInputs2()}
-        <div className="buttons">
-          <button className="button button-aceptar" type="button" onClick={() => actualizarResultado(resultadoSellecionado[3])}>
-            Actualizar
-          </button>
-          
-          <button className="button button-cancel" type="button" onClick={hideAllModals}>
-            Cancelar
-          </button>
-        </div>
-      </form>
-    </div>
+      <h1 className='title-registrar-resultado'>Actualizar resultado</h1> 
+      
+        <form className="formulario-muestra" method="post">
+          {generarInputs2()}
+          <div className="buttons">
+            <button className="button button-aceptar" type="button" onClick={() => actualizarResultado(resultadoSellecionado[3])}>
+              Actualizar
+            </button>
+            
+            <button className="button button-cancel" type="button" onClick={hideAllModals}>
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
 
 
 <div>
 
 <div className={`main-content-registrar ${showModal3 ? 'show' :  ''}`} id="modalInfo3" showModal={showModal3}>
       <div className="container-tittle">
-      <h1 className="title-registrar-muestras">Visualizar Muestra</h1>
+      <h1 className='title-registrar-resultado'>Visualizar resultado</h1> 
+
 
       </div>
       <form className="formulario-muestra" method="post">

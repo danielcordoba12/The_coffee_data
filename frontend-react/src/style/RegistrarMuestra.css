@@ -70,6 +70,14 @@
   /* border-bottom:1px black solid;   */
   border: none;
 }
+.title-registrar-resultado{
+  background-color: rgb(234, 241, 243);
+  width: 800px;
+  height: 60px;
+  z-index: 12;
+  position: relative;
+  bottom: 360px;
+}
 
 .columna {
   flex: 1;
