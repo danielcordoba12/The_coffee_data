@@ -454,8 +454,8 @@ const Cafe = () => {
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleRegistrar({
-                                variedades_id: dataSelect.variedades_id.value,
-                                lotes_id: dataSelect.lotes_id.value
+                                variedades_id: dataSelect.variedades_id ? dataSelect.variedades_id.value : "",
+                                lotes_id: dataSelect.lotes_id ? dataSelect.lotes_id.value : ""
                             });
                         }}
                         method="post"

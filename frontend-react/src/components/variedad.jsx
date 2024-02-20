@@ -27,7 +27,6 @@ const Variedad = () => {
     const [searchTerm, setSearchTerm] = useState("");
 
     const nombre = useRef();
-    const fecha_creacion = useRef();
 
     const navigate = useNavigate()
 
@@ -241,12 +240,6 @@ const Variedad = () => {
             <div className="table-register-variedad">
                 <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Variedad</h1>
                 <div className="max-w-xs">
-                    <input
-                        className="input-field"
-                        type="hidden" placeholder="fecha_creacion"
-                        value={modalVar.fecha_creacion}
-                        onChange={(e) => setModalVar({ ...modalVar, fecha_creacion: e.target.value })}
-                    />
                     <div>
                     <input
                         className="input-field"

@@ -61,16 +61,20 @@ function validate(data) {
             errros[inputs[e]] = "Debe seleccionar una opción para " + referencia
           } else {
             let keysOptions = data[keys[x]][inputs[e]]["opciones"]
-            for (let o = 0; o < keysOptions.length; o++) { 
-         
-
-              if (keysOptions[o] == data[keys[x]][inputs[e]]["value"]) {
-                result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
-                break
-              } else if (o == keysOptions.length) {
-                errros[inputs[e]] = +"Debe seleccionar una opción válida para el " + referencia
+            if(keysOptions.length > 0){
+              for (let o = 0; o < keysOptions.length; o++) { 
+                if (keysOptions[o] == data[keys[x]][inputs[e]]["value"]) {
+                  result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
+                  break
+                } else if (o == keysOptions.length) {
+                  errros[inputs[e]] = +"Debe seleccionar una opción válida para el " + referencia
+                }
               }
+            }else{
+              result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
+
             }
+            
           }
 
         }
