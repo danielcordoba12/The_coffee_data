@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import '../style/RegistrarMuestra.css'
 import Sweet from "../helpers/Sweet";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faX }  from'@fortawesome/free-solid-svg-icons'
 import Api from "../services/api";
+import esES from "../languages/es-ES.json"
+import $ from "jquery";
+import "bootstrap";
+import "datatables.net";
+import "datatables.net-bs5";
+import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+import "datatables.net-responsive";
+import "datatables.net-responsive-bs5";
+import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+
 
 
 
@@ -16,6 +26,8 @@ function Resultado() {
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
+  const tableRef = useRef();
+
 
   const [filtro, setFiltro] = useState('');
 
@@ -183,7 +195,7 @@ useEffect(() => {
     'Malla 17 (g)',
     'Malla 14 (g)',
     'Malla 16 (g)',
-    'analisis'
+    // 'analisis'
     // Otras mallas o campos pueden agregarse según sea necesario
   ];
 
@@ -341,12 +353,16 @@ useEffect(() => {
   const generarInputs = () => {
     const filas = [];
     const numColumnas = 9;
-  
     for (let i = 0; i < datos.length; i += numColumnas) {
+      
       const fila = datos.slice(i, i + numColumnas);
+      
       filas.push(
+        
         <div className="columna" key={i}>
+          
           {fila.map((dato, j) => (
+            
             <div className="container-input" key={dato.variables_id}>
               <input
                 type="text"
@@ -361,8 +377,11 @@ useEffect(() => {
               </label>
             </div>
           ))}
+          
         </div>
+        
       );
+      
     }
   
     // Agregar una columna separada para el análisis
@@ -467,7 +486,38 @@ useEffect(() => {
 
 
 
+  ////////////////////////////////////////////////DATA TABLE//////////////////////////////////////////
 
+  useEffect(()=> {
+    if (resultado.length > 0 ) {
+      if($.fn.DataTable.isDataTable(tableRef.current)) {
+        $(tableRef.current).DataTable().destroy();
+      }
+      $(tableRef.current).DataTable({
+        columnDefs:[
+          {
+            targets:-1,
+            responsivePriority:1
+          },
+          {
+            targets:-2,
+            responsivePriority:1
+          },
+          {
+            targets:-3,
+            responsivePriority:1
+          }
+        ],
+        responsive:true,
+        language: esES,
+        lengthMenu:[
+          [7,10,50,-1],
+          ['7 Filas','10 Filas','50 Filas','Ver Todo']
+        ]
+      });
+
+    }
+  },[resultado])
 
 
   const GuardarResultados = async () => {
@@ -615,39 +665,7 @@ useEffect(() => {
       <h1 className="title-registrar-muestras">Registrar Resultado</h1>
       <form className="formulario-muestra" method="post">
         {generarInputs()}
-        <div className="container-input">
-         {/* <input
-          type="text"
-          className='input'
-          placeholder=''
-          id="cafes_id"
-          name="cafes_id" 
-          // ref={cafes_id}
-          // value={filtro}
-          // onChange={filtrarOpciones}
-          // autoComplete="off" // Desactivar autocompletado
-        />
-        {/* <label htmlFor="cafes_id" className='label'>Cafe</label> */}
-          {/* {mostrarOpciones && (
-            <div className="custom-dropdown">
-              {cafe.map((cafe) => (
-                (cafe.documento.toLowerCase().includes(filtro) ||
-                  cafe.nombre_usuario.toLowerCase().includes(filtro) ||
-                  cafe.numero_lote.toLowerCase().includes(filtro) ||
-                  cafe.nombre_variedad.toLowerCase().includes(filtro)) && (
-                  <div
-                    key={cafe.id}
-                    className="custom-dropdown-option"
-                    onClick={() => handleClickOpcion(cafe)}
-                  >
-                    
-                    {`${cafe.id}-${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}
-                  </div>
-                )
-              ))}
-            </div>
-          )} */}
-          </div>
+  
         <div className="buttons">
           <button className="button button-aceptar" type="button" onClick={GuardarResultados}>
             Enviar
@@ -700,61 +718,66 @@ useEffect(() => {
         
       </form>
     </div>
-<img src="../../public/img/fondo.png" alt="" className="fondo-muestra" />
+{/* <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" /> */}
 
 <div className="main-container">
   <button className="btn-reg-mue" onClick={() => setShowModal1(!showModal1)}>
       Registrar resultado
   </button>
 
-  <table className="table-muestra">
+  <div className="container-fluid w-full">
+    <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+        ref={tableRef}
+        cellPadding={0}
+        width= "100%">
     <thead>
-      <tr>
-        <th>ID</th>
-        <th>Muestra</th>
-        <th>Cantidad</th>
-        <th>analisis</th>
-        <th>Fecha</th>
-        {/* <th>Fecha</th> */}
-        <th>Actualizar</th>
-        <th>Mas</th>
+        <tr>
+          <th>ID</th>
+          <th>Muestra</th>
+          <th>Cantidad</th>
+          <th>analisis</th>
+          <th>Fecha</th>
+          {/* <th>Fecha</th> */}
+          <th>Actualizar</th>
+          <th>Mas</th>
 
 
-      </tr>
-    </thead>
-    <tbody>
-            {resultado.map((task,index) => (
-              <tr key={task.id}>
-                <td>{task.id}</td>
-                {/* <td>{formatDate(task. fecha_creacion)}</td> */}
-                <td>{task.muestra}</td>
-                <td>{task.valor}</td>
-                <td>{task.analisis_id}</td>
-                <td>{formatDate(task.fecha_creacion)}</td>
+        </tr>
+      </thead>
+      <tbody>
+              {resultado.map((task,index) => (
+                <tr key={task.id}>
+                  <td>{task.id}</td>
+                  {/* <td>{formatDate(task. fecha_creacion)}</td> */}
+                  <td>{task.muestra}</td>
+                  <td>{task.valor}</td>
+                  <td>{task.analisis_id}</td>
+                  <td>{formatDate(task.fecha_creacion)}</td>
 
-                <td>
-                  <button className="btn-reg-mue"
-                    onClick={() => {
-                      toggleModal(2);
-                      buscarResultado(task.analisis_id);
-                    }}
-                    >
-                  Editar</button>
-                </td>
+                  <td>
+                    <button className="btn-reg-mue"
+                      onClick={() => {
+                        toggleModal(2);
+                        buscarResultado(task.analisis_id);
+                      }}
+                      >
+                    Editar</button>
+                  </td>
 
-                <td>
-                  <button
-                                type="button"
-                                className="btn-primary"
-                                onClick={() => { toggleModal(3), buscarResultado(task.analisis_id) ;} }
-                            >Mas
-                            </button>
-                </td>
+                  <td>
+                    <button
+                                  type="button"
+                                  className="btn-primary"
+                                  onClick={() => { toggleModal(3), buscarResultado(task.analisis_id) ;} }
+                              >Mas
+                              </button>
+                  </td>
 
-              </tr>
-            ))}
-          </tbody>
-  </table>
+                </tr>
+              ))}
+            </tbody>
+    </table>
+  </div>
 </div>
 
 

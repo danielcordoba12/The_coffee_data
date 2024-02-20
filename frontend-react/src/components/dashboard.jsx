@@ -157,26 +157,26 @@ function Dashboard() {
                     <div className="lista-items">
                     <FontAwesomeIcon icon={faBars} className="icon-menu" id="iconMenu" onClick={DesplegarMenu} />
                         <ul id='listaItemsUl' className='listaItemsUl'>
-                            {/* <li className="first-icon">
+                            <li className="first-icon">
                                 
                                 <FontAwesomeIcon icon={faHelmetSafety} className="icon " />
                                 <p id="paragraph">Administrador</p>
                             </li>
 
-                            <li className="first-icon">
+                            <li className="">
                                 <Link to={"/Usuario/listar"}>
                                     <FontAwesomeIcon icon={faUsers}  className="icon"/>
                                     <p id="paragraph">Usuarios</p>
                                 </Link>
                             </li>
-                            <li onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
+                            <li >
                                     <Link to={"/finca"}>
                                         <FontAwesomeIcon icon={faToolbox} className="icon" />
                                         <p>Fincas</p>
                                     </Link>
                                     {showTooltip && <span className="tooltip-content">Fincas</span>}
                             </li>
-                            <li onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
+                            <li >
                                     <Link to={"/finca"}>
                                         <FontAwesomeIcon icon={faToolbox} className="icon" />
                                         <p>Lotes</p>
@@ -205,27 +205,26 @@ function Dashboard() {
                                 <Link to={"/resultado"}>
                                     <FontAwesomeIcon icon={faVials}  className="icon"/>
                                     <p>Resultado</p>
-                                    {/* <h3 className='tooltip-li'>Resultado</h3> */}
+                                     {/* <h3 className='tooltip-li'>Resultado</h3>  */}
 
-                                {/* </Link>
+                                 </Link>
                             </li>
                             <li>
                                 <Link to={"/grafica"}>
                                     <FontAwesomeIcon icon={faVials}  className="icon"/>
                                     <p>Grafica</p>
-                                    {/* <h3 className='tooltip-li'>Grafica</h3> */}
-                                    {/*
+                                    
                                 </Link>
                             </li>
                         
-                            <li className="li-dasboard" onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
+                            <li className="li-dasboard" >
                                 <Link to={"/municipio"}>
                                     <FontAwesomeIcon icon={faSliders} className="icon" />
                                     <p className='paragraf-li' id="paragrafLi">Municipios</p>
                                 </Link>
-                                {!showTooltip && (
+                                {/* {!showTooltip && (
                                     <span className="tooltip">Contenido del tooltip</span>
-                                )}
+                                )} */}
                             </li>
 
 
@@ -235,9 +234,9 @@ function Dashboard() {
                                     <p>Variedad</p>
                                 </Link>
                             </li>
-                                */}
+                                
                             
-                            {items.map((item, index) => (
+                            {/* {items.map((item, index) => (
                                     <li key={index} className={item.className}>
                                         <Link to={item.to}>
                                             <Tooltip content={item.tooltipContent} className="tooltip">
@@ -246,7 +245,7 @@ function Dashboard() {
                                             <p>{item.label}</p>
                                         </Link>
                                     </li>
-                                ))}
+                                ))} */}
 
 
                         </ul> 

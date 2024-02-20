@@ -1,5 +1,5 @@
 import { pool } from "../database/conexion.js";
-// import { validationResult } from "express-validator";
+import { validationResult } from "express-validator";
 
 
 function validate(data) {
@@ -191,7 +191,7 @@ function validate(data) {
 
             // const [rows] = await pool.query(sql, [ data.fecha_creacion,data.codigo_externo,data.consecutivo_informe,data.muestreo,data.preparacion_muestra,data.cantidad,data.tipo_molienda,data.tipo_fermentacion,data.densidad_cafe_verde,data.fecha_procesamiento,data.tipo_tostion,data.tiempo_fermentacion,data.codigo_muestra,data.actividad_agua,data.tiempo_secado,data.presentacion,data.cafes_id ]); 
             
-            const [rows] = await pool.query(sql, [ fecha_creacion,codigo_externo,consecutivo_informe,muestreo,preparacion_muestra,data.cantidad,tipo_molienda,tipo_fermentacion,densidad_cafe_verde,fecha_procesamiento,tipo_tostion,tiempo_fermentacion,codigo_muestra,actividad_agua,tiempo_secado,presentacion,cafes_id ]); 
+            const [rows] = await pool.query(sql, [ fecha_creacion,codigo_externo,consecutivo_informe,muestreo,preparacion_muestra,cantidad,tipo_molienda,tipo_fermentacion,densidad_cafe_verde,fecha_procesamiento,tipo_tostion,tiempo_fermentacion,codigo_muestra,actividad_agua,tiempo_secado,presentacion,cafes_id ]); 
 
 
             if (rows.affectedRows > 0) {
