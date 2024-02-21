@@ -89,10 +89,31 @@ const Cafe = () => {
 
     const handleActualizar = async (data) => {
         try {
-           
-            await Api.put(`/cafe/actualizar/${selectedCafeId}`, data);
-            Sweet.actualizacionExitosa();
-            closeModal();
+
+            const actualizar = await Api.put(`/cafe/actualizar/${selectedCafeId}`, data);
+            console.log(actualizar, data)
+            if (actualizar.data.status == false) {
+                let keys = Object.keys(actualizar.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(actualizar.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = actualizar.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                Sweet.actualizacionExitosa();
+                closeModal();
+
+            }
             // Recargar la lista de Cafes después de la actualización
             const response = await Api.get("cafe/listar");
             setCafes(response.data);
@@ -222,6 +243,7 @@ const Cafe = () => {
     function searchInput() {
         let inputSearch = document.querySelectorAll(".input-search")
 
+
         if (inputSearch.length > 0) {
             for (let s = 0; s < inputSearch.length; s++) {
 
@@ -238,10 +260,11 @@ const Cafe = () => {
                                 } else {
                                     options[o].style.display = "none"
                                 }
+                                let referencia = inputSearch[s].getAttribute("id")
+
                                 if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
                                     let focusSelect = document.querySelectorAll(".option-select-focus")
                                     if (focusSelect.length > 0) {
-                                        console.log(focusSelect[0].classList)
                                         focusSelect[0].classList.remove("option-select-focus")
                                     }
                                     inputSearch[s].value = options[o].innerHTML
@@ -250,7 +273,17 @@ const Cafe = () => {
                                     }
                                     dataSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
                                     options[o].classList.add("option-select-focus")
+                                    if (!dataSelect[referencia]) {
+                                        dataSelect[referencia] = {}
+                                    }
+                                    dataSelect[referencia]["value"] = options[o].getAttribute("data-id");
+                                    options[o].parentNode.style.display = "none"
+                                    break
                                 } else {
+                                    if (!dataSelect[referencia]) {
+                                        dataSelect[referencia] = {}
+                                    }
+                                    dataSelect[referencia]["value"] = "";
                                     options[o].classList.remove("option-select-focus")
                                 }
                             }
@@ -393,7 +426,7 @@ const Cafe = () => {
                                     if (modalCafe.variedades_id) {
                                         !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = modalCafe.variedades_id
                                         if (key.id == modalCafe.variedades_id) {
-                                            !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.referencia =  key.nombre
+                                            !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.referencia = key.nombre
                                         }
                                     }
 
@@ -461,7 +494,7 @@ const Cafe = () => {
                         method="post"
                     >
 
-                        <div className="div-input">
+                        <div className="div-input div-input-search-select">
                             <input className="input-search" type="text" id="lotes_id" />
                             <label htmlFor="lotes_id" >Lote</label>
                             <div className="select-options-input">
@@ -472,12 +505,13 @@ const Cafe = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="div-input">
+                        <div className="div-input div-input-search-select">
                             <input className="input-search" type="text" id="variedades_id" />
                             <label htmlFor="variedades_id" >Variedad</label>
                             <div className="select-options-input">
                                 {variedades.map((key, index) => (
                                     (
+
                                         <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
                                     )
                                 ))}
