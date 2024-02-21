@@ -17,9 +17,8 @@ import ListarUsuarios from './components/listarusuario'
 // import RegistrarAnalisis from './components/Analisiss'
 // import ListarAnalisis from './components/ListarAnalisis'
 // import EditarAnalisis from './components/EditarAnalisis'
+import Analisis from'./components/Analisiss'
 import Grafica from './components/Grafica'
-import TablePrueba from './components/TablePrueba'
-import Analisis from './components/Analisiss'
 
 
 
@@ -30,7 +29,6 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/xd' element={<TablePrueba />} />
         <Route path='/' element={<Dashboard />}>
           <Route path='/resultado' element={<Resultado />} />
           <Route path='/finca/listar' element={<Finca />} />

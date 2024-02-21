@@ -2367,24 +2367,15 @@
                     <td>
                         Status: 200 OK <br>
                         BODY: <br>{
-                            "fecha_creacion":"2023-02-02",<br>
-                            "codigo_externo":"INF-2D",<br>
-                            "consecutivo_informe":"2D",<br>
-                            "muestreo":"Manual",<br>
-                            "preparacion_muestra":"normalito",<br>
-                            "cantidad":120,<br>
-                            "tipo_molienda":"No especifica",<br>
-                            "tipo_fermentacion":"en agua",<br>
-                            "densidad_cafe_verde":"No reporta",<br>
-                            "fecha_procesamiento":"2023-03-03",<br>
-                            "tipo_tostion":"No especifica",<br>
-                            "tiempo_fermentacion": "2 dias",<br>
-                            "codigo_muestra":"1D",<br>
-                            "actividad_agua":"No reporta",<br>
-                            "tiempo_secado":"3 dias",<br>
-                            "presentacion": "S.C.P",<br>
-                            "estado":1,<br>
-                            "cafes_id":1<br>
+                            "id": 1,<br>
+                            "fecha_creacion": "2024-02-20T19:40:04.000Z",<br>
+                            "cafe": 1,<br>
+                            "Lote": "lote 4",<br>
+                            "Finca": "Los pinos",<br>
+                            "estado": 1,<br>
+                            "codigo_externo": "INF-2D",<br>
+                            "usuario": "Yan carlos",<br>
+                            "variedad": "Caturra"<br>
                             <br>}
                         Error Servidor<br>
                         BODY: {<br>
@@ -2998,10 +2989,10 @@
                     <td>Request body JSON</td>
                     <td>
                         <br>{
-                            "valor":10,
-                            "analisis_id":1,
-                            "variables_id":7,
-                            "fecha":"2022-06-01"
+                            "valor":10,<br>
+                            "analisis_id":1,<br>
+                            "variables_id":7,<br>
+                            "fecha":"2022-06-01"<br>
                         <br> }
                     </td>
                 </tr>
@@ -3137,10 +3128,16 @@
                     <td>
                         Status: 200 OK <br>
                         BODY:<br>{
-                            "valor":10,
-                            "analisis_id":1,
-                            "variables_id":7,
-                            "fecha":"2022-06-01"
+                            "analisis_id": 1,<br>
+                            "id": 2,<br>
+                            "valor": 104,<br>
+                            "fecha_creacion": null,<br>
+                            "muestra": "56D",<br>
+                            "variable": "Peso de almendra sana (g)",<br>
+                            "usuario": "Yan carlos",<br>
+                            "finca": "Los pinos",<br>
+                            "lote": "lote 4",<br>
+                            "tipo_analisis": "Fisico"<br>
                         <br> }
                         INCORRECTO <br>
                         Status: 401 <br>
