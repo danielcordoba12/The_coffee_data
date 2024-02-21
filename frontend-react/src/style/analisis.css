@@ -74,6 +74,7 @@ font-size: 1.5rem;
 
 .btn-registrar-d{
 display: flex;
+position: relative;
 width: 75px;
 padding: 10px 10px;
 background-color:#0B2E4B; 

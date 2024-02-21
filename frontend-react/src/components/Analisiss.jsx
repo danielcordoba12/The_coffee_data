@@ -307,7 +307,7 @@ const Analisis = () => {
 
         {modalAnalisis && (
             <div className="tablaEditAna">
-                <h1 className="titleEditAna">Editar</h1>
+                <h1 className="titleEditAna">Editar Análisis</h1>
                 <div className="Editcampos">
                       <label htmlFor="" className="labelEdit">Muestra</label>
                         <div className="div-input-d">
