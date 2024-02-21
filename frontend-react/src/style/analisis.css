@@ -1,262 +1,403 @@
-/* Estilos CSS para la tabla con clase table1 */
+/* estilos de listado de analisis */
 
-.fondo2 {
-    z-index: -999;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-
-.table1 {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px; 
-  }
-
-
-  /* estilos de select para registrar un analisis */
-
-    .label-calidad{
-      display: flex;
-      position: relative;
-      margin-top: 34px;
-    }
-    select{
-      width: 70%;
-      top: -42px;
-      left: 74px;
-      display: flex;
-      position: relative;
-    }
-
-  .table1 th,
-  .table1 td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-  }
-  
-  .table1 th {
-    background-color: rgba(30,30,30);
-    color: white;
-  }
-  
-  .table1 tr:hover {
-    background-color: #968c8c;
-  }
-  .border-t{
-    background-color: #2980b9;
-    color: rgb(255, 255, 255);
-  }
-  
-/* 
-  //estilos fincas registrar// */
-
-
-.tabla2 {
-    backdrop-filter: blur(10px);
-    width: 350px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: rgb(30, 30, 30, 50%);
-    border-bottom:1px black solid;
-  }
-  
-  .tabla2 h1 {
-    color: white;
-    text-decoration: none   ;
-    text-align: center;
-    font-weight: bold;
- 
-    font-size: 1.5rem;
-    margin: 20px 0;
-  }
-  
-  .tabla2 div {
-    margin-bottom: 15px;
-  }
-  
-  .tabla2 input {
-    width: 100%;
-    padding: 10px;
-    /* border-bottom: 1px solid #ccc; */
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    background-color: transparent;
-    border: none;
-    border-bottom:1px rgb(153, 151, 151) solid;
-    color: white;
-    outline: none;
-  }
-  
-  /* Efecto del placeholder */
-  .tabla2 input + label {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    /* color: #ffffff; */
-    font-size: 16px;
-    pointer-events: none;
-    transition: transform 0.3s, font-size 0.3s, color 0.3s;
-    color:white ;
-    
-  }
-  
-  /* Placeholder transformado al enfocar el campo */
-  .tabla2 input:focus + label,
-  .tabla2 input:not(:placeholder-shown) + label {
-    transform: translateY(-100%) scale(1.2);
-    font-size: 12px;
-    color: rgb(255, 255, 255);
-    top: 10px;
-    transition: all 0.5s;
-  }
-  
-  .tabla2 button {
-    background-color: #3498db;
-    color: #fff;
-    font-weight: bold;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .tabla2 button:hover {
-    background-color: #2980b9;
-  }
-  
-  .div-input{
-    position: relative;
-  }
-
-/* editar fincas */
-
-
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .input-field {
-    width: 100%;
-    padding: 8px;
-    margin: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .btn-primary {
-    background-color: #3498db;
-    color: #fff;
-    font-weight: bold;
-    padding: 8px 16px;
-    margin: 8px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-secondary {
-    background-color: #e74c3c;
-    color: #fff;
-    font-weight: bold;
-    padding: 8px 16px;
-    margin: 8px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-tertiary {
-    background-color: #2ecc71;
-    color: #fff;
-    font-weight: bold;
-    padding: 8px 16px;
-    margin: 8px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  /* listar fincas */
-
-  
-.fondo2 {
-  width: 100%;
-  height: auto;
-  position: absolute;
-  z-index: -1;
-}
-
-.tablalistar {
-  backdrop-filter: blur(10px);
-    width: 100%;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      background-color: rgb(30, 30, 30, 50%);
-      border-bottom:1px black solid;
-}
-
-.titu {
-  justify-content: center;
-  text-align: center;
-  font-weight: bold;  
-  color: rgb(241, 241, 241);
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-
-/* styles.css */
-
-.tableprincipal {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px; /* Espaciado superior */
-  border: none;
-}
-
-.tableprincipal th,
-.tableprincipal td {
-  
-  padding: 8px;
-  text-align: left;
-  color: white;
-}
-
-.tableprincipal th {
-  background-color: rgb(94, 79, 38); /* Color de fondo más claro para encabezados */
-}
-
-.tableprincipal tr{
-  background-color: transparent;
-  
-}
-
-.btn-primary {
-  background-color: #0099ff; /* Color de fondo del botón */
+.btn-desactivar-d {
+  background-color: #0B2E4B;
   color: #fff;
   font-weight: bold;
   padding: 8px 16px;
+  margin: 8px;
+  position: relative;
+  float: right;
+  right: -15px;
+  top: 12px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s; /* Efecto de transición al pasar el ratón */
+}
+.btn-desactivar-d:hover{
+  background-color:#0b2e4be7;
 }
 
-.btn-primary:hover {
-  background-color: #207bb5; /* Cambio de color al pasar el ratón */
+
+.btn-activar-d {
+  background-color:#0B2E4B;
+  color: #fff;
+  font-weight: bold;
+  padding: 8px 16px;
+  margin: 8px;
+  float: right;
+  top: 12px;
+  position: relative;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
+.input-edit-ana{
+  left: 0.1px;
+  top: 0.1px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  background-color: rgb(234, 241, 243);
+  color: rgba(128, 128, 128, 0.743);
+}
+
+.titleanalisis{
+justify-content: center;
+text-align: left;
+font-weight: bold; 
+position: relative;
+font-family: Arial, Helvetica, sans-serif;
+color: black;
+font-size: 1.5rem;
+}
+
+.btn-registrar-d{
+display: flex;
+width: 75px;
+padding: 10px 10px;
+background-color:#0B2E4B; 
+color: white;
+left: 150px;
+top: -15px;
+position: relative;
+text-decoration: none;
+border: none;
+height: 30px;
+align-items: center;
+justify-content: center;
+border-radius: 4px;
+cursor: pointer;
+font-size: 1rem;
+font-weight: bold;
+}
+.btn-registrar-d:hover {
+background-color: #0b2e4be7;
+
+}
+
+ .contTitle{
+  position: relative;
+  top: -16px;
+  left: 70px;
+  border-radius: 8px;
+  width: 93%;
+  height: auto;
+}
+.titleanalisis{
+  position: relative;
+  left: 35px;
+  font-size: 1.5rem;
+  top: 25px;
+}
+
+.btn-actualizar-d{ 
+color: #fff;
+position: relative;
+font-weight: bold;
+padding: 8px 16px;
+border: none;
+left: 90px;
+top: 20px;
+margin-bottom: 14px;
+border-radius: 4px;
+cursor: pointer;
+background-color: #0B2E4B;
+transition: background-color 0.3s; 
+}
+.btn-actualizar-d:hover{
+  background-color: #0b2e4beb;
+}
+.btn-actualizar-mod{
+  color: #fff;
+position: relative;
+font-weight: bold;
+padding: 8px 16px;
+border: none;
+top: 10px;
+margin-bottom: 14px;
+border-radius: 4px;
+cursor: pointer;
+background-color: #0B2E4B;
+transition: background-color 0.3s; 
+
+}
+
+.btn-actualizar-mod:hover {
+background-color:#0b2e4be2; 
+}
+
+.tablaAnalisis{
+display: inline-table;
+justify-content: center;
+align-items: center;
+top: 125px;
+left: 100px;
+width: 93%;
+height: 1000rem;
+overflow: hidden;
+border-radius: 8px;
+}
+ .encabezado{
+ position: relative;
+top: 50px;
+width: 100%;
+ left: 35px;
+ text-align: center;
+ color: #808080;
+}
+
+table{
+  width: 90%;
+}
+.cuerpodatos{
+  position: relative;
+  left: 35px;
+  top: 64px;
+  width: 100%;
+  text-align: center;
+  color: #808080;
+
+}
+
+/* 
+estilos de registro de analisis css */
+.contRegistrarAna{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1001;
+  max-height: 95%;
+  max-width: 90%;
+  height: 500px;
+  width: 500px;
+  text-align: center;
+
+}
+.contRegistrarAna input{
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px rgb(153, 151, 151) solid;
+  color: rgb(0, 0, 0);
+  outline: none;
+
+}
+.contenido-regi-d{
+background-color: rgb(138, 138, 156);
+width: 70%;
+height: 600px;
+
+}
+.titleRegistrar{
+text-align: center;
+color: black;
+margin-top: 13px;
+font-size: 1.5rem;
+font-weight: bold;
+}
+.cuerpodatos{
+  border-radius: 8px;
+
+}
+.formRegiAna{
+  display: block;
+  top: 90px;
+  position: relative;
+}
+.overlay-d{
+  background-color: rgba(128, 128, 128, 0.209);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+}
+.input-search-d{
+  background-color: #207bb5;
+}
+.select-option-input-d{
+  display: block;
+  position: absolute;
+  color: black;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  z-index: 1;
+  top: 100%;
+  max-height: 100px;
+  overflow: auto;
+  text-align: left;
+  padding: 10px;
+  font-size: 11px;
+  display: none;
+
+}
+.contRegistrarAna div {
+  margin-bottom: 15px;
+}
+
+
+.select-option-input-d>div {
+
+  margin: 0 !important;
+  padding: 0 !important;
+  padding: 5px !important;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.select-option-input-d>div:hover {
+
+  background-color: #80808024;
+  display: block;
+}
+.btn-register-d{
+  display: flex;
+  padding: 10px 10px;
+  background-color:#0B2E4B; 
+  color: white;
+  float: right;
+  right: 12px;
+  top: 50px;
+  position: relative;
+  text-decoration: none;
+  border: none;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.contRegistrarAna input + label{
+  position: absolute;
+  top: 2%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
   
+}
+.contRegistrarAna input:focus + label,
+.contRegistrarAna:not(:placeholder-shown) + label {
+  transform: translateY(-130%) scale(1.2) ;
+  font-size: 12px;
+  color: rgb(0, 0, 0);
+  top: 10px;
+  transition: all 0.5s;
+}
+.close-modal-Ana{
+  position: absolute;
+  top: -150px;
+  right: -10px;
+  background: none;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-size: 36px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 4px;
+}
+
+.input-search-d{
+  color:  black;
+}
+.div-input-d{
+  color: black;
+  position: relative;
+}
+
+.select-invisility {
+
+  width: 0;
+
+  height: 0;
+
+}
+.option-select-focus {
+  background-color: rgb(61 194 145);
+
+}
+label{
+  color: #808080;
+
+}
+.tipe-ana{
+  left: -32px;
+  position: relative;
+  top: -15px;
+}
+select{
+  position: relative;
+  top: -12px;
+  width: 60%;
+  background-color: whitesmoke;
+  text-decoration: none;
+}
+/* styles from tableEditAna */
+
+.tablaEditAna{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  font:-z;
+  transform: translate(-50%, -50%);
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1001;
+  max-height: 95%;
+  max-width: 90%;
+  height: 500px;
+  width: 500px;
+  text-align: center;
+}
+.Editcampos{
+  width: 90%;
+  position: relative;
+  top: 60px;
+
+}
+.titleEditAna{
+  position: relative;
+  top: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+ .Editcampos .labelEdit{
+  color: #808080;
+  text-align: left;
+  display: flex;
+  left: -123px;
+
+}
+.close-modal-Edit{
+  position: absolute;
+  top: -120px;
+  right: -55px;
+  background: none;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-size: 36px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 4px;
+
+}

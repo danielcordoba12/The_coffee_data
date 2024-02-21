@@ -173,35 +173,35 @@ useEffect(() => {
 
 
   const labelText = [
-    'value: Peso C.P.S (g)',
-    'Humedad (%)',
-    'Peso Cisco (g)',
-    'Merma por trilla (%)',
-    'Peso total de la almendra (g)',
-    'Porcentaje de almendra sana (%)',
-    'Peso defectos totales (g)',
-    'Factor de rendimiento (Kg C.P.S)',
-    'Peso de almendra sana (g)',
-    'Porcentaje de defectos totales (%)',
-    'Negro total o parcial (g)',
-    'Cardenillo (g)',
-    'Vinagre (g)',
-    'Cristalizado (g)',
-    'Veteado (g)',
-    'Ámbar o mantequillo (g)',
+    'Peso',
+    'Humedad',
+    'Peso Cisco',
+    'Merma por trilla',
+    'Peso total de la almendra ',
+    'Almendra sana ',
+    'Peso defectos totales ',
+    'Factor de rendimiento',
+    'Peso de almendra sana',
+    'Porcentaje de defectos ',
+    'Negro total o parcial ',
+    'Cardenillo ',
+    'Vinagre ',
+    'Cristalizado ',
+    'Veteado ',
+    'Ámbar ',
     'Sobresecado (g)',
-    'Mordido o cortado (g)',
-    'Picado por insectos (g)',
-    'Averanado o arrugado (g)',
-    'Inmaduro o paloteado(g)',
-    'Aplastado (g)',
-    'Flojo (g)',
-    'Decolorado o reposado (g)',
-    'Malla 18 (g)',
-    'Malla 15 (g)',
-    'Malla 17 (g)',
-    'Malla 14 (g)',
-    'Malla 16 (g)',
+    'Mordido ',
+    'Picado',
+    'Averanado ',
+    'Inmaduro ',
+    'Aplastado',
+    'Flojo',
+    'Decolorado ',
+    'Malla 18 ',
+    'Malla 15 ',
+    'Malla 17 ',
+    'Malla 14 ',
+    'Malla 16 ',
     // 'analisis'
     // Otras mallas o campos pueden agregarse según sea necesario
   ];
@@ -363,9 +363,12 @@ useEffect(() => {
     // let cafes_id = dataSelect.cafes_id;
     // console.log("este es cafes_id " + cafes_id);
     // setCafesId(dataSelect.cafes_id)
-    for (let i = 0; i < datos.length; i += numColumnas) {
+    for (let i = 0; i < labelText.length; i += numColumnas) {
       
-      const fila = datos.slice(i, i + numColumnas);
+      const fila = labelText.slice(i, i + numColumnas);
+      // for (let i = 0; i < datos.length; i += numColumnas) {
+      
+      //   const fila = datos.slice(i, i + numColumnas);
       
       filas.push(
         
@@ -568,16 +571,18 @@ useEffect(() => {
         console.log("Resultado del servidor:", result);
         Sweet.registroExitoso();
         hideAllModals()
+        listarResultado();
+
       }
 
       if (response.status === 400) {
         console.error("Error al procesar la solicitud", response.statusText);
         Sweet.registroFallido();
       }
+
     } catch (error) {
       console.error("Error al procesar la solicitud", error);
     }
-    listarResultado();
 
   };
 

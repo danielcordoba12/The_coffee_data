@@ -502,9 +502,42 @@ const RegistrarMuestra = async (data) => {
           .catch(error => {
             console.error('Error:', error);
 			});
-
-    
     }
+    // const actualizarMuestra = async (id) => {
+    //   try {
+    //       const data = await Api.put(`/muestra/actualizar/${id}`, showModal2,muestraSeleccionada);
+    //       console.log(data, "muestra")
+    //       if (data.data.status == false) {
+    //           let keys = Object.keys(data.data.errors)
+    //           let h6Error = document.querySelectorAll(".h6-error");
+    //           for (let x = 0; x < h6Error.length; x++) {
+    //               h6Error[x].remove()
+    //           }
+    //           console.log(data.data)
+    //           for (let x = 0; x < keys.length; x++) {
+    //               let h6 = document.createElement("h6")
+    //               h6.innerHTML = data.data.errors[keys[x]]
+    //               h6.classList.add("h6-error")
+    //               if (document.getElementById(keys[x])) {
+    //                   let parent = document.getElementById(keys[x]).parentNode
+    //                   parent.appendChild(h6)
+    //               }
+
+    //           }
+    //       } else {
+    //           Sweet.actualizacionExitosa();
+    //           hideAllModals();
+    //       }
+    //                   // Recargar la lista de lotes después de la actualización
+    //                   // const response = await Api.get("lote/listar");
+    //                   // setLotes(response.data);
+    //               } catch (error) {
+    //                   console.error("Error al actualizar lote: ", error);
+    //               }
+    //           };
+    
+    
+
     useEffect(() => {
       const buscarcafe = async () => {
           try {
@@ -734,7 +767,7 @@ const RegistrarMuestra = async (data) => {
             
 
 {showModal2 ?  <div className= {`main-content-actualizar `}  id="modalInfo2" >
-<h1 className='title-registrar-resultado'>Registrar muestra</h1> 
+<h1 className='title-registrar-resultado'>Actualizar muestra</h1> 
 
 
     <form className="formulario-muestra info-complete"  >
@@ -753,7 +786,7 @@ const RegistrarMuestra = async (data) => {
         </div>
         
         <div className='container-input'>
-        <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
+        {/* <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled /> */}
           <input type="text" id="consecutivo_informe" name="consecutivo_informe" className='input' placeholder=''  value={muestraSeleccionada.consecutivo_informe || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada , consecutivo_informe: e.target.value})}/>
           <label className='label'>Consecutivo Informe</label>
 
@@ -831,7 +864,7 @@ const RegistrarMuestra = async (data) => {
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tiempo_secado" name="tiempo_secado" className='input' placeholder='' value={muestraSeleccionada.tiempo_secado || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tiempo_secado: e.target.value})}/>
           <label className='label'>Tiempo de secado</label>
-                        
+
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />

@@ -177,7 +177,7 @@ function Dashboard() {
                                     {showTooltip && <span className="tooltip-content">Fincas</span>}
                             </li>
                             <li >
-                                    <Link to={"/finca"}>
+                                    <Link to={"/lote"}>
                                         <FontAwesomeIcon icon={faToolbox} className="icon" />
                                         <p>Lotes</p>
                                     </Link>
@@ -190,7 +190,7 @@ function Dashboard() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/analisis/listar"}>
+                                <Link to={"/analisis"}>
                                     <FontAwesomeIcon icon={faPhone}className="icon" />
                                     <p>Analisis</p>
                                 </Link>
