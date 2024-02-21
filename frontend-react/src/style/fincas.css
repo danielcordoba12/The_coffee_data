@@ -462,7 +462,7 @@ body.modal-open {
   font-size: 16px;
   pointer-events: none;
   transition: transform 0.3s, font-size 0.3s, color 0.3s;
-  
+  font-weight: bold;
 }
 
 /* Placeholder transformado al enfocar el campo */
@@ -832,4 +832,14 @@ div.dt-container div.dt-search label {
 
 select option{
   color: #000000;
+}
+
+.labeledit{
+ transform: translateY(100%) scale(1.2);
+ margin-right: 80%;
+  font-size: 12px;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  left: 10px;
+  transition: all 0.5s;
 }

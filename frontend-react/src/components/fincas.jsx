@@ -578,41 +578,44 @@ const FincaView = () => {
                             }
                         />
                         <div>
+                            <label className="labeledit" htmlFor="nombre">Nombre</label>
                         <input
                             className="input-field"
-                            label="nombre"
                             id="nombre"
                             type="text"
-                            placeholder="nombre"
+                            
                             value={modalFinca.nombre}
                             onChange={(e) =>
                                 setModalFinca({ ...modalFinca, nombre: e.target.value })
                             }
                         /></div>
                         <div>
+                        <label className="labeledit" htmlFor="longitud">longitud</label> 
                         <input
                             className="input-field"
+                            label="longitud"
                             id="longitud"
                             type="text"
-                            placeholder="longitud"
+                            
                             value={modalFinca.longitud}
                             onChange={(e) =>
                                 setModalFinca({ ...modalFinca, longitud: e.target.value })
                             }
                         /></div>
                         <div>
+                        <label className="labeledit" htmlFor="latitud">latitud</label> 
                         <input
                             className="input-field"
                             id="latitud"
                             type="text"
-                            placeholder="latitud"
+                            
                             value={modalFinca.latitud}
                             onChange={(e) =>
                                 setModalFinca({ ...modalFinca, latitud: e.target.value })
                             }
                         /></div>
                         <div>
-
+                            
                         <input
                             className="input-field"
                             id="usuarios_id"
@@ -647,11 +650,12 @@ const FincaView = () => {
                             </select>
                         </div>
                             <div>
+                            <label className="labeledit" htmlFor="noombre_vereda">vereda</label> 
                         <input
                             className="input-field"
                             id="noombre_vereda"
                             type="text"
-                            placeholder="noombre_vereda"
+                            
                             value={modalFinca.noombre_vereda}
                             onChange={(e) =>
                                 setModalFinca({
