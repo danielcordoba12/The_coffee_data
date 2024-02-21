@@ -580,6 +580,7 @@ const FincaView = () => {
                         <div>
                         <input
                             className="input-field"
+                            label="nombre"
                             id="nombre"
                             type="text"
                             placeholder="nombre"
