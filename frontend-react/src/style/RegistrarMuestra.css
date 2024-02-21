@@ -74,7 +74,7 @@
   background-color: rgb(234, 241, 243);
   width: 800px;
   height: 60px;
-  z-index: 12;
+  z-index: -1;
   position: relative;
   bottom: 360px;
 }
@@ -187,7 +187,9 @@
   color:  white;
   outline: none;
 }
-
+.input-search-cafe {
+  color:  black ;
+}
 .select-options-cafe{
   display: block;
   position: absolute;
@@ -336,7 +338,7 @@
 .modal-info{
   z-index: 12;
   font-family: Arial, sans-serif;
-  display: none ;
+  display: flex ;
   /* display: flex; */
   flex-direction: column;
   position: fixed;
@@ -350,9 +352,9 @@
   text-align: center;
   height: 100vh;
 }
-.modal-info.show{
+/* .modal-info.show{
   display: flex ;
-}
+} */
 
 .value{
   color: black;

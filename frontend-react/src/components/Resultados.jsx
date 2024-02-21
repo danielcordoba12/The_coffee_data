@@ -27,7 +27,9 @@ function Resultado() {
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
   const tableRef = useRef();
-
+  const [cafesId, setCafesId] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
+  const [dataSelect, setDataSelect] = useState({});
 
   const [filtro, setFiltro] = useState('');
 
@@ -47,11 +49,11 @@ function Resultado() {
 
   const toggleModal = (modalId) => {
     if (modalId === 1) {
-      setShowModal1(!showModal1);
+      setShowModal1(true);
     } else if (modalId === 2) {
-      setShowModal2(!showModal2);
+      setShowModal2(true);
     } else if (modalId === 3) {
-      setShowModal3(!showModal3);
+      setShowModal3(true);
     }
   };
 
@@ -70,11 +72,11 @@ function Resultado() {
   const inicializarDatos = () => {
       const nuevosDatos = Array.from({ length: 25 }, (_, index) => ({
         valor: "",
-      analisis_id: 5,
+      analisis_id: "",
       variables_id: (index + 1).toString(),
       // variables_id: 1,
-      fecha:"2024-01-27T00:40:33.000Z",
-      // fecha: fechaActual,
+      // fecha:"2024-01-27T00:40:33.000Z",
+      fecha: fechaActual,
 
     }));
     setDatos(nuevosDatos);
@@ -112,22 +114,27 @@ function Resultado() {
 
 
 
-
+useEffect(()=>{
+  window.addEventListener("click",function(e){
+    let divOptions = document.querySelectorAll(".div-input-search-select");
+    for (let s = 0; s < divOptions.length; s++) {
+      if(!e.target == divOptions[s] || !divOptions[s].contains(e.target)){
+        let options = divOptions[s].querySelectorAll(".select-options-cafe")
+        console.log(options[0])
+        if(options.length> 0){
+          options[0].style.display = "none"
+        } 
+      }
+    }
+  })
+},[])
 useEffect(() => {
 
   let inputSearch = document.querySelectorAll(".input-search-cafe")
 
   if (inputSearch.length > 0) {
       for (let s = 0; s < inputSearch.length; s++) {
-          inputSearch[s].addEventListener("blur",function(){
-              let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-options-cafe");
-              if(divOptions.length > 0){
-                 setTimeout(() => {
-                  divOptions[0].style.display = "none"
-                 }, 100); 
-              }
 
-          })
           inputSearch[s].addEventListener("input", function () {
               let parent = inputSearch[s].parentNode
               if (parent) {
@@ -353,6 +360,9 @@ useEffect(() => {
   const generarInputs = () => {
     const filas = [];
     const numColumnas = 9;
+    // let cafes_id = dataSelect.cafes_id;
+    // console.log("este es cafes_id " + cafes_id);
+    // setCafesId(dataSelect.cafes_id)
     for (let i = 0; i < datos.length; i += numColumnas) {
       
       const fila = datos.slice(i, i + numColumnas);
@@ -387,16 +397,24 @@ useEffect(() => {
     // Agregar una columna separada para el análisis
     filas.push(
       <div className="columna" key="analisis">
-        <div className="container-input">
-        <input className="input-search-cafe " type="text" id="cafe_id" />
-                        <label htmlFor="cafe_id" className='label'>Analisis</label>
-                        <div className="select-options-cafe" >
+        <div className="container-input div-input-search-select">
+        <input className="input-search-cafe " type="text" id="cafes_id" />
+                        <label htmlFor="cafes_id" className='label'>Analisis</label>
+                        <div className="select-options-cafe" 
+
+                         >
                             {analisis.map((key, index) => (
                                 (
-                                    <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafe_id").value = key.consecutivo_informe ;  "";dataSelect.cafe_id.value = key.id; clearFocusInput("cafe_id") }} key={key.id_analisis}>{key.consecutivo_informe+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
+                                    <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafes_id").value = key.id_analisis;!dataSelect.cafes_id ? dataSelect.cafes_id = {} : "".dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id_analisis}>
+                                      
+                                      {   key.consecutivo_informe+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
                                 )
                             ))}
                         </div>
+                        {
+
+                        //  console.log("este es cafes_id " + cafes_id )
+                        }
         </div>
       </div>
     );
@@ -521,10 +539,15 @@ useEffect(() => {
 
 
   const GuardarResultados = async () => {
+    console.log("datos de resultado" ,datos )
+    console.log("este es el id de cafes" + cafesId);
+
+
     try {
       const datosConAnalisisId = datos.map((dato) => ({
         ...dato,
         fecha: fechaActual,
+        analisis_id: cafes_id.value
       }));
 
       // setDatos(datosConAnalisisId);
@@ -659,11 +682,16 @@ useEffect(() => {
   // };
 
   return (
+
     <div>
-      <div className={`main-content-registrar ${showModal1 ? 'show' :  ''}`} id="modalInfo1" showModal={showModal1}>
+      
+      {showModal1 ?
+      <div className={`main-content-registrar`} id="modalInfo1" >
       <h1 className='title-registrar-resultado'>Registrar resultado</h1> 
 
-      <form className="formulario-muestra" method="post">
+      <form className="formulario-muestra"
+      
+      method="post">
         
         {generarInputs()}
   
@@ -679,10 +707,10 @@ useEffect(() => {
       </form>
     </div>
 
-
+      : " "}
     
-
-    <div className={`main-content-registrar ${showModal2 ? 'show' :  ''}`} id="modalInfo2" showModal={showModal2}>
+    {showModal2 ? 
+      <div className="main-content-registrar"id="modalInfo2" >
 
       <h1 className='title-registrar-resultado'>Actualizar resultado</h1> 
       
@@ -699,11 +727,14 @@ useEffect(() => {
           </div>
         </form>
       </div>
+    :""}
+    
 
 
 <div>
 
-<div className={`main-content-registrar ${showModal3 ? 'show' :  ''}`} id="modalInfo3" showModal={showModal3}>
+    {showModal3 ? 
+      <div className="main-content-registrar" id="modalInfo3" >
       <div className="container-tittle">
       <h1 className='title-registrar-resultado'>Visualizar resultado</h1> 
 
@@ -721,6 +752,8 @@ useEffect(() => {
         
       </form>
     </div>
+
+    : ""}
 {/* <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" /> */}
 
 <div className="main-container">

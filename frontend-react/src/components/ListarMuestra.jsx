@@ -331,7 +331,8 @@ const RegistrarMuestra = async (data) => {
           }
       } else {
           Sweet.registroExitoso();
-          hideAllModals()
+          hideAllModals();
+          listarMuestra();  
           // closeRegistrarModal();
           // const response = await Api.get("finca/listar");
           setCafes(response.data);
@@ -481,6 +482,7 @@ const RegistrarMuestra = async (data) => {
 
           if (data.status == 200) {
             Sweet.actualizacionExitosa();
+            toggleModal(2)
             
           }
           if (data.status == 401) {
@@ -586,181 +588,211 @@ const RegistrarMuestra = async (data) => {
     return (
 
       <div>
-            <div id="modalInfo3" className={`modal-info ${showModal3 ? 'show' : ''}`}   >
-    <form className="formulario-muestra"  method="post">
-      <div className="btn-x" onClick={hideAllModals}>
-          <FontAwesomeIcon icon={faX} className="faX"/>
-      </div>
-    <table className="info-complete">
-        <tbody>
-        <tr>
-            <td>
-            <div className="columna">
-
-            <div className='container-input'>
-
-              <label className='label'>Cafe </label>
-                  {cafe.filter(cafe => cafe.id === muestraSeleccionada.cafes_id).map((cafe) => (
-                      <div
-                          key={cafe.id}
-                          className="custom-dropdown-option"
-                          // onClick={() => handleClickOpcion(lote)}
-                      >
-                          <div className='value'>{`${cafe.id}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}</div>
-                      </div>
-                  ))}
-
-            </div> 
-            <div className='container-input'>
-                <input  className='input input-register' value={formatDate(muestraSeleccionada.fecha_creacion)}/>
-                <label className='label'>Fecha de creacion</label>
-
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.codigo_externo} />
-              <label className='label'>Codigo externo</label>
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.consecutivo_informe} />
-              <label className='label'>Consecutivo Informe</label>
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.muestreo} />
-              <label className='label'>Muestreo</label>
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.preparacion_muestra} />
-              <label className='label'>Preparacion muestra</label>
-
-
-            </div><div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.cantidad} />
-              <label className='label'>Cantidad</label>
-
-
-            </div><div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.tipo_molienda} />
-              <label className='label'>Tipo de molienda</label>
-
-
-            </div><div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.tipo_fermentacion} />
-              <label className='label'>Tipo de fermentacion</label>
-
-
-            </div>
-            
-            </div>
-          </td>
-          <td>
-            <div className="columna">
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.densidad_cafe_verde} />
-              <label className='label'>Densidad de cafe verde</label>
-
-
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={formatDate(muestraSeleccionada.fecha_procesamiento)} />
-              <label className='label'>Fecha de procesamiento</label>
-
-
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.tipo_tostion} />
-              <label className='label'>Tipo de tostion</label>
-
-
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.tiempo_fermentacion} />
-              <label className='label'>tiempo fermentacion</label>
-
-
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.codigo_muestra} />
-              <label className='label'>Codigo de muestra</label>
-
-
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.actividad_agua} />
-              <label className='label'>Actividad agua</label>
-
-
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.tiempo_secado} />
-              <label className='label'>Tiempo de secado</label>
-
-
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.presentacion} />
-              <label className='label'>Presentacion</label>
-
-
-            </div>
-            <div className='container-input'>
-              <input type="text" className="input-register" value={muestraSeleccionada.presentacion} />
-              <label className='label'>Estado</label>
+        {showModal3 ? 
+          <div id="modalInfo3" className="modal-info"   >
+          {/* <h1 className='title-registrar-resultado'>Datos muestra</h1>  */}
+    
+        <form className="formulario-muestra"  method="post">
+          <div className="btn-x" onClick={hideAllModals}>
+              <FontAwesomeIcon icon={faX} className="faX"/>
+          </div>
+        <table className="info-complete">
+            <tbody>
+            <tr>
+                <td>
+                <div className="columna">
+    
+                <div className='container-input'>
+    
+                  <label className='label'>Cafe </label>
+                      {cafe.filter(cafe => cafe.id === muestraSeleccionada.cafes_id).map((cafe) => (
+                          <div
+                              key={cafe.id}
+                              className="custom-dropdown-options"
+                              // onClick={() => handleClickOpcion(lote)}
+                          >
+                              <div className='input input-register  '>{`${cafe.id}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}</div>
+                          </div>
+                      ))}
+    
+                </div> 
+                <div className='container-input'>
+                    <input  className='input input-register' value={formatDate(muestraSeleccionada.fecha_creacion)}/>
+                    <label className='label'>Fecha de creacion</label>
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.codigo_externo} />
+                  <label className='label'>Codigo externo</label>
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.consecutivo_informe} />
+                  <label className='label'>Consecutivo Informe</label>
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.muestreo} />
+                  <label className='label'>Muestreo</label>
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.preparacion_muestra} />
+                  <label className='label'>Preparacion muestra</label>
+    
+    
+                </div><div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.cantidad} />
+                  <label className='label'>Cantidad</label>
+    
+    
+                </div><div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.tipo_molienda} />
+                  <label className='label'>Tipo de molienda</label>
+    
+    
+                </div><div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.tipo_fermentacion} />
+                  <label className='label'>Tipo de fermentacion</label>
+    
+    
+                </div>
+                
+                </div>
+              </td>
+              <td>
+                <div className="columna">
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.densidad_cafe_verde} />
+                  <label className='label'>Densidad de cafe verde</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={formatDate(muestraSeleccionada.fecha_procesamiento)} />
+                  <label className='label'>Fecha de procesamiento</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.tipo_tostion} />
+                  <label className='label'>Tipo de tostion</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.tiempo_fermentacion} />
+                  <label className='label'>tiempo fermentacion</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.codigo_muestra} />
+                  <label className='label'>Codigo de muestra</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.actividad_agua} />
+                  <label className='label'>Actividad agua</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.tiempo_secado} />
+                  <label className='label'>Tiempo de secado</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.presentacion} />
+                  <label className='label'>Presentacion</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                    <input 
+                      type="text" 
+                      className="input-register" 
+                      value={muestraSeleccionada.estado === 0 ? 'Inactivo' : 'Activo'} 
+                      disabled={muestraSeleccionada.estado === 0} // Desactiva si el estado es 0
+                    />
+                  <label className='label'>Estado</label>
+                  
+    
+                </div>
               
-
-            </div>
-          
-
-            </div>
-          </td>
-          
-          
-        </tr>
-      </tbody>
-    </table>
-  </form>
-
-</div>
+    
+                </div>
+              </td>
+              
+              
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    
+    </div>
+        : ""}
+            
 
 {showModal2 ?  <div className= {`main-content-actualizar `}  id="modalInfo2" >
-          <h1 className='title-registrar-muestras'>Editar Muestra</h1>
+<h1 className='title-registrar-resultado'>Registrar muestra</h1> 
+
 
     <form className="formulario-muestra info-complete"  >
       <div className="columna">
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="date" id="fecha_creacion" name="fecha_creacion" className='input' placeholder='' value={formatDate(muestraSeleccionada.fecha_creacion)} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, fecha_creacion: e.target.value})}/>
+          <label className='label'>Fecha de creacion</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="codigo_externo" name="codigo_externo" className='input' placeholder='' value={muestraSeleccionada.codigo_externo || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, codigo_externo: e.target.value})}/>
+          <label className='label'>Codigo externo</label>
+
         </div>
+        
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="consecutivo_informe" name="consecutivo_informe" className='input' placeholder=''  value={muestraSeleccionada.consecutivo_informe || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada , consecutivo_informe: e.target.value})}/>
+          <label className='label'>Consecutivo Informe</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="muestreo" name="muestreo" className='input' placeholder='' value={muestraSeleccionada.muestreo} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, muestreo: e.target.value})}/>
+          <label className='label'>Muestreo</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="preparacion_muestra" name="preparacion_muestra" className='input' placeholder=''value={muestraSeleccionada.preparacion_muestra || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, preparacion_muestra: e.target.value})}/>
+          <label className='label'>Preparacion muestra</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="cantidad" name="cantidad" className='input' placeholder='' value={muestraSeleccionada.cantidad || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, cantidad: e.target.value})}/>
+          <label className='label'>Cantidad</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tipo_molienda" name="tipo_molienda" className='input' placeholder='' value={muestraSeleccionada.tipo_molienda || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tipo_molienda: e.target.value})}/>
+          <label className='label'>Tipo de molienda</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tipo_fermentacion" name="tipo_fermentacion" className='input' placeholder=''value={muestraSeleccionada.tipo_fermentacion || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tipo_fermentacion: e.target.value})}/>
+          <label className='label'>Tipo de fermentacion</label>
+
         </div>
         <div className='container-input' >
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="densidad_cafe_verde" name="densidad_cafe_verde" className='input' placeholder='' value={muestraSeleccionada.densidad_cafe_verde || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, densidad_cafe_verde: e.target.value})}/>
+          <label className='label'>Densidad de cafe verde</label>
+
         </div>
       </div>
 
@@ -768,31 +800,44 @@ const RegistrarMuestra = async (data) => {
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="date" id="fecha_procesamiento" name="fecha_procesamiento" className='input'  placeholder='' value={formatDate(muestraSeleccionada.fecha_procesamiento || '')  } onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, fecha_procesamiento: e.target.value})}/>
+          <label className='label'>Fecha de procesamiento</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tipo_tostion" name="tipo_tostion" className='input'  value={muestraSeleccionada.tipo_tostion || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tipo_tostion: e.target.value})}/>
-          <label htmlFor="tipo_tostion" className='label'></label>
+          <label className='label'>Tipo de tostion</label>
+          
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tiempo_fermentacion" name="tiempo_fermentacion" className='input'  placeholder='' value={muestraSeleccionada.tiempo_fermentacion || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tiempo_fermentacion: e.target.value})}/>
+          <label className='label'>tiempo fermentacion</label>
+
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="codigo_muestra" name="codigo_muestra" className='input' placeholder=''  value={muestraSeleccionada.codigo_muestra || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, codigo_muestra: e.target.value})}/>
+          <label className='label'>Codigo de muestra</label>
+
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="actividad_agua" name="actividad_agua" className='input' placeholder=''  value={muestraSeleccionada.actividad_agua || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, actividad_agua: e.target.value})}/>
+          <label className='label'>Actividad agua</label>
+
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tiempo_secado" name="tiempo_secado" className='input' placeholder='' value={muestraSeleccionada.tiempo_secado || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tiempo_secado: e.target.value})}/>
+          <label className='label'>Tiempo de secado</label>
+                        
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="presentacion" name="presentacion" className='input' placeholder='' value={muestraSeleccionada.presentacion || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, presentacion: e.target.value})}/>
+          <label className='label'>Presentacion</label>
+
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
@@ -817,6 +862,8 @@ const RegistrarMuestra = async (data) => {
        
        {showModal1 ?
         <div className={`main-content-registrar`}   id="modalInfo1 "   >
+      <h1 className='title-registrar-resultado'>Registrar muestra</h1> 
+
         {/* {showModal && ( */}
            {/* Registrar Muestra */}
           {/* // <div className="main-content-registrar" > */}
@@ -856,7 +903,7 @@ const RegistrarMuestra = async (data) => {
                         <div className="select-options-cafe" >
                             {cafe.map((key, index) => (
                                 (
-                                    <div className="option-select-cafe" data-id={key.id} onClick={() => { console.log(key.id); document.getElementById("cafes_id").value = key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad; !dataSelect.cafes_id ? dataSelect.cafes_id = {} : ""; dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id}>{key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad} </div>
+                                    <div className="option-select-cafe" data-id={key.id} onClick={() => {document.getElementById("cafes_id").value = key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad; !dataSelect.cafes_id ? dataSelect.cafes_id = {} : ""; dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id}>{key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad} </div>
                                 )
                             ))}
                         </div>

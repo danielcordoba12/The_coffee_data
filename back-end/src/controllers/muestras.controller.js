@@ -26,7 +26,7 @@ function validate(data) {
         if (keys[x] == "varchar") {
             if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
                 errros[inputs[e]] = referencia + " no puede estar vacío"
-            } else if (!(/^[a-zA-Z0-9-]+$/).test(data[keys[x]][inputs[e]]["value"])) {
+            } else if (!(/^[a-zA-Z0-9- ]+$/).test(data[keys[x]][inputs[e]]["value"])) {
                 errros[inputs[e]] = referencia + " debe ser un varchar"
             } else {
                 result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
@@ -35,8 +35,17 @@ function validate(data) {
         if (keys[x] == "int") {
             if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
                 errros[inputs[e]] = referencia + " no puede estar vacío"
-            } else if (!(/^[a-zA-Z0-9-]+$/).test(data[keys[x]][inputs[e]]["value"])) {
-                errros[inputs[e]] = referencia + " debe ser un varchar"
+            } else if (!(/^[0-9]+$/).test(data[keys[x]][inputs[e]]["value"])) {
+                errros[inputs[e]] = referencia + " debe ser numerica"
+            } else {
+                result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+            }
+        }
+        if (keys[x] == "date") {
+            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+                errros[inputs[e]] = referencia + " no puede estar vacío"
+            } else if (!(/^\d{4}-\d{2}-\d{2}$/).test(data[keys[x]][inputs[e]]["value"])) {
+                errros[inputs[e]] = referencia + " debe ser una fecha valida"
             } else {
                 result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
             }
@@ -48,24 +57,24 @@ function validate(data) {
                 result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
             }
             }
-            if (keys[x] == "select") {
-            if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
-                errros[inputs[e]] = "Debe seleccionar una opción para " + referencia
-            } else {
-                let keysOptions = data[keys[x]][inputs[e]]["opciones"]
-                for (let o = 0; o < keysOptions.length; o++) { 
+            // if (keys[x] == "select") {
+            // if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+            //     errros[inputs[e]] = "Debe seleccionar una opción para " + referencia
+            // } else {
+            //     let keysOptions = data[keys[x]][inputs[e]]["opciones"]
+            //     for (let o = 0; o < keysOptions.length; o++) { 
         
 
-                if (keysOptions[o] == data[keys[x]][inputs[e]]["value"]) {
-                    result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
-                    break
-                } else if (o == keysOptions.length) {
-                    errros[inputs[e]] = +"Debe seleccionar una opción válida para el " + referencia
-                }
-                }
-            }
+            //     if (keysOptions[o] == data[keys[x]][inputs[e]]["value"]) {
+            //         result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
+            //         break
+            //     } else if (o == keysOptions.length) {
+            //         errros[inputs[e]] = +"Debe seleccionar una opción válida para el " + referencia
+            //     }
+            //     }
+            // }
 
-            }
+            // }
         }
     }
     console.log(errros,result)
@@ -88,32 +97,81 @@ function validate(data) {
         
     export const guardarMuestra = async (req, res) => {
 
-        const [muestra] = await pool.query("SELECT id FROM cafes");
-        let opcionesMuestra = [];
-        for (let x = 0; x < muestra.length; x++) {
-        opcionesMuestra.push(muestra[x]["id"])
-        }
-        console.log(opcionesMuestra)
+        // const [muestra] = await pool.query("SELECT id FROM cafe");
+        // let opcionesMuestra = [];
+        // for (let x = 0; x < muestra.length; x++) {
+        // opcionesMuestra.push(muestra[x]["id"])
+        // }
+        // console.log(opcionesMuestra)
 
         try {
 
             let data = {
+                "int":{
+                    "cantidad":{
+                        "value" : req.body.cantidad,
+                        "referencia": "La cantidad "
+                    }
+                },
                 "varchar":{
                     "codigo_externo": {
                         "value": req.body.codigo_externo,
                         "referencia": "El código externo"
                     },
+                    "consecutivo_informe" : {
+                        "value" : req.body.consecutivo_informe,
+                        "referencia":"El consecutivo informe"
+                    },
+                    "codigo_muestra" : {
+                        "value" : req.body.codigo_muestra,
+                        "referencia":"El codgio de la muestra"
+                    },
+                    "tipo_tostion" :{
+                        "value" : req.body.tipo_tostion,
+                        "referencia" : "El tipo de tostion"
+                    },
+                    "tiempo_fermentacion" : {
+                        "value" : req.body.tiempo_fermentacion,
+                        "referencia": "El tiempo de fermentacion "
+                    },
+                    "actividad_agua": {
+                        "value": req.body.actividad_agua,
+                        "referencia": "La actividad del agua"
+                    },
+                    "tiempo_secado": {
+                            "value": req.body.tiempo_secado,
+                            "referencia": "El tiempo de secado"
+                        }
+
                 },
-                "string": {
+                "date":{
                     "fecha_creacion": {
-                        "value": req.body.fecha_creacion,
-                        "referencia": "La fecha de creación"
-                    },
+                            "value": req.body.fecha_creacion,
+                            "referencia": "La fecha de creación"
+                        },
+                        "fecha_procesamiento": {
+                            "value": req.body.fecha_procesamiento,
+                            "referencia": "La fecha de procesamiento"
+                        },  
+                },
+                // "select":{
+                //     "cafes_id": {
+                //         "value": req.body.cafe_id,
+                //         "opciones": opcionesMuestra,
+                //         "referencia": "Cafes "
+                //     }
+                // },
+                "string": {
+                    // "fecha_creacion": {
+                    //     "value": req.body.fecha_creacion,
+                    //     "referencia": "La fecha de creación"
+                    // },
                     
-                    "consecutivo_informe": {
-                        "value": req.body.consecutivo_informe,
-                        "referencia": "El consecutivo de informe"
-                    },
+                    
+                    // "consecutivo_informe": {
+                    //     "value": req.body.consecutivo_informe,
+                    //     "referencia": "El consecutivo de informe"
+                    // },
                     "muestreo": {
                         "value": req.body.muestreo,
                         "referencia": "El muestreo"
@@ -122,10 +180,10 @@ function validate(data) {
                         "value": req.body.preparacion_muestra,
                         "referencia": "La preparación de la muestra"
                     },
-                    "cantidad": {
-                        "value": req.body.cantidad,
-                        "referencia": "La cantidad"
-                    },
+                    // "cantidad": {
+                    //     "value": req.body.cantidad,
+                    //     "referencia": "La cantidad"
+                    // },
                     "tipo_molienda": {
                         "value": req.body.tipo_molienda,
                         "referencia": "El tipo de molienda"
@@ -138,30 +196,30 @@ function validate(data) {
                         "value": req.body.densidad_cafe_verde,
                         "referencia": "La densidad del café verde"
                     },
-                    "fecha_procesamiento": {
-                        "value": req.body.fecha_procesamiento,
-                        "referencia": "La fecha de procesamiento"
-                    },
-                    "tipo_tostion": {
-                        "value": req.body.tipo_tostion,
-                        "referencia": "El tipo de tostión"
-                    },
-                    "tiempo_fermentacion": {
-                        "value": req.body.tiempo_fermentacion,
-                        "referencia": "El tiempo de fermentación"
-                    },
-                    "codigo_muestra": {
-                        "value": req.body.codigo_muestra,
-                        "referencia": "El código de muestra"
-                    },
-                    "actividad_agua": {
-                        "value": req.body.actividad_agua,
-                        "referencia": "La actividad del agua"
-                    },
-                    "tiempo_secado": {
-                        "value": req.body.tiempo_secado,
-                        "referencia": "El tiempo de secado"
-                    },
+                    // "fecha_procesamiento": {
+                    //     "value": req.body.fecha_procesamiento,
+                    //     "referencia": "La fecha de procesamiento"
+                    // },
+                    // "tipo_tostion": {
+                    //     "value": req.body.tipo_tostion,
+                    //     "referencia": "El tipo de tostión"
+                    // },
+                    // "tiempo_fermentacion": {
+                    //     "value": req.body.tiempo_fermentacion,
+                    //     "referencia": "El tiempo de fermentación"
+                    // },
+                    // "codigo_muestra": {
+                    //     "value": req.body.codigo_muestra,
+                    //     "referencia": "El código de muestra"
+                    // },
+                    // "actividad_agua": {
+                    //     "value": req.body.actividad_agua,
+                    //     "referencia": "La actividad del agua"
+                    // },
+                    // "tiempo_secado": {
+                    //     "value": req.body.tiempo_secado,
+                    //     "referencia": "El tiempo de secado"
+                    // },
                     "presentacion": {
                         "value": req.body.presentacion,
                         "referencia": "La presentación"
@@ -170,13 +228,7 @@ function validate(data) {
                     //     "value": req.body.codigo_externo,
                     //     "referencia":"El codigo externo"
                     // },
-                    "cafes_id":{
-                        "cafes_id": {
-                            "value": req.body.cafe_id,
-                            "opciones": opcionesMuestra,
-                            "referencia": "La muestra"
-                        }
-                    }
+                    
 
                 }
             };
