@@ -4,6 +4,7 @@ import Api from "../services/api";
 import '../style/variedad.css';
 import Sweet from "../helpers/Sweet";
 import $ from "jquery";
+import esES from "../languages/es-ES.json"
 import "bootstrap"
 import "datatables.net";
 import "datatables.net-dt/css/dataTables.dataTables.min.css";
@@ -147,12 +148,16 @@ const Variedad = () => {
     const initializeDataTable = (variedades) => {
         $(document).ready(function () {
             $(dataTableRef.current).DataTable({
+                columnDefs:[
+                    {
+                      targets:-1,
+                      responsivePriority:1
+                    }
+                  ],
                 lengthMenu: [5, 10, 20, 30, 40, 50],
                 processing: true,
                 pageLength: 5,
-                language: {
-                    processing: "Procesando datos...",
-                },
+                language:esES,
                 responsive: true,
             });
         });
@@ -195,7 +200,7 @@ const Variedad = () => {
                 Añadir
             </button>
 
-            <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+            <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef} width={"100%"}>
                 <thead>
                     <tr className="bg-gray-200">
                         <th>id</th>
