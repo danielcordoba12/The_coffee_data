@@ -60,7 +60,7 @@ const Sweet = {
     habilitacionExitosa: () => {
         Swal.fire ({
             title: 'Mensaje',
-            icon: 'succes',
+            icon: 'success',
             text: 'Se activo de forma exitosa',
             confirmButtonText: 'Cerrar'
         });

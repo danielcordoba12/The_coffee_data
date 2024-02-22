@@ -10,10 +10,17 @@
   import "bootstrap";
   import "datatables.net";
   import "datatables.net-bs5";
+  import 'bootstrap/dist/css/bootstrap.min.css';
   import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+  import 'datatables.net-bs5/js/dataTables.bootstrap5.min.js';
   import "datatables.net-responsive";
   import "datatables.net-responsive-bs5";
   import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+
+  // import 'bootstrap/dist/css/bootstrap.min.css';
+  // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+  // import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
+  // import 'datatables.net-bs5/js/dataTables.bootstrap5.min.js';
 
 
   async function verificarCodigo(codigo, data) {
@@ -467,74 +474,80 @@ const RegistrarMuestra = async (data) => {
       })
     }
 
-    function actualizarMuestra(id) {
-      fetch( `http://localhost:4000/muestra/actualizar/${id}`,{
-        method:'PUT',
-        headers:{
-          'Content-type': 'application/json'
+    // function actualizarMuestra(id) {
+    //   fetch( `http://localhost:4000/muestra/actualizar/${id}`,{
+    //     method:'PUT',
+    //     headers:{
+    //       'Content-type': 'application/json'
 
-      },
-      body: JSON.stringify(muestraSeleccionada),
-    })
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data.status);
+    //   },
+    //   body: JSON.stringify(muestraSeleccionada),
+    // })
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //       // console.log(data.status);
 
-          if (data.status == 200) {
-            Sweet.actualizacionExitosa();
-            toggleModal(2)
+    //       if (data.status == 200) {
+    //         Sweet.actualizacionExitosa();
+    //         toggleModal(2)
             
-          }
-          if (data.status == 401) {
-
-            Sweet.actualizacionFallida();
-
-          }
-          // hideAllModals();
-          listarMuestra();
-          // setUpdateModal(false);
-          // removeModalBackdrop();
-          // const modalBackdrop = document.querySelector('.modal-backdrop');
-          // if (modalBackdrop) {
-          //   modalBackdrop.remove();
-          // }
-        })
-          .catch(error => {
-            console.error('Error:', error);
-			});
-    }
-    // const actualizarMuestra = async (id) => {
-    //   try {
-    //       const data = await Api.put(`/muestra/actualizar/${id}`, showModal2,muestraSeleccionada);
-    //       console.log(data, "muestra")
-    //       if (data.data.status == false) {
-    //           let keys = Object.keys(data.data.errors)
-    //           let h6Error = document.querySelectorAll(".h6-error");
-    //           for (let x = 0; x < h6Error.length; x++) {
-    //               h6Error[x].remove()
-    //           }
-    //           console.log(data.data)
-    //           for (let x = 0; x < keys.length; x++) {
-    //               let h6 = document.createElement("h6")
-    //               h6.innerHTML = data.data.errors[keys[x]]
-    //               h6.classList.add("h6-error")
-    //               if (document.getElementById(keys[x])) {
-    //                   let parent = document.getElementById(keys[x]).parentNode
-    //                   parent.appendChild(h6)
-    //               }
-
-    //           }
-    //       } else {
-    //           Sweet.actualizacionExitosa();
-    //           hideAllModals();
     //       }
-    //                   // Recargar la lista de lotes después de la actualización
-    //                   // const response = await Api.get("lote/listar");
-    //                   // setLotes(response.data);
-    //               } catch (error) {
-    //                   console.error("Error al actualizar lote: ", error);
-    //               }
-    //           };
+    //       if (data.status == 401) {
+
+    //         Sweet.actualizacionFallida();
+
+    //       }
+    //       // hideAllModals();
+    //       listarMuestra();
+    //       // setUpdateModal(false);
+    //       // removeModalBackdrop();
+    //       // const modalBackdrop = document.querySelector('.modal-backdrop');
+    //       // if (modalBackdrop) {
+    //       //   modalBackdrop.remove();
+    //       // }
+    //     })
+    //       .catch(error => {
+    //         console.error('Error:', error);
+		// 	});
+    // }
+    async function actualizarMuestra (id) {
+      alert("muestraSeleccionada");
+      console.log(muestraSeleccionada,"ahhhh")
+      try {
+      console.log("este es la info de actualizar" ,muestraSeleccionada);
+
+          const data = await Api.put(`/muestra/actualizar/${id}`,muestraSeleccionada);
+          console.log(data, "muestra")
+          if (data.data.status == false) {
+              let keys = Object.keys(data.data.errors)
+              let h6Error = document.querySelectorAll(".h6-error");
+              for (let x = 0; x < h6Error.length; x++) {
+                  h6Error[x].remove()
+              }
+              console.log(data.data)
+              for (let x = 0; x < keys.length; x++) {
+                  let h6 = document.createElement("h6")
+                  h6.innerHTML = data.data.errors[keys[x]]
+                  h6.classList.add("h6-error")
+                  if (document.getElementById(keys[x])) {
+                      let parent = document.getElementById(keys[x]).parentNode
+                      parent.appendChild(h6)
+                  }
+
+              }
+          } else {
+              Sweet.actualizacionExitosa();
+              hideAllModals();
+          }
+                      // Recargar la lista de lotes después de la actualización
+                      // const response = await Api.get("lote/listar");
+                      // setLotes(response.data);
+                  } catch (error) {
+      console.log("este es la info de actualizar" ,muestraSeleccionada);
+
+                      console.error("Error al actualizar lote: ", error);
+                  }
+              };
     
     
 
@@ -878,7 +891,7 @@ const RegistrarMuestra = async (data) => {
         </div>
         <div className="container-button">
       <button  className='button' type="button"            
-            onClick={() => { actualizarMuestra(muestraSeleccionada.id), hideAllModals}}
+            onClick={() => { actualizarMuestra(muestraSeleccionada.id); hideAllModals}}
       >Actualizar</button>
       
       <button  className='button' type="button"
