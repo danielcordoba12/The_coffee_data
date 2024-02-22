@@ -4,6 +4,7 @@ import * as echarts from 'echarts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import '../style/grafica.css';
+import Form from 'react-bootstrap/Form';
 import esES from "../languages/es-ES.json"
 import $ from "jquery";
 import "bootstrap";
@@ -97,6 +98,7 @@ function Grafica() {
 
     // Configura tus opciones de gráfico
   const option = {
+    backgroundColor : "white",
   title: {
     text: 'Resultados'
 
@@ -132,6 +134,9 @@ function Grafica() {
         type: 'line',
         stack: 'a',
         data: [120, 132, 101, 134, 90, 230, 210]
+      //   lineStyle: {
+      //     color: 'green', // Cambia  al color deseado
+      // },
     },
     {
         name: 'Union Ads',
@@ -160,7 +165,7 @@ function Grafica() {
     
     ],
     textStyle: {
-        color: 'white',  // Cambia el color del texto 
+        color: 'black',  // Cambia el color del texto 
     },
 };
 
@@ -180,7 +185,7 @@ function Grafica() {
             notMerge={true}
             lazyUpdate={true}
             style={{ height: '700px', width: '100%' }}
-            theme="dark"
+            theme="light"
         />
         </div>
 
@@ -217,7 +222,7 @@ function Grafica() {
                     <td>{task.tipo_analisis}</td>
                     <td>{formatDate(task.fecha_creacion)}</td>
                     <td>
-                      <ToggleButtonExample index={index} />
+                      <CheckApiExample />
                     </td>
 
                   </tr>
@@ -249,5 +254,24 @@ function ToggleButtonExample({ index }) {
   </ToggleButton>
   );
 }
+
+        function CheckApiExample() {
+          return (
+            <Form>
+              {/* {['checkbox'].map((type) => ( */}
+                <div className="mb-3 h-6 bg-color-red">
+                  <Form.Check  >
+                    <Form.Check.Input   />
+                    <Form.Control.Feedback >
+                    </Form.Control.Feedback>
+                  </Form.Check>
+                </div>
+              {/* ))} */}
+            </Form>
+          );
+        }
+
+  
+
 
 export default Grafica;

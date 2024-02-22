@@ -190,17 +190,18 @@ function Dashboard() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/analisis"}>
-                                    <FontAwesomeIcon icon={faPhone}className="icon" />
-                                    <p>Analisis</p>
-                                </Link>
-                            </li>
-                            <li>
                                 <Link to={"/listar/muestra"}>
                                     <FontAwesomeIcon icon={faVials}  className="icon"/>
                                     <p>Muestras</p>
                                 </Link>
                             </li>
+                            <li>
+                                <Link to={"/analisis"}>
+                                    <FontAwesomeIcon icon={faPhone}className="icon" />
+                                    <p>Analisis</p>
+                                </Link>
+                            </li>
+                            
                             <li>
                                 <Link to={"/resultado"}>
                                     <FontAwesomeIcon icon={faVials}  className="icon"/>

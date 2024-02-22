@@ -428,3 +428,17 @@
 
 
 
+/* ///////////////////////////////Data table//////////////////////////////////////////////// */
+/* .paging_simple_numbers{
+  background-color: red;
+} */
+/* .container-fluid w-full{
+  margin-top: 24px;
+  background-color: red;
+  z-index: 34;
+  position: absolute;
+} */
+.dataTables_wrapper .dataTables_length select {
+  margin-top: 20px; /* Modifica el margen superior según tus preferencias */
+}
+
