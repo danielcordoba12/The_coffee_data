@@ -133,12 +133,32 @@ export const actualizarVariedad = async (req, res) => {
 
 
     try {
-        let error1 = validationResult(req);
-        if (!error1.isEmpty()) {
-            return res.status(400).json(error1);
+
+      let data = {
+        "string": {
+          "nombre": {
+            "value": req.body.nombre,
+            "referencia": "El nombre"
+          }
         }
+  
+      }
+      console.log(data,"xddd");
+      let validateInputs = validate(data)
+      if (validateInputs.status == false) {
+        return res.status(200).json({
+          "status": false,
+          "errors": validateInputs.errors
+  
+        })
+      }
+      console.log(req.body)
+      let error1 = validationResult(req);
+      if (!error1.isEmpty()) {
+        return res.status(400).json(error1);
+      }
         let id = req.params.id;
-        let { fecha_creacion, nombre, estado } = req.body;
+        let { fecha_creacion, nombre } = req.body;
 
         let sql = `update variedades SET fecha_creacion='${fecha_creacion}',nombre='${nombre}'
             where id=${id}`;

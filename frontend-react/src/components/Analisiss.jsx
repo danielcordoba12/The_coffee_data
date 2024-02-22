@@ -108,7 +108,6 @@ const Analisis = () => {
             try {
                 await Api.patch(`analisis/desactivar/${selectAnalisisid}`, modalAnalisis);
                 closeModalEdit();
-                // Recargar la lista de Analisis después de la desactivación
                 const response = await Api.get("analisis/listar");
                 setAnalisis(response.data);
             } catch (error) {
@@ -122,7 +121,6 @@ const Analisis = () => {
             try {
                 await Api.patch(`/analisis/activar/${selectAnalisisid}`, modalAnalisis);
                 closeModalEdit();
-                // Recargar la lista de analisis después de la activación
                 const response = await Api.get("analisis/listar");
                 setAnalisis(response.data);
                 }catch (error) {
@@ -131,13 +129,7 @@ const Analisis = () => {
         }
     };
 
-    const handleClickOpcion = (usuario) => {
-        // Actualizamos el filtro con el valor seleccionado
-        setFiltro(`${usuario.numero_documentos}-${usuario.nombre}`);
-        setMostrarOpciones(false);
-    };
 
- 
 
     function formatDate(dateString) {
         if (!dateString) return ''; // Manejar el caso de valor nulo o indefinido
@@ -147,9 +139,6 @@ const Analisis = () => {
         const day = String(fecha.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     }
-
-
-
 
     const closeModalEdit = () => {
         setselectAnalisisid(null);
@@ -176,15 +165,12 @@ const Analisis = () => {
             console.log(data1,"tiposssssss")
             Sweet.registroExitoso();
             closeRegistrarAnalisisModal();
-            // Recargar la lista de analisis después del registro
             const response = await Api.get("analisis/listar");
             setAnalisis(response.data);
         } catch (error) {
             console.error("Error al registrar el analisis:", error);
         }
     };
-
-
 
     function clearFocusInput(Element) {
         let inputSearch = document.getElementById(Element)
@@ -259,7 +245,6 @@ const Analisis = () => {
         }
     }, [aRegistrarModalOpen])
 
-
     return (
         <>
         {modalAnalisis && <div className="overlay-d" onClick={closeModalEdit}></div>}
@@ -268,15 +253,13 @@ const Analisis = () => {
             )}
             
         <div className="tablaAnalisis">
-            <div className="contTile">
+            <div className="contTitle">
             <h1 className="titleanalisis">Análisis</h1> 
         
             <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
                 Añadir
             </button>
             </div>
-          
-
             <table>
                 <thead className="analisis">
                     <tr className="encabezado">
@@ -289,6 +272,7 @@ const Analisis = () => {
                         <th>Propietario </th>
                         <th>Finca </th>
                         <th>Lote </th>
+                        <th>Variedad</th>
 
                     </tr>
                 </thead>
@@ -304,6 +288,7 @@ const Analisis = () => {
                                 <td>{task.propietario}</td>
                                 <td>{task.nombre_fincas}</td> 
                                 <td>{task.nombre_lotes}</td> 
+                                <td>{task.nombre_variedades}</td> 
                                 <td>
                                     <button
                                         type="button"
@@ -322,7 +307,7 @@ const Analisis = () => {
 
         {modalAnalisis && (
             <div className="tablaEditAna">
-                <h1 className="titleEditAna">Editar</h1>
+                <h1 className="titleEditAna">Editar Análisis</h1>
                 <div className="Editcampos">
                       <label htmlFor="" className="labelEdit">Muestra</label>
                         <div className="div-input-d">
@@ -348,7 +333,7 @@ const Analisis = () => {
                                 ))}
                             </select>
                         </div><br />
-                        <label htmlFor="" className="labelEdit">Asignación</label>
+                        <label htmlFor="" className="labelEdit">Usuario</label>
                         <div className="div-input-d">
                             <select
 
@@ -404,8 +389,6 @@ const Analisis = () => {
             </div>
         )}
 
-
-            
             {aRegistrarModalOpen && (
                 <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
             )}
@@ -429,16 +412,11 @@ const Analisis = () => {
                         method="post"
                     >
                         
-                        <div className="div-input-d">
-                            <input className="input-search-d" type="text" id="tipo_analisis_id" ref={tipo_analisis_id} />
-                            <label htmlFor="  tipo_analisis_id" >Fisico</label>
-                            <div className="select-option-input-d">
-                                {tipo_analisis.map((key, index) => (
-                                    (
-                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("tipo_analisis_id").value = key.nombre_tipo_analisis; !datasSelect.tipo_analisis_id ? datasSelect.tipo_analisis_id = {} : ""; datasSelect.tipo_analisis_id.value = key.id; clearFocusInput("tipo_analisis_id") }} key={key.id}>{key.nombre_tipo_analisis}</div>
-                                    )
-                                ))}
-                            </div>
+                        <div className="div-input-d-select">
+                        <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
+                            <select className="option-select-ana" name="tipo_analisis_id" id="1">
+                                <option value="">Fisico</option>
+                            </select>
                         </div>
                         <div className="div-input-d">
                             <input className="input-search-d" type="text" id="muestras_id"ref={muestras_id} />
@@ -453,7 +431,7 @@ const Analisis = () => {
                         </div>
                         <div className="div-input-d">
                             <input className="input-search-d" type="text" id="usuarios_id" ref={usuarios_id} />
-                            <label htmlFor="usuarios_id" className='label'>Usuarios</label>
+                            <label htmlFor="usuarios_id" className='label'>Usuario</label>
                             <div className="select-option-input-d">
                                 {usuarios.map((key, index) =>(
                                     (

@@ -5,8 +5,16 @@
   // import '../style/RegistrarMuestra.css'
   import Api from "../services/api";
   import Sweet from "../helpers/Sweet";
+  import esES from "../languages/es-ES.json"
+  import $ from "jquery";
+  import "bootstrap";
+  import "datatables.net";
+  import "datatables.net-bs5";
+  import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+  import "datatables.net-responsive";
+  import "datatables.net-responsive-bs5";
+  import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
-  
 
   async function verificarCodigo(codigo, data) {
     try {
@@ -41,22 +49,22 @@
 
   const Muestra = () => {
     const[muestra, setMuestra] = useState([]);
-    const [showModal,setShowModal] = useState(false);
+    // const [showModal,setShowModal] = useState(false);
     // const [showModal2, setShowModal2] = useState(false);
+    const[showModal ,setShowModal] = useState(false)
     const [showModal1, setShowModal1] = useState(false);  
     const [showModal2, setShowModal2] = useState(false);
     const [showModal3, setShowModal3] = useState(false);
-    const [showModal4, setShowModal4] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
-    const [filtro, setFiltro] = useState('');
     const [cafe,setCafes] = useState([]);
-    const [mostrarOpciones, setMostrarOpciones] = useState(false);
-    const modalMuestraRef = useRef(null);
-    let modalVisible = false; 
     const [muestraSeleccionada,setMuestraSeleccionada] = useState({});
-    const [codigo, setCodigo] = useState('');
+    const [selectedCafeId, setSelectedCafeId] = useState(null);
+    const [dataSelect, setDataSelect] = useState({});
+    const tableRef = useRef();
+    // const [codigo,setCodigo] = useState({})
 
 
+    const cafes_id = useRef(null);
     const codigo_externo = useRef(null);
     const consecutivo_informe = useRef(null);
     const muestreo = useRef(null);
@@ -72,7 +80,6 @@
     const actividad_agua = useRef(null);
     const tiempo_secado = useRef(null);
     const presentacion = useRef(null);
-    const cafes_id = useRef(null);
     const fecha_creacion = useRef(null);
 
 
@@ -99,11 +106,18 @@
   //   console.log("Toggle modal funcional");
   //   setShowModal(!showModal);
   // }
+    const openRegistrarModal = () => {
+      setShowModal(true);
+      console.log("modal" , showModal);
+      console.log("si estoy funcionando");
+  };
+
   const toggleModal = (modalId) => {
     if (modalId === 1) {
       console.log("modal" , modalId);
-      setShowModal1(!showModal1);
-    } else if (modalId === 2) {
+      setShowModal1(true);
+    }
+    else if (modalId === 2) {
       console.log("modal" , modalId);
 
       setShowModal2(!showModal2);
@@ -122,9 +136,9 @@
 
 
     
-  useEffect(() => {
-    generarCodigoUnicoNoRepetido();
-  }, []);
+  // useEffect(() => {
+  //   generarCodigoUnicoNoRepetido();
+  // }, []);
 
   const generarCodigoUnico = () => {
     let parte1 = 'INF-';
@@ -136,18 +150,53 @@
     return parte1 + (parte2 < 10 ? '0' + parte2 : parte2) + parte3;
   };
 
-  const generarCodigoUnicoNoRepetido = async () => {
-    let nuevoCodigo;
-    do {
-      nuevoCodigo = generarCodigoUnico();
-    } while (await verificarCodigo(nuevoCodigo));
+  // const generarCodigoUnicoNoRepetido = async () => {
+  //   let nuevoCodigo;
+  //   do {
+  //     nuevoCodigo = generarCodigoUnico();
+  //   } while (await verificarCodigo(nuevoCodigo));
 
-    console.log(nuevoCodigo);
-    setCodigo(nuevoCodigo);
-  };
+  //   console.log(nuevoCodigo);
+  //   setCodigo(nuevoCodigo);
+  // };
   
 
   
+
+
+  ////////////////////////////////////////////////DATA TABLE//////////////////////////////////////////
+
+  useEffect(()=> {
+    if (muestra.length > 0 ) {
+      if($.fn.DataTable.isDataTable(tableRef.current)) {
+        $(tableRef.current).DataTable().destroy();
+      }
+      $(tableRef.current).DataTable({
+        columnDefs:[
+          {
+            targets:-1,
+            responsivePriority:1
+          },
+          {
+            targets:-2,
+            responsivePriority:1
+          },
+          {
+            targets:-3,
+            responsivePriority:1
+          }
+        ],
+        responsive:true,
+        language: esES,
+        paging: true,
+        lengthMenu:[
+          [7,10,50,-1],
+          ['7 Filas','10 Filas','50 Filas','Ver Todo']
+        ]
+      });
+
+    }
+  },[muestra])
 
   // useEffect(() => {
     const listarMuestra = async () => {
@@ -166,17 +215,47 @@
       listarMuestra();
     }, []);
     
-  
-  const filtrarOpciones = (event) => {
-    setFiltro(event.target.value.toLowerCase());
-    setMostrarOpciones(true);
-  };
-  const handleClickOpcion = (cafe) => {
-    // Actualizamos el filtro con el valor seleccionado
-    setFiltro(`${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`);
-    setMostrarOpciones(false);
-  };
 
+  const inputRef = useRef(null);
+
+    const handleOptionClick = (key) => {
+        const textoSeleccionado = `${key.documento}, ${key.nombre_finca}, ${key.nombre_usuario}, ${key.numero_lote}, ${key.nombre_variedad}`;
+        inputRef.current.value = textoSeleccionado;
+    };
+    
+  // const filtrarOpciones = (event) => {
+  //   setFiltro(event.target.value.toLowerCase());
+  //   setMostrarOpciones(true);
+  // };
+  // const handleClickOpcion = (cafe) => {
+  //   // Actualizamos el filtro con el valor seleccionado
+  //   setFiltro(`${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`);
+  //   setMostrarOpciones(false);
+  // };
+
+
+  function clearFocusInput(Element) {
+    let inputSearch = document.getElementById(Element)
+
+    if (inputSearch) {
+        
+        let divOptions = inputSearch.parentNode.querySelectorAll(".select-options-cafe");
+        if(divOptions.length > 0){
+            divOptions[0].style.display = "none"
+        }
+        let select = inputSearch.parentNode.querySelectorAll(".option-select-cafe")
+        for (let s = 0; s < select.length; s++) {
+            let elementValue = inputSearch.getAttribute("id")
+            
+            if(dataSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")){
+                select[s].classList.add("option-select-cafe")
+            }else{
+                select[s].classList.remove("option-select-cafe")
+            }
+            
+        }
+    }
+}
 
       
   // async function listarMuestra(){
@@ -197,25 +276,71 @@
 
   //     }
   // }
+  useEffect(() => {
+    let inputRegister = document.querySelectorAll(".input-register");
+    let h6Error = document.querySelectorAll(".h6-error");
 
-  const RegistrarMuestra = async (data) => {
-    const headers = {
-        headers: {
-            token: "xd",
-        },
-    };
-    console.log("Esto es data:", data);
+    for (let x = 0; x < inputRegister.length; x++) {
+        inputRegister[x].addEventListener("change", function () {
+            let h6Error = document.querySelectorAll(".h6-error");
 
-    try {
-        await Api.post("muestra/registrar", data, headers);
-        Sweet.registroExitoso();
-        closeRegistrarModal();  
-        // Recargar la lista de cafes después del registro
-        const response = await Api.get("muestra/listar");
-        setCafes(response.data);
-    } catch (error) {
-        console.error("Error al registrar el cafe:", error);
+            if (h6Error[x]) {
+                h6Error[x].style.display = "none"
+            }
+        })
+        inputRegister[x].addEventListener("input", function () {
+            let h6Error = document.querySelectorAll(".h6-error");
+
+            if (h6Error[x]) {
+                h6Error[x].style.display = "none"
+            }
+        })
     }
+
+},[showModal])
+// const data = await Api.post("muestra/registrar", muestraData, headers);
+
+const RegistrarMuestra = async (data) => {
+  const muestraData = {
+      ...data
+  };
+
+  const headers = {
+      headers: {
+          token: "xd",
+      },
+  };
+  try {
+      const data = await Api.post("muestra/registrar", muestraData, headers);
+      console.log(data,"ahhhh")
+      if (data.data.status == false) {
+          let keys = Object.keys(data.data.errors)
+          let h6Error = document.querySelectorAll(".h6-error");
+          for (let x = 0; x < h6Error.length; x++) {
+              h6Error[x].remove()
+          }
+          for (let x = 0; x < keys.length; x++) {
+              let h6 = document.createElement("h6")
+              h6.innerHTML = data.data.errors[keys[x]]
+              h6.classList.add("h6-error")
+              if (document.getElementById(keys[x])) {
+                console.log("Si se enontro a", keys[x]);
+                  let parent = document.getElementById(keys[x]).parentNode
+                  parent.appendChild(h6)
+              }
+          }
+      } else {
+          Sweet.registroExitoso();
+          hideAllModals();
+          listarMuestra();  
+          // closeRegistrarModal();
+          // const response = await Api.get("finca/listar");
+          setCafes(response.data);
+          // location.href = "/finca"
+      }
+  } catch (error) {
+      console.error("Error al registrar la muestra:", error);
+  }
 };
     // function RegistrarMuestra(){
 
@@ -357,6 +482,7 @@
 
           if (data.status == 200) {
             Sweet.actualizacionExitosa();
+            toggleModal(2)
             
           }
           if (data.status == 401) {
@@ -364,7 +490,7 @@
             Sweet.actualizacionFallida();
 
           }
-          hideAllModals();
+          // hideAllModals();
           listarMuestra();
           // setUpdateModal(false);
           // removeModalBackdrop();
@@ -376,9 +502,42 @@
           .catch(error => {
             console.error('Error:', error);
 			});
-
-    
     }
+    // const actualizarMuestra = async (id) => {
+    //   try {
+    //       const data = await Api.put(`/muestra/actualizar/${id}`, showModal2,muestraSeleccionada);
+    //       console.log(data, "muestra")
+    //       if (data.data.status == false) {
+    //           let keys = Object.keys(data.data.errors)
+    //           let h6Error = document.querySelectorAll(".h6-error");
+    //           for (let x = 0; x < h6Error.length; x++) {
+    //               h6Error[x].remove()
+    //           }
+    //           console.log(data.data)
+    //           for (let x = 0; x < keys.length; x++) {
+    //               let h6 = document.createElement("h6")
+    //               h6.innerHTML = data.data.errors[keys[x]]
+    //               h6.classList.add("h6-error")
+    //               if (document.getElementById(keys[x])) {
+    //                   let parent = document.getElementById(keys[x]).parentNode
+    //                   parent.appendChild(h6)
+    //               }
+
+    //           }
+    //       } else {
+    //           Sweet.actualizacionExitosa();
+    //           hideAllModals();
+    //       }
+    //                   // Recargar la lista de lotes después de la actualización
+    //                   // const response = await Api.get("lote/listar");
+    //                   // setLotes(response.data);
+    //               } catch (error) {
+    //                   console.error("Error al actualizar lote: ", error);
+    //               }
+    //           };
+    
+    
+
     useEffect(() => {
       const buscarcafe = async () => {
           try {
@@ -391,136 +550,282 @@
       }
       buscarcafe();
     }, []);
+
+    const openModal = async (cafeId) => {
+      setSelectedCafeId(cafeId);
+      try {
+          const response = await Api.get(`/cafe/buscar/${cafeId}`);
+          setModalCafe(response.data);
+      } catch (error) {
+          console.error('Error buscando el cafe', error);
+      }
+  };
+
+  useEffect(()=>{
+    window.addEventListener("click",function(e){
+      let divOptions = document.querySelectorAll(".div-input-search-select");
+      for (let s = 0; s < divOptions.length; s++) {
+        if(!e.target == divOptions[s] || !divOptions[s].contains(e.target)){
+          let options = divOptions[s].querySelectorAll(".select-options-cafe")
+          console.log(options[0])
+          if(options.length> 0){
+            options[0].style.display = "none"
+          } 
+        }
+      }
+    })
+  },[])
+  useEffect(() => {
+
+    let inputSearch = document.querySelectorAll(".input-search-cafe")
+
+    if (inputSearch.length > 0) {
+        for (let s = 0; s < inputSearch.length; s++) {
+
+            inputSearch[s].addEventListener("input", function () {
+                let parent = inputSearch[s].parentNode
+                if (parent) {
+                    let selectOptionsInput = parent.querySelectorAll(".select-options-cafe");
+                    if (selectOptionsInput[0]) {
+                        selectOptionsInput[0].style.display = "block"
+                        let options = selectOptionsInput[0].querySelectorAll("div");
+                        for (let o = 0; o < options.length; o++) {
+                            if (options[o].innerHTML.toLowerCase().includes(inputSearch[s].value.toLowerCase())) {
+                                options[o].style.display = "block"
+                            } else {
+                                options[o].style.display = "none"
+                            }
+                            if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
+                                let focusSelect = document.querySelectorAll(".option-select-cafe")
+                                if (focusSelect.length > 0) {
+                                    console.log(focusSelect[0].classList)
+                                    focusSelect[0].classList.remove("option-select-cafe")
+                                }
+                                inputSearch[s].value = options[o].innerHTML
+                                if(!dataSelect[inputSearch[s].getAttribute("data-id")]){
+                                    dataSelect[inputSearch[s].getAttribute("data-id")] = {}
+                                }
+                                dataSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
+                                options[o].classList.add("option-select-cafe")
+                            } else {
+                                options[o].classList.remove("option-select-cafe")
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    }
+},[showModal1])
     
     return (
 
       <div>
-            <div id="modalInfo3" className={`modal-info ${showModal3 ? 'show' : ''}`}  showModal={showModal3} >
-    <form className="formulario-muestra"  method="post">
-      <div className="btn-x" onClick={hideAllModals}>
-          <FontAwesomeIcon icon={faX} className="faX"/>
-      </div>
-    <table className="info-complete">
-        <tbody>
-        <tr>
-            <td>  
-            <div className='container-label'>
-                <label className='label-modal'>Fecha de creacion</label>
-                <div className='value'>{formatDate(muestraSeleccionada.fecha_creacion)}</div>
-            </div>
-            <div className='container-label'>
-              <label className='label-modal'>Codigo externo</label>
-              <div className='value'>{muestraSeleccionada.codigo_externo}</div>
-            </div><div className='container-label'>
-              <label className='label-modal'>Consecutivo Informe</label>
-              <div className='value'>{muestraSeleccionada.consecutivo_informe}</div>
-            </div><div className='container-label'>
-              <label className='label-modal'>Muestreo</label>
-              <div className='value'>{muestraSeleccionada.muestreo}</div>
-            </div><div className='container-label'>
-              <label className='label-modal'>Preparacion muestra</label>
-              <div className='value'>{muestraSeleccionada.preparacion_muestra}</div>
-            </div><div className='container-label'>
-              <label className='label-modal'>Cantidad</label>
-              <div className='value'>{muestraSeleccionada.cantidad}</div>
-            </div><div className='container-label'>
-              <label className='label-modal'>Tipo de molienda</label>
-              <div className='value'>{muestraSeleccionada.tipo_molienda}</div>
-            </div><div className='container-label'>
-              <label className='label-modal'>Tipo de fermentacion</label>
-              <div className='value'>{muestraSeleccionada.tipo_fermentacion}</div>
-            </div>
-            <div className='container-label'>
-              <label className='label-modal'>Densidad de cafe verde</label>
-              <div className='value'>{muestraSeleccionada.densidad_cafe_verde}</div>
-            </div>
-          </td>
-          <td>
+        {showModal3 ? 
+          <div id="modalInfo3" className="modal-info"   >
+          {/* <h1 className='title-registrar-resultado'>Datos muestra</h1>  */}
+    
+        <form className="formulario-muestra"  method="post">
+          <div className="btn-x" onClick={hideAllModals}>
+              <FontAwesomeIcon icon={faX} className="faX"/>
+          </div>
+        <table className="info-complete">
+            <tbody>
+            <tr>
+                <td>
+                <div className="columna">
+    
+                <div className='container-input'>
+    
+                  <label className='label'>Cafe </label>
+                      {cafe.filter(cafe => cafe.id === muestraSeleccionada.cafes_id).map((cafe) => (
+                          <div
+                              key={cafe.id}
+                              className="custom-dropdown-options"
+                              // onClick={() => handleClickOpcion(lote)}
+                          >
+                              <div className='input input-register  '>{`${cafe.id}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}</div>
+                          </div>
+                      ))}
+    
+                </div> 
+                <div className='container-input'>
+                    <input  className='input input-register' value={formatDate(muestraSeleccionada.fecha_creacion)}/>
+                    <label className='label'>Fecha de creacion</label>
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.codigo_externo} />
+                  <label className='label'>Codigo externo</label>
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.consecutivo_informe} />
+                  <label className='label'>Consecutivo Informe</label>
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.muestreo} />
+                  <label className='label'>Muestreo</label>
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.preparacion_muestra} />
+                  <label className='label'>Preparacion muestra</label>
+    
+    
+                </div><div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.cantidad} />
+                  <label className='label'>Cantidad</label>
+    
+    
+                </div><div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.tipo_molienda} />
+                  <label className='label'>Tipo de molienda</label>
+    
+    
+                </div><div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.tipo_fermentacion} />
+                  <label className='label'>Tipo de fermentacion</label>
+    
+    
+                </div>
+                
+                </div>
+              </td>
+              <td>
+                <div className="columna">
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.densidad_cafe_verde} />
+                  <label className='label'>Densidad de cafe verde</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={formatDate(muestraSeleccionada.fecha_procesamiento)} />
+                  <label className='label'>Fecha de procesamiento</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.tipo_tostion} />
+                  <label className='label'>Tipo de tostion</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.tiempo_fermentacion} />
+                  <label className='label'>tiempo fermentacion</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.codigo_muestra} />
+                  <label className='label'>Codigo de muestra</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.actividad_agua} />
+                  <label className='label'>Actividad agua</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.tiempo_secado} />
+                  <label className='label'>Tiempo de secado</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                  <input type="text" className="input-register" value={muestraSeleccionada.presentacion} />
+                  <label className='label'>Presentacion</label>
+    
+    
+                </div>
+                <div className='container-input'>
+                    <input 
+                      type="text" 
+                      className="input-register" 
+                      value={muestraSeleccionada.estado === 0 ? 'Inactivo' : 'Activo'} 
+                      disabled={muestraSeleccionada.estado === 0} // Desactiva si el estado es 0
+                    />
+                  <label className='label'>Estado</label>
+                  
+    
+                </div>
+              
+    
+                </div>
+              </td>
+              
+              
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    
+    </div>
+        : ""}
             
-            <div className='container-label'>
-              <label className='label-modal'>Fecha de procesamiento</label>
-              <div className='value'>{formatDate(muestraSeleccionada.fecha_procesamiento)}</div>
-            </div>
-            <div className='container-label'>
-              <label className='label-modal'>Tipo de tostion</label>
-              <div className='value'>{muestraSeleccionada.tipo_tostion}</div>
-            </div>
-            <div className='container-label'>
-              <label className='label-modal'>Tiempo de fermentacion</label>
-              <div className='value'>{muestraSeleccionada.tiempo_fermentacion}</div>
-            </div>
-            <div className='container-label'>
-              <label className='label-modal'>Codigo de muestra</label>
-              <div className='value'>{muestraSeleccionada.codigo_muestra}</div>
-            </div>
-            <div className='container-label'>
-              <label className='label-modal'>Actividad agua</label>
-              <div className='value'>{muestraSeleccionada.actividad_agua}</div>
-            </div>
-            <div className='container-label'>
-              <label className='label-modal'>Tiempo de secado</label>
-              <div className='value'>{muestraSeleccionada.tiempo_secado}</div>
-            </div>
-            <div className='container-label'>
-              <label className='label-modal'>Presentacion</label>
-              <div className='value'>{muestraSeleccionada.presentacion}</div>
-            </div>
-            <div className='container-label'>
-              <label className='label-modal'>Estado</label>
-              <div className='value'>{muestraSeleccionada.estado}</div>
-            </div>
-            <div className='container-label'>
-              <label className='label-modal'>Cafe</label>
-              <div className='value'>{muestraSeleccionada.cafes_id}</div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
 
-</div>
+{showModal2 ?  <div className= {`main-content-actualizar `}  id="modalInfo2" >
+<h1 className='title-registrar-resultado'>Actualizar muestra</h1> 
 
-        <div className= {`main-content-actualizar ${showModal2 ? 'show' : ''}`}  id="modalInfo2" showModal={showModal2}>
-          <h1 className='title-registrar-muestras'>Editar Muestra</h1>
 
     <form className="formulario-muestra info-complete"  >
       <div className="columna">
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="date" id="fecha_creacion" name="fecha_creacion" className='input' placeholder='' value={formatDate(muestraSeleccionada.fecha_creacion)} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, fecha_creacion: e.target.value})}/>
+          <label className='label'>Fecha de creacion</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="codigo_externo" name="codigo_externo" className='input' placeholder='' value={muestraSeleccionada.codigo_externo || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, codigo_externo: e.target.value})}/>
+          <label className='label'>Codigo externo</label>
+
         </div>
+        
         <div className='container-input'>
-        <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
+        {/* <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled /> */}
           <input type="text" id="consecutivo_informe" name="consecutivo_informe" className='input' placeholder=''  value={muestraSeleccionada.consecutivo_informe || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada , consecutivo_informe: e.target.value})}/>
+          <label className='label'>Consecutivo Informe</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="muestreo" name="muestreo" className='input' placeholder='' value={muestraSeleccionada.muestreo} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, muestreo: e.target.value})}/>
+          <label className='label'>Muestreo</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="preparacion_muestra" name="preparacion_muestra" className='input' placeholder=''value={muestraSeleccionada.preparacion_muestra || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, preparacion_muestra: e.target.value})}/>
+          <label className='label'>Preparacion muestra</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="cantidad" name="cantidad" className='input' placeholder='' value={muestraSeleccionada.cantidad || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, cantidad: e.target.value})}/>
+          <label className='label'>Cantidad</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tipo_molienda" name="tipo_molienda" className='input' placeholder='' value={muestraSeleccionada.tipo_molienda || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tipo_molienda: e.target.value})}/>
+          <label className='label'>Tipo de molienda</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tipo_fermentacion" name="tipo_fermentacion" className='input' placeholder=''value={muestraSeleccionada.tipo_fermentacion || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tipo_fermentacion: e.target.value})}/>
+          <label className='label'>Tipo de fermentacion</label>
+
         </div>
         <div className='container-input' >
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="densidad_cafe_verde" name="densidad_cafe_verde" className='input' placeholder='' value={muestraSeleccionada.densidad_cafe_verde || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, densidad_cafe_verde: e.target.value})}/>
+          <label className='label'>Densidad de cafe verde</label>
+
         </div>
       </div>
 
@@ -528,31 +833,44 @@
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="date" id="fecha_procesamiento" name="fecha_procesamiento" className='input'  placeholder='' value={formatDate(muestraSeleccionada.fecha_procesamiento || '')  } onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, fecha_procesamiento: e.target.value})}/>
+          <label className='label'>Fecha de procesamiento</label>
+
         </div>
         <div className='container-input'>
         <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tipo_tostion" name="tipo_tostion" className='input'  value={muestraSeleccionada.tipo_tostion || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tipo_tostion: e.target.value})}/>
-          <label htmlFor="tipo_tostion" className='label'></label>
+          <label className='label'>Tipo de tostion</label>
+          
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tiempo_fermentacion" name="tiempo_fermentacion" className='input'  placeholder='' value={muestraSeleccionada.tiempo_fermentacion || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tiempo_fermentacion: e.target.value})}/>
+          <label className='label'>tiempo fermentacion</label>
+
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="codigo_muestra" name="codigo_muestra" className='input' placeholder=''  value={muestraSeleccionada.codigo_muestra || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, codigo_muestra: e.target.value})}/>
+          <label className='label'>Codigo de muestra</label>
+
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="actividad_agua" name="actividad_agua" className='input' placeholder=''  value={muestraSeleccionada.actividad_agua || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, actividad_agua: e.target.value})}/>
+          <label className='label'>Actividad agua</label>
+
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="tiempo_secado" name="tiempo_secado" className='input' placeholder='' value={muestraSeleccionada.tiempo_secado || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, tiempo_secado: e.target.value})}/>
+          <label className='label'>Tiempo de secado</label>
+
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
           <input type="text" id="presentacion" name="presentacion" className='input' placeholder='' value={muestraSeleccionada.presentacion || ''} onChange={(e)=> setMuestraSeleccionada({ ...muestraSeleccionada, presentacion: e.target.value})}/>
+          <label className='label'>Presentacion</label>
+
         </div>
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
@@ -573,105 +891,88 @@
 
 
     </form>
-  </div>
-        {/* Registrar Muestra */}
-          <div className={`main-content-registrar ${showModal1 ? 'show' :  ''}`}   id="modalInfo1 "   >
+  </div>: ""}
+       
+       {showModal1 ?
+        <div className={`main-content-registrar`}   id="modalInfo1 "   >
+      <h1 className='title-registrar-resultado'>Registrar muestra</h1> 
+
+        {/* {showModal && ( */}
+           {/* Registrar Muestra */}
+          {/* // <div className="main-content-registrar" > */}
     <h1 className='title-registrar-muestras'>Registrar Muestra</h1>
 
       <form className="formulario-muestra"
       onSubmit={(e) => {
         e.preventDefault();
         RegistrarMuestra({
-            // lotes_id: lotes_id.current.value,
-            // variedades_id: variedades_id.current.value,
-            fecha_creacion : fecha_creacion.current.value,
-            codigo_externo : codigo_externo.current.value,
-            consecutivo_informe : consecutivo_informe.current.value,
-            muestreo : muestreo.current.value,
-            preparacion_muestra : preparacion_muestra.current.value,
-            cantidad : cantidad.current.value,
-            tipo_molienda : tipo_molienda.current.value,
-            tipo_fermentacion : tipo_fermentacion.current.value,
-            densidad_cafe_verde : densidad_cafe_verde.current.value,
-            fecha_procesamiento : fecha_procesamiento.current.value,
-            tipo_tostion : tipo_tostion.current.value,
-            tiempo_fermentacion : tiempo_fermentacion.current.value,
-            codigo_muestra : codigo_muestra.current.value,
-            actividad_agua : actividad_agua.current.value,
-            tiempo_secado : tiempo_secado.current.value,
-            presentacion : presentacion.current.value,
-            // cafes_id : cafes_id.current.value,
-            cafes_id : cafes_id.current.value.split('')[0]
+              fecha_creacion : fecha_creacion.current.value,
+              codigo_externo : codigo_externo.current.value,
+              consecutivo_informe : consecutivo_informe.current.value,
+              muestreo : muestreo.current.value,
+              preparacion_muestra : preparacion_muestra.current.value,
+              cantidad : cantidad.current.value,
+              tipo_molienda : tipo_molienda.current.value,
+              tipo_fermentacion : tipo_fermentacion.current.value,
+              densidad_cafe_verde : densidad_cafe_verde.current.value,
+              fecha_procesamiento : fecha_procesamiento.current.value,
+              tipo_tostion : tipo_tostion.current.value,
+              tiempo_fermentacion : tiempo_fermentacion.current.value,
+              codigo_muestra : codigo_muestra.current.value,
+              actividad_agua : actividad_agua.current.value,
+              tiempo_secado : tiempo_secado.current.value,
+              presentacion : presentacion.current.value,
+              cafes_id: dataSelect.cafes_id ? dataSelect.cafes_id.value : "" 
         });
     }}
-      // onSubmit={handleSubmit}
       
       method="POST" >
       <div className="columna">
-      <div className='container-input'>
-    <input
-      type="text"
-      className='input'
-      placeholder=''
-      id="cafes_id"
-      name="cafes_id"
-      ref={cafes_id}
-      value={filtro}
-      onChange={filtrarOpciones}
-      autoComplete="off" // Desactivar autocompletado
-    />
-    <label htmlFor="cafes_id" className='label'>Cafe</label>
-    {mostrarOpciones && (
-      <div className="custom-dropdown">
-        {cafe.map((cafe) => (
-          (cafe.documento.toLowerCase().includes(filtro) ||
-            cafe.nombre_usuario.toLowerCase().includes(filtro) ||
-            cafe.numero_lote.toLowerCase().includes(filtro) ||
-            cafe.nombre_variedad.toLowerCase().includes(filtro)) && (
-            <div
-              key={cafe.id}
-              className="custom-dropdown-option"
-              onClick={() => handleClickOpcion(cafe)}
-            >
-              
-              {`${cafe.id}-${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`}
-            </div>
-          )
-        ))}
-      </div>
-    )}
+      <div className='container-input div-input-search-select'>
+
+                  <input className="input-search-cafe " type="text" id="cafes_id" />
+      
+                        <label htmlFor="cafes_id" className='label'>Cafe</label>
+                        <div className="select-options-cafe" >
+                            {cafe.map((key, index) => (
+                                (
+                                    <div className="option-select-cafe" data-id={key.id} onClick={() => {document.getElementById("cafes_id").value = key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad; !dataSelect.cafes_id ? dataSelect.cafes_id = {} : ""; dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id}>{key.documento+ ", " + key.nombre_usuario + ", "  + key.nombre_finca + ", " +key.numero_lote + ", " + key.nombre_variedad} </div>
+                                )
+                            ))}
+                        </div>
+
   </div>
         <div className='container-input'>
-          <input type="date" id="fecha_creacion" name="fecha_creacion" className='input' ref={fecha_creacion} placeholder='' />
-          <label htmlFor="fecha_creacion" className='label'>Campo 1:</label>
+          <input type="date" id="fecha_creacion" name="fecha_creacion" className='input input-register' ref={fecha_creacion} placeholder='' />
+          <label htmlFor="fecha_creacion" className='label-muestra'>Campo 1:</label>
           
         </div>
         <div className='container-input'>
-          <input type="text" id="codigo_externo" name="codigo_externo" className='input' placeholder=''  ref={codigo_externo} value={codigo}  />
+          <input type="text" id="codigo_externo" name="codigo_externo" className='input input-register' placeholder=''  ref={codigo_externo}   />
           <label htmlFor="codigo_externo" className='label'>Codigo externo</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="consecutivo_informe" name="consecutivo_informe" className='input' ref={consecutivo_informe} placeholder=''  onBlur={(e) => console.log(e.target.value)}/>
+          <input type="text" id="consecutivo_informe" name="consecutivo_informe" className='input input-register' ref={consecutivo_informe} placeholder=''  onBlur={(e) => console.log(e.target.value)}/>
           <label htmlFor="consecutivo_informe" className='label'>Consecutivo informe</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="muestreo" name="muestreo" className='input' ref={muestreo} placeholder=''  />
+          <input type="text" id="muestreo" name="muestreo" className='input input-register' ref={muestreo} placeholder=''  />
           <label htmlFor="muestreo" className='label'>Muestreo</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="preparacion_muestra" name="preparacion_muestra" className='input' ref={preparacion_muestra} placeholder=''  />
+          <input type="text" id="preparacion_muestra" name="preparacion_muestra" className='input input-register' ref={preparacion_muestra} placeholder=''  />
           <label htmlFor="preparacion_muestra" className='label'>Preparacion de la muestra</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="cantidad" name="cantidad" className='input' ref={cantidad} placeholder=''   />
+          <input type="text" id="cantidad" name="cantidad" className='input input-register' ref={cantidad} placeholder=''   />
           <label htmlFor="cantidad" className='label'>Cantidad</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="tipo_molienda" name="tipo_molienda" className='input' ref={tipo_molienda}  placeholder=''  />
+          <input type="text" id="tipo_molienda" name="tipo_molienda" className='input input-register' ref={tipo_molienda}  placeholder=''  />
           <label htmlFor="tipo_molienda" className='label'>Tipo de molienda</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="tipo_fermentacion" name="tipo_fermentacion" className='input'  ref={tipo_fermentacion} placeholder=''   />
+          <input type="text" id="tipo_fermentacion" name="tipo_fermentacion" className='input input-register'  ref={tipo_fermentacion} placeholder=''   />
           <label htmlFor="tipo_fermentacion" className='label'>Tipo de fermentacion</label>
         </div>
         
@@ -679,59 +980,69 @@
 
       <div className="columna">
         <div className='container-input' >
-          <input type="text" id="densidad_cafe_verde" name="densidad_cafe_verde" className='input' ref={densidad_cafe_verde} placeholder=''  />
+          <input type="text" id="densidad_cafe_verde" name="densidad_cafe_verde" className='input input-register' ref={densidad_cafe_verde} placeholder=''  />
           <label htmlFor="densidad_cafe_verde" className='label'>Densidad de cafe verde</label>
         </div>
         <div className='container-input'>
-          <input type="date" id="fecha_procesamiento" name="fecha_procesamiento" className='input' ref={fecha_procesamiento }  placeholder='' />
+          <input type="date" id="fecha_procesamiento" name="fecha_procesamiento" className='input input-register' ref={fecha_procesamiento }  placeholder='' />
           <label htmlFor="fecha_procesamiento"  className='label'>Fecha de procesamiento</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="tipo_tostion" name="tipo_tostion" className='input' ref={tipo_tostion} placeholder='' />
+          <input type="text" id="tipo_tostion" name="tipo_tostion" className='input input-register' ref={tipo_tostion} placeholder='' />
           <label htmlFor="tipo_tostion" className='label'>Tipo de tostion</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="tiempo_fermentacion" name="tiempo_fermentacion" className='input' ref={tiempo_fermentacion}  placeholder=''  />
+          <input type="text" id="tiempo_fermentacion" name="tiempo_fermentacion" className='input input-register' ref={tiempo_fermentacion}  placeholder=''  />
           <label htmlFor="tiempo_fermentacion" className='label'>Tiempo fermentacion</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="codigo_muestra" name="codigo_muestra" className='input' ref={codigo_muestra} placeholder=''  />
+          <input type="text" id="codigo_muestra" name="codigo_muestra" className='input input-register' ref={codigo_muestra} placeholder=''  />
           <label htmlFor="codigo_muestra"className='label'>Codigo de muestra</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="actividad_agua" name="actividad_agua" className='input' ref={actividad_agua} placeholder=''/>
+          <input type="text" id="actividad_agua" name="actividad_agua" className='input input-register' ref={actividad_agua} placeholder=''/>
           <label htmlFor="actividad_agua" className='label'>Actividad agua</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="tiempo_secado" name="tiempo_secado" className='input'  ref={tiempo_secado} placeholder='' />
+          <input type="text" id="tiempo_secado" name="tiempo_secado" className='input input-register'  ref={tiempo_secado} placeholder='' />
           <label htmlFor="tiempo_secado" className='label'>Tiempo de secado</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="presentacion" name="presentacion" className='input'  ref={presentacion} placeholder='' />
+          <input type="text" id="presentacion" name="presentacion" className='input input-register'  ref={presentacion} placeholder='' />
           <label htmlFor="presentacion" className='label'>Presentacion</label>
         </div>
         <button className="btn-reg-mue" type="button" onClick={hideAllModals}> 
           Cancelar
       </button>
-        <button  className='button' onClick={hideAllModals} type="submit">Enviar</button>
+        <button  className='button'  type="submit">Enviar</button>
 
 
       </div>
 
 
     </form>
-  </div>
+  </div>        : ""}
+        
+  {/* )} */}
+        
+        
+        
         <div>
-      <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" />
+      {/* <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" /> */}
 
       <div className="main-container">
-        <button className="btn-reg-mue" onClick={() => setShowModal1(!showModal1)}>
+        <button className="btn-reg-mue" onClick={() => toggleModal(1)}>
             Registrar muestra
         </button>
 
+        <div className="container-fluid w-full">
+        {/* <table className="table-muestra"> */}
+        <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+        ref={tableRef}
+        cellPadding={0}
+        width= "100%">
 
-        <table className="table-muestra">
-          <thead>
+          <thead className="text-center text-justify">
             <tr>
               <th>ID</th>
               <th>Fecha de creacion</th>
@@ -790,7 +1101,7 @@
                         <button
                                       type="button"
                                       className="btn-primary"
-                                      onClick={() => { toggleModal(3) ,buscarMuestra(task.id);}}
+                                      onClick={() => { toggleModal(3) ,buscarMuestra(task.id)}}
                                   >Mas
                                   </button>
                       </td>
@@ -800,6 +1111,7 @@
                   ))}
                 </tbody>
         </table>
+        </div>
       </div>
 
 

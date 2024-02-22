@@ -88,22 +88,23 @@
   transition: all 0.5s;
 }
 
-.btn-register-municipio{
-  padding: 10px 20px;
-  background-color: green;
+.btn-añadir-municipio{
+  position: relative;
+  padding: 6px 10px;
+  background-color: rgb(11, 46, 75);
   color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  border: #007bff;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  top: 100px; /* Ajusta la distancia desde la parte superior */
-  right: 275px; /* Ajusta la distancia desde la derecha */
-  display: inline-flex;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  top: 30px; /* Ajusta la distancia desde la parte superior */
+  left: 180px; /* Ajusta la distancia desde la derecha */
 }
 
 .btn-register-municipio{
-  background-color: #007bff;
+  background-color: rgb(22, 188, 22);
     color: #fff;
     font-weight: bold;
     padding: 8px;
@@ -112,7 +113,7 @@
     outline: none;
 }
 .btn-register-municipio:hover {
-  background-color: #0056b3;
+  background-color: rgb(28, 212, 28);
 }
 
 

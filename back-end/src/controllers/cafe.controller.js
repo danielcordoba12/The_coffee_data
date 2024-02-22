@@ -2,6 +2,85 @@
 
 import {pool} from '../database/conexion.js';
 import {validationResult} from 'express-validator';
+function validate(data) {
+  try {
+    let keys = Object.keys(data);
+    let errros = {};
+    let result = {};
+    for (let x = 0; x < keys.length; x++) {
+      let inputs = Object.keys(data[keys[x]])
+      for (let e = 0; e < inputs.length; e++) {
+        let referencia = "El campo"
+        if (data[keys[x]][inputs[e]]["referencia"]) {
+          referencia = data[keys[x]][inputs[e]]["referencia"];
+        }
+        if (keys[x] == "string") {
+          if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+            errros[inputs[e]] = referencia + " no puede estar vacío"
+          } else if (!(/[a-zA-Z]+$/).test(data[keys[x]][inputs[e]]["value"])) {
+            errros[inputs[e]] = referencia + " debe ser un string"
+          } else {
+            result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+          }
+        }
+        if (keys[x] == "normal") {
+          if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+            errros[inputs[e]] = referencia + " no puede estar vacío"
+          } else {
+            result[inputs[e]] = data[keys[x]][inputs[e]]["value"].toLowerCase();
+          }
+        }
+        if (keys[x] == "select") {
+          if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+            errros[inputs[e]] = "Debe seleccionar una opción para " + referencia
+          } else {
+            let keysOptions = data[keys[x]][inputs[e]]["opciones"]
+            if(keysOptions.length > 0){
+              for (let o = 0; o < keysOptions.length; o++) { 
+                if (keysOptions[o] == data[keys[x]][inputs[e]]["value"]) {
+                  result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
+                  break
+                } else if (o == keysOptions.length) {
+                  errros[inputs[e]] = +"Debe seleccionar una opción válida para el " + referencia
+                }
+              }
+            }else{
+              result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
+
+            }
+            
+          }
+
+        }
+        if (keys[x] == "float") {
+          // Validación para float
+          if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
+            errros[inputs[e]] = referencia + " no puede estar vacío";
+          } else if (!/^-?\d+(\.\d+)?$/.test(data[keys[x]][inputs[e]]["value"])) {
+            errros[inputs[e]] = referencia + " debe ser un número decimal";
+          } else {
+            result[inputs[e]] = parseFloat(data[keys[x]][inputs[e]]["value"]);
+          }
+        }
+      }
+    }
+    console.log(errros,result)
+    if (Object.keys(errros).length > 0) {
+      return {
+        status: false,
+        errors: errros
+      }
+    } else {
+      return {
+        status: true,
+        data: result
+      }
+    }
+
+  } catch (e) {
+    console.log(e)
+  }
+}
 
 export const listarcafe= async (req,res)=>{
     try{
@@ -30,8 +109,44 @@ export const buscarCafe= async (req,res)=>{
 
 
 export const guardarCafe= async (req, res) => {
+  const [variedades] = await pool.query("SELECT id FROM variedades");
+  let opcionesVariedades = [];
+  for (let x = 0; x < variedades.length; x++) {
+    opcionesVariedades.push(variedades[x]["id"])
+  }
 
+  const [lotes] = await pool.query("SELECT id FROM lotes");
+  let opcionesLotes = [];
+  for (let x = 0; x < lotes.length; x++) {
+    opcionesLotes.push(lotes[x]["id"])
+  }
     try{
+      let data = {
+
+        "select": {
+          "lotes_id": {
+            "value": req.body.lotes_id,
+            "opciones": opcionesVariedades,
+            "referencia": "el lote"
+          },
+          "variedades_id": {
+            "value": req.body.variedades_id,
+            "opciones": opcionesLotes,
+            "referencia": "la variedad"
+          }
+        }
+      }
+    
+      let validateInputs = validate(data)
+      if (validateInputs.status == false) {
+        return res.status(200).json({
+          "status": false,
+          "errors": validateInputs.errors
+  
+        })
+      }
+  
+  
       let error1 = validationResult(req);
         if (!error1.isEmpty()){
             return res.status(400).json(error1);
@@ -72,8 +187,44 @@ return    res.status(500).json({
 
 
 export const actualizarCafe=async (req, res) =>{
+  const [variedades] = await pool.query("SELECT id FROM variedades");
+  let opcionesVariedades = [];
+  for (let x = 0; x < variedades.length; x++) {
+    opcionesVariedades.push(variedades[x]["id"])
+  }
 
+  const [lotes] = await pool.query("SELECT id FROM lotes");
+  let opcionesLotes = [];
+  for (let x = 0; x < lotes.length; x++) {
+    opcionesLotes.push(lotes[x]["id"])
+  }
     try{
+
+      let data = {
+
+        "select": {
+          "lotes_id": {
+            "value": req.body.lotes_id,
+            "opciones": opcionesVariedades,
+            "referencia": "el lote"
+          },
+          "variedades_id": {
+            "value": req.body.variedades_id,
+            "opciones": opcionesLotes,
+            "referencia": "la variedad"
+          }
+        }
+      }
+    
+      let validateInputs = validate(data)
+      if (validateInputs.status == false) {
+        return res.status(200).json({
+          "status": false,
+          "errors": validateInputs.errors
+  
+        })
+      }
+      
       let error1 = validationResult(req);
         if (!error1.isEmpty()){
             return res.status(400).json(error1);

@@ -1,4 +1,15 @@
 /* estilos de listado de analisis */
+.select-div-tip{
+  color: #808080;
+  position: relative;
+  left: -37px;
+  top:-15px;
+  font-size: 1rem;
+}
+option{
+  color: #808080;
+}
+
 
 .btn-desactivar-d {
   background-color: #0B2E4B;
@@ -63,6 +74,7 @@ font-size: 1.5rem;
 
 .btn-registrar-d{
 display: flex;
+position: relative;
 width: 75px;
 padding: 10px 10px;
 background-color:#0B2E4B; 
@@ -87,8 +99,8 @@ background-color: #0b2e4be7;
 
  .contTitle{
   position: relative;
-  top: -16px;
-  left: 70px;
+  top: 56px;
+  left: 100px;
   border-radius: 8px;
   width: 93%;
   height: auto;
@@ -149,20 +161,21 @@ border-radius: 8px;
 }
  .encabezado{
  position: relative;
-top: 50px;
+top: 100px;
 width: 100%;
- left: 35px;
+ left: 135px;
  text-align: center;
  color: #808080;
 }
 
 table{
   width: 90%;
+
 }
 .cuerpodatos{
   position: relative;
-  left: 35px;
-  top: 64px;
+  left: 135px;
+  top: 124px;
   width: 100%;
   text-align: center;
   color: #808080;

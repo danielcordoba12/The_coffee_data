@@ -27,7 +27,6 @@ const Variedad = () => {
     const [searchTerm, setSearchTerm] = useState("");
 
     const nombre = useRef();
-    const fecha_creacion = useRef();
 
     const navigate = useNavigate()
 
@@ -59,14 +58,36 @@ const Variedad = () => {
 
     const handleEditUser1 = async () => {
         try {
-            await Api.put(`/variedad/actualizar/${selectedVarId}`, modalVar);
-            Sweet.actualizacionExitosa();
-            closeModal();
+            const data = await Api.put(`/variedad/actualizar/${selectedVarId}`, modalVar);
+            console.log(data, "variedad")
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                Sweet.actualizacionExitosa();
+                
+                closeModal();
+            }
+
             // Recargar la lista de lotes después de la actualización
             const response = await Api.get("variedad/listar");
             setvariedades(response.data);
         } catch (error) {
-            console.error("Error editando el variedad: ", error);
+            console.error("Error editando la variedad: ", error);
         }
     };
 
@@ -170,8 +191,8 @@ const Variedad = () => {
 
 
         <div className="container-fluid w-full">
-            <button to="/variedad/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
-                Registrar variedad
+            <button to="/variedad/registrar" className="btn-añadir-variedad" onClick={openRegistrarModal}>
+                Añadir
             </button>
 
             <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
@@ -219,19 +240,15 @@ const Variedad = () => {
             <div className="table-register-variedad">
                 <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Variedad</h1>
                 <div className="max-w-xs">
+                    <div>
                     <input
                         className="input-field"
-                        type="hidden" placeholder="fecha_creacion"
-                        value={modalVar.fecha_creacion}
-                        onChange={(e) => setModalVar({ ...modalVar, fecha_creacion: e.target.value })}
-                    />
-                    <input
-                        className="input-field"
+                        id="nombre"
                         type="text"
                         placeholder="nombre"
                         value={modalVar.nombre}
                         onChange={(e) => setModalVar({ ...modalVar, nombre: e.target.value })}
-                    />
+                    /></div>
                     <button
                         className="btn-act-variedad"
                         onClick={handleEditUser1}

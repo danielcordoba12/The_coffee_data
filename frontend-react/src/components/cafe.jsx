@@ -15,6 +15,7 @@ import 'datatables.net-responsive-dt/css/responsive.dataTables.css';
 import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
 import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
 import 'datatables.net-bs5';
+import api from "../services/api";
 
 
 const Cafe = () => {
@@ -39,7 +40,6 @@ const Cafe = () => {
             try {
                 const response = await Api.get('cafe/listar');
                 setCafes(response.data);
-                console.log(response)
             } catch (error) {
                 console.error('Error fetching tasks:', error);
             }
@@ -87,11 +87,33 @@ const Cafe = () => {
         setModalCafe(null);
     };
 
-    const handleEditUser1 = async () => {
+    const handleActualizar = async (data) => {
         try {
-            await Api.put(`/cafe/actualizar/${selectedCafeId}`, modalCafe);
-            Sweet.actualizacionExitosa();
-            closeModal();
+
+            const actualizar = await Api.put(`/cafe/actualizar/${selectedCafeId}`, data);
+            console.log(actualizar, data)
+            if (actualizar.data.status == false) {
+                let keys = Object.keys(actualizar.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(actualizar.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = actualizar.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                Sweet.actualizacionExitosa();
+                closeModal();
+
+            }
             // Recargar la lista de Cafes después de la actualización
             const response = await Api.get("cafe/listar");
             setCafes(response.data);
@@ -205,20 +227,26 @@ const Cafe = () => {
         }
     }
     useEffect(() => {
+        window.addEventListener("click", function (e) {
+            let divOptions = document.querySelectorAll(".div-input-search-select");
+            for (let s = 0; s < divOptions.length; s++) {
+                if (!e.target == divOptions[s] || !divOptions[s].contains(e.target)) {
+                    let options = divOptions[s].querySelectorAll(".select-options-input")
+                    if (options.length > 0) {
+                        options[0].style.display = "none"
+                    }
+                }
+            }
+        })
+    }, [])
 
+    function searchInput() {
         let inputSearch = document.querySelectorAll(".input-search")
+
 
         if (inputSearch.length > 0) {
             for (let s = 0; s < inputSearch.length; s++) {
-                inputSearch[s].addEventListener("blur", function () {
-                    let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-options-input");
-                    if (divOptions.length > 0) {
-                        setTimeout(() => {
-                            divOptions[0].style.display = "none"
-                        }, 150);
-                    }
 
-                })
                 inputSearch[s].addEventListener("input", function () {
                     let parent = inputSearch[s].parentNode
                     if (parent) {
@@ -232,10 +260,11 @@ const Cafe = () => {
                                 } else {
                                     options[o].style.display = "none"
                                 }
+                                let referencia = inputSearch[s].getAttribute("id")
+
                                 if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
                                     let focusSelect = document.querySelectorAll(".option-select-focus")
                                     if (focusSelect.length > 0) {
-                                        console.log(focusSelect[0].classList)
                                         focusSelect[0].classList.remove("option-select-focus")
                                     }
                                     inputSearch[s].value = options[o].innerHTML
@@ -244,7 +273,17 @@ const Cafe = () => {
                                     }
                                     dataSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
                                     options[o].classList.add("option-select-focus")
+                                    if (!dataSelect[referencia]) {
+                                        dataSelect[referencia] = {}
+                                    }
+                                    dataSelect[referencia]["value"] = options[o].getAttribute("data-id");
+                                    options[o].parentNode.style.display = "none"
+                                    break
                                 } else {
+                                    if (!dataSelect[referencia]) {
+                                        dataSelect[referencia] = {}
+                                    }
+                                    dataSelect[referencia]["value"] = "";
                                     options[o].classList.remove("option-select-focus")
                                 }
                             }
@@ -253,7 +292,14 @@ const Cafe = () => {
                 })
             }
         }
+    }
+    useEffect(() => {
+        searchInput()
     }, [isRegistrarModalOpen]);
+    useEffect(() => {
+
+        searchInput()
+    }, [openModal]);
 
     const dataTableRef = useRef(null);
     const initializeDataTable = (Cafes) => {
@@ -298,7 +344,7 @@ const Cafe = () => {
 
                 <div className="container-fluid w-full">
                     <button to="/cafe/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
-                        Registrar cafe
+                        Añadir
                     </button>
 
                     <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
@@ -352,25 +398,53 @@ const Cafe = () => {
                 <div className="table-register-cafe">
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Cafe</h1>
                     <div className="max-w-xs">
-                        <input
-                            className="input-field"
-                            type="number"
-                            
-                            placeholder="lotes_id"
-                            value={modalCafe.lotes_id}
-                            onChange={(e) => setModalCafe({ ...modalCafe, lotes_id: e.target.value })}
-                        />
-                        
 
-                        <input
-                            className="input-field"
-                            type="number" placeholder="variedades_id"
-                            value={modalCafe.variedades_id}
-                            onChange={(e) => setModalCafe({ ...modalCafe, variedades_id: e.target.value })}
-                        />
+                        <div className="div-input div-input-search-select">
+                            <div className="select-options-input">
+
+                                {lote.map((key, index) => {
+                                    if (modalCafe.lotes_id) {
+                                        !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = modalCafe.lotes_id
+                                        if (key.id == modalCafe.lotes_id) {
+                                            !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.referencia = key.Nombre_Finca + ", " + key.nombre
+                                        }
+                                    }
+
+                                    return <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
+                                })}
+                            </div>
+                            <input defaultValue={dataSelect.lotes_id ? dataSelect.lotes_id.referencia ? dataSelect.lotes_id.referencia : "" : ""} className="input-search" type="text" id="lotes_id" />
+                            <label htmlFor="lotes_id" >Lote</label>
+
+                        </div>
+
+
+                        <div className="div-input div-input-search-select">
+                            <div className="select-options-input">
+
+                                {variedades.map((key, index) => {
+                                    if (modalCafe.variedades_id) {
+                                        !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = modalCafe.variedades_id
+                                        if (key.id == modalCafe.variedades_id) {
+                                            !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.referencia = key.nombre
+                                        }
+                                    }
+
+                                    return <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
+                                })}
+                            </div>
+                            <input defaultValue={dataSelect.variedades_id ? dataSelect.variedades_id.referencia ? dataSelect.variedades_id.referencia : "" : ""} className="input-search" type="text" id="variedades_id" />
+                            <label htmlFor="variedades_id" >variedad</label>
+
+                        </div>
                         <button
-                            className="btn-register-cafe"
-                            onClick={handleEditUser1}
+                            className="btn-act-cafe"
+                            onClick={() => {
+                                handleActualizar({
+                                    variedades_id: dataSelect.variedades_id ? dataSelect.variedades_id.value : "",
+                                    lotes_id: dataSelect.lotes_id ? dataSelect.lotes_id.value : ""
+                                })
+                            }}
                         >
                             Actualizar
                         </button>
@@ -413,14 +487,14 @@ const Cafe = () => {
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleRegistrar({
-                                variedades_id: dataSelect.variedades_id.value,
-                                lotes_id: dataSelect.lotes_id.value
+                                variedades_id: dataSelect.variedades_id ? dataSelect.variedades_id.value : "",
+                                lotes_id: dataSelect.lotes_id ? dataSelect.lotes_id.value : ""
                             });
                         }}
                         method="post"
                     >
 
-                        <div className="div-input">
+                        <div className="div-input div-input-search-select">
                             <input className="input-search" type="text" id="lotes_id" />
                             <label htmlFor="lotes_id" >Lote</label>
                             <div className="select-options-input">
@@ -431,12 +505,13 @@ const Cafe = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="div-input">
+                        <div className="div-input div-input-search-select">
                             <input className="input-search" type="text" id="variedades_id" />
                             <label htmlFor="variedades_id" >Variedad</label>
                             <div className="select-options-input">
                                 {variedades.map((key, index) => (
                                     (
+
                                         <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
                                     )
                                 ))}

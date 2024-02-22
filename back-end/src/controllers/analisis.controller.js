@@ -57,7 +57,7 @@ export const listarAnalisis = async(req,res)=>{
         m.codigo_externo AS codigo_externo,
         us.nombre AS nombre_usuario,
         a.fecha_analisis,
-        a.estado,
+        a.estado,vd.nombre AS nombre_variedades,
         u.nombre AS propietario,
         f.nombre AS nombre_fincas,
         l.nombre AS nombre_lotes,
@@ -68,6 +68,8 @@ export const listarAnalisis = async(req,res)=>{
         muestras m ON m.id = a.muestras_id
     JOIN   
         cafes c ON c.id = m.cafes_id
+    JOIN   
+        variedades vd ON vd.id = c.variedades_id
     JOIN   
         lotes l ON l.id = c.lotes_id
     JOIN   

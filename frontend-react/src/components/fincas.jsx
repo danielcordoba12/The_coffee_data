@@ -121,14 +121,36 @@ const FincaView = () => {
 
     const handleEditUser1 = async () => {
         try {
-            await Api.put(`/finca/actualizar/${SelectedFincaId}`, modalFinca);
-            Sweet.actualizacionExitosa();
-            closeEditarModal();
-            // Recargar la lista de fincas después de la actualización
+           const data = await Api.put(`/finca/actualizar/${SelectedFincaId}`, modalFinca);
+            console.log(data, "fincaaa")
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                Sweet.actualizacionExitosa();
+                setModalFinca(false)
+                closeModal();
+            }
+
+            // Recargar la lista de lotes después de la actualización
             const response = await Api.get("finca/listar");
             setFincas(response.data);
         } catch (error) {
-            console.error("Error editando el Finca: ", error);
+            console.error("Error editando la finca: ", error);
         }
     };
 
@@ -166,10 +188,31 @@ const FincaView = () => {
 
     const loteEditUser1 = async () => {
         try {
-            await Api.put(`/lote/actualizar/${selectedLoteId}`, modalLote);
-            Sweet.actualizacionExitosa();
-            openLotesModal(fincaId)
-            closeModal();
+            const data = await Api.put(`/lote/actualizar/${selectedLoteId}`, modalLote);
+            console.log(data, "loteeeeeeeee")
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                Sweet.actualizacionExitosa();
+                openLotesModal(fincaId)
+                closeModal();
+            }
+
             // Recargar la lista de lotes después de la actualización
             const response = await Api.get("lote/listar");
             setLotes(response.data);
@@ -355,8 +398,8 @@ const FincaView = () => {
         const month = String(fecha.getMonth() + 1).padStart(2, '0');
         const day = String(fecha.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
-      }
-    
+    }
+
     return (
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
@@ -376,7 +419,7 @@ const FincaView = () => {
                 <div className="container-fluid w-full">
 
 
-                    <table className="table table-stripped table-bordered border display reponsive nowrap b-4" ref={dataTableRef}>
+                    <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
 
                         <thead>
                             <tr className="bg-gray-200">
@@ -414,7 +457,7 @@ const FincaView = () => {
                                                 <button
                                                     type="button"
                                                     className="btn-actu"
-                                                    onClick={() => openEditarModal(task.id)}
+                                                    onClick={() =>{setFincaId(task.id); openEditarModal(task.id)}}
                                                 >
                                                     Modificar
                                                 </button>
@@ -449,67 +492,67 @@ const FincaView = () => {
             </div>
             {isLotesModalOpen && (
                 <div className="modal-div-fin">
-                <div className="modal modal-ver-lotes" tabIndex="-1" role="dialog" style={{ display: isLotesModalOpen ? 'block' : 'none' }}>
-                    <div className="fondo-over" onClick={() => setLotesModalOpen(false)} ></div>
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-contents">
-                            <div className="modal-header">
+                    <div className="modal modal-ver-lotes" tabIndex="-1" role="dialog" style={{ display: isLotesModalOpen ? 'block' : 'none' }}>
+                        <div className="fondo-over" onClick={() => setLotesModalOpen(false)} ></div>
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-contents">
+                                <div className="modal-header">
 
-                                <h5 className="modal-title">Lotes de la Finca</h5>
-                                <button type="button" className="close" onClick={() => setLotesModalOpen(false)}>
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
+                                    <h5 className="modal-title">Lotes de la Finca</h5>
+                                    <button type="button" className="close" onClick={() => setLotesModalOpen(false)}>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
 
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Finca</th>
-                                            <th>Latitud</th>
-                                            <th>Longitud</th>
-                                            <th>N° Plantas</th>
-                                            <th>Variedad</th>
-                                            <th>Estado</th>
-                                            <th>modificar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                    <table className="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Finca</th>
+                                                <th>Latitud</th>
+                                                <th>Longitud</th>
+                                                <th>N° Plantas</th>
+                                                <th>Variedad</th>
+                                                <th>Estado</th>
+                                                <th>modificar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                        {Object.keys(modalLotes).length > 0 ?
-                                            modalLotes.map((lote) => {
-                                                console.log(lote)
-                                                return <tr key={lote.id}>
-                                                    <td>{lote.nombre}</td>
-                                                    <td>{lote.nombre_finca}</td>
-                                                    <td>{lote.latitud}</td>
-                                                    <td>{lote.longitud}</td>
-                                                    <td>{lote.n_plantas}</td>
-                                                    <td>{lote.nombre_variedad ? lote.nombre_variedad : <span className="span-no-registra"> No registra</span>}</td>
-                                                    <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                                    <td><button
-                                                        type="button"
-                                                        className="btn-actu"
-                                                        onClick={() => openModal(lote.id)}
-                                                    >
-                                                        Modificar
-                                                    </button></td>
+                                            {Object.keys(modalLotes).length > 0 ?
+                                                modalLotes.map((lote) => {
+                                                    console.log(lote)
+                                                    return <tr key={lote.id}>
+                                                        <td>{lote.nombre}</td>
+                                                        <td>{lote.nombre_finca}</td>
+                                                        <td>{lote.latitud}</td>
+                                                        <td>{lote.longitud}</td>
+                                                        <td>{lote.n_plantas}</td>
+                                                        <td>{lote.nombre_variedad ? lote.nombre_variedad : <span className="span-no-registra"> No registra</span>}</td>
+                                                        <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                                        <td><button
+                                                            type="button"
+                                                            className="btn-actu"
+                                                            onClick={() => openModal(lote.id)}
+                                                        >
+                                                            Modificar
+                                                        </button></td>
 
-                                                </tr>
-                                            })
-                                            : <tr>
-                                                <td className="text-center p-5" colSpan={1000000}>No hay nada para mostrar</td>
-                                            </tr>}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={() => setLotesModalOpen(false)}>Cerrar</button>
+                                                    </tr>
+                                                })
+                                                : <tr>
+                                                    <td className="text-center p-5" colSpan={1000000}>No hay nada para mostrar</td>
+                                                </tr>}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" onClick={() => setLotesModalOpen(false)}>Cerrar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             )}
 
@@ -523,6 +566,7 @@ const FincaView = () => {
                     <div className="max-w-xs">
                         <input
                             className="input-field"
+                            id="fecha_creacion"
                             type="hidden"
                             placeholder="fecha_creacion"
                             value={modalFinca.fecha_creacion}
@@ -533,43 +577,55 @@ const FincaView = () => {
                                 })
                             }
                         />
+                        <div>
+                            <label className="labeledit" htmlFor="nombre">Nombre</label>
                         <input
                             className="input-field"
+                            id="nombre"
                             type="text"
-                            placeholder="nombre"
+                            
                             value={modalFinca.nombre}
                             onChange={(e) =>
                                 setModalFinca({ ...modalFinca, nombre: e.target.value })
                             }
-                        />
+                        /></div>
+                        <div>
+                        <label className="labeledit" htmlFor="longitud">longitud</label> 
                         <input
                             className="input-field"
+                            label="longitud"
+                            id="longitud"
                             type="text"
-                            placeholder="longitud"
+                            
                             value={modalFinca.longitud}
                             onChange={(e) =>
                                 setModalFinca({ ...modalFinca, longitud: e.target.value })
                             }
-                        />
+                        /></div>
+                        <div>
+                        <label className="labeledit" htmlFor="latitud">latitud</label> 
                         <input
                             className="input-field"
+                            id="latitud"
                             type="text"
-                            placeholder="latitud"
+                            
                             value={modalFinca.latitud}
                             onChange={(e) =>
                                 setModalFinca({ ...modalFinca, latitud: e.target.value })
                             }
-                        />
-
+                        /></div>
+                        <div>
+                            
                         <input
                             className="input-field"
+                            id="usuarios_id"
                             type="hidden"
                             placeholder="usuarios_id "
-                            value={modalFinca.usuarios_id }
+                            value={modalFinca.usuarios_id}
                             onChange={(e) =>
-                                setModalFinca({ ...modalFinca, usuarios_id : e.target.value })
+                                setModalFinca({ ...modalFinca, usuarios_id: e.target.value })
                             }
-                        />
+                        /></div>
                         <div className="div-input">
                             <select
 
@@ -593,11 +649,13 @@ const FincaView = () => {
                                 ))}
                             </select>
                         </div>
-
+                            <div>
+                            <label className="labeledit" htmlFor="noombre_vereda">vereda</label> 
                         <input
                             className="input-field"
+                            id="noombre_vereda"
                             type="text"
-                            placeholder="noombre_vereda"
+                            
                             value={modalFinca.noombre_vereda}
                             onChange={(e) =>
                                 setModalFinca({
@@ -605,7 +663,7 @@ const FincaView = () => {
                                     noombre_vereda: e.target.value,
                                 })
                             }
-                        />
+                        /></div>
                         <button
                             className="btn-actu"
                             onClick={handleEditUser1}
@@ -645,7 +703,7 @@ const FincaView = () => {
                     <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                         Registrar Lote
                     </h1>
-                
+
 
                     <form
                         className="contenido-regi"
@@ -663,112 +721,126 @@ const FincaView = () => {
                     >
 
                         <div className="input-container">
-                        <div className="div-input">
-                            <input className="input-register" type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
-                            <label htmlFor="nombre">Nombre</label>
-                        </div>
-                        <div className="div-input">
-                            <input className="input-register" type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
-                            <label htmlFor="latitud">Latitud</label>
-                        </div>
-                        <div className="div-input">
-                            <input className="input-register" type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
-                            <label htmlFor="longitud">Longitud</label>
-                        </div>
-                        <div className="div-input">
-                            <input className="input-register" type="number" id="n_plantas" name="n_plantas" ref={n_plantas} placeholder="" />
-                            <label htmlFor="longitud">n_plantas</label>
-                        </div>
-                        <input value={idFinca} type="hidden" id="fincas_id " name="fincas_id " ref={fincas_id} placeholder="" />
+                            <div className="div-input">
+                                <input className="input-register" type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
+                                <label htmlFor="nombre">Nombre</label>
+                            </div>
+                            <div className="div-input">
+                                <input className="input-register" type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
+                                <label htmlFor="latitud">Latitud</label>
+                            </div>
+                            <div className="div-input">
+                                <input className="input-register" type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
+                                <label htmlFor="longitud">Longitud</label>
+                            </div>
+                            <div className="div-input">
+                                <input className="input-register" type="number" id="n_plantas" name="n_plantas" ref={n_plantas} placeholder="" />
+                                <label htmlFor="longitud">n_plantas</label>
+                            </div>
+                            <input value={idFinca} type="hidden" id="fincas_id " name="fincas_id " ref={fincas_id} placeholder="" />
 
-                        <button className="btn-actu"
-                            type="submit">Registrar lote</button>
-                        <button
-                            className="close-modal"
-                            onClick={closeRegistrarModal}
-                        >
-                            x
-                        </button>
+                            <button className="btn-actu"
+                                type="submit">Registrar lote</button>
+                            <button
+                                className="close-modal"
+                                onClick={closeRegistrarModal}
+                            >
+                                x
+                            </button>
                         </div>
                     </form>
                 </div>
-                
+
             )}
 
             {modalLote && (
                 <div className="div-modal-edit" >
                     <div className="overlay" onClick={closeModal} ></div>
                     <div className="tabla-editar">
-                    
-                    <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
-                    <div className="max-w-xs">
 
-                        <input
-                            className="input-field"
-                            type="text"
-                            placeholder="nombre"
-                            value={modalLote.nombre}
-                            onChange={(e) => setModalLote({ ...modalLote, nombre: e.target.value })}
-                        />
-                        <input
-                            className="input-field"
-                            type="text"
-                            placeholder="longitud"
-                            value={modalLote.longitud}
-                            onChange={(e) => setModalLote({ ...modalLote, longitud: e.target.value })}
-                        />
-                        <input
-                            className="input-field"
-                            type="text"
-                            placeholder="latitud"
-                            value={modalLote.latitud}
-                            onChange={(e) => setModalLote({ ...modalLote, latitud: e.target.value })}
-                        />
-                        <input
-                            className="input-field"
-                            type="number"
-                            placeholder="n_plantas"
-                            value={modalLote.n_plantas}
-                            onChange={(e) =>
-                                setModalLote({ ...modalLote, n_plantas: e.target.value })
-                            }
-                        />
-                        <input
-                            className="input-field"
-                            type="hidden"
-                            placeholder="fincas_id"
-                            value={modalLote.fincas_id}
-                            onChange={(e) => setModalLote({ ...modalLote, fincas_id: e.target.value })}
-                        />
-                        <button
-                            className="btn-actu"
-                            onClick={loteEditUser1}
-                        >
-                            Actualizar
-                        </button>
-                        {modalLote.estado === 1 ? (
+                        <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
+                        <div className="max-w-xs">
+                            <div>
+                                <input
+                                    className="input-field"
+                                    id="nombre"
+                                    type="text"
+                                    placeholder="nombre"
+                                    value={modalLote.nombre}
+                                    onChange={(e) => setModalLote({ ...modalLote, nombre: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                            <input
+                                className="input-field"
+                                id="longitud"
+                                type="text"
+                                placeholder="longitud"
+                                value={modalLote.longitud}
+                                onChange={(e) => setModalLote({ ...modalLote, longitud: e.target.value })}
+                            />
+                            </div>
+                            <div>
+                            <input
+                                className="input-field"
+                                id="latitud"
+                                type="text"
+                                placeholder="latitud"
+                                value={modalLote.latitud}
+                                onChange={(e) => setModalLote({ ...modalLote, latitud: e.target.value })}
+                            />
+                            </div>
+                            <div>
+                            <input
+                                className="input-field"
+                                id="n_plantas"
+                                type="number"
+                                placeholder="n_plantas"
+                                value={modalLote.n_plantas}
+                                onChange={(e) =>
+                                    setModalLote({ ...modalLote, n_plantas: e.target.value })
+                                }
+                            />
+                            </div>
+                            <div>
+                            <input
+                                className="input-field"
+                                id="fincas_id"
+                                type="hidden"
+                                placeholder="fincas_id"
+                                value={modalLote.fincas_id}
+                                onChange={(e) => setModalLote({ ...modalLote, fincas_id: e.target.value })}
+                            />
+                            </div>
                             <button
-                                className="btn-desactivar-finca"
-                                onClick={loteEditUser2}
+                                className="btn-actu"
+                                onClick={loteEditUser1}
                             >
-                                Desactivar
+                                Actualizar
                             </button>
-                        ) : (
+                            {modalLote.estado === 1 ? (
+                                <button
+                                    className="btn-desactivar-finca"
+                                    onClick={loteEditUser2}
+                                >
+                                    Desactivar
+                                </button>
+                            ) : (
+                                <button
+                                    className="btn-activar-finca"
+                                    onClick={loteEditUser3}
+                                >
+                                    Activar
+                                </button>
+                            )}
                             <button
-                                className="btn-activar-finca"
-                                onClick={loteEditUser3}
+                                className="close-modal"
+                                onClick={closeModal}
                             >
-                                Activar
+                                ✕
                             </button>
-                        )}
-                        <button
-                            className="close-modal"
-                            onClick={closeModal}
-                        >
-                            ✕
-                        </button>
+                        </div>
                     </div>
-                </div>
                 </div>
             )}
 
