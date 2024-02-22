@@ -260,7 +260,11 @@ function ToggleButtonExample({ index }) {
             <Form>
               {/* {['checkbox'].map((type) => ( */}
                 <div className="mb-3 h-6 bg-color-red">
-                  <Form.Check  >
+                  <Form.Check
+                   id="custom-checkbox"
+                   type="checkbox"
+                   label="Check me out"
+                   className="checkbox-sm"  >
                     <Form.Check.Input   />
                     <Form.Control.Feedback >
                     </Form.Control.Feedback>
