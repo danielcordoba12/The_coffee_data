@@ -171,7 +171,7 @@ const Analisis = () => {
                 for (let x = 0; x < r7error.length; x++) {
                     r7error[x].remove()
                 }
-                console.log(data1.data)
+                // console.log(data1.data)
                 for (let x = 0; x < keys.length; x++) {
                     let hr = document.createElement("hr")
                     hr.innerHTML = data.data.err[keys[x]]
@@ -181,7 +181,7 @@ const Analisis = () => {
                         parent.appendChild(hr)
                     }
                 }
-            } else {
+                } else {
                 console.log(data1.data)
                 /* Sweet.registroExitoso();
                 closeRegistrarModal(); */
@@ -189,10 +189,10 @@ const Analisis = () => {
                 const response = await Api.get("analisis/listar");
                 setAnalisis(response.data);
                 location.href = "/analisis"
-            }
-            console.log(data1,"tiposssssss")
-            const response = await Api.get("analisis/listar");
-            setAnalisis(response.data);
+                }
+                console.log(data1,"tiposssssss")
+                const response = await Api.get("analisis/listar");
+                 setAnalisis(response.data);
         } catch (error) {
             console.error("Error al registrar el analisis:", error);
         }
