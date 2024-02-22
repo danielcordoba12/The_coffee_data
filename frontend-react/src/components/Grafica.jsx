@@ -97,6 +97,7 @@ function Grafica() {
 
     // Configura tus opciones de gráfico
   const option = {
+    backgroundColor : "white",
   title: {
     text: 'Resultados'
 
@@ -132,6 +133,9 @@ function Grafica() {
         type: 'line',
         stack: 'a',
         data: [120, 132, 101, 134, 90, 230, 210]
+      //   lineStyle: {
+      //     color: 'green', // Cambia  al color deseado
+      // },
     },
     {
         name: 'Union Ads',
@@ -160,7 +164,7 @@ function Grafica() {
     
     ],
     textStyle: {
-        color: 'white',  // Cambia el color del texto 
+        color: 'black',  // Cambia el color del texto 
     },
 };
 
@@ -180,7 +184,7 @@ function Grafica() {
             notMerge={true}
             lazyUpdate={true}
             style={{ height: '700px', width: '100%' }}
-            theme="dark"
+            theme="light"
         />
         </div>
 
