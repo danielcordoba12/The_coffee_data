@@ -742,6 +742,29 @@ body {
   margin: unset;
   width: 100%;
 }
+.modal-dialog {
+  max-width: 80%;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 80%;
+    margin: 1.75rem auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+    max-width: 65%;
+  }
+}
+
+@media (min-width: 992px) {
+  .modal-dialog {
+    max-width: 55%;
+  }
+}
+
 
 .modal-contents {
   position: relative;
