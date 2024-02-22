@@ -155,16 +155,42 @@ const Analisis = () => {
 
     const handleRegistrarAnalisis = async (data) => {
         console.log(data, "data")
+        const AnalisisDta= {
+            ...data
+        };
         const headers = {
             headers: {
                 token: "xd",
             },
         };
         try {
-            const data1 = await Api.post("analisis/registrar", data, headers);
+            const data1 = await Api.post("analisis/registrar", AnalisisDta, headers);
+            if (data1.data.status == false) {
+                let keys = Object.keys(data1.data.err)
+                let r7error = document.querySelectorAll(".r7-error");
+                for (let x = 0; x < r7error.length; x++) {
+                    r7error[x].remove()
+                }
+                console.log(data1.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let hr = document.createElement("hr")
+                    hr.innerHTML = data.data.err[keys[x]]
+                    hr.classList.add("hr")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(hr)
+                    }
+                }
+            } else {
+                console.log(data1.data)
+                /* Sweet.registroExitoso();
+                closeRegistrarModal(); */
+                // Recargar la lista de fincas después del registro
+                const response = await Api.get("analisis/listar");
+                setAnalisis(response.data);
+                location.href = "/analisis"
+            }
             console.log(data1,"tiposssssss")
-            Sweet.registroExitoso();
-            closeRegistrarAnalisisModal();
             const response = await Api.get("analisis/listar");
             setAnalisis(response.data);
         } catch (error) {

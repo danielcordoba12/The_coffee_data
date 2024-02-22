@@ -25,7 +25,7 @@ const Cafe = () => {
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
     const [lote, setLotes] = useState([]);
     const [variedades, setvariedades] = useState([]);
-    const [dataSelect, setDataSelect] = useState({});
+    const [dataSelect, setDataSelect] = useState({});   
 
 
     const lotes_id = useRef();

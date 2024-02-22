@@ -5,6 +5,7 @@
   left: -37px;
   top:-15px;
   font-size: 1rem;
+
 }
 option{
   color: #808080;
@@ -28,7 +29,6 @@ option{
 .btn-desactivar-d:hover{
   background-color:#0b2e4be7;
 }
-
 
 .div-input-d{
   color: #808080;
