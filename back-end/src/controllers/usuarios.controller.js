@@ -45,7 +45,7 @@ export const listarUsuario = async (req, res) => {
 
     try {
         
-        const [result] = await pool.query("select nombre, apellido, numero_documentos,telefono, correo_electronico, user_password, tipo_documento, rol, cargo from usuarios");
+        const [result] = await pool.query("select id,nombre, apellido, numero_documentos,telefono, correo_electronico, user_password, tipo_documento, rol, cargo from usuarios");
         res.status(200).json(result);
     } catch (err) {
         res.status(200).json({

@@ -187,8 +187,43 @@ return    res.status(500).json({
 
 
 export const actualizarCafe=async (req, res) =>{
+  const [variedades] = await pool.query("SELECT id FROM variedades");
+  let opcionesVariedades = [];
+  for (let x = 0; x < variedades.length; x++) {
+    opcionesVariedades.push(variedades[x]["id"])
+  }
 
+  const [lotes] = await pool.query("SELECT id FROM lotes");
+  let opcionesLotes = [];
+  for (let x = 0; x < lotes.length; x++) {
+    opcionesLotes.push(lotes[x]["id"])
+  }
     try{
+
+      let data = {
+
+        "select": {
+          "lotes_id": {
+            "value": req.body.lotes_id,
+            "opciones": opcionesVariedades,
+            "referencia": "el lote"
+          },
+          "variedades_id": {
+            "value": req.body.variedades_id,
+            "opciones": opcionesLotes,
+            "referencia": "la variedad"
+          }
+        }
+      }
+    
+      let validateInputs = validate(data)
+      if (validateInputs.status == false) {
+        return res.status(200).json({
+          "status": false,
+          "errors": validateInputs.errors
+  
+        })
+      }
       
       let error1 = validationResult(req);
         if (!error1.isEmpty()){
