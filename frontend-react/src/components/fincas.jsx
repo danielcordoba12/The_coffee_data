@@ -3,18 +3,15 @@ import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
 import "../style/fincas.css";
 import Sweet from "../helpers/Sweet";
+import esES from "../languages/es-ES.json"
 import $ from "jquery";
-import jQuery from "jquery";
-import "bootstrap"
-import "../../node_modules/datatables.net";
-import "../../node_modules/datatables.net-dt/css/dataTables.dataTables.min.css";
-import "../../node_modules/datatables.net-dt/css/dataTables.dataTables.css";
-import '../../node_modules/datatables.net-responsive';
-import '../../node_modules/datatables.net-responsive/js/dataTables.responsive';
-import '../../node_modules/datatables.net-responsive-dt';
-import '../../node_modules/datatables.net-responsive-dt/css/responsive.dataTables.min.css';
-import '../../node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css';
-import '../../node_modules/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
+import "bootstrap";
+import "datatables.net";
+import "datatables.net-bs5";
+import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+import "datatables.net-responsive";
+import "datatables.net-responsive-bs5";
+import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 
 const FincaView = () => {
@@ -36,6 +33,7 @@ const FincaView = () => {
     const [filtro, setFiltro] = useState('');
     const [usuario, setUsuario] = useState([]);
     const [mostrarOpciones, setMostrarOpciones] = useState(false);
+    const tableRef = useRef();
 
 
     const fincas_id = useRef();
@@ -46,6 +44,29 @@ const FincaView = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (fincas.length > 0) {
+            if ($.fn.DataTable.isDataTable(tableRef.current)) {
+                $(tableRef.current).DataTable().destroy();
+            }
+            $(tableRef.current).DataTable({
+                columnDefs:[
+                    {
+                        targets:-1,
+                        responsivePriority:1
+                      }
+                  ],
+                responsive: true,
+                language: esES,
+                paging: true,
+                lengthMenu: [
+                    [7, 10, 50, -1],
+                    ['7 Filas', '10 Filas', '50 Filas', 'Ver Todo']
+                ]
+            });
+
+        }
+    }, [fincas])
     useEffect(() => {
         const fetchMunicipios = async () => {
             try {
@@ -121,7 +142,7 @@ const FincaView = () => {
 
     const handleEditUser1 = async () => {
         try {
-           const data = await Api.put(`/finca/actualizar/${SelectedFincaId}`, modalFinca);
+            const data = await Api.put(`/finca/actualizar/${SelectedFincaId}`, modalFinca);
             console.log(data, "fincaaa")
             if (data.data.status == false) {
                 let keys = Object.keys(data.data.errors)
@@ -419,7 +440,10 @@ const FincaView = () => {
                 <div className="container-fluid w-full">
 
 
-                    <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                    <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+                        ref={tableRef}
+                        cellPadding={0}
+                        width="100%">
 
                         <thead>
                             <tr className="bg-gray-200">
@@ -457,7 +481,7 @@ const FincaView = () => {
                                                 <button
                                                     type="button"
                                                     className="btn-actu"
-                                                    onClick={() =>{setFincaId(task.id); openEditarModal(task.id)}}
+                                                    onClick={() => { setFincaId(task.id); openEditarModal(task.id) }}
                                                 >
                                                     Modificar
                                                 </button>
@@ -505,7 +529,7 @@ const FincaView = () => {
                                 </div>
                                 <div className="modal-body">
 
-                                    <table className="table">
+                                    <table className="table"  >
                                         <thead>
                                             <tr>
                                                 <th>Nombre</th>
@@ -579,54 +603,55 @@ const FincaView = () => {
                         />
                         <div>
                             <label className="labeledit" htmlFor="nombre">Nombre</label>
-                        <input
-                            className="input-field"
-                            id="nombre"
-                            type="text"
-                            
-                            value={modalFinca.nombre}
-                            onChange={(e) =>
-                                setModalFinca({ ...modalFinca, nombre: e.target.value })
-                            }
-                        /></div>
+                            <input
+                                className="input-field"
+                                id="nombre"
+                                type="text"
+
+                                value={modalFinca.nombre}
+                                onChange={(e) =>
+                                    setModalFinca({ ...modalFinca, nombre: e.target.value })
+                                }
+                            /></div>
                         <div>
-                        <label className="labeledit" htmlFor="longitud">longitud</label> 
-                        <input
-                            className="input-field"
-                            label="longitud"
-                            id="longitud"
-                            type="text"
-                            
-                            value={modalFinca.longitud}
-                            onChange={(e) =>
-                                setModalFinca({ ...modalFinca, longitud: e.target.value })
-                            }
-                        /></div>
+                            <label className="labeledit" htmlFor="longitud">longitud</label>
+                            <input
+                                className="input-field"
+                                label="longitud"
+                                id="longitud"
+                                type="text"
+
+                                value={modalFinca.longitud}
+                                onChange={(e) =>
+                                    setModalFinca({ ...modalFinca, longitud: e.target.value })
+                                }
+                            /></div>
                         <div>
-                        <label className="labeledit" htmlFor="latitud">latitud</label> 
-                        <input
-                            className="input-field"
-                            id="latitud"
-                            type="text"
-                            
-                            value={modalFinca.latitud}
-                            onChange={(e) =>
-                                setModalFinca({ ...modalFinca, latitud: e.target.value })
-                            }
-                        /></div>
+                            <label className="labeledit" htmlFor="latitud">latitud</label>
+                            <input
+                                className="input-field"
+                                id="latitud"
+                                type="text"
+
+                                value={modalFinca.latitud}
+                                onChange={(e) =>
+                                    setModalFinca({ ...modalFinca, latitud: e.target.value })
+                                }
+                            /></div>
                         <div>
-                            
-                        <input
-                            className="input-field"
-                            id="usuarios_id"
-                            type="hidden"
-                            placeholder="usuarios_id "
-                            value={modalFinca.usuarios_id}
-                            onChange={(e) =>
-                                setModalFinca({ ...modalFinca, usuarios_id: e.target.value })
-                            }
-                        /></div>
+
+                            <input
+                                className="input-field"
+                                id="usuarios_id"
+                                type="hidden"
+                                placeholder="usuarios_id "
+                                value={modalFinca.usuarios_id}
+                                onChange={(e) =>
+                                    setModalFinca({ ...modalFinca, usuarios_id: e.target.value })
+                                }
+                            /></div>
                         <div className="div-input">
+
                             <select
 
                                 className="input-register"
@@ -649,21 +674,21 @@ const FincaView = () => {
                                 ))}
                             </select>
                         </div>
-                            <div>
-                            <label className="labeledit" htmlFor="noombre_vereda">vereda</label> 
-                        <input
-                            className="input-field"
-                            id="noombre_vereda"
-                            type="text"
-                            
-                            value={modalFinca.noombre_vereda}
-                            onChange={(e) =>
-                                setModalFinca({
-                                    ...modalFinca,
-                                    noombre_vereda: e.target.value,
-                                })
-                            }
-                        /></div>
+                        <div>
+                            <label className="labeledit" htmlFor="noombre_vereda">vereda</label>
+                            <input
+                                className="input-field"
+                                id="noombre_vereda"
+                                type="text"
+
+                                value={modalFinca.noombre_vereda}
+                                onChange={(e) =>
+                                    setModalFinca({
+                                        ...modalFinca,
+                                        noombre_vereda: e.target.value,
+                                    })
+                                }
+                            /></div>
                         <button
                             className="btn-actu"
                             onClick={handleEditUser1}
@@ -771,46 +796,46 @@ const FincaView = () => {
                                 />
                             </div>
                             <div>
-                            <input
-                                className="input-field"
-                                id="longitud"
-                                type="text"
-                                placeholder="longitud"
-                                value={modalLote.longitud}
-                                onChange={(e) => setModalLote({ ...modalLote, longitud: e.target.value })}
-                            />
+                                <input
+                                    className="input-field"
+                                    id="longitud"
+                                    type="text"
+                                    placeholder="longitud"
+                                    value={modalLote.longitud}
+                                    onChange={(e) => setModalLote({ ...modalLote, longitud: e.target.value })}
+                                />
                             </div>
                             <div>
-                            <input
-                                className="input-field"
-                                id="latitud"
-                                type="text"
-                                placeholder="latitud"
-                                value={modalLote.latitud}
-                                onChange={(e) => setModalLote({ ...modalLote, latitud: e.target.value })}
-                            />
+                                <input
+                                    className="input-field"
+                                    id="latitud"
+                                    type="text"
+                                    placeholder="latitud"
+                                    value={modalLote.latitud}
+                                    onChange={(e) => setModalLote({ ...modalLote, latitud: e.target.value })}
+                                />
                             </div>
                             <div>
-                            <input
-                                className="input-field"
-                                id="n_plantas"
-                                type="number"
-                                placeholder="n_plantas"
-                                value={modalLote.n_plantas}
-                                onChange={(e) =>
-                                    setModalLote({ ...modalLote, n_plantas: e.target.value })
-                                }
-                            />
+                                <input
+                                    className="input-field"
+                                    id="n_plantas"
+                                    type="number"
+                                    placeholder="n_plantas"
+                                    value={modalLote.n_plantas}
+                                    onChange={(e) =>
+                                        setModalLote({ ...modalLote, n_plantas: e.target.value })
+                                    }
+                                />
                             </div>
                             <div>
-                            <input
-                                className="input-field"
-                                id="fincas_id"
-                                type="hidden"
-                                placeholder="fincas_id"
-                                value={modalLote.fincas_id}
-                                onChange={(e) => setModalLote({ ...modalLote, fincas_id: e.target.value })}
-                            />
+                                <input
+                                    className="input-field"
+                                    id="fincas_id"
+                                    type="hidden"
+                                    placeholder="fincas_id"
+                                    value={modalLote.fincas_id}
+                                    onChange={(e) => setModalLote({ ...modalLote, fincas_id: e.target.value })}
+                                />
                             </div>
                             <button
                                 className="btn-actu"
