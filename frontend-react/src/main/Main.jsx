@@ -1,19 +1,17 @@
 import React from "react";
 import App from "../App";
-import Login from "../components/login/login.jsx";
+import LoginForm
 
 
 
 
-const Main = () => {
-    const token = localStorage.getItem("token");
-    
-    if (token) {
+if (localStorage.getItem("token")) {
         const parseJwt = (token) => {
             const base64Url = token.split(".")[1];
             const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
             const jsonPayload = decodeURIComponent(
-                atob(base64)
+                window
+                    .atob(base64)
                     .split("")
                     .map(function (c) {
                         return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
@@ -23,16 +21,15 @@ const Main = () => {
             return JSON.parse(jsonPayload);
         };
 
-        const tokenExp = parseJwt(token).exp * 1000;
-        const tokenExistAndStillValid = tokenExp > Date.now();
+        var tokenExisAndStillValid = (parseJwt(localStorage.getItem("token")).exp*1000 > Date.now());
+    };
+   
 
-        if (tokenExistAndStillValid) {
-            return <App />;
-        }
-    }
-    
-    return <Login />;
+
+const Main = () => {
+    return <>{tokenExisAndStillValid ? <App/> : <loginFrom />}</>;
 };
+
 
 
 export default Main;

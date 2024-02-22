@@ -27,6 +27,7 @@
     "datatables.net-responsive-dt": "^3.0.0",
     "echarts-for-react": "^3.0.2",
     "jquery": "^3.7.1",
+    "mdb-react-ui-kit": "^7.2.0",
     "mui-datatables": "^4.3.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
