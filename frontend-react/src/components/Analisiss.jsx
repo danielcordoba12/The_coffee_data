@@ -3,6 +3,15 @@ import Api from "../services/api";
 import Sweet from "../helpers/Sweet";
 import { useNavigate } from "react-router-dom";
 import '../style/analisis.css';
+import $ from "jquery";
+import "bootstrap";
+import "datatables.net";
+import "datatables.net-bs5";
+import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+import "datatables.net-responsive";
+import "datatables.net-responsive-bs5";
+import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+
 
 
 const Analisis = () => {
@@ -168,7 +177,7 @@ const Analisis = () => {
             if (data1.data.status == false) {
                 let keys = Object.keys(data1.data.err)
                 let r7error = document.querySelectorAll(".r7-error");
-                for (let x = 0; x < r7error.length; x++) {
+                for (let x = 0; x < r7error.length; x ++) {
                     r7error[x].remove()
                 }
                 // console.log(data1.data)
@@ -271,64 +280,94 @@ const Analisis = () => {
         }
     }, [aRegistrarModalOpen])
 
+    const dataTableRef = useRef(null);
+    const initializeDataTable = (Cafes) => {
+        $(document).ready(function () {
+            $(dataTableRef.current).DataTable({
+                lengthMenu: [5, 10, 20, 30, 40, 50],
+                processing: true,
+                pageLength: 5,
+                language: {
+                    processing: "Procesando datos...",
+                },
+                responsive: true,
+            });
+        });
+
+        return () => {
+            $(dataTableRef.current).DataTable().destroy(true);
+        };
+    };
+
+    useEffect(() => {
+        if (analisis.length > 0) {
+            initializeDataTable(analisis);
+        }
+    }, [analisis]);
+
+
+
     return (
         <>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
         {modalAnalisis && <div className="overlay-d" onClick={closeModalEdit}></div>}
         {aRegistrarModalOpen && (
             <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
             )}
+
+                <div className="contTitle">
+                <h1 className="titleanalisis">Análisis</h1>
+
+                <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
+                    Añadir
+                </button>
+                </div>
             
-        <div className="tablaAnalisis">
-            <div className="contTitle">
-            <h1 className="titleanalisis">Análisis</h1> 
-        
-            <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
-                Añadir
-            </button>
+        <div className="tablaAnalisis">    
+            <div className="container-fluid w-full">
+                    <table className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                    <thead>
+                            <tr className="bg-gray-200">
+                            <th>id</th>
+                            <th>Fecha</th>
+                            <th>Tipo Análisis </th>
+                            <th>Consecutivo Informe </th>
+                            <th>Asignación </th>
+                            <th>Estado </th>
+                            <th>Propietario </th>
+                            <th>Finca </th>
+                            <th>Lote </th>
+                            <th>Variedad</th>
+                        </tr>
+                    </thead>
+                        <tbody className="bg-gray-200">
+                        {analisis.map((task) => (
+                                <tr key={task.id_analisis}>
+                                    <td>{task.id_analisis}</td>
+                                    <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td>
+                                    <td>{task.nombre_tipo_analisis}</td>
+                                    <td className="conse" >{task.codigo_externo}</td>
+                                    <td>{task.nombre_usuario}</td>
+                                    <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                    <td>{task.propietario}</td>
+                                    <td>{task.nombre_fincas}</td> 
+                                    <td>{task.nombre_lotes}</td> 
+                                    <td>{task.nombre_variedades}</td> 
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="btn-actualizar-mod"
+                                            onClick={() => openModal(task.id_analisis)}
+                                        >
+                                            Modificar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <thead className="analisis">
-                    <tr className="encabezado">
-                        <th>id</th>
-                        <th>Fecha</th>
-                        <th>Tipo Análisis </th>
-                        <th>Consecutivo Informe </th>
-                        <th>Asignación </th>
-                        <th>Estado </th>
-                        <th>Propietario </th>
-                        <th>Finca </th>
-                        <th>Lote </th>
-                        <th>Variedad</th>
-
-                    </tr>
-                </thead>
-                <tbody className="cuerpodatos">
-                    {analisis.map((task) => (
-                            <tr key={task.id_analisis}>
-                                <td>{task.id_analisis}</td>
-                                <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td>
-                                <td>{task.nombre_tipo_analisis}</td>
-                                <td className="conse" >{task.codigo_externo}</td>
-                                <td>{task.nombre_usuario}</td>
-                                <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                <td>{task.propietario}</td>
-                                <td>{task.nombre_fincas}</td> 
-                                <td>{task.nombre_lotes}</td> 
-                                <td>{task.nombre_variedades}</td> 
-                                <td>
-                                    <button
-                                        type="button"
-                                        className="btn-actualizar-mod"
-                                        onClick={() => openModal(task.id_analisis)}
-                                    >
-                                        Modificar
-                                    </button>
-                                </td>
-
-                            </tr>
-                        ))}
-                </tbody>
-            </table>
         </div>
 
         {modalAnalisis && (

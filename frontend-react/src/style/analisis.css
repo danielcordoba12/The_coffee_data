@@ -61,7 +61,6 @@ option{
   background-color: rgb(234, 241, 243);
   color: rgba(128, 128, 128, 0.743);
 }
-
 .titleanalisis{
 justify-content: center;
 text-align: left;
@@ -96,11 +95,11 @@ font-weight: bold;
 background-color: #0b2e4be7;
 
 }
-
  .contTitle{
   position: relative;
   top: 56px;
-  left: 100px;
+  left: 26px;
+  background-color: white;
   border-radius: 8px;
   width: 93%;
   height: auto;
@@ -130,7 +129,7 @@ transition: background-color 0.3s;
   background-color: #0b2e4beb;
 }
 .btn-actualizar-mod{
-  color: #fff;
+color: #fff;
 position: relative;
 font-weight: bold;
 padding: 8px 16px;
@@ -149,11 +148,12 @@ background-color:#0b2e4be2;
 }
 
 .tablaAnalisis{
-display: inline-table;
-justify-content: center;
-align-items: center;
-top: 125px;
-left: 100px;
+/* display: inline-table; */
+/* justify-content: center;
+align-items: center; */
+position: relative;
+top: 95px;
+left: 26px;
 width: 93%;
 height: 1000rem;
 overflow: hidden;
@@ -168,10 +168,6 @@ width: 100%;
  color: #808080;
 }
 
-table{
-  width: 90%;
-
-}
 .cuerpodatos{
   position: relative;
   left: 135px;

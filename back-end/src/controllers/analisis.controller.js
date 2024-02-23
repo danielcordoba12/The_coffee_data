@@ -157,8 +157,6 @@ export const guardarAnalisis = async (req, res) => {
 
     }
 };
-
-
 export const buscaranalisis = async (req, res) => {
     try {
         let id = req.params.id;

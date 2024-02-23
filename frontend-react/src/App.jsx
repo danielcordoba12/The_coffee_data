@@ -14,9 +14,6 @@ import EditarMestra from './components/EditarMuestra'
 import Registrarusuarios from './components/usuariosRegistrar'
 import EditarUsuario from './components/editarusuario'
 import ListarUsuarios from './components/listarusuario'
-// import RegistrarAnalisis from './components/Analisiss'
-// import ListarAnalisis from './components/ListarAnalisis'
-// import EditarAnalisis from './components/EditarAnalisis'
 import Analisis from'./components/Analisiss'
 import Grafica from './components/Grafica'
 
@@ -35,8 +32,6 @@ function App() {
           <Route path='/finca' element={<Finca />} />
           <Route path='/lote' element={<Lote />} />
           <Route path='/analisis' element={<Analisis />} />
-          {/* <Route path='/analisis/update/:id' element={<EditarAnalisis />} />
-          <Route path='/analisis/listar' element={<ListarAnalisis />} /> */}
           <Route path='/login' element={<LoginForm />} />
           <Route path='/usuario' element={<Registrarusuarios />} />
           <Route path='/usuario/listar' element={<ListarUsuarios />} />
