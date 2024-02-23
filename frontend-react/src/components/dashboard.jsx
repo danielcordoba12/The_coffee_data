@@ -78,37 +78,37 @@ function Dashboard() {
                             </li>
 
                             <li>
-                                <Link to={"/Usuario/listar"}>
+                                <Link to={"/home/usuario/listar"}>
                                     <FontAwesomeIcon icon={faUsers}  className="icon"/>
                                     <p id="paragraph">Usuarios</p>
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/finca"}>
+                                <Link to={"/home/finca"}>
                                     <FontAwesomeIcon icon={faToolbox} className="icon"/>
                                     <p>Fincas</p>
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/lote"}>
+                                <Link to={"/home/lote"}>
                                     <FontAwesomeIcon icon={faMagnifyingGlassChart} className="icon"/>
                                     <p>Lotes</p>
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/cafe"}>
+                                <Link to={"/home/cafe"}>
                                     <FontAwesomeIcon icon={faChartColumn} className="icon"/>
                                     <p>Cafe</p>
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/analisis"}>
+                                <Link to={"/home/analisis"}>
                                     <FontAwesomeIcon icon={faPhone}className="icon" />
                                     <p>Analisis</p>
                                 </Link>
                             </li>
                             <li>
-                                <Link to={"/listar/muestra"}>
+                                <Link to={"/home/listar/muestra"}>
                                     <FontAwesomeIcon icon={faVials}  className="icon"/>
                                     <p>Muestras</p>
                                 </Link>
@@ -119,20 +119,20 @@ function Dashboard() {
                                     <p>Resultado</p>
                                 </Link>
                             </li><li>
-                                <Link to={"/grafica"}>
+                                <Link to={"/home/grafica"}>
                                     <FontAwesomeIcon icon={faVials}  className="icon"/>
                                     <p>Grafica</p>
                                 </Link>
                             </li>
                         
                             <li className="li-dasboard">
-                                <Link to={"/municipio"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                <Link to={"/home/municipio"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                     <FontAwesomeIcon icon={faSliders} className="icon"/>
                                     <p>Municipios</p>
                                 </Link>
                             </li>
                             <li className="li-dasboard">
-                                <Link to={"/variedad"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                <Link to={"/home/variedad"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                     <FontAwesomeIcon icon={faSliders} className="icon"/>
                                     <p>Variedad</p>
                                 </Link>

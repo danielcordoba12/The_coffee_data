@@ -1,60 +1,52 @@
-
-import { Route, Routes } from 'react-router-dom'
-import Muestra from './components/Resultados'
-import Dashboard from './components/dashboard'
-import Finca from './components/fincas'
-import Resultado from './components/Resultados'
-import Lote from './components/Lotes'
-import Cafe from './components/cafe'
-import Municipio from './components/Municipio'
-import Variedad from './components/variedad'
-import ListarMuestra from './components/ListarMuestra'
-import EditarMestra from './components/EditarMuestra'
-import Registrarusuarios from './components/usuariosRegistrar'
-import EditarUsuario from './components/editarusuario'
-import ListarUsuarios from './components/listarusuario'
-// import RegistrarAnalisis from './components/Analisiss'
-// import ListarAnalisis from './components/ListarAnalisis'
-// import EditarAnalisis from './components/EditarAnalisis'
-import Grafica from './components/Grafica'
-import TablePrueba from './components/TablePrueba'
-import Analisis from './components/Analisiss'
-
-
-
-
-
+import { Route, Routes } from 'react-router-dom';
+import React from 'react';
+import Dashboard from './components/dashboard';
+import Resultado from './components/Resultados';
+import Finca from './components/fincas';
+import Lote from './components/Lotes';
+import Analisis from './components/Analisiss';
+import Registrarusuarios from './components/usuariosRegistrar';
+import EditarUsuario from './components/editarusuario';
+import ListarUsuarios from './components/listarusuario';
+import Municipio from './components/Municipio';
+import Variedad from './components/variedad';
+import Cafe from './components/cafe';
+import ListarMuestra from './components/ListarMuestra';
+import EditarMestra from './components/EditarMuestra';
+import Grafica from './components/Grafica';
+import TablePrueba from './components/TablePrueba';
+import Inicio from './components/login/Inicio';
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route path='/xd' element={<TablePrueba />} />
-        <Route path='/' element={<Dashboard />}>
-          <Route path='/resultado' element={<Resultado />} />
-          <Route path='/finca/listar' element={<Finca />} />
-          <Route path='/finca' element={<Finca />} />
-          <Route path='/lote' element={<Lote />} />
-          <Route path='/analisis' element={<Analisis />} />
-          {/* <Route path='/analisis/update/:id' element={<EditarAnalisis />} />
-          <Route path='/analisis/listar' element={<ListarAnalisis />} /> */}
-          <Route path='/usuario' element={<Registrarusuarios />} />
-          <Route path='/usuario/listar' element={<ListarUsuarios />} />
-          <Route path='/usuario/actualizar/:id' element={<EditarUsuario />} />
-          <Route path='/municipio' element={<Municipio />} />
-          <Route path='/variedad' element={<Variedad />} />
-          <Route path='/cafe' element={<Cafe />} />
-          <Route path='/listar/muestra' element={<ListarMuestra />} />
-          <Route path='/editar/muestra/:id' element={<EditarMestra />} />
-          <Route path='/grafica' element={<Grafica />} />
-
-
-        </Route>
-
-
-      </Routes>
-    </>
-  )
+    <Routes>
+      <Route path="/inicio" element={<Inicio />} />
+      {/* <Route /> */}
+      <Route path="/home" element={<Dashboard />} >
+        <Route path="resultado" element={<Resultado />} />
+        <Route path="finca/*" element={<Finca />} />
+        <Route path="lote" element={<Lote />} />
+        <Route path="analisis" element={<Analisis />} />
+        <Route path="usuario" element={<Registrarusuarios />} />
+        <Route path="usuario/listar" element={<ListarUsuarios />} />
+        <Route path="usuario/actualizar/:id" element={<EditarUsuario />} />
+        <Route path="municipio" element={<Municipio />} />
+        <Route path="variedad" element={<Variedad />} />
+        <Route path="cafe" element={<Cafe />} />
+        <Route path="listar/muestra" element={<ListarMuestra />} />
+        <Route path="editar/muestra/:id" element={<EditarMestra />} />
+        <Route path="grafica" element={<Grafica />} />
+        <Route path="xd" element={<TablePrueba />} />
+        {/* Ruta no encontrada */}
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  );
 }
 
-export default App 
+// Componente para manejar rutas no encontradas
+function NotFound() {
+  return <h1>404 - Página no encontrada</h1>;
+}
+
+export default App;
