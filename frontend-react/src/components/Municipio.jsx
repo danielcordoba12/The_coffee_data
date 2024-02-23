@@ -23,7 +23,6 @@ const Municipio = () => {
     const [modalMunicipio, setModalMunicipio] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
 
-    const fecha_creacion = useRef();
     const nombre = useRef();
     const departamentos_id = useRef();
 
@@ -58,10 +57,32 @@ const Municipio = () => {
 
     const handleEditUser = async () => {
         try {
-            await Api.put(`/municipio/Actualizar/${selectedMunicipioId}`, modalMunicipio);
-            Sweet.actualizacionExitosa();
-            closeEditarModal();
+           const data = await Api.put(`/municipio/Actualizar/${selectedMunicipioId}`, modalMunicipio);
+            console.log(data, "municipio")
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
 
+                }
+            } else {
+                Sweet.actualizacionExitosa();
+                
+                closeEditarModal();
+            }
+
+            // Recargar la lista de lotes después de la actualización
             const response = await Api.get("municipio/listar");
             setMunicipios(response.data);
         } catch (error) {
@@ -174,8 +195,8 @@ const Municipio = () => {
 
 
                     <div className="container-fluid w-full">
-                        <button to="/Municipio/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
-                            Registrar Municipio
+                        <button to="/Municipio/registrar" className="btn-añadir-municipio" onClick={openRegistrarModal}>
+                            Añadir 
                         </button>
 
                         <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
@@ -223,20 +244,10 @@ const Municipio = () => {
                                 Editar Municipio
                             </h1>
                             <div className="max-w-xs">
+                                <div>
                                 <input
                                     className="input-field"
-                                    type="hidden"
-                                    placeholder="fecha_creacion"
-                                    value={modalMunicipio.fecha_creacion}
-                                    onChange={(e) =>
-                                        setModalMunicipio({
-                                            ...modalMunicipio,
-                                            fecha_creacion: e.target.value,
-                                        })
-                                    }
-                                />
-                                <input
-                                    className="input-field"
+                                    id="nombre"
                                     type="text"
                                     placeholder="nombre"
                                     value={modalMunicipio.nombre}
@@ -246,10 +257,12 @@ const Municipio = () => {
                                             nombre: e.target.value
                                         })
                                     }
-                                />
+                                /></div>
 
+                                <div>
                                 <input
                                     className="input-field"
+                                    id="departamentos_id"
                                     type="number"
                                     placeholder="departamentos_id"
                                     value={modalMunicipio.departamentos_id}
@@ -259,7 +272,7 @@ const Municipio = () => {
                                             departamentos_id: e.target.value,
                                         })
                                     }
-                                />
+                                /></div>
                                 <button
                                     className="btn-act-municipio "
                                     onClick={handleEditUser}
@@ -289,16 +302,13 @@ const Municipio = () => {
                                 onSubmit={(e) => {
                                     e.preventDefault();
                                     handleRegistrar({
-                                        fecha_creacion: fecha_creacion.current.value,
                                         nombre: nombre.current.value,
                                         departamentos_id: departamentos_id.current.value,
                                     });
                                 }}
                                 method="post"
                             >
-                                <div className="div-input">
-                                    <input type="hidden" id="fecha_creacion" name="fecha_creacion" ref={fecha_creacion} placeholder="" />
-                                </div>
+
 
                                 <div className="div-input">
                                     <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />

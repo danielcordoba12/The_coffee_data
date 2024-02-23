@@ -14,7 +14,6 @@ import Cafe from './components/cafe';
 import ListarMuestra from './components/ListarMuestra';
 import EditarMestra from './components/EditarMuestra';
 import Grafica from './components/Grafica';
-import TablePrueba from './components/TablePrueba';
 import Inicio from './components/login/Inicio';
 
 function App() {
@@ -36,7 +35,6 @@ function App() {
         <Route path="listar/muestra" element={<ListarMuestra />} />
         <Route path="editar/muestra/:id" element={<EditarMestra />} />
         <Route path="grafica" element={<Grafica />} />
-        <Route path="xd" element={<TablePrueba />} />
         {/* Ruta no encontrada */}
         <Route path="*" element={<NotFound />} />
       </Route>

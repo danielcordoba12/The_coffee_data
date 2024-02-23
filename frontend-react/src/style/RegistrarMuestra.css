@@ -1,14 +1,14 @@
-.fondo-muestra {
+/* .fondo-muestra {
     z-index: -26;
     position: fixed;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh; /* Ajusta la altura según tus necesidades */
+    height: 100vh; 
     width: 100%;
     margin: 0;
     
-}
+} */
 
 .visible{
   display: flex ;
@@ -20,10 +20,11 @@
 .main-content-registrar {
   z-index: 12;
   font-family: Arial, sans-serif;
-  display: none ;
+  display: flex;
   flex-direction: column;
   position: fixed;
-  backdrop-filter: blur(16px);
+  /* backdrop-filter: blur(16px);   */
+  background-color: rgba(0, 0, 0, 0.8);
   width: 100%;
   padding: 0;
   justify-content: center;
@@ -39,15 +40,15 @@
 
 
 .formulario-muestra  {
-  background-color: red;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   /* background-color: #fff; */ 
   padding: 15px;
   border-radius: 0px 0px 8px 8px;
   display: flex;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: rgba(0, 0, 0, 0.5);
-  border-bottom:1px black solid;
+  position: absolute;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  background-color: rgb(234, 241, 243);
+  /* border-bottom:1px black solid; */
   justify-content: space-between;
   max-width: 800px;
   width: 100%;
@@ -63,11 +64,19 @@
   width: 800px;
   height: 60px;
   font-size: 2.5em;
-  color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: rgba(0, 0, 0, 0.5);
-  border-bottom:1px black solid;  
+  color: black;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    background-color: rgb(250, 250, 250);
+  /* border-bottom:1px black solid;   */
   border: none;
+}
+.title-registrar-resultado{
+  background-color: rgb(234, 241, 243);
+  width: 800px;
+  height: 60px;
+  z-index: -1;
+  position: relative;
+  bottom: 360px;
 }
 
 .columna {
@@ -75,11 +84,11 @@
   margin-left: 30px;
 }
 
-label {
+.label-muestra {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  color: white;
+  color: black;
   font-size: 0.9em;
 }
 
@@ -89,16 +98,19 @@ label {
   margin-bottom: 10px;
   background-color: transparent;
   border: none;
-  border-bottom:1px rgb(153, 151, 151) solid;
-  color: white;
+  border-bottom:1px black solid;
+  color: black;
   outline: none;
 }
+/* .input-register{
+  color: black;
+} */
 .option-cafe{
   border: none;
 }
 .select-cafe{
   /* background-color: red; */
-  display: flex;
+  /* display: flex; */
   border-top: none;
   border-left:none;
   border-right: none;
@@ -109,6 +121,10 @@ label {
 .label-cafe{
   display: flex;
   margin-left: 0;
+}
+.h6-error {
+  color: rgb(255, 46, 49);
+  font-size: 0.8em;
 }
 
 .button {
@@ -131,7 +147,7 @@ label {
   top: 50%;
   left: 20px;
   transform: translateY(-50%);
-  color: #ffffff;
+  color: black;
   font-size: 16px;
   pointer-events: none;
   transition: transform 0.3s, font-size 0.3s, color 0.3s;
@@ -141,7 +157,7 @@ label {
 .formulario-muestra input:not(:placeholder-shown) + label {
   transform: translateY(-100%) scale(1.2);
   font-size: 12px;
-  color: rgb(255, 255, 255);
+  color: black;
   top: 10px;
 
   transition: all 0.5s;
@@ -162,6 +178,55 @@ label {
   overflow-y: auto;
   cursor: pointer;
 }
+.input-search-cafe{
+  background-color: transparent;
+  border-right: none;
+  border-top: none;
+  border-left: none;
+  width: 100%;
+  color:  white;
+  outline: none;
+}
+.input-search-cafe {
+  color:  black ;
+}
+.select-options-cafe{
+  display: block;
+  position: absolute;
+  color: black;
+  background-color: rgb(255, 255, 255);
+
+  width: 100%;
+
+  z-index: 1;
+
+  top: 100%;
+
+  max-height: 100px;
+
+  overflow: auto;
+
+  text-align: left;
+
+  padding: 10px;
+
+  font-size: 11px;
+
+  display: none;
+}
+.select-options-cafe>div{
+  margin: 0 !important;
+  padding: 0 !important;
+  padding: 5px !important;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.select-options-cafe>div:hover{
+  background-color: #80808024;
+  display: block;
+}
+
+
 
 /* ================================listar muestra===============================0
 
@@ -177,17 +242,17 @@ label {
 }
 
 .main-container{
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   width: 100%;
   margin: auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: rgb(30, 30, 30, 50%);
-  border-bottom:1px black solid;
-  overflow-y: auto;
-  max-height: 650px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  /* background-color: rgb(30, 30, 30, 50%); */
+  /* border-bottom:1px black solid; */
+  /* overflow-y: auto; */
+  /* max-height: 650px; */
 }
 
 .table-muestra {
@@ -245,8 +310,7 @@ label {
 .main-content-actualizar {
   z-index: 12;
   font-family: Arial, sans-serif;
-  display: none ;
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
   position: fixed;
   /* background-color: red; */
@@ -274,13 +338,13 @@ label {
 .modal-info{
   z-index: 12;
   font-family: Arial, sans-serif;
-  display: none ;
+  display: flex ;
   /* display: flex; */
   flex-direction: column;
   position: fixed;
   /* background-color: red; */
   backdrop-filter: blur(10px);
-  /* background-color: rgba(30, 30, 30, 0.925); */
+  /* background-color: rgba(234, 241, 243,); */
   width: 100%;
   padding: 0;
   justify-content: center;
@@ -288,12 +352,12 @@ label {
   text-align: center;
   height: 100vh;
 }
-.modal-info.show{
+/* .modal-info.show{
   display: flex ;
-}
+} */
 
 .value{
-  color: white;
+  color: black;
 }
 .container-label{  
   justify-content: center;
@@ -309,7 +373,7 @@ label {
 .label-modal{
   width: 70%;
   border-radius: 5px;
-  background-color: rgb(94, 79, 38);
+  
 
 }
 .btn-x{
@@ -332,10 +396,12 @@ label {
 /* Estilo para el contenedor de los botones */
 .buttons {
   position: absolute;
-  bottom: 0;
+  /* top: 290px; */
   right: 0;
+  bottom: 0;
   /* transform: translateY(50%); */
   margin: 20px; /* Ajusta el margen según sea necesario */
+  /* background-color: green;  */
 }
 
 /* Estilo para los botones */
@@ -361,4 +427,18 @@ label {
 
 
 
+
+/* ///////////////////////////////Data table//////////////////////////////////////////////// */
+/* .paging_simple_numbers{
+  background-color: red;
+} */
+/* .container-fluid w-full{
+  margin-top: 24px;
+  background-color: red;
+  z-index: 34;
+  position: absolute;
+} */
+.dataTables_wrapper .dataTables_length select {
+  margin-top: 20px; /* Modifica el margen superior según tus preferencias */
+}
 

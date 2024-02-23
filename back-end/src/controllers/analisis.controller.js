@@ -12,7 +12,7 @@ export const guardarAnalisis = async (req,res)=>{
         console.log('user',data);
         
         let sql = 'INSERT INTO analisis(tipo_analisis_id,muestras_id,usuarios_id) VALUES (?,?,?)';
-        const [rows] = await pool.query(sql,[data.tipo_analisis_id,data.muestras_id,data.usuarios_id]);
+        const [rows] = await pool.query(sql,[1,data.muestras_id.value,data.usuarios_id.value]);
 
         if(rows.affectedRows>0){
             res.status(200).json({
@@ -22,13 +22,13 @@ export const guardarAnalisis = async (req,res)=>{
 
 
         }else{
-            res.status(400).json({
+            res.status(200).json({
                 "status":401,
                 "menssage":"No se registro"
             });
         } 
     }catch(error){
-        res.status(500).json({
+        res.status(200).json({
             "status":500,
             "menssage":"error en el sevidor"+error
         });
@@ -54,10 +54,10 @@ export const listarAnalisis = async(req,res)=>{
     try{
         const [result] = await pool.query(`SELECT   
         a.id AS id_analisis,
-        m.consecutivo_informe AS consecutivo_informe,
+        m.codigo_externo AS codigo_externo,
         us.nombre AS nombre_usuario,
         a.fecha_analisis,
-        a.estado,
+        a.estado,vd.nombre AS nombre_variedades,
         u.nombre AS propietario,
         f.nombre AS nombre_fincas,
         l.nombre AS nombre_lotes,
@@ -68,6 +68,8 @@ export const listarAnalisis = async(req,res)=>{
         muestras m ON m.id = a.muestras_id
     JOIN   
         cafes c ON c.id = m.cafes_id
+    JOIN   
+        variedades vd ON vd.id = c.variedades_id
     JOIN   
         lotes l ON l.id = c.lotes_id
     JOIN   

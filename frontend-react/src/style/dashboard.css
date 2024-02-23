@@ -3,62 +3,87 @@
     margin: 0;
 }
 .main-container-dasboard {
-    
-    /* overflow: hidden; */
     display: flex;
-    flex-direction: column; /* Apila los elementos verticalmente */
+    flex-direction: column;
+    width: 100%;
+    /* height: calc(100vh + 50px); */
     height: 100vh;
-} 
+    /* background-color: rgb(245, 7, 7); */
+}
+
+
 .content-container {
     /* width: 1820px;
      */
     width: 100%;
-     height: 120px;
+    height: 120px;
     position: relative;
+    /* background-color: gre; */
     /* height: 820px; */
 
     z-index: 12;
-}    
+}
 .container-outlet{
     display: flex;
+    /* background-color: #9de617; */
 
 }
-.nav{
-    top: 0;
-    left: 0;
-    width: 90px;
-    height: 94vh;
-    color: #fff; /* Color del texto en el menú */
-    padding: 20px;  
-    text-decoration: none;
-    display: flex;
-    flex-direction: row; /* Coloca los elementos del nav en fila horizontal */
-    flex: 1;
-    
-    position: relative;
-    left: 0px;
-    /* width: 400px; */
-    /* width: 250px; */
-    /* height:calc(100vh - 6px) ; */
-    background-color: rgba(30, 30, 30, 0.767);
-    transition: all 800ms 
+    .nav {
+        top: 0;
+        left: 0;
+        width: 90px;
+        height: 96vh; /* Ajusta la altura al viewport del navegador */
+        color: #fff;
+        /* padding: 20px; */
+        text-decoration: none;
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        position: relative;
+        background-color: rgb(53, 43, 202);
+        transition: all 800ms;
+    }
 
-}
+
+
 
 .lista-items ul{
+
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    overflow: hidden;
+    /* gap: 2vh; */
+    align-items: start;
+    justify-content: start;
+    text-align: center;
+    /* overflow: hidden; */
+    /* margin-left: 100; */
+    margin-left: -30px;
+
+
 }
 
 .lista-items ul li p{
     margin-top: 1rem;
+
+}
+
+.lista-items ul li {
+    /* margin-top: 1rem; */
+    /* position: relative; */
+    display: inline-flex;
+
+    right: 0;
+    left: 0;
+
+
 }
 .icon-menu{
     font-size: 1.5em;
     margin-left: 12px;
-    
+    /* position: relative;
+    left: 0;
+    right: 0; */
+
 }
 
 /* /////////////////////////////////////HEAD NAV (Title,User name)////////////////////// */
@@ -66,10 +91,10 @@
 
 .header{
     display: grid;
-    grid-template: 50px/ 210px  1fr 360px 1fr 250px; 
+    grid-template: 50px/ 210px  1fr 360px 1fr 250px;
     width: 100%;
     /* height: 80px; */
-    background-color: rgba(30, 30, 30, 0.767);
+    background-color: rgb(53, 43, 202); 
     backdrop-filter: blur(10px);
 }
 
@@ -116,12 +141,12 @@
     top: -2px;
     transition: all 820ms;
     color: white;
-    
+
 }
 .container-username:hover{
     color:  rgb(204, 153, 12);
     cursor: pointer;
-} 
+}
 .FaUser {
     font-size: 1.6em;
     padding-right: 20px;
@@ -131,64 +156,113 @@
 }
 .username h2{
     margin-top: 12px;
-    font-size: 1em;  
+    font-size: 1em;
     /* color: white;   */
 }
 
 /* /////////////////////////////////////////////////////LISTA ITEMS////////////////////////////////////////////////// */
 .lista-items{
-    /* display: table-column-group; */
-    /* display: block;
+    /*
+    display: table-column-group;
+    display: block;
     align-items: center;
     justify-content: center;
-    text-align: center; */
+    text-align: center;
+    position: relative; */
     width: 100%;
-    /* position: relative; */
+    /* height: 100%; */
+    /* background-color: aqua; */
+    /* max-height: 97%; */
+
 }
 .nav ul li a ,.first-icon{
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    color: black; /* Establece el color de texto deseado */
+    color: rgb(0, 0, 0); /* Establece el color de texto deseado */
+    overflow: hidden;
+
 }
 .lista-items ul li :hover ,.first-icon:hover{
-    background-color: rgba(70, 68, 68, 0.918);
+    /* background-color: rgba(196, 11, 11, 0.918); */
     border-radius: 10px;
     cursor: pointer;
     color: rgb(229, 198, 154);
 }
 .lista-items ul li{
     display: flex ;
-    height: 50px;
+    /* height:50px;     */
     padding: 5px 5px 5px 12px ;
     width:100%;
     font-size:1em;
     transition: all 6ms;
-    
+
 }
 .lista-items ul li p{
     width: 200px; /* Ajusta el tamaño del contenedor según tus necesidades */
     white-space: nowrap; /* Evita el salto de línea */
-    overflow: hidden; /* Oculta el contenido que no cabe en el contenedor */
-    
+    overflow: hidden;
+
 }
 
 .icon{
     margin-right: 32px;
 }
 .lista-items ul li:hover{
-    background-color: rgba(70, 68, 68, 0.918);
+    background-color: rgb(84, 76, 197);
+
     /* color: rgb(204, 153, 12); */
     border-radius: 10px;
     cursor: pointer;
     color: rgb(229, 198, 154);
 }
-.fondo{
+/* .fondo{
     left: 0;
     top: 0;
     width: 100%;
     position: fixed;
-}
+} */
 .first-icon{
     margin-top: 22px;
+}
+/* .main-tooltip-li{
+    width: 12px;
+    height: 12px;
+} */
+
+/* .tooltip-li{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+} */
+/* .li-dasboard ul li .tooltip-li{
+    margin-top:12px ;
+} */
+.tooltip {
+    position: absolute;
+    background-color: rgba(211, 21, 21, 0.7);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    z-index: 999;
+    top: calc(100% + 5px); /* Posiciona el tooltip debajo del elemento */
+    left: 50%; /* Lo coloca en el centro horizontalmente */
+    transform: translateX(-50%); /* Lo ajusta para que esté centrado horizontalmente */
+    display: none; /* Inicialmente oculto */
+}
+.tooltip-content {
+    position: absolute; /* Cambia la posición según tu diseño */
+    background-color: rgba(0, 0, 0, 0.8); /* Color de fondo del tooltip */
+    color: white; /* Color del texto del tooltip */
+    padding: 5px; /* Espacio interno del tooltip */
+    border-radius: 5px; /* Borde redondeado */
+    z-index: 9999; /* Asegura que esté por encima de otros elementos */
+    left: 50px;
+}
+
+.li-dasboard:hover .tooltip {
+    display: block; /* Muestra el tooltip cuando se hace hover en el contenedor */
 }
