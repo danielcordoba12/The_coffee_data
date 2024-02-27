@@ -793,41 +793,41 @@ const FincaView = () => {
                         <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
                         <div className="max-w-xs">
                             <div>
+                            <label className="labeledit" htmlFor="nombre">Nombre</label>
                                 <input
                                     className="input-field"
                                     id="nombre"
                                     type="text"
-                                    placeholder="nombre"
                                     value={modalLote.nombre}
                                     onChange={(e) => setModalLote({ ...modalLote, nombre: e.target.value })}
                                 />
                             </div>
                             <div>
+                            <label className="labeledit" htmlFor="longitud">longitud</label>
                                 <input
                                     className="input-field"
                                     id="longitud"
                                     type="text"
-                                    placeholder="longitud"
                                     value={modalLote.longitud}
                                     onChange={(e) => setModalLote({ ...modalLote, longitud: e.target.value })}
                                 />
                             </div>
                             <div>
+                            <label className="labeledit" htmlFor="latitud">latitud</label>
                                 <input
                                     className="input-field"
                                     id="latitud"
                                     type="text"
-                                    placeholder="latitud"
                                     value={modalLote.latitud}
                                     onChange={(e) => setModalLote({ ...modalLote, latitud: e.target.value })}
                                 />
                             </div>
                             <div>
+                            <label className="labeledit" htmlFor="n_plantas">N°plantas</label>
                                 <input
                                     className="input-field"
                                     id="n_plantas"
                                     type="number"
-                                    placeholder="n_plantas"
                                     value={modalLote.n_plantas}
                                     onChange={(e) =>
                                         setModalLote({ ...modalLote, n_plantas: e.target.value })

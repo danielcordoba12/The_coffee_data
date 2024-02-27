@@ -111,12 +111,13 @@ const Cafe = () => {
                 }
             } else {
                 Sweet.actualizacionExitosa();
-                closeModal();
+                // closeModal();
 
             }
             // Recargar la lista de Cafes después de la actualización
             const response = await Api.get("cafe/listar");
             setCafes(response.data);
+            location.href = "/home/cafe"
         } catch (error) {
             console.error("Error editando el Cafe: ", error);
         }
@@ -190,13 +191,16 @@ const Cafe = () => {
 
                 }
             } else {
+                Sweet.registroExitoso();
                 console.log(data.data)
-                /* Sweet.registroExitoso();
-                closeRegistrarModal(); */
+                
+                // closeRegistrarModal(); 
                 // Recargar la lista de fincas después del registro
                 const response = await Api.get("cafe/listar");
+                
                 setCafes(response.data);
-                location.href = "/cafe"
+                
+                location.href = "/home/cafe"
             }
 
         } catch (error) {
