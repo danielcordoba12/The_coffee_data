@@ -347,7 +347,7 @@ const Cafe = () => {
                         Añadir
                     </button>
 
-                    <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                    <table style={{ width: "100%" }} className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
 
                         <thead>
                             <tr className="bg-gray-200">

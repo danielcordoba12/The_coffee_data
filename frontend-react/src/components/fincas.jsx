@@ -443,7 +443,14 @@ const FincaView = () => {
                     <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
                         ref={tableRef}
                         cellPadding={0}
-                        width="100%">
+                        width="100%"
+                        style={
+                            {
+                                width : "100%",
+                                maxWidth : "100%"
+                            }
+                        }
+                        >
 
                         <thead>
                             <tr className="bg-gray-200">
