@@ -126,46 +126,46 @@ function Dashboard() {
                                 </li>
 
                                 <li className="first-icon">
-                                    <Link to={"/Usuario/listar"}>
+                                    <Link to={"/home/Usuario/listar"}>
                                         <FontAwesomeIcon icon={faUsers} className="icon" />
                                         <p id="paragraph">Usuarios</p>
                                     </Link>
                                 </li>
                                 <li className="first-icon">
-                                    <Link to={"/finca"}>
+                                    <Link to={"/home/finca"}>
                                         <FontAwesomeIcon icon={faToolbox} className="icon" />
                                         <p>Fincas</p>
                                     </Link>
                                     {showTooltip && <span className="tooltip-content">Fincas</span>}
                                 </li>
                                 <li className="first-icon">
-                                    <Link to={"/lote"}>
+                                    <Link to={"/home/lote"}>
                                         <FontAwesomeIcon icon={faToolbox} className="icon" />
                                         <p>Lotes</p>
                                     </Link>
                                     {showTooltip && <span className="tooltip-content">Lotes</span>}
                                 </li>
                                 <li className="first-icon">
-                                    <Link to={"/cafe"}>
+                                    <Link to={"/home/cafe"}>
                                         <FontAwesomeIcon icon={faChartColumn} className="icon" />
                                         <p>Cafe</p>
                                     </Link>
                                 </li>
                                 <li className="first-icon">
-                                    <Link to={"/listar/muestra"}>
+                                    <Link to={"/home/listar/muestra"}>
                                         <FontAwesomeIcon icon={faVials} className="icon" />
                                         <p>Muestras</p>
                                     </Link>
                                 </li>
                                 <li className="first-icon">
-                                    <Link to={"/analisis"}>
+                                    <Link to={"/home/analisis"}>
                                         <FontAwesomeIcon icon={faPhone} className="icon" />
                                         <p>Analisis</p>
                                     </Link>
                                 </li>
 
                                 <li className="first-icon">
-                                    <Link to={"/resultado"}>
+                                    <Link to={"/home/resultado"}>
                                         <FontAwesomeIcon icon={faVials} className="icon" />
                                         <p>Resultado</p>
                                         {/* <h3 className='tooltip-li'>Resultado</h3>  */}
@@ -173,7 +173,7 @@ function Dashboard() {
                                     </Link>
                                 </li>
                                 <li className="first-icon">
-                                    <Link to={"/grafica"}>
+                                    <Link to={"/home/grafica"}>
                                         <FontAwesomeIcon icon={faVials} className="icon" />
                                         <p>Grafica</p>
 
@@ -181,7 +181,7 @@ function Dashboard() {
                                 </li>
 
                                 <li className="first-icon" >
-                                    <Link to={"/municipio"}>
+                                    <Link to={"/home/municipio"}>
                                         <FontAwesomeIcon icon={faSliders} className="icon" />
                                         <p className='paragraf-li' id="paragrafLi">Municipios</p>
                                     </Link>
@@ -192,7 +192,7 @@ function Dashboard() {
 
 
                                 <li className="first-icon">
-                                    <Link to={"/variedad"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                    <Link to={"/home/variedad"} style={{ textDecoration: 'none', color: 'black !important' }}>
                                         <FontAwesomeIcon icon={faSliders} className="icon" />
                                         <p>Variedad</p>
                                     </Link>
