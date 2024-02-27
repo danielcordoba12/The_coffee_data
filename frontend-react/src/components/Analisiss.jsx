@@ -3,6 +3,15 @@ import Api from "../services/api";
 import Sweet from "../helpers/Sweet";
 import { useNavigate } from "react-router-dom";
 import '../style/analisis.css';
+import $ from "jquery";
+import "bootstrap";
+import "datatables.net";
+import "datatables.net-bs5";
+import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+import "datatables.net-responsive";
+import "datatables.net-responsive-bs5";
+import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+
 
 
 const Analisis = () => {
@@ -155,18 +164,44 @@ const Analisis = () => {
 
     const handleRegistrarAnalisis = async (data) => {
         console.log(data, "data")
+        const AnalisisDta= {
+            ...data
+        };
         const headers = {
             headers: {
                 token: "xd",
             },
         };
         try {
-            const data1 = await Api.post("analisis/registrar", data, headers);
-            console.log(data1,"tiposssssss")
-            Sweet.registroExitoso();
-            closeRegistrarAnalisisModal();
-            const response = await Api.get("analisis/listar");
-            setAnalisis(response.data);
+            const data1 = await Api.post("analisis/registrar", AnalisisDta, headers);
+            if (data1.data.status == false) {
+                let keys = Object.keys(data1.data.err)
+                let r7error = document.querySelectorAll(".r7-error");
+                for (let x = 0; x < r7error.length; x ++) {
+                    r7error[x].remove()
+                }
+                // console.log(data1.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let hr = document.createElement("hr")
+                    hr.innerHTML = data.data.err[keys[x]]
+                    hr.classList.add("hr")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(hr)
+                    }
+                }
+                } else {
+                console.log(data1.data)
+                /* Sweet.registroExitoso();
+                closeRegistrarModal(); */
+                // Recargar la lista de fincas después del registro
+                const response = await Api.get("analisis/listar");
+                setAnalisis(response.data);
+                location.href = "/analisis"
+                }
+                console.log(data1,"tiposssssss")
+                const response = await Api.get("analisis/listar");
+                 setAnalisis(response.data);
         } catch (error) {
             console.error("Error al registrar el analisis:", error);
         }
@@ -245,64 +280,94 @@ const Analisis = () => {
         }
     }, [aRegistrarModalOpen])
 
+    const dataTableRef = useRef(null);
+    const initializeDataTable = (Cafes) => {
+        $(document).ready(function () {
+            $(dataTableRef.current).DataTable({
+                lengthMenu: [5, 10, 20, 30, 40, 50],
+                processing: true,
+                pageLength: 5,
+                language: {
+                    processing: "Procesando datos...",
+                },
+                responsive: true,
+            });
+        });
+
+        return () => {
+            $(dataTableRef.current).DataTable().destroy(true);
+        };
+    };
+
+    useEffect(() => {
+        if (analisis.length > 0) {
+            initializeDataTable(analisis);
+        }
+    }, [analisis]);
+
+
+
     return (
         <>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
         {modalAnalisis && <div className="overlay-d" onClick={closeModalEdit}></div>}
         {aRegistrarModalOpen && (
             <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
             )}
+
+                <div className="contTitle">
+                <h1 className="titleanalisis">Análisis</h1>
+
+                <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
+                    Añadir
+                </button>
+                </div>
             
-        <div className="tablaAnalisis">
-            <div className="contTitle">
-            <h1 className="titleanalisis">Análisis</h1> 
-        
-            <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
-                Añadir
-            </button>
+        <div className="tablaAnalisis">    
+            <div className="container-fluid w-full">
+                    <table className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                    <thead>
+                            <tr className="bg-gray-200">
+                            <th>id</th>
+                            <th>Fecha</th>
+                            <th>Tipo Análisis </th>
+                            <th>Consecutivo Informe </th>
+                            <th>Asignación </th>
+                            <th>Estado </th>
+                            <th>Propietario </th>
+                            <th>Finca </th>
+                            <th>Lote </th>
+                            <th>Variedad</th>
+                        </tr>
+                    </thead>
+                        <tbody className="bg-gray-200">
+                        {analisis.map((task) => (
+                                <tr key={task.id_analisis}>
+                                    <td>{task.id_analisis}</td>
+                                    <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td>
+                                    <td>{task.nombre_tipo_analisis}</td>
+                                    <td className="conse" >{task.codigo_externo}</td>
+                                    <td>{task.nombre_usuario}</td>
+                                    <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                    <td>{task.propietario}</td>
+                                    <td>{task.nombre_fincas}</td> 
+                                    <td>{task.nombre_lotes}</td> 
+                                    <td>{task.nombre_variedades}</td> 
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="btn-actualizar-mod"
+                                            onClick={() => openModal(task.id_analisis)}
+                                        >
+                                            Modificar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <thead className="analisis">
-                    <tr className="encabezado">
-                        <th>id</th>
-                        <th>Fecha</th>
-                        <th>Tipo Análisis </th>
-                        <th>Consecutivo Informe </th>
-                        <th>Asignación </th>
-                        <th>Estado </th>
-                        <th>Propietario </th>
-                        <th>Finca </th>
-                        <th>Lote </th>
-                        <th>Variedad</th>
-
-                    </tr>
-                </thead>
-                <tbody className="cuerpodatos">
-                    {analisis.map((task) => (
-                            <tr key={task.id_analisis}>
-                                <td>{task.id_analisis}</td>
-                                <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td>
-                                <td>{task.nombre_tipo_analisis}</td>
-                                <td className="conse" >{task.codigo_externo}</td>
-                                <td>{task.nombre_usuario}</td>
-                                <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                <td>{task.propietario}</td>
-                                <td>{task.nombre_fincas}</td> 
-                                <td>{task.nombre_lotes}</td> 
-                                <td>{task.nombre_variedades}</td> 
-                                <td>
-                                    <button
-                                        type="button"
-                                        className="btn-actualizar-mod"
-                                        onClick={() => openModal(task.id_analisis)}
-                                    >
-                                        Modificar
-                                    </button>
-                                </td>
-
-                            </tr>
-                        ))}
-                </tbody>
-            </table>
         </div>
 
         {modalAnalisis && (
