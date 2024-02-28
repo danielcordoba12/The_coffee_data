@@ -10,6 +10,7 @@ import esES from "../languages/es-ES.json"
   import "datatables.net-bs5";
   import 'bootstrap/dist/css/bootstrap.min.css';
   import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+ 
   import "datatables.net-responsive";
   import "datatables.net-responsive-bs5";
   import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";

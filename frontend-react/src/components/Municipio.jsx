@@ -148,6 +148,12 @@ const Municipio = () => {
     const initializeDataTable = (municipios) => {
         $(document).ready(function () {
             $(dataTableRef.current).DataTable({
+                columnDefs:[
+                    {
+                        targets:-1,
+                        responsivePriority:1
+                      }
+                  ],
                 lengthMenu: [5, 10, 20, 30, 40, 50],
                 processing: true,
                 pageLength: 5,
@@ -199,7 +205,7 @@ const Municipio = () => {
                             Añadir 
                         </button>
 
-                        <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                        <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" width={"100%"} ref={dataTableRef}>
                             <thead>
                                 <tr className="bg-gray-200">
                                     <th>id</th>
