@@ -208,7 +208,7 @@ export const actualizarlote = async (req, res) => {
       return res.status(400).json(error1);
     }
     let data = {
-      "string": {
+      "normal": {
         "nombre": {
           "value": req.body.nombre,
           "referencia": "El nombre"
