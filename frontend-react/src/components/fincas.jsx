@@ -436,7 +436,7 @@ const FincaView = () => {
                 <br />
                 <br />
 
-
+ 
                 <div className="container-fluid w-full">
 
 

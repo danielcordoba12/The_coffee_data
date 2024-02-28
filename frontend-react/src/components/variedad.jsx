@@ -200,7 +200,7 @@ const Variedad = () => {
                 Añadir
             </button>
 
-            <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef} width={"100%"}>
+            <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" width={"100%"} ref={dataTableRef}>
                 <thead>
                     <tr className="bg-gray-200">
                         <th>id</th>

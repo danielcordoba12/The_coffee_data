@@ -19,7 +19,7 @@ import Inicio from './components/login/Inicio';
 function App() {
   return (
     <Routes>
-      <Route path="/inicio" element={<Inicio />} />
+      <Route path="/" element={<Inicio />} />
       {/* <Route /> */}
       <Route path="/home" element={<Dashboard />} >
         <Route path="resultado" element={<Resultado />} />
