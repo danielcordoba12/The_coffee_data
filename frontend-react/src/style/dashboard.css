@@ -1,7 +1,8 @@
-*{
+* {
     padding: 0;
     margin: 0;
 }
+
 .main-container-dasboard {
     display: flex;
     flex-direction: column;
@@ -13,41 +14,37 @@
 
 
 .content-container {
-    /* width: 1820px;
-     */
-    width: 100%;
-    height: 120px;
-    position: relative;
-    /* background-color: gre; */
-    /* height: 820px; */
-
-    z-index: 12;
+   width: 100%;
+   max-width: 100%;
 }
-.container-outlet{
+
+.container-outlet {
     display: flex;
     /* background-color: #9de617; */
 
 }
-    .nav {
-        top: 0;
-        left: 0;
-        width: 90px;
-        height: 96vh; /* Ajusta la altura al viewport del navegador */
-        color: #fff;
-        /* padding: 20px; */
-        text-decoration: none;
-        display: flex;
-        flex-direction: row;
-        flex: 1;
-        position: relative;
-        background-color: rgb(53, 43, 202);
-        transition: all 800ms;
-    }
+
+.nav {
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 96vh;
+    /* Ajusta la altura al viewport del navegador */
+    color: #fff;
+    /* padding: 20px; */
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    position: relative;
+    background-color: rgb(53, 43, 202);
+    transition: all 800ms;
+}
 
 
 
 
-.lista-items ul{
+.lista-items ul {
 
     display: flex;
     flex-direction: column;
@@ -58,11 +55,11 @@
     /* overflow: hidden; */
     /* margin-left: 100; */
     margin-left: -30px;
-
+    max-height: 700px;
 
 }
 
-.lista-items ul li p{
+.lista-items ul li p {
     margin-top: 1rem;
 
 }
@@ -77,7 +74,8 @@
 
 
 }
-.icon-menu{
+
+.icon-menu {
     font-size: 1.5em;
     margin-left: 12px;
     /* position: relative;
@@ -89,17 +87,62 @@
 /* /////////////////////////////////////HEAD NAV (Title,User name)////////////////////// */
 /* HEAD */
 
-.header{
+.header {
     display: grid;
-    grid-template: 50px/ 210px  1fr 360px 1fr 250px;
+    grid-template-columns: auto 1fr auto 1fr auto;
+    /* Corregí la propiedad incorrecta */
+    grid-template-rows: 50px;
+    /* Agregué esta línea para definir la altura */
     width: 100%;
-    /* height: 80px; */
-    background-color: rgb(53, 43, 202); 
+    height: 50px;
+    /* Establece una altura fija para el encabezado */
+    background-color: rgb(53, 43, 202);
     backdrop-filter: blur(10px);
+    align-items: center;
+    /* Centra verticalmente los elementos */
+}
+
+/* Estilos para el logo */
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo svg {
+    width: 130px;
+    /* Ajusta el tamaño del logo */
+    height: auto;
+    fill: white;
+    /* Cambia el color del logo */
+    height: 40px;
+}
+
+/* Estilos para el título del dashboard */
+.title-dasboard {
+    margin: 0;
+    font-size: 20px;
+    /* Reduce el tamaño del título */
+    color: white;
+    /* Cambia el color del texto */
+}
+
+/* Estilos para el nombre de usuario */
+.username {
+    margin-left: auto;
+    /* Mueve el nombre de usuario hacia la derecha */
+    margin-right: 100px;
+    /* Agrega un pequeño margen a la derecha */
+
+}
+
+/* Otros */
+.empty {
+    flex: 1;
 }
 
 
-.container-title-dasboard{
+.container-title-dasboard {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,34 +150,36 @@
     justify-content: center;
     transition: all 820ms;
 }
-.container-logo{
+
+.container-logo {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
 }
 
-.logo{
+.logo {
     width: 50px;
     /* background-color: green; */
 }
 
-.container-title-dasboard:hover{
-    color:  rgb(204, 153, 12);
+.container-title-dasboard:hover {
+    color: rgb(204, 153, 12);
     cursor: pointer;
 }
-.empty{
+
+.empty {
     height: 100%;
 }
 
-.title-dasboard{
+.title-dasboard {
     font-size: 2em;
     font-weight: 400;
     color: white;
 }
 
 /* Username */
-.container-username{
+.container-username {
     display: flex;
     justify-content: center;
     position: relative;
@@ -143,10 +188,12 @@
     color: white;
 
 }
-.container-username:hover{
-    color:  rgb(204, 153, 12);
+
+.container-username:hover {
+    color: rgb(204, 153, 12);
     cursor: pointer;
 }
+
 .FaUser {
     font-size: 1.6em;
     padding-right: 20px;
@@ -154,14 +201,15 @@
     font-size: 1em;
     /* color: white;   */
 }
-.username h2{
+
+.username h2 {
     margin-top: 12px;
     font-size: 1em;
     /* color: white;   */
 }
 
 /* /////////////////////////////////////////////////////LISTA ITEMS////////////////////////////////////////////////// */
-.lista-items{
+.lista-items {
     /*
     display: table-column-group;
     display: block;
@@ -175,40 +223,50 @@
     /* max-height: 97%; */
 
 }
-.nav ul li a ,.first-icon{
+
+.nav ul li a,
+.first-icon {
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    color: rgb(0, 0, 0); /* Establece el color de texto deseado */
+    color: rgb(0, 0, 0);
+    /* Establece el color de texto deseado */
     overflow: hidden;
 
 }
-.lista-items ul li :hover ,.first-icon:hover{
+
+.lista-items ul li :hover,
+.first-icon:hover {
     /* background-color: rgba(196, 11, 11, 0.918); */
     border-radius: 10px;
     cursor: pointer;
-    color: rgb(229, 198, 154);
+    color: rgb(255, 183, 82);
 }
-.lista-items ul li{
-    display: flex ;
-    /* height:50px;     */
-    padding: 5px 5px 5px 12px ;
-    width:100%;
-    font-size:1em;
+
+.lista-items ul li {
+    display: flex;
+    height: 50px;
+    padding: 5px 5px 5px 12px;
+    width: 100%;
+    font-size: 1em;
     transition: all 6ms;
 
 }
-.lista-items ul li p{
-    width: 200px; /* Ajusta el tamaño del contenedor según tus necesidades */
-    white-space: nowrap; /* Evita el salto de línea */
+
+.lista-items ul li p {
+    width: 200px;
+    /* Ajusta el tamaño del contenedor según tus necesidades */
+    white-space: nowrap;
+    /* Evita el salto de línea */
     overflow: hidden;
 
 }
 
-.icon{
+.icon {
     margin-right: 32px;
 }
-.lista-items ul li:hover{
+
+.lista-items ul li:hover {
     background-color: rgb(84, 76, 197);
 
     /* color: rgb(204, 153, 12); */
@@ -216,15 +274,17 @@
     cursor: pointer;
     color: rgb(229, 198, 154);
 }
+
 /* .fondo{
     left: 0;
     top: 0;
     width: 100%;
     position: fixed;
 } */
-.first-icon{
+.first-icon {
     margin-top: 22px;
 }
+
 /* .main-tooltip-li{
     width: 12px;
     height: 12px;
@@ -248,21 +308,57 @@
     border-radius: 3px;
     font-size: 14px;
     z-index: 999;
-    top: calc(100% + 5px); /* Posiciona el tooltip debajo del elemento */
-    left: 50%; /* Lo coloca en el centro horizontalmente */
-    transform: translateX(-50%); /* Lo ajusta para que esté centrado horizontalmente */
-    display: none; /* Inicialmente oculto */
+    top: calc(100% + 5px);
+    /* Posiciona el tooltip debajo del elemento */
+    left: 50%;
+    /* Lo coloca en el centro horizontalmente */
+    transform: translateX(-50%);
+    /* Lo ajusta para que esté centrado horizontalmente */
+    display: none;
+    /* Inicialmente oculto */
 }
+
 .tooltip-content {
-    position: absolute; /* Cambia la posición según tu diseño */
-    background-color: rgba(0, 0, 0, 0.8); /* Color de fondo del tooltip */
-    color: white; /* Color del texto del tooltip */
-    padding: 5px; /* Espacio interno del tooltip */
-    border-radius: 5px; /* Borde redondeado */
-    z-index: 9999; /* Asegura que esté por encima de otros elementos */
+    position: absolute;
+    /* Cambia la posición según tu diseño */
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Color de fondo del tooltip */
+    color: white;
+    /* Color del texto del tooltip */
+    padding: 5px;
+    /* Espacio interno del tooltip */
+    border-radius: 5px;
+    /* Borde redondeado */
+    z-index: 9999;
+    /* Asegura que esté por encima de otros elementos */
     left: 50px;
 }
 
 .li-dasboard:hover .tooltip {
-    display: block; /* Muestra el tooltip cuando se hace hover en el contenedor */
+    display: block;
+    /* Muestra el tooltip cuando se hace hover en el contenedor */
+}
+
+
+#mainConterDasboard {
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    width: 100%;
+    position: fixed;
+    height: 100%;
+}
+
+.container-outlet {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    height: 100%;
+}
+
+#nav{
+    height: 100%;
+}
+.row>*{
+    margin: 0 !important;
+    padding: 0 !important;
 }
