@@ -13,7 +13,7 @@ option{
 
 
 .btn-desactivar-d {
-  background-color: #0B2E4B;
+  background-color:#0b2e4be7;
   color: #fff;
   font-weight: bold;
   padding: 8px 16px;
@@ -21,13 +21,13 @@ option{
   position: relative;
   float: right;
   right: -15px;
-  top: 59px;
+  top: 61px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 .btn-desactivar-d:hover{
-  background-color:#0b2e4be7;
+  background-color:#B31312;
 }
 
 .div-input-d{
@@ -41,11 +41,15 @@ option{
   padding: 8px 16px;
   margin: 8px;
   float: right;
-  top: 60px;
+  top: 61px;
   position: relative;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+.btn-activar-d:hover{
+  background-color:#008000;
+
 }
 
 .input-edit-ana{
@@ -112,7 +116,7 @@ background-color: #0b2e4be7;
 }
 
 .btn-actualizar-d{ 
-color: #fff;
+color: #0B2E4B;
 position: relative;
 font-weight: bold;
 padding: 8px 16px;
@@ -122,11 +126,13 @@ top: 70px;
 margin-bottom: 14px;
 border-radius: 4px;
 cursor: pointer;
-background-color: #0B2E4B;
+background-color: #fff;
+border: 0.5px solid black;
 transition: background-color 0.3s; 
 }
 .btn-actualizar-d:hover{
-  background-color: #0b2e4beb;
+  background-color: #0B2E4B;
+  color: #fff;
 }
 .btn-actualizar-mod{
 color: #fff;
