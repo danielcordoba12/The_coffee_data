@@ -134,8 +134,8 @@ function Grafica() {
   }
 
 
-  const handleCheckboxChange = (isChecked, index) => {
-    console.log("este es index" , index);
+  const handleCheckboxChange = (isChecked, index, id) => {
+    console.log("este es el id" , id);
     setSelectedRows(prevState => ({
       ...prevState,
       [index]: isChecked
@@ -246,7 +246,7 @@ function Grafica() {
           
         <thead>
           <tr>
-          <th>Index</th>
+          {/* <th>Index</th> */}
           <th>ID</th>
           <th>Muestra</th>
           <th>Cantidad</th>
@@ -264,7 +264,7 @@ function Grafica() {
                 {resultado.map((task,index) => (
                   
                   <tr key={task.id}>
-                    <td>{index}</td>
+                    {/* <td>{index}</td> */}
                     <td>{task.id}</td>
                     <td>{task.muestra}</td>
                     <td>{task.valor}</td>
@@ -274,7 +274,7 @@ function Grafica() {
                     <td>{task.tipo_analisis}</td>
                     <td>{formatDate(task.fecha_creacion)}</td>
                     <td>
-                    <CheckApiExample onChange={(isChecked) => handleCheckboxChange(isChecked, index)}/>
+                    <CheckApiExample onChange={(isChecked) => handleCheckboxChange(isChecked, index,task.id)}/>
                     </td>
                     <td>
                       <button onClick={() => idcheck(index)}>holis</button>

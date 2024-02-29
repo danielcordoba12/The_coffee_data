@@ -405,12 +405,12 @@ useEffect(() => {
                         <label htmlFor="cafes_id" className='label'>Analisis</label>
                         <div className="select-options-cafe" 
 
-                         >
+                        >
                             {analisis.map((key, index) => (
                                 (
                                     <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafes_id").value = key.id_analisis;!dataSelect.cafes_id ? dataSelect.cafes_id = {} : "".dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id_analisis}>
                                       
-                                      {   key.consecutivo_informe+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
+                                      {key.id_analisis + "," + key.consecutivo_informe+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
                                 )
                             ))}
                         </div>

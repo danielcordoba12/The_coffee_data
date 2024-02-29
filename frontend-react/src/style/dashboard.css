@@ -14,8 +14,8 @@
 
 
 .content-container {
-   width: 100%;
-   max-width: 100%;
+    width: 100%;
+    max-width: 100%;
 }
 
 .container-outlet {
@@ -37,9 +37,16 @@
     flex-direction: row;
     flex: 1;
     position: relative;
-    background-color: rgb(53, 43, 202);
+    /* background-color: #0B2E4B; */
     transition: all 800ms;
 }
+.contenedor-imagen {
+    width: 100%;
+    height: 100vh; 
+    background-image: url('../../public/img/fondoMenuVertical2.webp'); 
+    background-size: cover;
+    background-position: center; 
+    } 
 
 
 
@@ -84,6 +91,7 @@
 
 }
 
+
 /* /////////////////////////////////////HEAD NAV (Title,User name)////////////////////// */
 /* HEAD */
 
@@ -96,8 +104,8 @@
     width: 100%;
     height: 50px;
     /* Establece una altura fija para el encabezado */
-    background-color: rgb(53, 43, 202);
-    backdrop-filter: blur(10px);
+    background-color: #0B2E4B;
+    /* backdrop-filter: blur(10px); */
     align-items: center;
     /* Centra verticalmente los elementos */
 }
@@ -182,10 +190,13 @@
 .container-username {
     display: flex;
     justify-content: center;
+    align-items: center;
+    text-align: left;
     position: relative;
-    top: -2px;
+    /* top: -2px; */
     transition: all 820ms;
     color: white;
+    /* background-color: red; */
 
 }
 
@@ -195,18 +206,27 @@
 }
 
 .FaUser {
-    font-size: 1.6em;
+    font-size: 1.5em;
     padding-right: 20px;
-    margin-top: 16px;
-    font-size: 1em;
+    /* margin-top: 16px; */
+    font-size: 2em;
     /* color: white;   */
 }
 
 .username h2 {
-    margin-top: 12px;
-    font-size: 1em;
+    /* margin-top: 12px; */
+    font-size: 1.5em;
     /* color: white;   */
+    margin-top: 8px;
 }
+.username h3 {
+    /* margin-top: 12px; */
+    font-size: 1.2em;
+    margin-top: -10px;
+    /* color: white;   */
+    /* margin-top: 2px; */
+}
+
 
 /* /////////////////////////////////////////////////////LISTA ITEMS////////////////////////////////////////////////// */
 .lista-items {
@@ -229,7 +249,7 @@
     display: inline-flex;
     align-items: center;
     text-decoration: none;
-    color: rgb(0, 0, 0);
+    color: white;
     /* Establece el color de texto deseado */
     overflow: hidden;
 
@@ -267,7 +287,7 @@
 }
 
 .lista-items ul li:hover {
-    background-color: rgb(84, 76, 197);
+    background-color: rgb(60, 77, 100);
 
     /* color: rgb(204, 153, 12); */
     border-radius: 10px;
