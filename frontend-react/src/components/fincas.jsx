@@ -50,12 +50,12 @@ const FincaView = () => {
                 $(tableRef.current).DataTable().destroy();
             }
             $(tableRef.current).DataTable({
-                columnDefs:[
+                columnDefs: [
                     {
-                        targets:-1,
-                        responsivePriority:1
-                      }
-                  ],
+                        targets: -1,
+                        responsivePriority: 1
+                    }
+                ],
                 responsive: true,
                 language: esES,
                 paging: true,
@@ -300,8 +300,11 @@ const FincaView = () => {
 
     const openRegistrarModal = () => {
         setRegistrarModalOpen(true);
+        console.log("modal" , setRegistrarModalOpen);
+        console.log("si estoy funcionando");
     };
 
+    
     const closeRegistrarModal = () => {
         setRegistrarModalOpen(false);
     };
@@ -352,13 +355,13 @@ const FincaView = () => {
 
         try {
             const data = await Api.post("lote/registrar", LoteData, headers);
+            console.log(data, "ahhhh")
             if (data.data.status == false) {
                 let keys = Object.keys(data.data.errors)
                 let h6Error = document.querySelectorAll(".h6-error");
                 for (let x = 0; x < h6Error.length; x++) {
                     h6Error[x].remove()
                 }
-                console.log(data.data)
                 for (let x = 0; x < keys.length; x++) {
                     let h6 = document.createElement("h6")
                     h6.innerHTML = data.data.errors[keys[x]]
@@ -370,17 +373,15 @@ const FincaView = () => {
 
                 }
             } else {
-                console.log(data.data)
-                /* Sweet.registroExitoso();
-                closeRegistrarModal(); */
-                // Recargar la lista de fincas después del registro
-                const response = await Api.get("lote/listar");
-                setLotes(response.data);
-                location.href = "/finca"
+
+                Sweet.registroExitoso();
+                closeRegistrarModal();
+              
+                // closeRegistrarModal();
+                // const response = await Api.get("finca/listar");
+                setFincas(response.data);
+                // location.href = "/finca"
             }
-
-
-
 
         } catch (error) {
             console.error("Error al registrar la finca:", error);
@@ -436,7 +437,7 @@ const FincaView = () => {
                 <br />
                 <br />
 
- 
+
                 <div className="container-fluid w-full">
 
 
@@ -446,11 +447,11 @@ const FincaView = () => {
                         width="100%"
                         style={
                             {
-                                width : "100%",
-                                maxWidth : "100%"
+                                width: "100%",
+                                maxWidth: "100%"
                             }
                         }
-                        >
+                    >
 
                         <thead>
                             <tr className="bg-gray-200">
@@ -793,7 +794,7 @@ const FincaView = () => {
                         <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>
                         <div className="max-w-xs">
                             <div>
-                            <label className="labeledit" htmlFor="nombre">Nombre</label>
+                                <label className="labeledit" htmlFor="nombre">Nombre</label>
                                 <input
                                     className="input-field"
                                     id="nombre"
@@ -803,7 +804,7 @@ const FincaView = () => {
                                 />
                             </div>
                             <div>
-                            <label className="labeledit" htmlFor="longitud">longitud</label>
+                                <label className="labeledit" htmlFor="longitud">longitud</label>
                                 <input
                                     className="input-field"
                                     id="longitud"
@@ -813,7 +814,7 @@ const FincaView = () => {
                                 />
                             </div>
                             <div>
-                            <label className="labeledit" htmlFor="latitud">latitud</label>
+                                <label className="labeledit" htmlFor="latitud">latitud</label>
                                 <input
                                     className="input-field"
                                     id="latitud"
@@ -823,7 +824,7 @@ const FincaView = () => {
                                 />
                             </div>
                             <div>
-                            <label className="labeledit" htmlFor="n_plantas">N°plantas</label>
+                                <label className="labeledit" htmlFor="n_plantas">N°plantas</label>
                                 <input
                                     className="input-field"
                                     id="n_plantas"

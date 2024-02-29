@@ -86,6 +86,8 @@ const ListarUsuarios = () => {
 
     const openRegistrarModal = () => {
         setRegistrarModalOpen(true);
+        console.log("modal" , setRegistrarModalOpen);
+        console.log("si estoy funcionando");
     };
 
     const closeRegistrarModal = () => {
@@ -175,12 +177,13 @@ const ListarUsuarios = () => {
                         parent.appendChild(h6)
                     }
                 }
-            } else {
-                Sweet.registroExitoso();
+            } else { Sweet.registroExitoso();
                 closeRegistrarModal();
-                const response = await Api.get("finca/listar");
+              
+                // closeRegistrarModal();
+                // const response = await Api.get("finca/listar");
                 setFincas(response.data);
-                location.href = "/finca"
+                location.href = "/home/finca"
             }
         } catch (error) {
             console.error("Error al registrar la finca:", error);

@@ -9,7 +9,7 @@ import loteRoute from "./src/routers/lote.router.js";
 import analisisRoute from "./src/routers/analisis.router.js";
 import resultadoRoute from "./src/routers/resultado.router.js";
 import cafeRoute from "./src/routers/cafe.router.js";
-
+import departamentoRoute from "./src/routers/departamento.route.js"; 
 import autRoute from "./src/routers/autenticacion.router.js";
 import bodyParser from "body-parser";
 import cors from 'cors';
@@ -46,7 +46,9 @@ app.use('/lote',loteRoute);
 app.use('/analisis',analisisRoute);
 app.use('/resultado',resultadoRoute);
 app.use('/cafe',cafeRoute);
+app.use('/departamento',departamentoRoute);
 app.use('/validacion',autRoute)
+
 
 
 

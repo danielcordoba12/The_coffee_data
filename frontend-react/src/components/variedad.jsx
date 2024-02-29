@@ -153,9 +153,9 @@ const Variedad = () => {
             $(tableRef.current).DataTable({
                 columnDefs:[
                     {
-                        targets:-1,
-                        responsivePriority:1
-                      }
+                      targets:-1,
+                      responsivePriority:1
+                    }
                   ],
                 responsive: true,
                 language: esES,
