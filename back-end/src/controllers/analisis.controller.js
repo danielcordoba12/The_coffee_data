@@ -159,7 +159,7 @@ export const guardarAnalisis = async (req, res) => {
 export const buscaranalisis = async (req, res) => {
     try {
         let id = req.params.id;
-        const [result] = await pool.query("select * from analisis where id =" + id);
+        const [result] = await pool.query("select a.id,fecha_analisis,m.consecutivo_informe,calidad,a.estado,tipo_analisis_id,a.muestras_id,usuarios_id FROM analisis a JOIN muestras m ON m.id = a.muestras_id where a.id =" + id);
         res.status(200).json(result);
     } catch (err) {
         res.status(500).json({
