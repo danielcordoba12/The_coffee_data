@@ -13,7 +13,7 @@ export const validarusuario = async(req, res) => {
             // Compara la contraseña proporcionada con la contraseña almacenada
             if (bcrypt.compareSync(user_password, user.user_password)) {
                 // Si las contraseñas coinciden, genera un token JWT
-                const token = jwt.sign({ id: user.id, nombre: user.nombre, rol: user.rol }, process.env.AUT_SECRET, { expiresIn: 60 }); // 3600 segundos = 1 hora
+                const token = jwt.sign({ id: user.id, nombre: user.nombre, rol: user.rol }, process.env.AUT_SECRET, { expiresIn: 14400 }); // 3600 segundos = 1 hora
                 return res.status(200).json({ token: token, message: "Inicio de sesión exitoso" });
             } else {
                 return res.status(401).json({ message: "Contraseña incorrecta" });
