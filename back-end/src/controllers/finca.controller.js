@@ -117,7 +117,7 @@ export const guardarFinca = async (req, res) => {
   console.log(opcionesMunicipios)
   try {
     let data = {
-      "string": {
+      "normal": {
         "nombre": {
           "value": req.body.nombre,
           "referencia": "El nombre"

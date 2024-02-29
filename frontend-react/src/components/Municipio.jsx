@@ -324,6 +324,7 @@ const Municipio = () => {
                                 <div className="div-input">
                                     <input type="number" id="departamentos_id" name="departamentos_id" ref={departamentos_id} placeholder="" />
                                     <label htmlFor="departamentos_id">Departamento</label>
+                                    
                                 </div>
                                 <button
                                     className="btn-register-municipio"

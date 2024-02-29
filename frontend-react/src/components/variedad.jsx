@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Api from "../services/api";
 import '../style/variedad.css';
 import Sweet from "../helpers/Sweet";
+import esES from "../languages/es-ES.json"
 import $ from "jquery";
 import "bootstrap"
 import "datatables.net";
@@ -25,6 +26,8 @@ const Variedad = () => {
     const [modalVar, setModalVar] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const tableRef = useRef();
+    const dataTableInstanceRef = useRef(null);
 
     const nombre = useRef();
 
@@ -79,7 +82,7 @@ const Variedad = () => {
                 }
             } else {
                 Sweet.actualizacionExitosa();
-                
+                setModalVar(false)
                 closeModal();
             }
 
@@ -100,6 +103,10 @@ const Variedad = () => {
     };
 
     const handleRegistrar = async (data) => {
+        const variedadData = {
+            ...data
+        };
+
         const headers = {
             headers: {
                 token: "xd",
@@ -107,73 +114,60 @@ const Variedad = () => {
         };
     
         try {
-            const response = await Api.post("variedad/registrar", data, headers);
+            const data = await Api.post("variedad/registrar", variedadData, headers);
     
-            if (response.data.status === false) {
-                let keys = Object.keys(response.data.errors);
+            if (data.data.status === false) {
+                let keys = Object.keys(data.data.errors);
                 let h6Error = document.querySelectorAll(".h6-error");
-    
                 for (let x = 0; x < h6Error.length; x++) {
                     h6Error[x].remove();
-                }
-    
-                console.log(response.data);
-    
+                }console.log(data.data)
                 for (let x = 0; x < keys.length; x++) {
                     let h6 = document.createElement("h6");
-                    h6.innerHTML = response.data.errors[keys[x]];
-                    h6.classList.add("h6-error");
-    
+                    h6.innerHTML = data.data.errors[keys[x]];
+                    h6.classList.add("h6-error");  
                     if (document.getElementById(keys[x])) {
                         let parent = document.getElementById(keys[x]).parentNode;
                         parent.appendChild(h6);
                     }
                 }
-            } else {
-                console.log(response.data);
-                /* Sweet.registroExitoso();
-                closeRegistrarModal(); */
-                // Recargar la lista de variedades después del registro
-                const variedadesResponse = await Api.get("variedad/listar");
-                setvariedades(variedadesResponse.data);
-                location.href = "/variedad";
+            } else { 
+                Sweet.registroExitoso("/home/variedad");
+                closeRegistrarModal(true);
             }
+            const response = await Api.get("variedad/listar");
+            setvariedades(response.data);
+            
+            
         } catch (error) {
-            console.error("Error al registrar la finca:", error);
+            console.error("Error al registrar la variedad:", error);
         }
     };
 
-    const dataTableRef = useRef(null);
-    const initializeDataTable = (variedades) => {
-        $(document).ready(function () {
-            $(dataTableRef.current).DataTable({
+   
+    useEffect(() => {
+        if (variedades.length > 0) {
+            if ($.fn.DataTable.isDataTable(tableRef.current)) {
+                $(tableRef.current).DataTable().destroy();
+            }
+            $(tableRef.current).DataTable({
                 columnDefs:[
                     {
                         targets:-1,
                         responsivePriority:1
                       }
                   ],
-                lengthMenu: [5, 10, 20, 30, 40, 50],
-                processing: true,
-                pageLength: 5,
-                language: {
-                    processing: "Procesando datos...",
-                },
                 responsive: true,
+                language: esES,
+                paging: true,
+                lengthMenu: [
+                    [7, 10, 50, -1],
+                    ['7 Filas', '10 Filas', '50 Filas', 'Ver Todo']
+                ]
             });
-        });
 
-        return () => {
-            $(dataTableRef.current).DataTable().destroy(true);
-        };
-    };
-
-    useEffect(() => {
-        if (variedades.length > 0) {
-            initializeDataTable(variedades);
         }
-    }, [variedades]);
-
+    }, [variedades])
     function formatDate(dateString) {
         if (!dateString) return ''; // Manejar el caso de valor nulo o indefinido
         const fecha = new Date(dateString);
@@ -201,7 +195,7 @@ const Variedad = () => {
                 Añadir
             </button>
 
-            <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" width={"100%"} ref={dataTableRef}>
+            <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" width={"100%"} ref={tableRef}>
                 <thead>
                     <tr className="bg-gray-200">
                         <th>id</th>
