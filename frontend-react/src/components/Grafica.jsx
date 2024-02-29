@@ -24,6 +24,7 @@ function Grafica() {
   const [showContainer, setShowContainer] = useState(false);
   const [resultado, setResultado] = useState([]);
   const tableRef = useRef();
+  const [selectedRows, setSelectedRows] = useState({});
 
 
   function formatDate(dateString) {
@@ -95,6 +96,52 @@ function Grafica() {
   useEffect(()=>{
     listarResultado()
   },[]);
+
+  
+  
+  const idcheck = (index) => {
+    const isChecked = selectedRows[index];
+    console.log("holis",selectedRows);
+    if (isChecked) {
+      console.log(`El checkbox en la fila ${index} está seleccionado`);
+    } else {
+      console.log(`El checkbox en la fila ${index} no está seleccionado`);
+    }
+  };
+  function buscarResultado(id) {
+    console.log("estes es el id", id);
+    fetch(`http://localhost:4000/resultado/buscar/${id}`,{
+      method:'GET',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // setResultadoSeleccionado(data); Este es la linea que funciona
+        // setResultadoSeleccionado({
+        //   ...data,
+        //   id:id,
+        //   // valor:resultadoSellecionado[j].valor,
+        // })
+        setResultadoSeleccionado(data)
+
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      // console.log(dato)
+  }
+
+
+  const handleCheckboxChange = (isChecked, index,id) => {
+    console.log("este es id" , id);
+    console.log("este es index" , index);
+    setSelectedRows(prevState => ({
+      ...prevState,
+      [index]: isChecked
+    }));
+  };
 
     // Configura tus opciones de gráfico
   const option = {
@@ -191,15 +238,20 @@ function Grafica() {
 
 
     <div className={`main-content-graficar ${showModal1 ? 'show' : ''}`} id="modalInfo1">
-
     <div className="container-fluid w-full">
 
     <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
         ref={tableRef}
         cellPadding={0}
         width= "100%">
+          
         <thead>
           <tr>
+<<<<<<< HEAD
+          {/* <th>Index</th> */}
+=======
+          {/* <th hidden>Index</th> */}
+>>>>>>> 79fac8a1f8fa76fbfda5314d67aee298ae9a08d7
           <th>ID</th>
           <th>Muestra</th>
           <th>Cantidad</th>
@@ -208,12 +260,21 @@ function Grafica() {
           <th>Lote</th>
           <th>Tipo analisis</th>
           <th>Fecha</th>
+          <th>Graficar</th>
+          <th>jjj</th>
 
           </tr>
         </thead>
         <tbody>
                 {resultado.map((task,index) => (
+                  
                   <tr key={task.id}>
+<<<<<<< HEAD
+                    {/* <td>{index}</td> */}
+=======
+                    {/* <td hidden>{index}</td> */}
+>>>>>>> 79fac8a1f8fa76fbfda5314d67aee298ae9a08d7
+                    <td>{task.id}</td>
                     <td>{task.muestra}</td>
                     <td>{task.valor}</td>
                     <td>{task.usuario}</td>
@@ -222,13 +283,23 @@ function Grafica() {
                     <td>{task.tipo_analisis}</td>
                     <td>{formatDate(task.fecha_creacion)}</td>
                     <td>
-                      <CheckApiExample />
+                    <CheckApiExample onChange={(isChecked) => handleCheckboxChange(isChecked, index,task.id)}/>
+                    </td>
+                    <td>
+                      <button onClick={() => idcheck(index)}>holis</button>
                     </td>
 
                   </tr>
                 ))}
+                
               </tbody>
+              
+              
       </table>
+      {/* <button onClick={() => {
+        buscarResultado(task.analisis_id)
+      }}>Hola mundo </button> */}
+
 </div>
 </div>
 
@@ -255,21 +326,27 @@ function ToggleButtonExample({ index }) {
   );
 }
 
-        function CheckApiExample() {
-          return (
-            <Form>
-              {/* {['checkbox'].map((type) => ( */}
-                <div className="mb-3 h-6 bg-color-red">
-                  <Form.Check  >
-                    <Form.Check.Input   />
-                    <Form.Control.Feedback >
-                    </Form.Control.Feedback>
-                  </Form.Check>
-                </div>
-              {/* ))} */}
-            </Form>
-          );
-        }
+function CheckApiExample({ onChange }) {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    const isChecked = event.target.checked;
+    setIsChecked(isChecked);
+    if (onChange) {
+      onChange(isChecked);
+    }
+  };
+
+  return (
+    <Form>
+      <div className="text-primary">
+        <Form.Check>
+          <Form.Check.Input id="custom-checkbox" type="checkbox" className="" onChange={handleCheckboxChange} checked={isChecked} />
+        </Form.Check>
+      </div>
+    </Form>
+  );
+}
 
   
 

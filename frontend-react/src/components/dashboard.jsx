@@ -1,21 +1,60 @@
 import '../style/dashboard.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faHelmetSafety, faBars, faUsers, faToolbox, faMagnifyingGlassChart, faChartColumn, faPhone, faSliders, faVials, } from '@fortawesome/free-solid-svg-icons'
-
-
+// import imgNav from './../../public/img/fondo.jpg';
 
 function Dashboard() {
     const [menuDesplegado, setMenuDesplegado] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
     const [tooltipHovered, setTooltipHovered] = useState(false);
     const [tooltipStates, setTooltipStates] = useState({});
+    const [dataUser, setDataUser] = useState('');
 
     const menuWidth = menuDesplegado ? '220px' : '55px';
 
+
+
+    // const fetchUserData = async () => {
+    //     try {
+    //       const token = localStorage.getItem('token');
+    //       const response = await axios.post('http://localhost:4000/validacion/validar', {
+    //         headers: {
+    //           'token': token
+    //         }
+    //       });
+    //       setDataUser(response.data.user); // asumiendo que el servidor devuelve el objeto de usuario en response.data.user
+    //     } catch (error) {
+    //       console.error('Error al obtener datos del usuario:', error);
+    //     }
+    //   };
+  
+    //   fetchUserData();
+
+
+
+  
+
+    useEffect(() => {
+        const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjpbeyJpZCI6MSwibm9tYnJlIjoiWWFuIGNhcmxvcyIsInJvbCI6ImNhdGFkb3IifV0sImlhdCI6MTcwOTE1NDA0MiwiZXhwIjoxNzA5MjQwNDQyfQ.4MGZ7eYX40aE2U7aPih2zGNSsAsDXjObOxvmAOVrLj8";
+
+        // Decodificar el token JWT
+        const  decodedToken = JSON.parse(atob(jwtToken.split('.')[1]));
+        
+        // Mostrar el contenido decodificado en la consola
+        setDataUser(decodedToken.user[0]);
+
+    }, [])
+
+
+
+
+
+
     const DesplegarMenu = () => {
         setMenuDesplegado(!menuDesplegado);
+
     };
 
 
@@ -116,6 +155,11 @@ function Dashboard() {
 
                 <div className="container-outlet">
                     <nav className={`nav ${menuDesplegado ? 'menu-desplegado' : ''}`} id="nav" style={{ width: menuWidth }}>
+                    <div className="contenedor-imagen">
+      {/* <h1>Mi Componente con Imagen</h1> */}
+                    {/* <img src={imgNav} alt="Descripción de la imagen" className="imagen-estilo" /> */}
+                            {/* <img src="../../public/img/fondoMenuVertical2.webp" alt="" className='fondo-nav'/> */}
+
                         <div className="lista-items">
                             <FontAwesomeIcon icon={faBars} className="icon-menu" id="iconMenu" onClick={DesplegarMenu} />
                             <ul id='listaItemsUl' className='listaItemsUl'>
@@ -213,6 +257,7 @@ function Dashboard() {
 
                             </ul>
                         </div>
+                        </div>
 
                     </nav>
                 </div>
@@ -246,7 +291,9 @@ function Dashboard() {
                                 <FontAwesomeIcon icon={faUser} className="FaUser" />
                             </div>
                             <div className="username">
-                                <h2>Daniel Cordoba</h2>
+                                <h2>{dataUser.nombre}</h2>
+                                <h3>{dataUser.rol}</h3>
+
                             </div>
                         </div>
 
