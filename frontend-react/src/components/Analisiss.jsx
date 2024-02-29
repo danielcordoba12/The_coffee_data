@@ -3,6 +3,19 @@ import Api from "../services/api";
 import Sweet from "../helpers/Sweet";
 import { useNavigate } from "react-router-dom";
 import '../style/analisis.css';
+import esES from "../languages/es-ES.json"
+  import $ from "jquery";
+  import "bootstrap";
+  import "datatables.net";
+  import "datatables.net-bs5";
+  import 'bootstrap/dist/css/bootstrap.min.css';
+  import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+ 
+  import "datatables.net-responsive";
+  import "datatables.net-responsive-bs5";
+  import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+
+
 
 
 const Analisis = () => {
@@ -155,23 +168,50 @@ const Analisis = () => {
 
     const handleRegistrarAnalisis = async (data) => {
         console.log(data, "data")
+        const AnalisisDta= {
+            ...data
+        };
         const headers = {
             headers: {
                 token: "xd",
             },
         };
         try {
-            const data1 = await Api.post("analisis/registrar", data, headers);
-            console.log(data1,"tiposssssss")
-            Sweet.registroExitoso();
-            closeRegistrarAnalisisModal();
-            const response = await Api.get("analisis/listar");
-            setAnalisis(response.data);
+            const data = await Api.post("analisis/registrar", AnalisisDta, headers);
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.err)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(data.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.err[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                Sweet.registroExitoso();
+                console.log(data.data)
+                
+       
+                const response = await Api.get("analisis/listar");
+                setAnalisis(response.data);
+                location.href = "/home/analisis"
+                }
+                // console.log(data,"tiposssssss")
+                // const response = await Api.get("analisis/listar");
+                //  setAnalisis(response.data);
         } catch (error) {
             console.error("Error al registrar el analisis:", error);
         }
     };
-
+    
     function clearFocusInput(Element) {
         let inputSearch = document.getElementById(Element)
 
@@ -183,7 +223,7 @@ const Analisis = () => {
             }
             let select = inputSearch.parentNode.querySelectorAll(".option-select-ana")
             for (let s = 0; s < select.length; s++) {
-                let elementValue = inputSearch.getAttribute("id")
+                let elementvalue = inputSearch.getAttribute("id")
 
                 if (datasSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")) {
                     select[s].classList.add("option-select-focus")
@@ -195,20 +235,26 @@ const Analisis = () => {
         }
     }
     useEffect(() => {
+        window.addEventListener("click", function (e) {
+            let divOptions = document.querySelectorAll(".div-input-search-select");
+            for (let s = 0; s < divOptions.length; s++) {
+                if (!e.target == divOptions[s] || !divOptions[s].contains(e.target)) {
+                    let options = divOptions[s].querySelectorAll(".select-option-input-d")
+                    if (options.length > 0) {
+                        options[0].style.display = "none"
+                    }
+                }
+            }
+        })
+    }, [])
 
+    function searchInput() {
         let inputSearch = document.querySelectorAll(".input-search-d")
+
 
         if (inputSearch.length > 0) {
             for (let s = 0; s < inputSearch.length; s++) {
-                inputSearch[s].addEventListener("blur", function () {
-                    let divOptions = inputSearch[s].parentNode.querySelectorAll(".select-option-input-d");
-                    if (divOptions.length > 0) {
-                        setTimeout(() => {
-                            divOptions[0].style.display = "none"
-                        }, 110);
-                    }
 
-                })
                 inputSearch[s].addEventListener("input", function () {
                     let parent = inputSearch[s].parentNode
                     if (parent) {
@@ -222,10 +268,11 @@ const Analisis = () => {
                                 } else {
                                     options[o].style.display = "none"
                                 }
+                                let referencia = inputSearch[s].getAttribute("id")
+
                                 if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
                                     let focusSelect = document.querySelectorAll(".option-select-focus")
                                     if (focusSelect.length > 0) {
-                                        console.log(focusSelect[0].classList)
                                         focusSelect[0].classList.remove("option-select-focus")
                                     }
                                     inputSearch[s].value = options[o].innerHTML
@@ -234,7 +281,17 @@ const Analisis = () => {
                                     }
                                     datasSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
                                     options[o].classList.add("option-select-focus")
+                                    if (!datasSelect[referencia]) {
+                                        datasSelect[referencia] = {}
+                                    }
+                                    datasSelect[referencia]["value"] = options[o].getAttribute("data-id");
+                                    options[o].parentNode.style.display = "none"
+                                    break
                                 } else {
+                                    if (!datasSelect[referencia]) {
+                                        datasSelect[referencia] = {}
+                                    }
+                                    datasSelect[referencia]["value"] = "";
                                     options[o].classList.remove("option-select-focus")
                                 }
                             }
@@ -243,67 +300,111 @@ const Analisis = () => {
                 })
             }
         }
-    }, [aRegistrarModalOpen])
+    }
+    useEffect(() => {
+        searchInput()
+    }, [aRegistrarModalOpen]);
+    useEffect(() => {
+
+        searchInput()
+    }, [openModal]);
+
+    const dataTableRef = useRef(null);
+    const initializeDataTable = (analisis) => {
+        $(document).ready(function () {
+            $(dataTableRef.current).DataTable({
+                lengthMenu: [5, 10, 20, 30, 40, 50],
+                processing: true,
+                pageLength: 5,
+                language: {
+                    processing: "Procesando datos...",
+                },
+                responsive: true,
+            });
+        });
+
+        return () => {
+            $(dataTableRef.current).DataTable().destroy(true);
+        };
+    };
+
+    useEffect(() => {
+        if (analisis.length > 0) {
+            initializeDataTable(analisis);
+        }
+    }, [analisis]);
+
+
+
+
+
+
+    
+
 
     return (
         <>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
         {modalAnalisis && <div className="overlay-d" onClick={closeModalEdit}></div>}
         {aRegistrarModalOpen && (
             <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
             )}
+
+
+                <div className="contTitle">
+                    <h1 className="titleanalisis">Análisis</h1>
+                    <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
+                    Añadir
+                    </button>
+                </div>
             
-        <div className="tablaAnalisis">
-            <div className="contTitle">
-            <h1 className="titleanalisis">Análisis</h1> 
-        
-            <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
-                Añadir
-            </button>
-            </div>
-            <table>
-                <thead className="analisis">
-                    <tr className="encabezado">
-                        <th>id</th>
-                        <th>Fecha</th>
-                        <th>Tipo Análisis </th>
-                        <th>Consecutivo Informe </th>
-                        <th>Asignación </th>
-                        <th>Estado </th>
-                        <th>Propietario </th>
-                        <th>Finca </th>
-                        <th>Lote </th>
-                        <th>Variedad</th>
-
-                    </tr>
-                </thead>
-                <tbody className="cuerpodatos">
-                    {analisis.map((task) => (
-                            <tr key={task.id_analisis}>
-                                <td>{task.id_analisis}</td>
-                                <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td>
-                                <td>{task.nombre_tipo_analisis}</td>
-                                <td className="conse" >{task.codigo_externo}</td>
-                                <td>{task.nombre_usuario}</td>
-                                <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                <td>{task.propietario}</td>
-                                <td>{task.nombre_fincas}</td> 
-                                <td>{task.nombre_lotes}</td> 
-                                <td>{task.nombre_variedades}</td> 
-                                <td>
-                                    <button
-                                        type="button"
-                                        className="btn-actualizar-mod"
-                                        onClick={() => openModal(task.id_analisis)}
-                                    >
-                                        Modificar
-                                    </button>
-                                </td>
-
-                            </tr>
-                        ))}
-                </tbody>
-            </table>
-        </div>
+                <div className="tablaAnalisis">    
+                    <div className="container-fluid w-full">
+                    <table id="table-d" style={{ width: "100%" }}className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                        <thead>
+                            <tr className="bg-gray-200">
+                            <th>id</th>
+                            <th>Fecha </th>
+                            <th>Tipo Análisis </th>
+                            <th>Consecutivo Informe </th>
+                            <th>Asignación </th>
+                            <th>Estado </th>
+                            <th>Propietario </th>
+                            <th>Finca </th>
+                            <th>Lote </th>
+                            <th>Variedad</th>
+                            <th>Opciones</th>
+                        </tr>
+                        </thead>
+                        <tbody className="bg-gray-200">
+                        {analisis.map((task) => (
+                                <tr key={task.id_analisis}>
+                                    <td>{task.id_analisis}</td>
+                                    <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td>
+                                    <td>{task.nombre_tipo_analisis}</td>
+                                    <td className="conse" >{task.codigo_externo}</td>
+                                    <td>{task.nombre_usuario}</td>
+                                    <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                    <td>{task.propietario}</td>
+                                    <td>{task.nombre_fincas}</td> 
+                                    <td>{task.nombre_lotes}</td> 
+                                    <td>{task.nombre_variedades}</td> 
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="btn-actualizar-mod"
+                                            onClick={() => openModal(task.id_analisis)}
+                                        >
+                                            Modificar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                    </table>
+                    </div>
+                </div>
 
         {modalAnalisis && (
             <div className="tablaEditAna">
@@ -404,23 +505,23 @@ const Analisis = () => {
                             e.preventDefault();
                             handleRegistrarAnalisis({
                 
-                                tipo_analisis_id: datasSelect.tipo_analisis_id,
-                                muestras_id: datasSelect.muestras_id,
-                                usuarios_id: datasSelect.usuarios_id
+                                tipo_analisis_id: datasSelect.tipo_analisis_id ? datasSelect.tipo_analisis_id.value:"",
+                                muestras_id: datasSelect.muestras_id ? datasSelect.muestras_id.value:"",
+                                usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value:""
                             });
                         }}
                         method="post"
                     >
                         
-                        <div className="div-input-d-select">
+                        <div className="div-input-d-select div-input-search-select ">
                         <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
                             <select className="option-select-ana" name="tipo_analisis_id" id="1">
                                 <option value="">Fisico</option>
                             </select>
                         </div>
-                        <div className="div-input-d">
+                        <div className="div-input-d div-input-search-select">
                             <input className="input-search-d" type="text" id="muestras_id"ref={muestras_id} />
-                            <label htmlFor="muestras_id" >Muestra</label>
+                            <label htmlFor="muestras_id"  className='label'>Muestra</label>
                             <div className="select-option-input-d">
                                 {muestras.map((key, index) => (
                                     (
@@ -429,7 +530,7 @@ const Analisis = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="div-input-d">
+                        <div className="div-input-d div-input-search-select">
                             <input className="input-search-d" type="text" id="usuarios_id" ref={usuarios_id} />
                             <label htmlFor="usuarios_id" className='label'>Usuario</label>
                             <div className="select-option-input-d">

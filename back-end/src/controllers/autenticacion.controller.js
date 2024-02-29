@@ -1,27 +1,31 @@
-import {pool} from '../database/conexion.js';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { pool } from '../database/conexion.js';
 
-
-export const validarusuario = async(req,res)=>{
+export const validarusuario = async(req, res) => {
     try {
-    let {numero_documentos,user_password}= req.body;
-    let sql=`select id,nombre,rol from usuarios where numero_documentos= '${numero_documentos}' and user_password = '${user_password}'`;
-    const [rows]= await pool.query(sql);
+        let { numero_documentos, user_password } = req.body;
+        let sql = `SELECT id, nombre, rol, user_password FROM usuarios WHERE numero_documentos = '${numero_documentos}'`;
+        const [rows] = await pool.query(sql);
 
-    if (rows.length>0) {
-        let token=jwt.sign({user:rows},process.env.AUT_SECRET,{expiresIn:process.env.AUT_EXPIRET});
-        return res.status(200).json({token:token,message:"Usuario autorizado"});
-        // res.status(200).json(rows);
-
-    }else{
-        res.status(401).json({messaje:"usuario no encontrado..."});
-    }
-
+        if (rows.length > 0) {
+            const user = rows[0];
+            // Compara la contraseña proporcionada con la contraseña almacenada
+            if (bcrypt.compareSync(user_password, user.user_password)) {
+                // Si las contraseñas coinciden, genera un token JWT
+                const token = jwt.sign({ id: user.id, nombre: user.nombre, rol: user.rol }, process.env.AUT_SECRET, { expiresIn: 60 }); // 3600 segundos = 1 hora
+                return res.status(200).json({ token: token, message: "Inicio de sesión exitoso" });
+            } else {
+                return res.status(401).json({ message: "Contraseña incorrecta" });
+            }
+        } else {
+            return res.status(401).json({ message: "Usuario no encontrado" });
+        }
     } catch (e) {
-        res.status(500).json({messaje:'error en el servidor : '+e});
+        return res.status(500).json({ message: 'Error en el servidor: ' + e });
     }
-    
 };
+
 
 export const validartoken = async(req,res,next)=>{
     try {
@@ -42,4 +46,3 @@ export const validartoken = async(req,res,next)=>{
         return res.status(500).json({message: 'error en validartoken' +e});
     }
 };
-

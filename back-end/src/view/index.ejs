@@ -277,13 +277,8 @@
         </tr>
     </table>
 </div>
-    
-  
-
-    <h1>Documentación API</h1>
-    <h2>Análisis</h2><br>
-
-    <div class="cont">
+<h1>Municipios</h4>
+    <div class="cont-2">
         <table>
 
             <tr>
@@ -293,17 +288,17 @@
             </tr>
             <tr>
                 <td>Nombre del web service</td>
-                <td>Registrar Analisis</td>
+                <td>Registrar Municipio</td>
 
 
             </tr>
             <tr>
                 <td>URL</td>
-                <td>localhost:4000/analisis/registrar</td>
+                <td>localhost:4000/municipio/registrar</td>
             </tr>
             <tr>
                 <td>Descripción</td>
-                <td>El método registra un Analisis fisico del café dependiendo los campos requeridos</td>
+                <td>El método registra un municipio </td>
             </tr>
             <tr>
                 <td>Verbo HTTP</td>
@@ -327,410 +322,7 @@
                 <td>CORRECTO <br>
                     <br>Status : 200 OK <br>
                     <br>BODY:{<br>
-                    'mensaje':'Registro de analisis exitoso..!'
-                    } <br>
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>Responde</td>
-                <td>
-                    <br>{
-                        "tipo_analisis_id":Fisico,<br>
-                        "muestras_id":INF-1D,<br>
-                        "usuarios_id":Danna López<br>
-                    }<br>
-
-                    <br>
-                    <br>INCORRECTO <br>
-                    Status:401 <br>
-                    "mensaje":"No se registro el Analisis..!"<br>
-                    <br>Error Servidor <br>
-                    'status':500,<br>
-                    "Error":"Error del Servidor"<br>
-
-                </td>
-            </tr>
-        </table>
-        <br>
-    </div><br>
-    <div class="cont-2">
-        <table>
-
-            <tr>
-                <th>Número</th>
-                <th>7</th>
-
-            </tr>
-            <tr>
-                <td>Nombre del webservice</td>
-                <td>Listar Analisis</td>
-            </tr>
-            <tr>
-                <td>URL</td>
-                <td>localhost:4000/analisis/listar</td>
-            </tr>
-            <tr>
-                <td>Descripción</td>
-                <td> El método lista en que fecha y que tipo de analisis se han ingresado</td>
-            </tr>
-            <tr>
-                <td>Verbo HTTP</td>
-                <td> GET</td>
-            </tr>
-            <tr>
-                <td>Header</td>
-                <td> Content-Type application/json; charset=utf-8</td>
-            </tr>
-            <tr>
-                <td>Usuarios</td>
-                <td>Aprendiz/Instructor</td>
-            </tr>
-            <tr>
-                <td>Request body from-data</td>
-                <td>CORRECTO <br>
-                    <br>Status : 200 OK <br>
-                </td>
-
-            </tr>
-            <tr>
-                <td>Responde</td>
-                <td>
-                    <br>{
-                        "id":"1",<br>
-                        "tipo_analisis_id":fisico,<br>
-                        "consecutivo_informe":INF-2D,<br>
-                        "Asignación":"Danna Audrey",<br>
-                        "Estado":"Activo",<br>
-                        "Propietario":"Yan Carlos"<br>
-                        "Finca":"Los pinos"<br>
-                        "Lote":"66"<br>
-                        "Variedad":"66"<br>
-                    }<br>
-
-                    <br>INCORRECTO <br>
-                    Status:401 <br>
-                    "mensaje":"error en listar analisis de la base de datos"<br>
-
-
-        </table>
-    </div>
-
-    <div class="cont-2">
-        <table>
-
-            <tr>
-                <th>Número</th>
-                <th>8</th>
-
-            </tr>
-            <tr>
-                <td>Nombre del webservice</td>
-                <td>Buscar Analisis</td>
-
-
-            </tr>
-            <tr>
-                <td>URL</td>
-                <td>localhost:4000/analisis/buscar/:id</td>
-            </tr>
-            <tr>
-                <td>Descripción</td>
-                <td> El método busca en que fecha y que tipo de analisis <br>
-                    se han ingresado</td>
-            </tr>
-            <tr>
-                <td>Verbo HTTP</td>
-                <td> GET</td>
-            </tr>
-            <tr>
-                <td>Header</td>
-                <td> Content-Type application/json; charset=utf-8</td>
-            </tr>
-            <tr>
-                <td>Usuarios</td>
-                <td>Aprendiz/Instructor</td>
-            </tr>
-            <tr>
-                <td>Request body from-data</td>
-                <td>CORRECTO <br>
-                    <br>Status : 200 OK <br>
-                    <br>
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>Responde</td>
-                <td>
-                    <br>{
-                        "tipo_analisis_id":1,<br>
-                        "muestras_id":1,<br>
-                        "usuarios_id":1<br>
-                    }<br>
-
-                    <br>Error Servidor <br>
-                    'status':500,<br>
-                    "Error":"Error en buscar analisis"<br>
-
-                </td>
-            </tr>
-        </table>
-        <br>
-    </div>
-
-    <div class="cont-2">
-        <table>
-
-            <tr>
-                <th>Número</th>
-                <th>9</th>
-
-            </tr>
-            <tr>
-                <td>Nombre del webservice</td>
-                <td>Actualizar Analisis</td>
-
-
-            </tr>
-            <tr>
-                <td>URl</td>
-                <td>localhost:4000/analisis/update/:id</td>
-            </tr>
-            <tr>
-                <td>Descripción</td>
-                <td>El método actualiza en que fecha y que tipo de analisis <br>
-                    se han ingresado a través de el id ingresado en la url</td>
-            </tr>
-            <tr>
-                <td>Verbo HTTP</td>
-                <td> PUT</td>
-            </tr>
-            <tr>
-                <td>Header</td>
-
-
-                <td> <br>Autorizacion Bearer TOKEN<br>
-
-                    Content-Type application/json; charset=utf-8</td>
-            </tr>
-            <tr>
-                <td>Usuarios</td>
-                <td>Aprendiz,Instructor</td>
-            </tr>
-            <tr>
-                <td>Request body from-data</td>
-                <td>CORRECTO <br>
-                    <br>Status : 200 OK <br>
-                    <br>BODY:{<br>
-
-
-                    <br> 'mensaje':'¡Registro de Analisis actualizado..! '
-                    } <br>
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>Responde</td>
-                <td>
-                    <br>{
-                        "muestras_id":INF-1D,<br>
-                        "Usuario":Danna López<br>
-                    }<br>
-                    <br>INCORRECTO <br>
-                    Status:401 <br>
-                    "mensaje":"¡El analisis no fue actualizado"<br>
-                    <br>Error Servidor <br>
-                    'status':500,<br>
-                    "Error":"Error en el servidor"<br>
-                </td>
-            </tr>
-        </table>
-        <br>
-    </div>
-
-    <div class="cont-2">
-        <table>
-
-            <tr>
-                <th>Número</th>
-                <th>10</th>
-
-            </tr>
-            <tr>
-                <td>Nombre del webservice</td>
-                <td>Desactivar Analisis</td>
-
-
-            </tr>
-            <tr>
-                <td>URL</td>
-                <td>localhost:4000/analisis/desactivar/:id</td>
-            </tr>
-            <tr>
-                <td>Descripción</td>
-                <td>El método desactiva el estado un análisis</td>
-            </tr>
-            <tr>
-                <td>Verbo HTTP</td>
-                <td> PATCH</td>
-            </tr>
-            <tr>
-                <td>Header</td>
-
-                <td>
-                    <br>Autorizacion Bearer TOKEN<br>
-                    Content-Type application/json; charset=utf-8
-                </td>
-            </tr>
-            <tr>
-                <td>Usuarios</td>
-                <td>Aprendiz/Instructor</td>
-            </tr>
-            <tr>
-                <td>Request body from-data</td>
-                <td>CORRECTO <br>
-                    <br>Status : 200 OK <br>
-                    <br>BODY:{<br>
-                        "message": "El analisis ya esta desactivada"
-                    } <br>
-                    <br>Status : 200 OK <br>
-                    <br>BODY:{<br>
-                        "message": "El analisis se desactivo con exito"  
-                    } <br>
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>Responde</td>
-                <td>
-                    <br>INCORRECTO <br>
-                    Status:401 <br>
-                    <br> "message": "El analisis no se desactivo"
-                    <br>Error Servidor <br>
-                    'status':500,<br>
-                    "Error":"Error en el Servidor"<br>
-
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="cont-2">
-        <table>
-
-            <tr>
-                <th>Número</th>
-                <th>11</th>
-
-            </tr>
-            <tr>
-                <td>Nombre del webservice</td>
-                <td>Activar Analisis</td>
-
-
-            </tr>
-            <tr>
-                <td>URL</td>
-                <td>localhost:4000/analisis/activar/:id</td>
-            </tr>
-            <tr>
-                <td>Descripción</td>
-                <td>El método activa el estado de el Análisis</td>
-            </tr>
-            <tr>
-                <td>Verbo HTTP</td>
-                <td> PATCH</td>
-            </tr>
-            <tr>
-                <td>Header</td>
-
-                <td>
-                    <br>Autorizacion Bearer TOKEN<br>
-                    Content-Type application/json; charset=utf-8
-                </td>
-            </tr>
-            <tr>
-                <td>Usuarios</td>
-                <td>Instructor/Aprendiz</td>
-            </tr>
-            <tr>
-                <td>Request body from-data</td>
-                <td>CORRECTO <br>
-                    <br>Status : 200 OK <br>
-                    <br>BODY:{<br>
-                        "message": "El analisis ya se encuentra activa " 
-                    } <br>
-                    <br>Status : 200 OK <br>
-                    <br>BODY:{<br>
-                        "message": "El analisis se activo con exito"  
-                    } <br>
-                </td>
-
-            </tr>
-            <tr>
-                <td>Responde</td>
-                <td>
-                    <br>INCORRECTO <br>
-                    Status:401 <br>
-                  <br>"message": "El analisis no se activo"
-                    <br>Error Servidor <br>
-                    'status':500,<br>
-                    "Error":"Error en el Servidor"<br>
-
-                </td>
-            </tr>
-        </table>
-    </div>
-
-    <h1>Fincas</h1>
-    <div class="cont-2">
-        <table>
-
-            <tr>
-                <th>Número</th>
-                <th>12</th>
-
-            </tr>
-            <tr>
-                <td>Nombre del web service</td>
-                <td>Registrar finca</td>
-
-
-            </tr>
-            <tr>
-                <td>URL</td>
-                <td>localhost:4000/finca/registrar/</td>
-            </tr>
-            <tr>
-                <td>Descripción</td>
-                <td>El método registra una finca </td>
-            </tr>
-            <tr>
-                <td>Verbo HTTP</td>
-                <td> POST</td>
-            </tr>
-            <tr>
-                <td>Header</td>
-
-                <td>
-                    <br>Autorizacion Bearer TOKEN<br>
-                    Content-Type application/json; charset=utf-8
-
-                </td>
-            </tr>
-            <tr>
-                <td>Usuarios</td>
-                <td>Aprendiz/Instructor</td>
-            </tr>
-            <tr>
-                <td>Request body from-data</td>
-                <td>CORRECTO <br>
-                    <br>Status : 200 OK <br>
-                    <br>BODY:{<br>
-                    'mensaje':'Registro de finca exitosa..!'
+                    'mensaje':'Registro de municipio exitosa..!'
                     } <br>
 
                 </td>
@@ -740,20 +332,15 @@
                 <td>Responde</td>
                 <td>
                     <br>
-                    {
-                    "id": 1,<br>
-                    "fecha_creacion": "2023-11-01T15:09:47.000Z",<br>
-                    "nombre": "los rosales",<br>
-                    "longitud": "345",<br>
-                    "latitud": "324",<br>
-                    "usuarios_id": 1,<br>
-                    "municipios_id": 1,<br>
-                    "estado": 0<br>
+                    {<br>
+                    "nombre": "pitalito chillurco" <br>
+                    "fecha_creacion": "2023-12-11" <br>
+                    "departamentos_id ": 1 <br>
                     }
                     <br>
                     <br>INCORRECTO <br>
                     Status:401 <br>
-                    "mensaje":"No se registro la finca..!"<br>
+                    "mensaje":"No se registro el municipio..!"<br>
                     <br>Error Servidor <br>
                     'status':500,<br>
                     "Error":"Error del Servidor"<br>
@@ -770,22 +357,170 @@
 
             <tr>
                 <th>Número</th>
-                <th>13</th>
+                <th>7</th>
 
             </tr>
             <tr>
                 <td>Nombre del web service</td>
-                <td>Actualizar finca</td>
+                <td>listar Municipio</td>
 
 
             </tr>
             <tr>
                 <td>URL</td>
-                <td>localhost:4000/finca/actualizar/id</td>
+                <td>localhost:4000/Municipio/listar</td>
             </tr>
             <tr>
                 <td>Descripción</td>
-                <td>El método actualiza una finca ya registrada </td>
+                <td>El método lista los Municipios </td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td> GET</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+
+                <td>
+                    <br>Autorizacion Bearer TOKEN<br>
+                    Content-Type application/json; charset=utf-8
+
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz/Instructor</td>
+            </tr>
+            <tr>
+                <td>Request body from-data</td>
+                <td>CORRECTO <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                    'mensaje':'lista de Municipio exitosa..!'
+                    } <br>
+
+                </td>
+
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    <br>
+                    {<br>
+                    "id": 1,<br>
+                    "nombre": "pitalito chillurco" <br>
+                    "fecha_creacion": "2023-12-11" <br>
+                    "departamentos_id ": 1 <br>
+                    }
+                    <br>
+                    <br>INCORRECTO <br>
+                    Status:401 <br>
+                    "mensaje":"No se listo el Municipio..!"<br>
+                    <br>Error Servidor <br>
+                    'status':500,<br>
+                    "Error":"Error del Servidor"<br>
+
+
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="cont-2">
+        <table>
+
+            <tr>
+                <th>Número</th>
+                <th>8</th>
+
+            </tr>
+            <tr>
+                <td>Nombre del web service</td>
+                <td>Buscar Municipio</td>
+
+
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>localhost:4000/Municipio/buscar/1</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>El método busca los Municipios </td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td> GET</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+
+                <td>
+                    <br>Autorizacion Bearer TOKEN<br>
+                    Content-Type application/json; charset=utf-8
+
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz/Instructor</td>
+            </tr>
+            <tr>
+                <td>Request body from-data</td>
+                <td>CORRECTO <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                    'mensaje':'busqueda de Municipio exitosa..!'
+                    } <br>
+
+                </td>
+
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    <br>
+                    {<br>
+                    "id": 1,<br>
+                    "nombre": "pitalito chillurco" <br>
+                    "fecha_creacion": "2023-12-11" <br>
+                    "departamentos_id ": 1 <br>
+                    }
+                    <br>
+                    <br>INCORRECTO <br>
+                    Status:401 <br>
+                    "mensaje":"No se busco el Municipio..!"<br>
+                    <br>Error Servidor <br>
+                    'status':500,<br>
+                    "Error":"Error del Servidor"<br>
+
+
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="cont-2">
+        <table>
+
+            <tr>
+                <th>Número</th>
+                <th>9</th>
+
+            </tr>
+            <tr>
+                <td>Nombre del web service</td>
+                <td>Actualizar Municipio</td>
+
+
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>localhost:4000/municipio/actualizar/1</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>El método actualiza un municipio </td>
             </tr>
             <tr>
                 <td>Verbo HTTP</td>
@@ -809,7 +544,7 @@
                 <td>CORRECTO <br>
                     <br>Status : 200 OK <br>
                     <br>BODY:{<br>
-                    'mensaje':'se actualizo la finca con exitoso..!'
+                    'mensaje':'actualizacion de municipio exitosa..!'
                     } <br>
 
                 </td>
@@ -819,20 +554,15 @@
                 <td>Responde</td>
                 <td>
                     <br>
-                    {
-                    "id": 1,<br>
-                    "fecha_creacion": "2023-11-01T15:09:47.000Z",<br>
-                    "nombre": "los rosales filo alto",<br>
-                    "longitud": "348",<br>
-                    "latitud": "314",<br>
-                    "usuarios_id": 1,<br>
-                    "municipios_id": 1,<br>
-                    "estado": 0<br>
+                    {<br>
+                    "nombre": "pitalito chillurcooo" <br>
+                    "fecha_creacion": "2023-12-11" <br>
+                    "departamentos_id ": 1 <br>
                     }
                     <br>
                     <br>INCORRECTO <br>
                     Status:401 <br>
-                    "mensaje":"No se actualizo la finca..!"<br>
+                    "mensaje":"No se actualizo el municipio..!"<br>
                     <br>Error Servidor <br>
                     'status':500,<br>
                     "Error":"Error del Servidor"<br>
@@ -843,306 +573,1337 @@
             </tr>
         </table>
     </div>
+<h1>Fincas</h1>
+<div class="cont-2">
+    <table>
 
-    <div class="cont-2">
-        <table>
+        <tr>
+            <th>Número</th>
+            <th>10</th>
 
-            <tr>
-                <th>Número</th>
-                <th>14</th>
-
-            </tr>
-            <tr>
-                <td>Nombre del web service</td>
-                <td>Buscar finca</td>
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>Registrar finca</td>
 
 
-            </tr>
-            <tr>
-                <td>URL</td>
-                <td>localhost:4000/finca/buscar/1</td>
-            </tr>
-            <tr>
-                <td>Descripción</td>
-                <td>El método busca una finca </td>
-            </tr>
-            <tr>
-                <td>Verbo HTTP</td>
-                <td> GET</td>
-            </tr>
-            <tr>
-                <td>Header</td>
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/finca/registrar/</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método registra una finca </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> POST</td>
+        </tr>
+        <tr>
+            <td>Header</td>
 
-                <td>
-                    <br>Autorizacion Bearer TOKEN<br>
-                    Content-Type application/json; charset=utf-8
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
 
-                </td>
-            </tr>
-            <tr>
-                <td>Usuarios</td>
-                <td>Aprendiz/Instructor</td>
-            </tr>
-            <tr>
-                <td>Request body from-data</td>
-                <td>CORRECTO <br>
-                    <br>Status : 200 OK <br>
-                    <br>BODY:{<br>
-                    'mensaje':'busqueda de finca exitosa..!'
-                    } <br>
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'Registro de finca exitosa..!'
+                } <br>
 
-                </td>
+            </td>
 
-            </tr>
-            <tr>
-                <td>Responde</td>
-                <td>
-                    <br>
-                    {
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {
+                "id": 1,<br>
+                "fecha_creacion": "2023-11-01T15:09:47.000Z",<br>
+                "nombre": "los rosales",<br>
+                "longitud": "345",<br>
+                "latitud": "324",<br>
+                "usuarios_id": 1,<br>
+                "municipios_id": 1,<br>
+                "estado": 0<br>
+                }
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se registro la finca..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>11</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>Actualizar finca</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/finca/actualizar/id</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método actualiza una finca ya registrada </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> PUT</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'se actualizo la finca con exitoso..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {
+                "id": 1,<br>
+                "fecha_creacion": "2023-11-01T15:09:47.000Z",<br>
+                "nombre": "los rosales filo alto",<br>
+                "longitud": "348",<br>
+                "latitud": "314",<br>
+                "usuarios_id": 1,<br>
+                "municipios_id": 1,<br>
+                "estado": 0<br>
+                }
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se actualizo la finca..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>12</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>Buscar finca</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/finca/buscar/1</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método busca una finca </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> GET</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'busqueda de finca exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {
+                "id": 1,<br>
+                "fecha_creacion": "2023-11-01T15:09:47.000Z",<br>
+                "nombre": "los rosales",<br>
+                "longitud": "345",<br>
+                "latitud": "324",<br>
+                "usuarios_id": 1,<br>
+                "municipios_id": 1,<br>
+                "estado": 0<br>
+                }
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se encontro la finca..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>13</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>desactivacion de la finca</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/finca/desactivar/3</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método sera la desactivacion de una finca por su id </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> PATCH</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'desactivacion de finca exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se desactivo la finca..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>14</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>activacion de la finca</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/finca/activar/3</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método sera la activacion de una finca por su id </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> PATCH</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'activacion de finca exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se activo la finca..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>15</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>listar finca</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/finca/listar</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método lista las fincas </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> GET</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'lista de finca exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {
+                "id": 1,<br>
+                "fecha_creacion": "2023-11-01T15:09:47.000Z",<br>
+                "nombre": "los rosales",<br>
+                "longitud": "345",<br>
+                "latitud": "324",<br>
+                "usuarios_id": 1,<br>
+                "municipios_id": 1,<br>
+                "estado": 1<br>
+                }
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se listo la finca..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<h1>Lotes</h1>
+
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>16</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>registrar lote</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/lote/registrar</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método registra un lote </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> POST</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'registro de lote exitoso..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {<br>
+                "fecha_creacion": "2023-11-01T15:10:06.000Z",<br>
+                "nombre": "los rosales",<br>
+                "latitud": "324",<br>
+                "longitud": "345",<br>
+                "fincas_id": 1,<br>
+                "estado": 0<br>
+                }
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se registro el lote..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>17</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>buscar lote</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/lote/buscar/ID</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método busca un lote</td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> GET</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'busqueda de lote exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {<br>
+                "id": 1,<br>
+                "fecha_creacion": "2023-11-01T15:10:06.000Z",<br>
+                "nombre": "los rosales",<br>
+                "latitud": "324",<br>
+                "longitud": "345",<br>
+                "fincas_id": 1,<br>
+                "estado": 1<br>
+                }
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se busco el lote..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table><br>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>18</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>Actualizar lote</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/lote/Actualizar/:id</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método actualiza un lote </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> PUT</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'actualizacion de lotes exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {<br>
+                "id": 1,<br>
+                "fecha_creacion": "2023-11-01T15:10:06.000Z",<br>
+                "nombre": "los rosales",<br>
+                "latitud": "324",<br>
+                "longitud": "345",<br>
+                "fincas_id": 1,<br>
+                "estado": 0<br>
+                }
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se actualizo el lote..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>19</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>desactivar el lote</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/lote/desactivar/:id</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método desactiva un lote </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> PATCH</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'desactivacion de lote exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se desactivo el lote..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>20</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>activar el lote</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/lote/activar/:id</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método activa un lote </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> PATCH</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'activacion de lote exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se activo el lote..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>21</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>listar lote</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/lote/listar</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método lista los lotes</td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> GET</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'lista de lotes exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {<br>
+                "id": 1,<br>
+                "fecha_creacion": "2023-11-01T15:10:06.000Z",<br>
+                "nombre": "los rosales",<br>
+                "latitud": "324",<br>
+                "longitud": "345",<br>
+                "fincas_id": 1,<br>
+                "estado": 0<br>
+                }
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se listo el lote..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table><br>
+</div>
+
+<h1>Cafe</h1>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>22</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>registrar Cafe</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/Cafe/registrar</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método registra un Cafe </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> POST</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'registro de Cafe exitoso..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {<br>
                     "id": 1,<br>
-                    "fecha_creacion": "2023-11-01T15:09:47.000Z",<br>
-                    "nombre": "los rosales",<br>
-                    "longitud": "345",<br>
-                    "latitud": "324",<br>
-                    "usuarios_id": 1,<br>
-                    "municipios_id": 1,<br>
-                    "estado": 0<br>
+                    "lotes_id ": 1,<br>
+                    "variedades_id ": 1<br>
                     }
-                    <br>
-                    <br>INCORRECTO <br>
-                    Status:401 <br>
-                    "mensaje":"No se encontro la finca..!"<br>
-                    <br>Error Servidor <br>
-                    'status':500,<br>
-                    "Error":"Error del Servidor"<br>
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se registro el Cafe..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
 
 
 
-                </td>
-            </tr>
-        </table>
-    </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="cont-2">
+    <table>
 
-    <div class="cont-2">
-        <table>
+        <tr>
+            <th>Número</th>
+            <th>23</th>
 
-            <tr>
-                <th>Número</th>
-                <th>15</th>
-
-            </tr>
-            <tr>
-                <td>Nombre del web service</td>
-                <td>desactivacion de la finca</td>
-
-
-            </tr>
-            <tr>
-                <td>URL</td>
-                <td>localhost:4000/finca/desactivar/3</td>
-            </tr>
-            <tr>
-                <td>Descripción</td>
-                <td>El método sera la desactivacion de una finca por su id </td>
-            </tr>
-            <tr>
-                <td>Verbo HTTP</td>
-                <td> PATCH</td>
-            </tr>
-            <tr>
-                <td>Header</td>
-
-                <td>
-                    <br>Autorizacion Bearer TOKEN<br>
-                    Content-Type application/json; charset=utf-8
-
-                </td>
-            </tr>
-            <tr>
-                <td>Usuarios</td>
-                <td>Aprendiz/Instructor</td>
-            </tr>
-            <tr>
-                <td>Request body from-data</td>
-                <td>CORRECTO <br>
-                    <br>Status : 200 OK <br>
-                    <br>BODY:{<br>
-                    'mensaje':'desactivacion de finca exitosa..!'
-                    } <br>
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>Responde</td>
-                <td>
-                    <br>
-                    <br>INCORRECTO <br>
-                    Status:401 <br>
-                    "mensaje":"No se desactivo la finca..!"<br>
-                    <br>Error Servidor <br>
-                    'status':500,<br>
-                    "Error":"Error del Servidor"<br>
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>buscar Cafe</td>
 
 
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/Cafe/buscar/ID</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método busca un Cafe</td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> GET</td>
+        </tr>
+        <tr>
+            <td>Header</td>
 
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="cont-2">
-        <table>
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
 
-            <tr>
-                <th>Número</th>
-                <th>16</th>
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'busqueda de Cafe exitosa..!'
+                } <br>
 
-            </tr>
-            <tr>
-                <td>Nombre del web service</td>
-                <td>activacion de la finca</td>
+            </td>
 
-
-            </tr>
-            <tr>
-                <td>URL</td>
-                <td>localhost:4000/finca/activar/3</td>
-            </tr>
-            <tr>
-                <td>Descripción</td>
-                <td>El método sera la activacion de una finca por su id </td>
-            </tr>
-            <tr>
-                <td>Verbo HTTP</td>
-                <td> PATCH</td>
-            </tr>
-            <tr>
-                <td>Header</td>
-
-                <td>
-                    <br>Autorizacion Bearer TOKEN<br>
-                    Content-Type application/json; charset=utf-8
-
-                </td>
-            </tr>
-            <tr>
-                <td>Usuarios</td>
-                <td>Aprendiz/Instructor</td>
-            </tr>
-            <tr>
-                <td>Request body from-data</td>
-                <td>CORRECTO <br>
-                    <br>Status : 200 OK <br>
-                    <br>BODY:{<br>
-                    'mensaje':'activacion de finca exitosa..!'
-                    } <br>
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>Responde</td>
-                <td>
-                    <br>INCORRECTO <br>
-                    Status:401 <br>
-                    "mensaje":"No se activo la finca..!"<br>
-                    <br>Error Servidor <br>
-                    'status':500,<br>
-                    "Error":"Error del Servidor"<br>
-
-
-
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="cont-2">
-        <table>
-
-            <tr>
-                <th>Número</th>
-                <th>17</th>
-
-            </tr>
-            <tr>
-                <td>Nombre del web service</td>
-                <td>listar finca</td>
-
-
-            </tr>
-            <tr>
-                <td>URL</td>
-                <td>localhost:4000/finca/listar</td>
-            </tr>
-            <tr>
-                <td>Descripción</td>
-                <td>El método lista las fincas </td>
-            </tr>
-            <tr>
-                <td>Verbo HTTP</td>
-                <td> GET</td>
-            </tr>
-            <tr>
-                <td>Header</td>
-
-                <td>
-                    <br>Autorizacion Bearer TOKEN<br>
-                    Content-Type application/json; charset=utf-8
-
-                </td>
-            </tr>
-            <tr>
-                <td>Usuarios</td>
-                <td>Aprendiz/Instructor</td>
-            </tr>
-            <tr>
-                <td>Request body from-data</td>
-                <td>CORRECTO <br>
-                    <br>Status : 200 OK <br>
-                    <br>BODY:{<br>
-                    'mensaje':'lista de finca exitosa..!'
-                    } <br>
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>Responde</td>
-                <td>
-                    <br>
-                    {
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {<br>
                     "id": 1,<br>
-                    "fecha_creacion": "2023-11-01T15:09:47.000Z",<br>
-                    "nombre": "los rosales",<br>
-                    "longitud": "345",<br>
-                    "latitud": "324",<br>
-                    "usuarios_id": 1,<br>
-                    "municipios_id": 1,<br>
-                    "estado": 1<br>
+                    "lotes_id ": 1,<br>
+                    "variedades_id ": 1<br>
                     }
-                    <br>
-                    <br>INCORRECTO <br>
-                    Status:401 <br>
-                    "mensaje":"No se listo la finca..!"<br>
-                    <br>Error Servidor <br>
-                    'status':500,<br>
-                    "Error":"Error del Servidor"<br>
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se busco el Cafe..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
 
 
 
-                </td>
-            </tr>
-        </table>
-    </div>
+            </td>
+        </tr>
+    </table><br>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>24</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>Actualizar Cafe</td>
 
 
-    <h1>Variedades</h1>
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/Cafe/Actualizar/:id</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método actualiza un Cafe </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> PUT</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'actualizacion de Cafes exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {<br>
+                "id": 1,<br>
+                "estado": 1,<br>
+                "lotes_id ": 1,<br>
+                "variedades_id ": 1<br>
+                }
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se actualizo el Cafe..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>25</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>desactivar el Cafe</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/Cafe/desactivar/:id</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método desactiva un Cafe </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> PATCH</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'desactivacion de Cafe exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se desactivo el Cafe..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>26</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>activar el Cafe</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/Cafe/activar/:id</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método activa un Cafe </td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> PATCH</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'activacion de Cafe exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se activo el Cafe..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="cont-2">
+    <table>
+
+        <tr>
+            <th>Número</th>
+            <th>27</th>
+
+        </tr>
+        <tr>
+            <td>Nombre del web service</td>
+            <td>listar Cafe</td>
+
+
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>localhost:4000/Cafe/listar</td>
+        </tr>
+        <tr>
+            <td>Descripción</td>
+            <td>El método lista los Cafes</td>
+        </tr>
+        <tr>
+            <td>Verbo HTTP</td>
+            <td> GET</td>
+        </tr>
+        <tr>
+            <td>Header</td>
+
+            <td>
+                <br>Autorizacion Bearer TOKEN<br>
+                Content-Type application/json; charset=utf-8
+
+            </td>
+        </tr>
+        <tr>
+            <td>Usuarios</td>
+            <td>Aprendiz/Instructor</td>
+        </tr>
+        <tr>
+            <td>Request body from-data</td>
+            <td>CORRECTO <br>
+                <br>Status : 200 OK <br>
+                <br>BODY:{<br>
+                'mensaje':'lista de Cafes exitosa..!'
+                } <br>
+
+            </td>
+
+        </tr>
+        <tr>
+            <td>Responde</td>
+            <td>
+                <br>
+                {<br>
+                    "id": 1,<br>
+                    "estado": 1,<br>
+                    "lotes_id ": 1,<br>
+                    "variedades_id ": 1<br>
+                    }
+                <br>
+                <br>INCORRECTO <br>
+                Status:401 <br>
+                "mensaje":"No se listo el Cafe..!"<br>
+                <br>Error Servidor <br>
+                'status':500,<br>
+                "Error":"Error del Servidor"<br>
+
+
+
+            </td>
+        </tr>
+    </table><br>
+</div>
+
+<h1>Variedades</h1>
     <div class="cont-2">
         <table>
 
             <tr>
                 <th>Número</th>
-                <th>18</th>
+                <th>28</th>
 
             </tr>
             <tr>
@@ -1215,7 +1976,7 @@
 
             <tr>
                 <th>Número</th>
-                <th>19</th>
+                <th>29</th>
 
             </tr>
             <tr>
@@ -1287,7 +2048,7 @@
 
             <tr>
                 <th>Número</th>
-                <th>20</th>
+                <th>30</th>
 
             </tr>
             <tr>
@@ -1356,934 +2117,46 @@
         </table>
     </div>
 
-    <h1>Municipios</h4>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>21</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>Registrar Municipio</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/municipio/registrar</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método registra un municipio </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> POST</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'Registro de municipio exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                        "nombre": "pitalito chillurco" <br>
-                        "fecha_creacion": "2023-12-11" <br>
-                        "departamentos_id ": 1 <br>
-                        }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se registro el municipio..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <br>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>22</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>listar Municipio</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/Municipio/listar</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método lista los Municipios </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> GET</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'lista de Municipio exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                        "id": 1,<br>
-                        "nombre": "pitalito chillurco" <br>
-                        "fecha_creacion": "2023-12-11" <br>
-                        "departamentos_id ": 1 <br>
-                        }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se listo el Municipio..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>23</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>Buscar Municipio</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/Municipio/buscar/1</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método busca los Municipios </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> GET</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'busqueda de Municipio exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                        "id": 1,<br>
-                        "nombre": "pitalito chillurco" <br>
-                        "fecha_creacion": "2023-12-11" <br>
-                        "departamentos_id ": 1 <br>
-                        }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se busco el Municipio..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>24</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>Actualizar Municipio</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/municipio/actualizar/1</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método actualiza un municipio </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> PUT</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'actualizacion de municipio exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                        "nombre": "pitalito chillurcooo" <br>
-                        "fecha_creacion": "2023-12-11" <br>
-                        "departamentos_id ": 1 <br>
-                        }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se actualizo el municipio..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <h1>Lotes</h1>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>25</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>Actualizar lote</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/lote/Actualizar/:id</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método actualiza un lote </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> PUT</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'actualizacion de lotes exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                        "id": 1,<br>
-                        "fecha_creacion": "2023-11-01T15:10:06.000Z",<br>
-                        "nombre": "los rosales",<br>
-                        "latitud": "324",<br>
-                        "longitud": "345",<br>
-                        "fincas_id": 1,<br>
-                        "estado": 0<br>
-                        }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se actualizo el lote..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>26</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>desactivar el lote</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/lote/desactivar/:id</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método desactiva un lote </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> PATCH</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'desactivacion de lote exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se desactivo el lote..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>27</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>activar el lote</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/lote/activar/:id</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método activa un lote </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> PATCH</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'activacion de lote exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se activo el lote..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>28</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>listar lote</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/lote/listar</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método lista los lotes</td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> GET</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'lista de lotes exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                        "id": 1,<br>
-                        "fecha_creacion": "2023-11-01T15:10:06.000Z",<br>
-                        "nombre": "los rosales",<br>
-                        "latitud": "324",<br>
-                        "longitud": "345",<br>
-                        "fincas_id": 1,<br>
-                        "estado": 0<br>
-                        }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se listo el lote..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table><br>
-        </div>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>29</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>registrar lote</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/lote/registrar</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método registra un lote </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> POST</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'registro de lote exitoso..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                        "fecha_creacion": "2023-11-01T15:10:06.000Z",<br>
-                        "nombre": "los rosales",<br>
-                        "latitud": "324",<br>
-                        "longitud": "345",<br>
-                        "fincas_id": 1,<br>
-                        "estado": 0<br>
-                        }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se registro el lote..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>30</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>buscar lote</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/lote/buscar/ID</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método busca un lote</td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> GET</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'busqueda de lote exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                        "id": 1,<br>
-                        "fecha_creacion": "2023-11-01T15:10:06.000Z",<br>
-                        "nombre": "los rosales",<br>
-                        "latitud": "324",<br>
-                        "longitud": "345",<br>
-                        "fincas_id": 1,<br>
-                        "estado": 1<br>
-                        }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se busco el lote..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table><br>
-        </div>
-
-
-        <h1>Documentación API Muestras</h1>
-
-        <h2>Registrar Muestra</h2>
-        <div class="cont-2">
-            <table>
-                <tr>
-                    <th>Número</th>
-                    <th>31</th>
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>Registrar muestra</td>
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>http://localhost:4000/muestra/registrar</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>Registra una nueva muestra en el sistema.</td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td>POST</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-                    <td>
-                        <br>Autorización Bearer TOKEN<br>
-                        Content-Type application/json;
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body JSON</td>
-                    <td>
-                        <br>{
-                                "fecha_creacion":"2023-02-02",<br>
-                                "codigo_externo":"INF-2D",<br>
-                                "consecutivo_informe":"2D",<br>
-                                "muestreo":"Manual",<br>
-                                "preparacion_muestra":"normalito",<br>
-                                "cantidad":120,<br>
-                                "tipo_molienda":"No especifica",<br>
-                                "tipo_fermentacion":"en agua",<br>
-                                "densidad_cafe_verde":"No reporta",<br>
-                                "fecha_procesamiento":"2023-03-03",<br>
-                                "tipo_tostion":"No especifica",<br>
-                                "tiempo_fermentacion": "2 dias",<br>
-                                "codigo_muestra":"1D",<br>
-                                "actividad_agua":"No reporta",<br>
-                                "tiempo_secado":"3 dias",<br>
-                                "presentacion": "S.C.P",<br>
-                                "cafes_id":1<br>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        Status: 200 OK <br>
-                        BODY: { <br>
-                        "mensaje": "La muestras se registro con exito" <br>
-                        } <br>
-                        INCORRECTO <br>
-                        Status: 401 <br>
-                        BODY: { <br>
-                        "mensaje": "La muestra no se registro" <br>
-                        } <br>
-                        Error Servidor <br>
-                        Status: 500 <br>
-                        BODY: { <br>
-                        "mensaje": "error en en el servidor" <br>
-                        }
-
-                    </td>
-                </tr>
-            </table>
-        </div><br>
-
-        <h2>Buscar muestra por ID</h2>
-        <div class="cont-2">
-            <table>
-                <tr>
-                    <th>Número</th>
-                    <th>32</th>
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>Obtener muestra por ID</td>
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>http://localhost:4000/muestra/buscar/:id</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>Obtiene la información de una muestra en específico utilizando su ID.</td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td>GET</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-                    <td>
-                        <br>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        Status: 200 OK <br>
-                        BODY: <br>{
-                            "fecha_creacion":"2023-02-02",<br>
-                            "codigo_externo":"INF-2D",<br>
-                            "consecutivo_informe":"2D",<br>
-                            "muestreo":"Manual",<br>
-                            "preparacion_muestra":"normalito",<br>
-                            "cantidad":120,<br>
-                            "tipo_molienda":"No especifica",<br>
-                            "tipo_fermentacion":"en agua",<br>
-                            "densidad_cafe_verde":"No reporta",<br>
-                            "fecha_procesamiento":"2023-03-03",<br>
-                            "tipo_tostion":"No especifica",<br>
-                            "tiempo_fermentacion": "2 dias",<br>
-                            "codigo_muestra":"1D",<br>
-                            "actividad_agua":"No reporta",<br>
-                            "tiempo_secado":"3 dias",<br>
-                            "presentacion": "S.C.P",<br>
-                            "estado":1,<br>
-                            "cafes_id":1<br>
-                            <br>}
-                        ERROR SERVIDOR<br>
-                        Status: 401<br>
-                        BODY:{<br>
-                        massage: "Error en listar la muestra :" <br>
-                        }
-                    </td>
-                </tr>
-            </table>
-        </div><br>
-
-        <h2>Actualizar Muestra</h2>
-        <div class="cont-2">
-            <table>
-                <tr>
-                    <th>Número</th>
-                    <th>33</th>
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>Actualizar Muestra</td>
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>http://localhost:4000/muestra/actualizar/:id</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>Actualiza la información de una muestra utilizando su ID.</td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td>PUT</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-                    <td>
-                        <br>Autorización Bearer TOKEN<br>
-                        Content-Type application/json;
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Instructor/Aprendiz</td>
-                </tr>
-                <tr>
-                    <td>Request body JSON</td>
-                    <td>
-                        <br>{
+    <h1>Documentación API Muestras</h1>
+
+    <h2>Registrar Muestra</h2>
+    <div class="cont-2">
+        <table>
+            <tr>
+                <th>Número</th>
+                <th>31</th>
+            </tr>
+            <tr>
+                <td>Nombre del web service</td>
+                <td>Registrar muestra</td>
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>http://localhost:4000/muestra/registrar</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>Registra una nueva muestra en el sistema.</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td>POST</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+                <td>
+                    <br>Autorización Bearer TOKEN<br>
+                    Content-Type application/json;
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz/Instructor</td>
+            </tr>
+            <tr>
+                <td>Request body JSON</td>
+                <td>
+                    <br>{
                             "fecha_creacion":"2023-02-02",<br>
                             "codigo_externo":"INF-2D",<br>
                             "consecutivo_informe":"2D",<br>
@@ -2301,654 +2174,776 @@
                             "tiempo_secado":"3 dias",<br>
                             "presentacion": "S.C.P",<br>
                             "cafes_id":1<br>
-                            <br>}
-                        
-                    </td>
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        Status: 200 OK <br>
-                        BODY: { <br>
-                        "mensaje": "La muestra se actuaizo con exito"<br>
-                        }<br>
-                        INCORRECTO<br>
-                        Status:401<br>
-                        BODY: {<br>
-                        "mensaje": "El usuario no fue actualizado"<br>
-                        } <br>
-                        ERROR SERVIDOR<br>
-                        Status:500<br>
-                        BODY: {<br>
-                        "mensaje": "Error en el servidor"<br>
-                        } <br>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <br>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    Status: 200 OK <br>
+                    BODY: { <br>
+                    "mensaje": "La muestras se registro con exito" <br>
+                    } <br>
+                    INCORRECTO <br>
+                    Status: 401 <br>
+                    BODY: { <br>
+                    "mensaje": "La muestra no se registro" <br>
+                    } <br>
+                    Error Servidor <br>
+                    Status: 500 <br>
+                    BODY: { <br>
+                    "mensaje": "error en en el servidor" <br>
+                    }
 
-        <h2>Listar Muestras</h2>
+                </td>
+            </tr>
+        </table>
+    </div><br>
 
-        <div class="cont-2">
-            <table>
-                <tr>
-                    <th>Número</th>
-                    <th>34</th>
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>Listar Muestras</td>
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>http://localhost:4000/muestra/listar</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>Lista todos las muestras que se encuntren guardadas.</td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td>Get</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-                    <td>
-                        <br>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Instructor/Aprendiz</td>
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        Status: 200 OK <br>
-                        BODY: <br>{
-                            "id": 1,<br>
-                            "fecha_creacion": "2024-02-20T19:40:04.000Z",<br>
-                            "cafe": 1,<br>
-                            "Lote": "lote 4",<br>
-                            "Finca": "Los pinos",<br>
-                            "estado": 1,<br>
-                            "codigo_externo": "INF-2D",<br>
-                            "usuario": "Yan carlos",<br>
-                            "variedad": "Caturra"<br>
-                            <br>}
-                        Error Servidor<br>
-                        BODY: {<br>
-                        massage: "Error en listar la muestra :" <br>
-                        }
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-    
-                <tr>
-                    <th>Número</th>
-                    <th>35</th>
-    
-                </tr>
-                <tr>
-                    <td>Nombre del webservice</td>
-                    <td>Desactivar Muestra</td>
-    
-    
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/muestra/desactivar/:id</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método desactiva el estado una muestra</td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> PATCH</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-    
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                            "message": "La muestra ya esta desactivada"
-                        } <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                            "message": "La muestra se desactivo con exito"  
-                        } <br>
-    
-                    </td>
-    
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        <br> "message": "La muestra no se desactivo"
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error en el Servidor"<br>
-    
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-    
-                <tr>
-                    <th>Número</th>
-                    <th>36</th>
-    
-                </tr>
-                <tr>
-                    <td>Nombre del webservice</td>
-                    <td>Activar Muestra</td>
-    
-    
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/muestra/activar/:id</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método activa el estado una muestra</td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> PATCH</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-    
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                            "message": "La muestra ya se encuentra activa "
-                        } <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                            "message": "La muestra se activo con exito"  
-                        } <br>
-    
-                    </td>
-    
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        Status: 200 OK <br>
-                        BODY: {
-                        "mensaje": "Actualización de usuario exitosa..!"
-                        }
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <br>
+    <h2>Buscar muestra por ID</h2>
+    <div class="cont-2">
+        <table>
+            <tr>
+                <th>Número</th>
+                <th>32</th>
+            </tr>
+            <tr>
+                <td>Nombre del web service</td>
+                <td>Obtener muestra por ID</td>
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>http://localhost:4000/muestra/buscar/:id</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>Obtiene la información de una muestra en específico utilizando su ID.</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td>GET</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+                <td>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz/Instructor</td>
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    Status: 200 OK <br>
+                    BODY: <br>{
+                        "fecha_creacion":"2023-02-02",<br>
+                        "codigo_externo":"INF-2D",<br>
+                        "consecutivo_informe":"2D",<br>
+                        "muestreo":"Manual",<br>
+                        "preparacion_muestra":"normalito",<br>
+                        "cantidad":120,<br>
+                        "tipo_molienda":"No especifica",<br>
+                        "tipo_fermentacion":"en agua",<br>
+                        "densidad_cafe_verde":"No reporta",<br>
+                        "fecha_procesamiento":"2023-03-03",<br>
+                        "tipo_tostion":"No especifica",<br>
+                        "tiempo_fermentacion": "2 dias",<br>
+                        "codigo_muestra":"1D",<br>
+                        "actividad_agua":"No reporta",<br>
+                        "tiempo_secado":"3 dias",<br>
+                        "presentacion": "S.C.P",<br>
+                        "estado":1,<br>
+                        "cafes_id":1<br>
+                        <br>}
+                    ERROR SERVIDOR<br>
+                    Status: 401<br>
+                    BODY:{<br>
+                    massage: "Error en listar la muestra :" <br>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div><br>
 
-        
+    <h2>Actualizar Muestra</h2>
+    <div class="cont-2">
+        <table>
+            <tr>
+                <th>Número</th>
+                <th>33</th>
+            </tr>
+            <tr>
+                <td>Nombre del web service</td>
+                <td>Actualizar Muestra</td>
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>http://localhost:4000/muestra/actualizar/:id</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>Actualiza la información de una muestra utilizando su ID.</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td>PUT</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+                <td>
+                    <br>Autorización Bearer TOKEN<br>
+                    Content-Type application/json;
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Instructor/Aprendiz</td>
+            </tr>
+            <tr>
+                <td>Request body JSON</td>
+                <td>
+                    <br>{
+                        "fecha_creacion":"2023-02-02",<br>
+                        "codigo_externo":"INF-2D",<br>
+                        "consecutivo_informe":"2D",<br>
+                        "muestreo":"Manual",<br>
+                        "preparacion_muestra":"normalito",<br>
+                        "cantidad":120,<br>
+                        "tipo_molienda":"No especifica",<br>
+                        "tipo_fermentacion":"en agua",<br>
+                        "densidad_cafe_verde":"No reporta",<br>
+                        "fecha_procesamiento":"2023-03-03",<br>
+                        "tipo_tostion":"No especifica",<br>
+                        "tiempo_fermentacion": "2 dias",<br>
+                        "codigo_muestra":"1D",<br>
+                        "actividad_agua":"No reporta",<br>
+                        "tiempo_secado":"3 dias",<br>
+                        "presentacion": "S.C.P",<br>
+                        "cafes_id":1<br>
+                        <br>}
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    Status: 200 OK <br>
+                    BODY: { <br>
+                    "mensaje": "La muestra se actuaizo con exito"<br>
+                    }<br>
+                    INCORRECTO<br>
+                    Status:401<br>
+                    BODY: {<br>
+                    "mensaje": "El usuario no fue actualizado"<br>
+                    } <br>
+                    ERROR SERVIDOR<br>
+                    Status:500<br>
+                    BODY: {<br>
+                    "mensaje": "Error en el servidor"<br>
+                    } <br>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
 
-        <h1>Cafe</h1>
-        <div class="cont-2">
-            <table>
+    <h2>Listar Muestras</h2>
 
-                <tr>
-                    <th>Número</th>
-                    <th>37</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>Actualizar Cafe</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/Cafe/Actualizar/:id</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método actualiza un Cafe </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> PUT</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'actualizacion de Cafes exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
+    <div class="cont-2">
+        <table>
+            <tr>
+                <th>Número</th>
+                <th>34</th>
+            </tr>
+            <tr>
+                <td>Nombre del web service</td>
+                <td>Listar Muestras</td>
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>http://localhost:4000/muestra/listar</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>Lista todos las muestras que se encuntren guardadas.</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td>Get</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+                <td>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Instructor/Aprendiz</td>
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    Status: 200 OK <br>
+                    BODY: <br>{
                         "id": 1,<br>
+                        "fecha_creacion": "2024-02-20T19:40:04.000Z",<br>
+                        "cafe": 1,<br>
+                        "Lote": "lote 4",<br>
+                        "Finca": "Los pinos",<br>
                         "estado": 1,<br>
-                        "lotes_id ": 1,<br>
-                        "variedades_id ": 1<br>
-                        }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se actualizo el Cafe..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
+                        "codigo_externo": "INF-2D",<br>
+                        "usuario": "Yan carlos",<br>
+                        "variedad": "Caturra"<br>
+                        <br>}
+                    Error Servidor<br>
+                    BODY: {<br>
+                    massage: "Error en listar la muestra :" <br>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="cont-2">
+        <table>
+
+            <tr>
+                <th>Número</th>
+                <th>35</th>
+
+            </tr>
+            <tr>
+                <td>Nombre del webservice</td>
+                <td>Desactivar Muestra</td>
 
 
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>localhost:4000/muestra/desactivar/:id</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>El método desactiva el estado una muestra</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td> PATCH</td>
+            </tr>
+            <tr>
+                <td>Header</td>
 
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
+                <td>
+                    <br>Autorizacion Bearer TOKEN<br>
+                    Content-Type application/json; charset=utf-8
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz/Instructor</td>
+            </tr>
+            <tr>
+                <td>Request body from-data</td>
+                <td>CORRECTO <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                        "message": "La muestra ya esta desactivada"
+                    } <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                        "message": "La muestra se desactivo con exito"  
+                    } <br>
 
-                <tr>
-                    <th>Número</th>
-                    <th>38</th>
+                </td>
 
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>desactivar el Cafe</td>
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    <br>INCORRECTO <br>
+                    Status:401 <br>
+                    <br> "message": "La muestra no se desactivo"
+                    <br>Error Servidor <br>
+                    'status':500,<br>
+                    "Error":"Error en el Servidor"<br>
 
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="cont-2">
+        <table>
 
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/Cafe/desactivar/:id</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método desactiva un Cafe </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> PATCH</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
+            <tr>
+                <th>Número</th>
+                <th>36</th>
 
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'desactivacion de Cafe exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se desactivo el Cafe..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
-
-
-
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>39</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>activar el Cafe</td>
+            </tr>
+            <tr>
+                <td>Nombre del webservice</td>
+                <td>Activar Muestra</td>
 
 
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/Cafe/activar/:id</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método activa un Cafe </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> PATCH</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>localhost:4000/muestra/activar/:id</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>El método activa el estado una muestra</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td> PATCH</td>
+            </tr>
+            <tr>
+                <td>Header</td>
 
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
+                <td>
+                    <br>Autorizacion Bearer TOKEN<br>
+                    Content-Type application/json; charset=utf-8
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz/Instructor</td>
+            </tr>
+            <tr>
+                <td>Request body from-data</td>
+                <td>CORRECTO <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                        "message": "La muestra ya se encuentra activa "
+                    } <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                        "message": "La muestra se activo con exito"  
+                    } <br>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'activacion de Cafe exitosa..!'
-                        } <br>
+                </td>
 
-                    </td>
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    Status: 200 OK <br>
+                    BODY: {
+                    "mensaje": "Actualización de usuario exitosa..!"
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
 
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se activo el Cafe..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
+    <h1>Documentación API</h1>
+    <h2>Análisis</h2><br>
 
+    <div class="cont">
+        <table>
 
+            <tr>
+                <th>Número</th>
+                <th>37</th>
 
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>40</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>listar Cafe</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/Cafe/listar</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método lista los Cafes</td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> GET</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'lista de Cafes exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                            "id": 1,<br>
-                            "estado": 1,<br>
-                            "lotes_id ": 1,<br>
-                            "variedades_id ": 1<br>
-                            }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se listo el Cafe..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
+            </tr>
+            <tr>
+                <td>Nombre del web service</td>
+                <td>Registrar Analisis</td>
 
 
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>localhost:4000/analisis/registrar</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>El método registra un Analisis fisico del café dependiendo los campos requeridos</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td> POST</td>
+            </tr>
+            <tr>
+                <td>Header</td>
 
-                    </td>
-                </tr>
-            </table><br>
-        </div>
-        <div class="cont-2">
-            <table>
+                <td>
+                    <br>Autorizacion Bearer TOKEN<br>
+                    Content-Type application/json; charset=utf-8
 
-                <tr>
-                    <th>Número</th>
-                    <th>41</th>
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz/Instructor</td>
+            </tr>
+            <tr>
+                <td>Request body from-data</td>
+                <td>CORRECTO <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                    'mensaje':'Registro de analisis exitoso..!'
+                    } <br>
 
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>registrar Cafe</td>
+                </td>
 
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    <br>{
+                        "tipo_analisis_id":Fisico,<br>
+                        "muestras_id":INF-1D,<br>
+                        "usuarios_id":Danna López<br>
+                    }<br>
 
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/Cafe/registrar</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método registra un Cafe </td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> POST</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
+                    <br>
+                    <br>INCORRECTO <br>
+                    Status:401 <br>
+                    "mensaje":"No se registro el Analisis..!"<br>
+                    <br>Error Servidor <br>
+                    'status':500,<br>
+                    "Error":"Error del Servidor"<br>
 
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
+                </td>
+            </tr>
+        </table>
+        <br>
+    </div><br>
+    <div class="cont-2">
+        <table>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'registro de Cafe exitoso..!'
-                        } <br>
+            <tr>
+                <th>Número</th>
+                <th>38</th>
 
-                    </td>
+            </tr>
+            <tr>
+                <td>Nombre del webservice</td>
+                <td>Listar Analisis</td>
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>localhost:4000/analisis/listar</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td> El método lista en que fecha y que tipo de analisis se han ingresado</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td> GET</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+                <td> Content-Type application/json; charset=utf-8</td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz/Instructor</td>
+            </tr>
+            <tr>
+                <td>Request body from-data</td>
+                <td>CORRECTO <br>
+                    <br>Status : 200 OK <br>
+                </td>
 
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                            "id": 1,<br>
-                            "lotes_id ": 1,<br>
-                            "variedades_id ": 1<br>
-                            }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se registro el Cafe..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    <br>{
+                        "id":"1",<br>
+                        "tipo_analisis_id":fisico,<br>
+                        "consecutivo_informe":INF-2D,<br>
+                        "Asignación":"Danna Audrey",<br>
+                        "Estado":"Activo",<br>
+                        "Propietario":"Yan Carlos"<br>
+                        "Finca":"Los pinos"<br>
+                        "Lote":"66"<br>
+                        "Variedad":"66"<br>
+                    }<br>
 
-
-
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="cont-2">
-            <table>
-
-                <tr>
-                    <th>Número</th>
-                    <th>42</th>
-
-                </tr>
-                <tr>
-                    <td>Nombre del web service</td>
-                    <td>buscar Cafe</td>
-
-
-                </tr>
-                <tr>
-                    <td>URL</td>
-                    <td>localhost:4000/Cafe/buscar/ID</td>
-                </tr>
-                <tr>
-                    <td>Descripción</td>
-                    <td>El método busca un Cafe</td>
-                </tr>
-                <tr>
-                    <td>Verbo HTTP</td>
-                    <td> GET</td>
-                </tr>
-                <tr>
-                    <td>Header</td>
-
-                    <td>
-                        <br>Autorizacion Bearer TOKEN<br>
-                        Content-Type application/json; charset=utf-8
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Usuarios</td>
-                    <td>Aprendiz/Instructor</td>
-                </tr>
-                <tr>
-                    <td>Request body from-data</td>
-                    <td>CORRECTO <br>
-                        <br>Status : 200 OK <br>
-                        <br>BODY:{<br>
-                        'mensaje':'busqueda de Cafe exitosa..!'
-                        } <br>
-
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Responde</td>
-                    <td>
-                        <br>
-                        {<br>
-                            "id": 1,<br>
-                            "lotes_id ": 1,<br>
-                            "variedades_id ": 1<br>
-                            }
-                        <br>
-                        <br>INCORRECTO <br>
-                        Status:401 <br>
-                        "mensaje":"No se busco el Cafe..!"<br>
-                        <br>Error Servidor <br>
-                        'status':500,<br>
-                        "Error":"Error del Servidor"<br>
+                    <br>INCORRECTO <br>
+                    Status:401 <br>
+                    "mensaje":"error en listar analisis de la base de datos"<br>
 
 
+        </table>
+    </div>
 
-                    </td>
-                </tr>
-            </table><br>
-        </div>
+    <div class="cont-2">
+        <table>
+
+            <tr>
+                <th>Número</th>
+                <th>39</th>
+
+            </tr>
+            <tr>
+                <td>Nombre del webservice</td>
+                <td>Buscar Analisis</td>
+
+
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>localhost:4000/analisis/buscar/:id</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td> El método busca en que fecha y que tipo de analisis <br>
+                    se han ingresado</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td> GET</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+                <td> Content-Type application/json; charset=utf-8</td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz/Instructor</td>
+            </tr>
+            <tr>
+                <td>Request body from-data</td>
+                <td>CORRECTO <br>
+                    <br>Status : 200 OK <br>
+                    <br>
+
+                </td>
+
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    <br>{
+                        "tipo_analisis_id":1,<br>
+                        "muestras_id":1,<br>
+                        "usuarios_id":1<br>
+                    }<br>
+
+                    <br>Error Servidor <br>
+                    'status':500,<br>
+                    "Error":"Error en buscar analisis"<br>
+
+                </td>
+            </tr>
+        </table>
+        <br>
+    </div>
+
+    <div class="cont-2">
+        <table>
+
+            <tr>
+                <th>Número</th>
+                <th>40</th>
+
+            </tr>
+            <tr>
+                <td>Nombre del webservice</td>
+                <td>Actualizar Analisis</td>
+
+
+            </tr>
+            <tr>
+                <td>URl</td>
+                <td>localhost:4000/analisis/update/:id</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>El método actualiza en que fecha y que tipo de analisis <br>
+                    se han ingresado a través de el id ingresado en la url</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td> PUT</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+
+
+                <td> <br>Autorizacion Bearer TOKEN<br>
+
+                    Content-Type application/json; charset=utf-8</td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz,Instructor</td>
+            </tr>
+            <tr>
+                <td>Request body from-data</td>
+                <td>CORRECTO <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+
+
+                    <br> 'mensaje':'¡Registro de Analisis actualizado..! '
+                    } <br>
+
+                </td>
+
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    <br>{
+                        "muestras_id":INF-1D,<br>
+                        "Usuario":Danna López<br>
+                    }<br>
+                    <br>INCORRECTO <br>
+                    Status:401 <br>
+                    "mensaje":"¡El analisis no fue actualizado"<br>
+                    <br>Error Servidor <br>
+                    'status':500,<br>
+                    "Error":"Error en el servidor"<br>
+                </td>
+            </tr>
+        </table>
+        <br>
+    </div>
+
+    <div class="cont-2">
+        <table>
+
+            <tr>
+                <th>Número</th>
+                <th>41</th>
+
+            </tr>
+            <tr>
+                <td>Nombre del webservice</td>
+                <td>Desactivar Analisis</td>
+
+
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>localhost:4000/analisis/desactivar/:id</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>El método desactiva el estado un análisis</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td> PATCH</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+
+                <td>
+                    <br>Autorizacion Bearer TOKEN<br>
+                    Content-Type application/json; charset=utf-8
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Aprendiz/Instructor</td>
+            </tr>
+            <tr>
+                <td>Request body from-data</td>
+                <td>CORRECTO <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                        "message": "El analisis ya esta desactivada"
+                    } <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                        "message": "El analisis se desactivo con exito"  
+                    } <br>
+
+                </td>
+
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    <br>INCORRECTO <br>
+                    Status:401 <br>
+                    <br> "message": "El analisis no se desactivo"
+                    <br>Error Servidor <br>
+                    'status':500,<br>
+                    "Error":"Error en el Servidor"<br>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="cont-2">
+        <table>
+
+            <tr>
+                <th>Número</th>
+                <th>42</th>
+
+            </tr>
+            <tr>
+                <td>Nombre del webservice</td>
+                <td>Activar Analisis</td>
+
+
+            </tr>
+            <tr>
+                <td>URL</td>
+                <td>localhost:4000/analisis/activar/:id</td>
+            </tr>
+            <tr>
+                <td>Descripción</td>
+                <td>El método activa el estado de el Análisis</td>
+            </tr>
+            <tr>
+                <td>Verbo HTTP</td>
+                <td> PATCH</td>
+            </tr>
+            <tr>
+                <td>Header</td>
+
+                <td>
+                    <br>Autorizacion Bearer TOKEN<br>
+                    Content-Type application/json; charset=utf-8
+                </td>
+            </tr>
+            <tr>
+                <td>Usuarios</td>
+                <td>Instructor/Aprendiz</td>
+            </tr>
+            <tr>
+                <td>Request body from-data</td>
+                <td>CORRECTO <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                        "message": "El analisis ya se encuentra activa " 
+                    } <br>
+                    <br>Status : 200 OK <br>
+                    <br>BODY:{<br>
+                        "message": "El analisis se activo con exito"  
+                    } <br>
+                </td>
+
+            </tr>
+            <tr>
+                <td>Responde</td>
+                <td>
+                    <br>INCORRECTO <br>
+                    Status:401 <br>
+                  <br>"message": "El analisis no se activo"
+                    <br>Error Servidor <br>
+                    'status':500,<br>
+                    "Error":"Error en el Servidor"<br>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+
         <h1>Documentación API Resultados</h1>
 
         <h2>Registrar Resultado</h2>

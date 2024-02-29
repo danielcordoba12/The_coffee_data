@@ -20,6 +20,7 @@ import api from "../services/api";
 
 const Cafe = () => {
     const [cafes, setCafes] = useState([]);
+    const [key, setKey] = useState(0);
     const [selectedCafeId, setSelectedCafeId] = useState(null);
     const [modalCafe, setModalCafe] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
@@ -111,17 +112,18 @@ const Cafe = () => {
                 }
             } else {
                 Sweet.actualizacionExitosa();
-                closeModal();
+                // closeModal();
 
             }
             // Recargar la lista de Cafes después de la actualización
             const response = await Api.get("cafe/listar");
             setCafes(response.data);
+            location.href = "/home/cafe"
         } catch (error) {
             console.error("Error editando el Cafe: ", error);
         }
     };
-    const handleEditUser2 = async () => {
+    const handleEditUser2 = async () => {       
         const result = await Sweet.confimarDeshabilitar({
         });
         if (result.isConfirmed) {
@@ -190,13 +192,16 @@ const Cafe = () => {
 
                 }
             } else {
+                Sweet.registroExitoso();
                 console.log(data.data)
-                /* Sweet.registroExitoso();
-                closeRegistrarModal(); */
+
+                // closeRegistrarModal(); 
                 // Recargar la lista de fincas después del registro
                 const response = await Api.get("cafe/listar");
+
                 setCafes(response.data);
-                location.href = "/cafe"
+
+                location.href = "/home/cafe"
             }
 
         } catch (error) {
@@ -305,6 +310,12 @@ const Cafe = () => {
     const initializeDataTable = (Cafes) => {
         $(document).ready(function () {
             $(dataTableRef.current).DataTable({
+                columnDefs:[
+                    {
+                        targets:-1,
+                        responsivePriority:1
+                      }
+                  ],
                 lengthMenu: [5, 10, 20, 30, 40, 50],
                 processing: true,
                 pageLength: 5,
@@ -321,6 +332,7 @@ const Cafe = () => {
     };
 
     useEffect(() => {
+        setKey(key + 1)
         if (cafes.length > 0) {
             initializeDataTable(cafes);
         }
@@ -331,205 +343,207 @@ const Cafe = () => {
     return (<>
 
 
-        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <div >
+            <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
 
 
 
-        <div className="bgr-c">
-            <div className="container-list-cafe">
-                <h1 className="title-cafe"> Listado de  cafe</h1>
+            <div className="bgr-c">
+                <div className="container-list-cafe">
+                    <h1 className="title-cafe"> Listado de  cafe</h1>
 
 
 
-                <div className="container-fluid w-full">
-                    <button to="/cafe/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
-                        Añadir
-                    </button>
-
-                    <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
-
-                        <thead>
-                            <tr className="bg-gray-200">
-                                <th>id</th>
-                                <th>Propietario</th>
-                                <th>finca</th>
-                                <th>Municipio</th>
-                                <th>lote</th>
-                                <th>variedad</th>
-                                <th>Estado</th>
-                                <th>opciones</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {cafes
-                                .map((task) => (
-                                    <tr key={task.id} className="border-t">
-                                        <td>{task.id}</td>
-                                        <td>{task.nombre_usuario}</td>
-                                        <td>{task.nombre_finca}</td>
-                                        <td>{task.nombre_municipio}</td>
-                                        <td>{task.numero_lote}</td>
-                                        <td>{task.nombre_variedad}</td>
-                                        <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                        <td>
-                                            <button
-                                                type="button"
-                                                className="btn-act-cafe"
-                                                onClick={() => openModal(task.id)}
-                                            >
-                                                Modificar
-                                            </button>
-
-                                        </td>
-
-                                    </tr>
-                                ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        {modalCafe && (
-            <div className="div-modal">
-                <div onClick={closeModal} className="fondo-modal"></div>
-                <div className="table-register-cafe">
-                    <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Cafe</h1>
-                    <div className="max-w-xs">
-
-                        <div className="div-input div-input-search-select">
-                            <div className="select-options-input">
-
-                                {lote.map((key, index) => {
-                                    if (modalCafe.lotes_id) {
-                                        !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = modalCafe.lotes_id
-                                        if (key.id == modalCafe.lotes_id) {
-                                            !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.referencia = key.Nombre_Finca + ", " + key.nombre
-                                        }
-                                    }
-
-                                    return <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
-                                })}
-                            </div>
-                            <input defaultValue={dataSelect.lotes_id ? dataSelect.lotes_id.referencia ? dataSelect.lotes_id.referencia : "" : ""} className="input-search" type="text" id="lotes_id" />
-                            <label htmlFor="lotes_id" >Lote</label>
-
-                        </div>
-
-
-                        <div className="div-input div-input-search-select">
-                            <div className="select-options-input">
-
-                                {variedades.map((key, index) => {
-                                    if (modalCafe.variedades_id) {
-                                        !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = modalCafe.variedades_id
-                                        if (key.id == modalCafe.variedades_id) {
-                                            !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.referencia = key.nombre
-                                        }
-                                    }
-
-                                    return <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
-                                })}
-                            </div>
-                            <input defaultValue={dataSelect.variedades_id ? dataSelect.variedades_id.referencia ? dataSelect.variedades_id.referencia : "" : ""} className="input-search" type="text" id="variedades_id" />
-                            <label htmlFor="variedades_id" >variedad</label>
-
-                        </div>
-                        <button
-                            className="btn-act-cafe"
-                            onClick={() => {
-                                handleActualizar({
-                                    variedades_id: dataSelect.variedades_id ? dataSelect.variedades_id.value : "",
-                                    lotes_id: dataSelect.lotes_id ? dataSelect.lotes_id.value : ""
-                                })
-                            }}
-                        >
-                            Actualizar
+                    <div className="container-fluid w-full" key={key} >
+                        <button to="/cafe/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
+                            Añadir
                         </button>
-                        {modalCafe.estado === 1 ? (
-                            <button
-                                className="btn-desactivar"
-                                onClick={handleEditUser2}
-                            >
-                                Desactivar
-                            </button>
-                        ) : (
-                            <button
-                                className="btn-activar"
-                                onClick={handleEditUser3}
-                            >
-                                Activar
-                            </button>
-                        )}
-                        <button
-                            className="close-modal-cafe"
-                            onClick={closeModal}
-                        >
-                            x
-                        </button>
+
+                        <table  className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" width={"100%"} ref={dataTableRef}>
+
+                            <thead>
+                                <tr className="bg-gray-200">
+                                    <th>id</th>
+                                    <th>Propietario</th>
+                                    <th>finca</th>
+                                    <th>Municipio</th>
+                                    <th>lote</th>
+                                    <th>variedad</th>
+                                    <th>Estado</th>
+                                    <th>opciones</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {cafes
+                                    .map((task) => (
+                                        <tr key={task.id} className="border-t">
+                                            <td>{task.id}</td>
+                                            <td>{task.nombre_usuario}</td>
+                                            <td>{task.nombre_finca}</td>
+                                            <td>{task.nombre_municipio}</td>
+                                            <td>{task.numero_lote}</td>
+                                            <td>{task.nombre_variedad}</td>
+                                            <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                            <td>
+                                                <button
+                                                    type="button"
+                                                    className="btn-act-cafe"
+                                                    onClick={() => openModal(task.id)}
+                                                >
+                                                    Modificar
+                                                </button>
+
+                                            </td>
+
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        )}
 
-        {isRegistrarModalOpen && (
-            <div className="div-modal">
-                <div onClick={closeRegistrarModal} className="fondo-modal"></div>
-                <div className="table-register-cafe">
-                    <h1 className="">
-                        Registrar Cafe
-                    </h1>
+            {modalCafe && (
+                <div className="div-modal">
+                    <div onClick={closeModal} className="fondo-modal"></div>
+                    <div className="table-register-cafe">
+                        <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Cafe</h1>
+                        <div className="max-w-xs">
 
-                    <form
-                        className="contenido-regi"
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            handleRegistrar({
-                                variedades_id: dataSelect.variedades_id ? dataSelect.variedades_id.value : "",
-                                lotes_id: dataSelect.lotes_id ? dataSelect.lotes_id.value : ""
-                            });
-                        }}
-                        method="post"
-                    >
+                            <div className="div-input div-input-search-select">
+                                <div className="select-options-input">
 
-                        <div className="div-input div-input-search-select">
-                            <input className="input-search" type="text" id="lotes_id" />
-                            <label htmlFor="lotes_id" >Lote</label>
-                            <div className="select-options-input">
-                                {lote.map((key, index) => (
-                                    (
-                                        <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
-                                    )
-                                ))}
+                                    {lote.map((key, index) => {
+                                        if (modalCafe.lotes_id) {
+                                            !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = modalCafe.lotes_id
+                                            if (key.id == modalCafe.lotes_id) {
+                                                !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.referencia = key.Nombre_Finca + ", " + key.nombre
+                                            }
+                                        }
+
+                                        return <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
+                                    })}
+                                </div>
+                                <input defaultValue={dataSelect.lotes_id ? dataSelect.lotes_id.referencia ? dataSelect.lotes_id.referencia : "" : ""} className="input-search" type="text" id="lotes_id" />
+                                <label htmlFor="lotes_id" >Lote</label>
+
                             </div>
-                        </div>
-                        <div className="div-input div-input-search-select">
-                            <input className="input-search" type="text" id="variedades_id" />
-                            <label htmlFor="variedades_id" >Variedad</label>
-                            <div className="select-options-input">
-                                {variedades.map((key, index) => (
-                                    (
 
-                                        <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
-                                    )
-                                ))}
+
+                            <div className="div-input div-input-search-select">
+                                <div className="select-options-input">
+
+                                    {variedades.map((key, index) => {
+                                        if (modalCafe.variedades_id) {
+                                            !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = modalCafe.variedades_id
+                                            if (key.id == modalCafe.variedades_id) {
+                                                !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.referencia = key.nombre
+                                            }
+                                        }
+
+                                        return <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
+                                    })}
+                                </div>
+                                <input defaultValue={dataSelect.variedades_id ? dataSelect.variedades_id.referencia ? dataSelect.variedades_id.referencia : "" : ""} className="input-search" type="text" id="variedades_id" />
+                                <label htmlFor="variedades_id" >variedad</label>
+
                             </div>
+                            <button
+                                className="btn-act-cafe"
+                                onClick={() => {
+                                    handleActualizar({
+                                        variedades_id: dataSelect.variedades_id ? dataSelect.variedades_id.value : "",
+                                        lotes_id: dataSelect.lotes_id ? dataSelect.lotes_id.value : ""
+                                    })
+                                }}
+                            >
+                                Actualizar
+                            </button>
+                            {modalCafe.estado === 1 ? (
+                                <button
+                                    className="btn-desactivar"
+                                    onClick={handleEditUser2}
+                                >
+                                    Desactivar
+                                </button>
+                            ) : (
+                                <button
+                                    className="btn-activar"
+                                    onClick={handleEditUser3}
+                                >
+                                    Activar
+                                </button>
+                            )}
+                            <button
+                                className="close-modal-cafe"
+                                onClick={closeModal}
+                            >
+                                x
+                            </button>
                         </div>
-
-                        <button className="btn-register-cafe"
-                            type="submit">Registrar Cafe</button>
-                        <button
-                            className="close-modal-cafe"
-                            onClick={closeRegistrarModal}
-                        >
-                            X
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
-        )}
+            )}
+
+            {isRegistrarModalOpen && (
+                <div className="div-modal">
+                    <div onClick={closeRegistrarModal} className="fondo-modal"></div>
+                    <div className="table-register-cafe">
+                        <h1 className="">
+                            Registrar Cafe
+                        </h1>
+
+                        <form
+                            className="contenido-regi"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleRegistrar({
+                                    variedades_id: dataSelect.variedades_id ? dataSelect.variedades_id.value : "",
+                                    lotes_id: dataSelect.lotes_id ? dataSelect.lotes_id.value : ""
+                                });
+                            }}
+                            method="post"
+                        >
+
+                            <div className="div-input div-input-search-select">
+                                <input className="input-search" type="text" id="lotes_id" />
+                                <label htmlFor="lotes_id" >Lote</label>
+                                <div className="select-options-input">
+                                    {lote.map((key, index) => (
+                                        (
+                                            <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("lotes_id").value = key.Nombre_Finca + ", " + key.nombre; !dataSelect.lotes_id ? dataSelect.lotes_id = {} : ""; dataSelect.lotes_id.value = key.id; clearFocusInput("lotes_id") }} key={key.id}>{key.Nombre_Finca + ", " + key.nombre}</div>
+                                        )
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="div-input div-input-search-select">
+                                <input className="input-search" type="text" id="variedades_id" />
+                                <label htmlFor="variedades_id" >Variedad</label>
+                                <div className="select-options-input">
+                                    {variedades.map((key, index) => (
+                                        (
+
+                                            <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("variedades_id").value = key.nombre; !dataSelect.variedades_id ? dataSelect.variedades_id = {} : ""; dataSelect.variedades_id.value = key.id; clearFocusInput("variedades_id") }} key={key.id}>{key.nombre}</div>
+                                        )
+                                    ))}
+                                </div>
+                            </div>
+
+                            <button className="btn-register-cafe"
+                                type="submit">Registrar Cafe</button>
+                            <button
+                                className="close-modal-cafe"
+                                onClick={closeRegistrarModal}
+                            >
+                                X
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
+        </div>
 
     </>
     )

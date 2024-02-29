@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import "../style/usuarios.css";
 import api from "../services/api";
 import Sweet from "../helpers/Sweet";
+import EncryptionComponent from '../components/crypt/criptar.jsx';
+import bcrypt from 'bcryptjs';
 
 const ListarUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -102,35 +104,36 @@ const ListarUsuarios = () => {
 
     const handleSubmit = async (e, status, id) => {
         e.preventDefault();
-
+    
+        // Obtiene los datos del formulario
         const data = {
             nombre: nombre.current.value,
             apellido: apellido.current.value,
             numero_documentos: numero_documentos.current.value,
             telefono: telefono.current.value,
             correo_electronico: correo_electronico.current.value,
-            user_password: user_password.current.value,
+            user_password: encryptPassword(user_password.current.value), // Encripta la contraseña
             tipo_documento: tipo_documento.current.value,
             rol: rol.current.value,
             cargo: cargo.current.value,
         };
-
+    
         const headers = {
             headers: {
                 token: "xd"
             }
         };
-        
-        let method = "post"
-        let route = ""
-        
+    
+        let method = "post";
+        let route = "";
+    
         if (status === 1) {
-            route = "usuario/registrar"
+            route = "usuario/registrar";
         } else if (status === 2 && id) {
-            route = "usuario/actualizar/" + id
-            method = "put"
+            route = "usuario/actualizar/" + id;
+            method = "put";
         }
-
+    
         try {
             const response = await Api[method](route, data, headers);
             if (response.data.status === false) {
@@ -201,6 +204,11 @@ const ListarUsuarios = () => {
             input.value = value
         }
     }
+
+    const encryptPassword = (password) => {
+        const salt = bcrypt.genSaltSync(10); // Genera un salt aleatorio
+        return bcrypt.hashSync(password, salt); // Encripta la contraseña con el salt
+    };
 
     return (
         <>

@@ -4,6 +4,7 @@ import Api from "../services/api";
 import '../style/municipio.css';
 import Sweet from "../helpers/Sweet";
 import $ from "jquery";
+import esES from "../languages/es-ES.json"
 import "bootstrap"
 import "datatables.net";
 import "datatables.net-dt/css/dataTables.dataTables.min.css";
@@ -22,6 +23,8 @@ const Municipio = () => {
     const [selectedMunicipioId, setSelectedMunicipioId] = useState(null);
     const [modalMunicipio, setModalMunicipio] = useState(null);
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
+    const [departamentos, setDepartamentos] = useState([]);
+    const [dataSelect, setDataSelect] = useState({});
 
     const nombre = useRef();
     const departamentos_id = useRef();
@@ -38,6 +41,17 @@ const Municipio = () => {
             }
         };
         buscarMunicipios();
+    }, []);
+    useEffect(() => {
+        const buscardepartamentos = async () => {
+            try {
+                const response = await Api.get("departamento/listar");
+                setDepartamentos(response.data);
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
+        };
+        buscardepartamentos();
     }, []);
 
     const openEditarModal = async (municipioId) => {
@@ -57,7 +71,7 @@ const Municipio = () => {
 
     const handleEditUser = async () => {
         try {
-           const data = await Api.put(`/municipio/Actualizar/${selectedMunicipioId}`, modalMunicipio);
+            const data = await Api.put(`/municipio/Actualizar/${selectedMunicipioId}`, modalMunicipio);
             console.log(data, "municipio")
             if (data.data.status == false) {
                 let keys = Object.keys(data.data.errors)
@@ -78,7 +92,7 @@ const Municipio = () => {
                 }
             } else {
                 Sweet.actualizacionExitosa();
-                
+
                 closeEditarModal();
             }
 
@@ -130,30 +144,131 @@ const Municipio = () => {
                 }
             } else {
                 console.log(data.data)
-                /* Sweet.registroExitoso();
-                closeRegistrarModal(); */
                 // Recargar la lista de fincas después del registro
                 const response = await Api.get("municipio/listar");
                 setMunicipios(response.data);
-                location.href = "/municipio"
+                Sweet.registroExitoso();
+                closeRegistrarModal();
+                // location.href = "/home/municipio"
             }
 
-            
+
         } catch (error) {
             console.error("Error al registrar el municipio:", error);
         }
     };
 
+    function clearFocusInput(Element) {
+        let inputSearch = document.getElementById(Element)
+
+        if (inputSearch) {
+
+            let divOptions = inputSearch.parentNode.querySelectorAll(".select-options-input");
+            if (divOptions.length > 0) {
+                divOptions[0].style.display = "none"
+            }
+            let select = inputSearch.parentNode.querySelectorAll(".option-select-search")
+            for (let s = 0; s < select.length; s++) {
+                let elementvalue = inputSearch.getAttribute("id")
+
+                if (dataSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")) {
+                    select[s].classList.add("option-select-focus")
+                } else {
+                    select[s].classList.remove("option-select-focus")
+                }
+
+            }
+        }
+    }
+    useEffect(() => {
+        window.addEventListener("click", function (e) {
+            let divOptions = document.querySelectorAll(".div-input-search-select");
+            for (let s = 0; s < divOptions.length; s++) {
+                if (!e.target == divOptions[s] || !divOptions[s].contains(e.target)) {
+                    let options = divOptions[s].querySelectorAll(".select-options-input")
+                    if (options.length > 0) {
+                        options[0].style.display = "none"
+                    }
+                }
+            }
+        })
+    }, [])
+
+    function searchInput() {
+        let inputSearch = document.querySelectorAll(".input-search")
+
+
+        if (inputSearch.length > 0) {
+            for (let s = 0; s < inputSearch.length; s++) {
+
+                inputSearch[s].addEventListener("input", function () {
+                    let parent = inputSearch[s].parentNode
+                    if (parent) {
+                        let selectOptionsInput = parent.querySelectorAll(".select-options-input");
+                        if (selectOptionsInput[0]) {
+                            selectOptionsInput[0].style.display = "block"
+                            let options = selectOptionsInput[0].querySelectorAll("div");
+                            for (let o = 0; o < options.length; o++) {
+                                if (options[o].innerHTML.toLowerCase().includes(inputSearch[s].value.toLowerCase())) {
+                                    options[o].style.display = "block"
+                                } else {
+                                    options[o].style.display = "none"
+                                }
+                                let referencia = inputSearch[s].getAttribute("id")
+
+                                if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
+                                    let focusSelect = document.querySelectorAll(".option-select-focus")
+                                    if (focusSelect.length > 0) {
+                                        focusSelect[0].classList.remove("option-select-focus")
+                                    }
+                                    inputSearch[s].value = options[o].innerHTML
+                                    if (!dataSelect[inputSearch[s].getAttribute("data-id")]) {
+                                        dataSelect[inputSearch[s].getAttribute("data-id")] = {}
+                                    }
+                                    dataSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
+                                    options[o].classList.add("option-select-focus")
+                                    if (!dataSelect[referencia]) {
+                                        dataSelect[referencia] = {}
+                                    }
+                                    dataSelect[referencia]["value"] = options[o].getAttribute("data-id");
+                                    options[o].parentNode.style.display = "none"
+                                    break
+                                } else {
+                                    if (!dataSelect[referencia]) {
+                                        dataSelect[referencia] = {}
+                                    }
+                                    dataSelect[referencia]["value"] = "";
+                                    options[o].classList.remove("option-select-focus")
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+        }
+    }
+    useEffect(() => {
+        searchInput()
+    }, [isRegistrarModalOpen]);
+    useEffect(() => {
+
+        searchInput()
+    }, [openEditarModal]);
+
     const dataTableRef = useRef(null);
     const initializeDataTable = (municipios) => {
         $(document).ready(function () {
             $(dataTableRef.current).DataTable({
+                columnDefs: [
+                    {
+                        targets: -1,
+                        responsivePriority: 1
+                    }
+                ],
                 lengthMenu: [5, 10, 20, 30, 40, 50],
                 processing: true,
                 pageLength: 5,
-                language: {
-                    processing: "Procesando datos...",
-                },
+                language: esES,
                 responsive: true,
             });
         });
@@ -196,10 +311,10 @@ const Municipio = () => {
 
                     <div className="container-fluid w-full">
                         <button to="/Municipio/registrar" className="btn-añadir-municipio" onClick={openRegistrarModal}>
-                            Añadir 
+                            Añadir
                         </button>
 
-                        <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                        <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef} width={"100%"}>
                             <thead>
                                 <tr className="bg-gray-200">
                                     <th>id</th>
@@ -235,16 +350,16 @@ const Municipio = () => {
                     </div>
                 </div>
 
-                </div>
-                    {modalMunicipio && (
-                        <div className="div-modal">
-                        <div onClick={closeEditarModal} className="fondo-modal"></div>
-                        <div className="table-register-municipio">
-                            <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-                                Editar Municipio
-                            </h1>
-                            <div className="max-w-xs">
-                                <div>
+            </div>
+            {modalMunicipio && (
+                <div className="div-modal">
+                    <div onClick={closeEditarModal} className="fondo-modal"></div>
+                    <div className="table-register-municipio">
+                        <h1 className="text-center font-bold underline text-3xl p-3 m-2">
+                            Editar Municipio
+                        </h1>
+                        <div className="max-w-xs">
+                            <div>
                                 <input
                                     className="input-field"
                                     id="nombre"
@@ -259,84 +374,100 @@ const Municipio = () => {
                                     }
                                 /></div>
 
-                                <div>
-                                <input
-                                    className="input-field"
-                                    id="departamentos_id"
-                                    type="number"
-                                    placeholder="departamentos_id"
-                                    value={modalMunicipio.departamentos_id}
-                                    onChange={(e) =>
-                                        setModalMunicipio({
-                                            ...modalMunicipio,
-                                            departamentos_id: e.target.value,
-                                        })
-                                    }
-                                /></div>
-                                <button
-                                    className="btn-act-municipio "
-                                    onClick={handleEditUser}
-                                >
-                                    Actualizar
-                                </button>
-                                <button
-                                    className="close-modal-municipio"
-                                    onClick={closeEditarModal}
-                                >
-                                    X
-                                </button>
+                            <div className="div-input div-input-search-select">
+                                <div className="select-options-input">
+
+                                    {departamentos.map((key, index) => {
+                                        if (modalMunicipio.departamentos_id) {
+                                            !dataSelect.departamentos_id ? dataSelect.departamentos_id = {} : ""; dataSelect.departamentos_id.value = modalMunicipio.departamentos_id
+                                            if (key.id == modalMunicipio.departamentos_id) {
+                                                !dataSelect.departamentos_id ? dataSelect.departamentos_id = {} : ""; dataSelect.departamentos_id.referencia = key.nombre
+                                            }
+                                        }
+
+                                        return <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("departamentos_id").value = key.nombre; !dataSelect.departamentos_id ? dataSelect.departamentos_id = {} : ""; dataSelect.departamentos_id.value = key.id; clearFocusInput("departamentos_id") }} key={key.id}>{key.nombre}</div>
+                                    })}
+                                </div>
+                                <input defaultValue={dataSelect.departamentos_id ? dataSelect.departamentos_id.referencia ? dataSelect.departamentos_id.referencia : "" : ""} className="input-search" type="text" id="departamentos_id" />
+                                <label htmlFor="departamentos_id" >Departamento</label>
+
                             </div>
-                        </div>
-                        </div>
-                    )}
-
-                    {isRegistrarModalOpen && (
-                        <div className="div-modal">
-                        <div onClick={closeRegistrarModal} className="fondo-modal"></div>
-                        <div className="table-register-municipio">
-                            <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-                                Registrar Municipio
-                            </h1>
-                            <form
-                                className="contenido-regi"
-                                onSubmit={(e) => {
-                                    e.preventDefault();
-                                    handleRegistrar({
-                                        nombre: nombre.current.value,
-                                        departamentos_id: departamentos_id.current.value,
-                                    });
+                            <button
+                                className="btn-act-municipio "
+                                onClick={() => {
+                                    handleEditUser({
+                                        departamentos_id: dataSelect.departamentos_id ? dataSelect.departamentos_id.value : ""
+                                    })
                                 }}
-                                method="post"
                             >
-
-
-                                <div className="div-input">
-                                    <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
-                                    <label htmlFor="nombre">Nombre</label>
-                                </div>
-
-                                <div className="div-input">
-                                    <input type="number" id="departamentos_id" name="departamentos_id" ref={departamentos_id} placeholder="" />
-                                    <label htmlFor="departamentos_id">Departamento</label>
-                                </div>
-                                <button
-                                    className="btn-register-municipio"
-                                    type="submit"
-                                >
-                                    Registrar municipio
-                                </button>
-                                <button
-                                    className="close-modal-municipio"
-                                    onClick={closeRegistrarModal}
-                                >
-                                    X
-                                </button>
-                            </form>
+                                Actualizar
+                            </button>
+                            <button
+                                className="close-modal-municipio"
+                                onClick={closeEditarModal}
+                            >
+                                X
+                            </button>
                         </div>
-                        </div>
-                    )}
-                </>
-                );
+                    </div>
+                </div>
+            )}
+
+            {isRegistrarModalOpen && (
+                <div className="div-modal">
+                    <div onClick={closeRegistrarModal} className="fondo-modal"></div>
+                    <div className="table-register-municipio">
+                        <h1 className="text-center font-bold underline text-3xl p-3 m-2">
+                            Registrar Municipio
+                        </h1>
+                        <form
+                            className="contenido-regi"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleRegistrar({
+                                    nombre: nombre.current.value,
+                                    departamentos_id: dataSelect.departamentos_id ? dataSelect.departamentos_id.value : ""
+                                });
+                            }}
+                            method="post"
+                        >
+
+
+                            <div className="div-input">
+                                <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
+                                <label htmlFor="nombre">Nombre</label>
+                            </div>
+
+                            <div className="div-input div-input-search-select">
+                                <input className="input-search" type="text" id="departamentos_id" />
+                                <label htmlFor="departamentos_id" >Variedad</label>
+                                <div className="select-options-input">
+                                    {departamentos.map((key, index) => (
+                                        (
+
+                                            <div className="option-select-search" data-id={key.id} onClick={() => { document.getElementById("departamentos_id").value = key.nombre; !dataSelect.departamentos_id ? dataSelect.departamentos_id = {} : ""; dataSelect.departamentos_id.value = key.id; clearFocusInput("departamentos_id") }} key={key.id}>{key.nombre}</div>
+                                        )
+                                    ))}
+                                </div>
+                            </div>
+                            <button
+                                className="btn-register-municipio"
+                                type="submit"
+                            >
+                                Registrar municipio
+                            </button>
+                            <button
+                                className="close-modal-municipio"
+                                onClick={closeRegistrarModal}
+                            >
+                                X
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
+        </>
+    );
 };
 
-                export default Municipio;
+export default Municipio;

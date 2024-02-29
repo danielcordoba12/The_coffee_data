@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './LoginForm.css'; // Asegúrate de tener un archivo de estilos CSS para este formulario
 
+
+
 function LoginForm() {
     const [numero_documentos, setNumeroDocumentos] = useState('');
     const [user_password, setUserPassword] = useState('');
