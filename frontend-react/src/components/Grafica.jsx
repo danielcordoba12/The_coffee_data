@@ -134,8 +134,9 @@ function Grafica() {
   }
 
 
-  const handleCheckboxChange = (isChecked, index, id) => {
-    console.log("este es el id" , id);
+  const handleCheckboxChange = (isChecked, index,id) => {
+    console.log("este es id" , id);
+    console.log("este es index" , index);
     setSelectedRows(prevState => ({
       ...prevState,
       [index]: isChecked
@@ -246,7 +247,11 @@ function Grafica() {
           
         <thead>
           <tr>
+<<<<<<< HEAD
           {/* <th>Index</th> */}
+=======
+          {/* <th hidden>Index</th> */}
+>>>>>>> 79fac8a1f8fa76fbfda5314d67aee298ae9a08d7
           <th>ID</th>
           <th>Muestra</th>
           <th>Cantidad</th>
@@ -264,7 +269,11 @@ function Grafica() {
                 {resultado.map((task,index) => (
                   
                   <tr key={task.id}>
+<<<<<<< HEAD
                     {/* <td>{index}</td> */}
+=======
+                    {/* <td hidden>{index}</td> */}
+>>>>>>> 79fac8a1f8fa76fbfda5314d67aee298ae9a08d7
                     <td>{task.id}</td>
                     <td>{task.muestra}</td>
                     <td>{task.valor}</td>
