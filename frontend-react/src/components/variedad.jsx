@@ -27,7 +27,6 @@ const Variedad = () => {
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const tableRef = useRef();
-    const dataTableInstanceRef = useRef(null);
 
     const nombre = useRef();
 
@@ -241,11 +240,11 @@ const Variedad = () => {
                 <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Variedad</h1>
                 <div className="max-w-xs">
                     <div>
+                    <label className="labeledit" htmlFor="nombre">Nombre</label>
                     <input
                         className="input-field"
                         id="nombre"
                         type="text"
-                        placeholder="nombre"
                         value={modalVar.nombre}
                         onChange={(e) => setModalVar({ ...modalVar, nombre: e.target.value })}
                     /></div>
@@ -287,6 +286,7 @@ const Variedad = () => {
                 >
 
                     <div className="div-input">
+                        
                         <input type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
                         <label htmlFor="nombre">Nombre</label>
                     </div>
