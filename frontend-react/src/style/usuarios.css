@@ -233,3 +233,7 @@
     font-size: 16px;
     /* Tamaño del texto */
 }
+select option {
+  color: #000000;
+  background: rgb(255, 255, 255);
+}
