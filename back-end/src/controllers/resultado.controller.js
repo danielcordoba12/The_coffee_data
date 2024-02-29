@@ -53,7 +53,8 @@ export const guardarResultado = async (req, res) => {
 export const buscarResultado = async (req, res) => {
     try {
         let id = req.params.id;
-        const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id =  ${id} ORDER BY r.fecha_creacion;`);
+        // const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id =  ${id} ORDER BY r.fecha_creacion;`);
+        const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion , m.consecutivo_informe FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id JOIN  muestras as m ON t.id = m.id WHERE analisis_id =  ${id} ORDER BY r.fecha_creacion;`)
 
 
     //     const [result] = await pool.query(`    
@@ -112,14 +113,12 @@ export const listarResultados = async (req, res) => {
     try {
         // const [result] = await pool.query("SELECT r.id,r.valor, r.analisis_id as analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join tipos_analisis as t on r.analisis_id = t.id;");
         // const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion, v.nombre AS variable FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id JOIN analisis as t ON r.analisis_id = t.id GROUP BY r.analisis_id;");
+
+
         // const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion, v.nombre AS variable FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id JOIN analisis as t ON r.analisis_id = t.id GROUP BY r.fecha_creacion;");
 
 
-<<<<<<< HEAD
-        const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion,m.consecutivo_informe AS muestra, v.nombre AS variable, u.nombre AS usuario,f.nombre AS finca, l.nombre AS lote , ta.nombre AS tipo_analisis FROM resultados AS r JOIN variables AS v ON r.variables_id  = v.id  JOIN analisis as t ON r.analisis_id = t.id JOIN muestras as m ON t.muestras_id = m.id  JOIN cafes AS c ON m.cafes_id = c.id JOIN lotes AS l ON c.lotes_id = l.id  JOIN  fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id JOIN tipos_analisis AS ta ON t.tipo_analisis_id = ta.id  GROUP BY r.fecha_creacion ORDER BY id;");
-=======
         const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion,m.consecutivo_informe AS muestra, v.nombre AS variable, u.nombre AS usuario,f.nombre AS finca, l.nombre AS lote , ta.nombre AS tipo_analisis FROM resultados AS r JOIN variables AS v ON r.variables_id  = v.id  JOIN analisis as t ON r.analisis_id = t.id JOIN muestras as m ON t.muestras_id = m.id  JOIN cafes AS c ON m.cafes_id = c.id JOIN lotes AS l ON c.lotes_id = l.id  JOIN  fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id JOIN tipos_analisis AS ta ON t.tipo_analisis_id = ta.id  GROUP BY r.fecha_creacion ORDER BY id ASC;");
->>>>>>> 79fac8a1f8fa76fbfda5314d67aee298ae9a08d7
         
         res.status(200).json(result);
     } catch (err) {
