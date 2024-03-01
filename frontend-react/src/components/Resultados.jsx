@@ -46,6 +46,23 @@ function Resultado() {
     const day = String(fecha.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
+  function convertirFechaSQL(fechaISO) {
+    // Crear un objeto Date a partir de la cadena de fecha ISO
+    const fecha = new Date(fechaISO);
+
+    // Obtener los componentes de fecha y hora
+    const year = fecha.getFullYear();
+    const month = String(fecha.getMonth() + 1).padStart(2, '0');
+    const day = String(fecha.getDate()).padStart(2, '0');
+    const hours = String(fecha.getHours()).padStart(2, '0');
+    const minutes = String(fecha.getMinutes()).padStart(2, '0');
+    const seconds = String(fecha.getSeconds()).padStart(2, '0');
+
+    // Crear la cadena de fecha en formato SQL
+    const fechaSQL = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+ console.log("esta es frcha ", fechaSQL);
+    return fechaSQL;
+}
 
   const toggleModal = (modalId) => {
     if (modalId === 1) {
@@ -434,6 +451,8 @@ useEffect(() => {
   
     for (let i = 0; i < resultadoSellecionado.length; i += numColumnas) {
       const fila = resultadoSellecionado.slice(i, i + numColumnas);
+      console.log("Resultado seleccionado",resultadoSellecionado);
+      
   
       filas.push(
         <div className="columna" key={i}>
@@ -604,8 +623,8 @@ useEffect(() => {
   }
 
 
-  function buscarResultado(id) {
-    fetch(`http://localhost:4000/resultado/buscar/${id}`,{
+  function buscarResultado(id,fecha_creacion) {
+    fetch(`http://localhost:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion}`,{
       method:'GET',
       headers: {
         'Content-type': 'application/json',
@@ -804,7 +823,7 @@ useEffect(() => {
                     <button className="btn-reg-mue"
                       onClick={() => {
                         toggleModal(2);
-                        buscarResultado(task.analisis_id);
+                        buscarResultado(task.analisis_id,convertirFechaSQL( task.fecha_creacion));
                       }}
                       >
                     Editar</button>
@@ -814,7 +833,7 @@ useEffect(() => {
                     <button
                                   type="button"
                                   className="btn-primary"
-                                  onClick={() => { toggleModal(3), buscarResultado(task.analisis_id) ;} }
+                                  onClick={() => { toggleModal(3), buscarResultado(task.analisis_id,convertirFechaSQL(task.fecha_creacion)) ;} }
                               >Mas
                               </button>
                   </td>

@@ -53,8 +53,13 @@ export const guardarResultado = async (req, res) => {
 export const buscarResultado = async (req, res) => {
     try {
         let id = req.params.id;
-        // const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id =  ${id} ORDER BY r.fecha_creacion;`);
-        const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion , m.consecutivo_informe FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id JOIN  muestras as m ON t.id = m.id WHERE analisis_id =  ${id} ORDER BY r.fecha_creacion;`)
+        let fecha = req.query.fecha_creacion;         // const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id =  ${id} ORDER BY r.fecha_creacion;`);
+
+
+        // const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id =  ${id} AND  r.fecha_creacion = '2023-03-03 00:00:00';`)
+
+const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id = ${id} AND  r.fecha_creacion = '${fecha}';`)
+        
 
 
     //     const [result] = await pool.query(`    
@@ -159,7 +164,7 @@ export const eliminarResultado = async (req, res) => {
 // export const actualizarResultado = async (req, res) => {
 //     try {
 //         // let error1 = validationResult(req);
-//         // if (!error1.isEmpty()){
+//         //- if (!error1.isEmpty()){
 //         //     return res.status(400).json(error1);
 //         // }
 //         let id = req.params.id;
