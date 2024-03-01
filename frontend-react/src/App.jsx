@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import Dashboard from './components/dashboard';
 import Resultado from './components/Resultados';
@@ -36,7 +36,7 @@ function App() {
         <Route path="editar/muestra/:id" element={<EditarMestra />} />
         <Route path="grafica" element={<Grafica />} />
         {/* Ruta no encontrada */}
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/home" />} />
       </Route>
     </Routes>
   );
