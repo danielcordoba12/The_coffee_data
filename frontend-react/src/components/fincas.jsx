@@ -34,6 +34,7 @@ const FincaView = () => {
     const [usuario, setUsuario] = useState([]);
     const [mostrarOpciones, setMostrarOpciones] = useState(false);
     const tableRef = useRef();
+    const tableRef2 = useRef();
 
 
     const fincas_id = useRef();
@@ -43,6 +44,30 @@ const FincaView = () => {
     const n_plantas = useRef();
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (lotes.length > 0) {
+            if ($.fn.DataTable.isDataTable(tableRef2.current)) {
+                $(tableRef2.current).DataTable().destroy();
+            }
+            $(tableRef2.current).DataTable({
+                columnDefs:[
+                    {
+                        targets:-1,
+                        responsivePriority:1
+                      }
+                  ],
+                responsive: true,
+                language: esES,
+                paging: true,
+                lengthMenu: [
+                    [7, 10, 50, -1],
+                    ['7 Filas', '10 Filas', '50 Filas', 'Ver Todo']
+                ]
+            });
+    
+        }
+    }, [lotes])
 
     useEffect(() => {
         if (fincas.length > 0) {
@@ -537,7 +562,18 @@ const FincaView = () => {
                                 </div>
                                 <div className="modal-body">
 
-                                    <table className="table"  >
+                                   
+        <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+                        ref={tableRef2}
+                        cellPadding={0}
+                        width="100%"
+                        style={
+                            {
+                                width : "100%",
+                                maxWidth : "100%"
+                            }
+                        }
+                        >
                                         <thead>
                                             <tr>
                                                 <th>Nombre</th>
