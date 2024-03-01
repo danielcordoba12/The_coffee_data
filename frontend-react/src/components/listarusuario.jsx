@@ -8,6 +8,16 @@ import api from "../services/api";
 import Sweet from "../helpers/Sweet";
 import EncryptionComponent from '../components/crypt/criptar.jsx';
 import bcrypt from 'bcryptjs';
+import $ from "jquery";
+import "bootstrap";
+import "datatables.net";
+import "datatables.net-bs5";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+
+import "datatables.net-responsive";
+import "datatables.net-responsive-bs5";
+import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 const ListarUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -103,6 +113,35 @@ const ListarUsuarios = () => {
     const closeRegistrarUsuarioModal = () => {
         setRegistrarUsuarioModalOpen(false);
     };
+
+    const dataTableRef = useRef(null);
+    const initializeDataTable = (usuarios) => {
+        $(document).ready(function () {
+            $(dataTableRef.current).DataTable({
+                lengthMenu: [5, 10, 20, 30, 40, 50],
+                processing: true,
+                pageLength: 5,
+                language: {
+                    processing: "Procesando datos...",
+                },
+                responsive: true,
+            });
+        });
+
+        return () => {
+            $(dataTableRef.current).DataTable().destroy(true);
+        };
+    };
+
+    useEffect(() => {
+        if (usuarios.length > 0) {
+            initializeDataTable(usuarios);
+        }
+    }, [usuarios]);
+
+
+
+
 
     const handleSubmit = async (e, status, id) => {
         e.preventDefault();
@@ -215,14 +254,14 @@ const ListarUsuarios = () => {
 
     return (
         <>
-            <img src="../../public/img/fondo.png" alt="" className="fondo2" />
+    
             <div className="tablalistar">
                 <h1 className="titu">Usuarios</h1>
                 <br />
                 <button className="btn-registrar" onClick={() => { setFormStatus(1); setRegistrarUsuarioModalOpen(true); setUserUpdate([]); openRegistrarUsuarioModal }}>
                     Registrar Usuario
                 </button>
-                <table className="tableprincipal">
+                <table  style={{ width: "100%" }}className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                     <thead>
                         <tr>
                             <th>id</th>
@@ -247,10 +286,10 @@ const ListarUsuarios = () => {
                                 <td>{usuario.correo_electronico}</td>
                                 <td>{usuario.estado === 1 ? 'desactivado' : 'Activo'}</td>
                                 <td>
-                                    <button type="button" className="btn-primary" onClick={() => { setFormStatus(2), setRegistrarUsuarioModalOpen(true), buscarUsuario(usuario.id ? usuario.id : "") }}>
+                                    <button type="button" className="btn-actualizar-mod" onClick={() => { setFormStatus(2), setRegistrarUsuarioModalOpen(true), buscarUsuario(usuario.id ? usuario.id : "") }}>
                                         actualizar
                                     </button>
-                                    <button className="btn-registrar" onClick={() => { setIdUsuario(usuario.id); openRegistrarModal() }}>
+                                    <button className="btn-actualizar-mod" onClick={() => { setIdUsuario(usuario.id); openRegistrarModal() }}>
                                         Registrar Finca
                                     </button>
                                 </td>
