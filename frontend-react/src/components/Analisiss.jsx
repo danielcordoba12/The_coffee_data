@@ -368,7 +368,7 @@ const Analisis = () => {
                             <th>Fecha </th>
                             <th>Tipo Análisis </th>
                             <th>Consecutivo Informe </th>
-                            <th>Asignación </th>
+                            <th>Catador</th>
                             <th>Estado </th>
                             <th>Propietario </th>
                             <th>Finca </th>
@@ -434,7 +434,7 @@ const Analisis = () => {
                                 ))}
                             </select>
                         </div><br />
-                        <label htmlFor="" className="labelEdit">Usuario</label>
+                        <label htmlFor="" className="labelEdit">Catador</label>
                         <div className="div-input-d">
                             <select
 
@@ -515,7 +515,7 @@ const Analisis = () => {
                         
                         <div className="div-input-d-select div-input-search-select ">
                         <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
-                            <select className="option-select-ana" name="tipo_analisis_id" id="1">
+                            <select className="select-ana" name="tipo_analisis_id" id="1">
                                 <option value="">Fisico</option>
                             </select>
                         </div>
@@ -532,7 +532,7 @@ const Analisis = () => {
                         </div>
                         <div className="div-input-d div-input-search-select">
                             <input className="input-search-d" type="text" id="usuarios_id" ref={usuarios_id} />
-                            <label htmlFor="usuarios_id" className='label'>Usuario</label>
+                            <label htmlFor="usuarios_id" className='label'>Catador</label>
                             <div className="select-option-input-d">
                                 {usuarios.map((key, index) =>(
                                     (

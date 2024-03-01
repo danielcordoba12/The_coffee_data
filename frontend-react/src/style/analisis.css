@@ -13,7 +13,7 @@ option{
 
 
 .btn-desactivar-d {
-  background-color:#0b2e4be7;
+  background-color:#168A45;
   color: #fff;
   font-weight: bold;
   padding: 8px 16px;
@@ -35,8 +35,8 @@ option{
 }
 
 .btn-activar-d {
-  background-color:#0B2E4B;
-  color: #fff;
+  background-color:gainsboro;
+  color: black;
   font-weight: bold;
   padding: 8px 16px;
   margin: 8px;
@@ -48,6 +48,7 @@ option{
   cursor: pointer;
 }
 .btn-activar-d:hover{
+  color: white;
   background-color:#008000;
 
 }
@@ -71,7 +72,7 @@ text-align: left;
 font-weight: bold; 
 position: relative;
 font-family: Arial, Helvetica, sans-serif;
-color: black;
+color:#168A45;
 font-size: 1.5rem;
 }
 
@@ -80,8 +81,8 @@ display: flex;
 position: relative;
 width: 75px;
 padding: 10px 10px;
-background-color:#0B2E4B; 
-color: white;
+background-color:#168A45; 
+color:white;
 left: 150px;
 top: -15px;
 position: relative;
@@ -93,12 +94,13 @@ justify-content: center;
 border-radius: 4px;
 cursor: pointer;
 font-size: 1rem;
+/* border: 1px solid grey; */
 font-weight: bold;
 }
-.btn-registrar-d:hover {
+/* .btn-registrar-d:hover {
 background-color: #0b2e4be7;
 
-}
+} */
  .contTitle{
   position: relative;
   top: 56px;
@@ -116,7 +118,7 @@ background-color: #0b2e4be7;
 }
 
 .btn-actualizar-d{ 
-color: #0B2E4B;
+color: black;
 position: relative;
 font-weight: bold;
 padding: 8px 16px;
@@ -126,16 +128,16 @@ top: 70px;
 margin-bottom: 14px;
 border-radius: 4px;
 cursor: pointer;
-background-color: #fff;
-border: 0.5px solid black;
+background-color: gainsboro;
+/* border: 0.5px solid grey; */
 transition: background-color 0.3s; 
 }
 .btn-actualizar-d:hover{
-  background-color: #0B2E4B;
-  color: #fff;
+  background-color: #008000;
+  color: white;
 }
 .btn-actualizar-mod{
-color: #fff;
+color: white;
 position: relative;
 font-weight: bold;
 padding: 8px 16px;
@@ -144,14 +146,14 @@ top: 10px;
 margin-bottom: 14px;
 border-radius: 4px;
 cursor: pointer;
-background-color: #0B2E4B;
-transition: background-color 0.3s; 
+/* border: 1px solid gray; */
+background-color: #168A45;
 
 }
-
+/* 
 .btn-actualizar-mod:hover {
 background-color:#0b2e4be2; 
-}
+} */
 
 .tablaAnalisis{
 /* display: inline-table; */
@@ -203,7 +205,9 @@ estilos de registro de analisis css */
 
 }
 .contRegistrarAna input{
-  width: 100%;
+  width: 85%;
+  position: relative;
+  left: -25px;
   padding: 10px;
   border-bottom: 1px solid #ccc;
   box-sizing: border-box;
@@ -223,7 +227,7 @@ height: 600px;
 }
 .titleRegistrar{
 text-align: center;
-color: black;
+color: #168A45;
 margin-top: 13px;
 font-size: 1.5rem;
 font-weight: bold;
@@ -287,7 +291,7 @@ font-weight: bold;
 .btn-register-d{
   display: flex;
   padding: 10px 10px;
-  background-color:#0B2E4B; 
+  background-color:#168A45; 
   color: white;
   float: right;
   right: 12px;
@@ -326,7 +330,7 @@ font-weight: bold;
   right: -10px;
   background: none;
   border: none;
-  color: rgb(0, 0, 0);
+  color: #168A45;
   font-size: 36px;
   cursor: pointer;
   font-weight: bold;
@@ -375,17 +379,17 @@ select{
 
 .tablaEditAna{
   position: fixed;
-  top: 50%;
+  top: 45%;
   left: 50%;
   font:-z;
   transform: translate(-50%, -50%);
-  background-color: whitesmoke;
+  background-color: white;
   padding: 20px;
   border-radius: 8px;
   z-index: 1001;
   max-height: 95%;
   max-width: 90%;
-  height: 500px;
+  height: 450px;
   width: 500px;
   text-align: center;
 }
@@ -398,6 +402,7 @@ select{
 .titleEditAna{
   position: relative;
   top: 20px;
+  color: black;
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -417,7 +422,7 @@ select{
   right: -55px;
   background: none;
   border: none;
-  color: rgb(0, 0, 0);
+  color: black;
   font-size: 36px;
   cursor: pointer;
   font-weight: bold;
