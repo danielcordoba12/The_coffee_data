@@ -744,39 +744,13 @@ body {
 .modal-ver-lotes .modal-body{
   overflow: auto;
 }
-.modal-ver-lotes .modal-dialog{
-  margin: unset;
-  width: 100%;
-}
-.modal-dialog {
-  max-width: 80%;
-}
-
-@media (min-width: 576px) {
-  .modal-dialog {
-    max-width: 80%;
-    margin: 1.75rem auto;
-  }
-}
-
-@media (min-width: 768px) {
-  .modal-dialog {
-    max-width: 65%;
-  }
-}
-
-@media (min-width: 992px) {
-  .modal-dialog {
-    max-width: 55%;
-  }
-}
 
 
 .modal-contents {
   position: relative;
   display: flex;
   flex-direction: column;
- 
+  width: 100%;
   color: var(--bs-modal-color);
   pointer-events: auto;
   background-color: var(--bs-modal-bg);
@@ -838,6 +812,10 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 9;
+}
+.modal-dialog{
+  width: 1300px !important;
+  max-width: 100% !important;
 }
 
 

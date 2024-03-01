@@ -46,28 +46,28 @@ const FincaView = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (lotes.length > 0) {
+        if (modalLotes.length > 0) {
             if ($.fn.DataTable.isDataTable(tableRef2.current)) {
                 $(tableRef2.current).DataTable().destroy();
             }
             $(tableRef2.current).DataTable({
-                columnDefs:[
+                columnDefs: [
                     {
-                        targets:-1,
-                        responsivePriority:1
-                      }
-                  ],
+                        targets: -1,
+                        responsivePriority: 1
+                    }
+                ],
                 responsive: true,
                 language: esES,
                 paging: true,
                 lengthMenu: [
-                    [7, 10, 50, -1],
-                    ['7 Filas', '10 Filas', '50 Filas', 'Ver Todo']
+                    [7],
+                    ['7 Filas']
                 ]
             });
-    
+
         }
-    }, [lotes])
+    }, [modalLotes])
 
     useEffect(() => {
         if (fincas.length > 0) {
@@ -325,11 +325,11 @@ const FincaView = () => {
 
     const openRegistrarModal = () => {
         setRegistrarModalOpen(true);
-        console.log("modal" , setRegistrarModalOpen);
+        console.log("modal", setRegistrarModalOpen);
         console.log("si estoy funcionando");
     };
 
-    
+
     const closeRegistrarModal = () => {
         setRegistrarModalOpen(false);
     };
@@ -401,7 +401,7 @@ const FincaView = () => {
 
                 Sweet.registroExitoso();
                 closeRegistrarModal();
-              
+
                 // closeRegistrarModal();
                 // const response = await Api.get("finca/listar");
                 setFincas(response.data);
@@ -549,7 +549,7 @@ const FincaView = () => {
             </div>
             {isLotesModalOpen && (
                 <div className="modal-div-fin">
-                    <div className="modal modal-ver-lotes" tabIndex="-1" role="dialog" style={{ display: isLotesModalOpen ? 'block' : 'none' }}>
+                    <div className="modal modal-ver-lotes" tabIndex="-1" role="dialog" style={{ display: isLotesModalOpen ? 'block' : 'none' }} >
                         <div className="fondo-over" onClick={() => setLotesModalOpen(false)} ></div>
                         <div className="modal-dialog" role="document">
                             <div className="modal-contents">
@@ -562,18 +562,18 @@ const FincaView = () => {
                                 </div>
                                 <div className="modal-body">
 
-                                   
-        <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
-                        ref={tableRef2}
-                        cellPadding={0}
-                        width="100%"
-                        style={
-                            {
-                                width : "100%",
-                                maxWidth : "100%"
-                            }
-                        }
-                        >
+                                <div className="container-fluid w-full">
+                                    <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+                                        ref={tableRef2}
+                                        cellPadding={0}
+                                        width={"100%"}
+                                        style={
+                                            {
+                                                width: "100%",
+                                                maxWidth: "100%"
+                                            }
+                                        }
+                                    >
                                         <thead>
                                             <tr>
                                                 <th>Nombre</th>
@@ -614,6 +614,7 @@ const FincaView = () => {
                                                 </tr>}
                                         </tbody>
                                     </table>
+                                    </div>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" onClick={() => setLotesModalOpen(false)}>Cerrar</button>
