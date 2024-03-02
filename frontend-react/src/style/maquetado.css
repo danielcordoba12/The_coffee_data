@@ -1,0 +1,53 @@
+/* Estilos para el contenedor principal */
+.contenedor-maquetado {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    margin: 20px; /* Ajusta el margen según tus necesidades */
+  }
+  
+  /* Estilos para los contenedores pequeños */  
+  .contenedor-pequeno {
+    width: 210px;
+    height: 100px;
+    background-color: #aaffaa;
+    margin-bottom: 5px;
+    margin-right: 0;
+  }
+  
+  /* Estilos para el contenedor de los cuatro pequeños */
+  .contenedor-cuadrado {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  /* Estilos para los contenedores grandes */
+  .contenedor-grande {
+    width: 250px;
+    height: 220px;
+    background-color: #aaaaff;
+    margin-bottom: 10px;
+  }
+
+  
+  /* Estilos para los contenedores pequeños */  
+  .contenedor-pequeno1 {
+    width: 210px;
+    height: 150px;
+    background-color: #aaffaa;
+    margin-bottom: 5px;
+    margin-right: 50px;
+  }
+  
+  
+  /* Estilos para los contenedores grandes */
+  .contenedor-grande1 {
+    margin-right: 400px;
+    width: 500px;
+    height: 150px;
+    background-color: #aaaaff;
+    margin-bottom: 10px;
+    flex-direction: column;
+  }
+  
