@@ -188,7 +188,7 @@ backdrop-filter: blur(10px);
   border: 1px solid #ccc;
   border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: rgb(30, 30, 30, 50%);
+    background-color: rgba(235, 240, 245);
     border-bottom:1px black solid;
 }
 
