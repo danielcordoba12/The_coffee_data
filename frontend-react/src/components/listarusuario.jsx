@@ -6,6 +6,18 @@ import Swal from 'sweetalert2';
 import "../style/usuarios.css";
 import api from "../services/api";
 import Sweet from "../helpers/Sweet";
+import EncryptionComponent from '../components/crypt/criptar.jsx';
+import bcrypt from 'bcryptjs';
+import $ from "jquery";
+import "bootstrap";
+import "datatables.net";
+import "datatables.net-bs5";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+
+import "datatables.net-responsive";
+import "datatables.net-responsive-bs5";
+import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 const ListarUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -86,6 +98,8 @@ const ListarUsuarios = () => {
 
     const openRegistrarModal = () => {
         setRegistrarModalOpen(true);
+        console.log("modal" , setRegistrarModalOpen);
+        console.log("si estoy funcionando");
     };
 
     const closeRegistrarModal = () => {
@@ -100,37 +114,67 @@ const ListarUsuarios = () => {
         setRegistrarUsuarioModalOpen(false);
     };
 
+    const dataTableRef = useRef(null);
+    const initializeDataTable = (usuarios) => {
+        $(document).ready(function () {
+            $(dataTableRef.current).DataTable({
+                lengthMenu: [5, 10, 20, 30, 40, 50],
+                processing: true,
+                pageLength: 5,
+                language: {
+                    processing: "Procesando datos...",
+                },
+                responsive: true,
+            });
+        });
+
+        return () => {
+            $(dataTableRef.current).DataTable().destroy(true);
+        };
+    };
+
+    useEffect(() => {
+        if (usuarios.length > 0) {
+            initializeDataTable(usuarios);
+        }
+    }, [usuarios]);
+
+
+
+
+
     const handleSubmit = async (e, status, id) => {
         e.preventDefault();
-
+    
+        // Obtiene los datos del formulario
         const data = {
             nombre: nombre.current.value,
             apellido: apellido.current.value,
             numero_documentos: numero_documentos.current.value,
             telefono: telefono.current.value,
             correo_electronico: correo_electronico.current.value,
-            user_password: user_password.current.value,
+            user_password: encryptPassword(user_password.current.value), // Encripta la contraseña
             tipo_documento: tipo_documento.current.value,
             rol: rol.current.value,
             cargo: cargo.current.value,
         };
-
+    
         const headers = {
             headers: {
                 token: "xd"
             }
         };
-        
-        let method = "post"
-        let route = ""
-        
+    
+        let method = "post";
+        let route = "";
+    
         if (status === 1) {
-            route = "usuario/registrar"
+            route = "usuario/registrar";
         } else if (status === 2 && id) {
-            route = "usuario/actualizar/" + id
-            method = "put"
+            route = "usuario/actualizar/" + id;
+            method = "put";
         }
-
+    
         try {
             const response = await Api[method](route, data, headers);
             if (response.data.status === false) {
@@ -175,12 +219,13 @@ const ListarUsuarios = () => {
                         parent.appendChild(h6)
                     }
                 }
-            } else {
-                Sweet.registroExitoso();
+            } else { Sweet.registroExitoso();
                 closeRegistrarModal();
-                const response = await Api.get("finca/listar");
+              
+                // closeRegistrarModal();
+                // const response = await Api.get("finca/listar");
                 setFincas(response.data);
-                location.href = "/finca"
+                location.href = "/home/finca"
             }
         } catch (error) {
             console.error("Error al registrar la finca:", error);
@@ -202,16 +247,21 @@ const ListarUsuarios = () => {
         }
     }
 
+    const encryptPassword = (password) => {
+        const salt = bcrypt.genSaltSync(10); // Genera un salt aleatorio
+        return bcrypt.hashSync(password, salt); // Encripta la contraseña con el salt
+    };
+
     return (
         <>
-            <img src="../../public/img/fondo.png" alt="" className="fondo2" />
+    
             <div className="tablalistar">
                 <h1 className="titu">Usuarios</h1>
                 <br />
                 <button className="btn-registrar" onClick={() => { setFormStatus(1); setRegistrarUsuarioModalOpen(true); setUserUpdate([]); openRegistrarUsuarioModal }}>
                     Registrar Usuario
                 </button>
-                <table className="tableprincipal">
+                <table  style={{ width: "100%" }}className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                     <thead>
                         <tr>
                             <th>id</th>
@@ -236,10 +286,10 @@ const ListarUsuarios = () => {
                                 <td>{usuario.correo_electronico}</td>
                                 <td>{usuario.estado === 1 ? 'desactivado' : 'Activo'}</td>
                                 <td>
-                                    <button type="button" className="btn-primary" onClick={() => { setFormStatus(2), setRegistrarUsuarioModalOpen(true), buscarUsuario(usuario.id ? usuario.id : "") }}>
+                                    <button type="button" className="btn-actualizar-mod" onClick={() => { setFormStatus(2), setRegistrarUsuarioModalOpen(true), buscarUsuario(usuario.id ? usuario.id : "") }}>
                                         actualizar
                                     </button>
-                                    <button className="btn-registrar" onClick={() => { setIdUsuario(usuario.id); openRegistrarModal() }}>
+                                    <button className="btn-actualizar-mod" onClick={() => { setIdUsuario(usuario.id); openRegistrarModal() }}>
                                         Registrar Finca
                                     </button>
                                 </td>

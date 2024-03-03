@@ -25,6 +25,7 @@ const Municipio = () => {
     const [isRegistrarModalOpen, setRegistrarModalOpen] = useState(false);
     const [departamentos, setDepartamentos] = useState([]);
     const [dataSelect, setDataSelect] = useState({});
+    const tableRef = useRef();
 
     const nombre = useRef();
     const departamentos_id = useRef();
@@ -143,15 +144,11 @@ const Municipio = () => {
 
                 }
             } else {
-                console.log(data.data)
-                // Recargar la lista de fincas después del registro
-                const response = await Api.get("municipio/listar");
-                setMunicipios(response.data);
-                Sweet.registroExitoso();
-                closeRegistrarModal();
-                // location.href = "/home/municipio"
+                Sweet.registroExitoso("/home/municipio");
+                closeRegistrarModal(true);
             }
-
+            const response = await Api.get("municipio/listar");
+            setMunicipios(response.data);
 
         } catch (error) {
             console.error("Error al registrar el municipio:", error);
@@ -255,34 +252,29 @@ const Municipio = () => {
         searchInput()
     }, [openEditarModal]);
 
-    const dataTableRef = useRef(null);
-    const initializeDataTable = (municipios) => {
-        $(document).ready(function () {
-            $(dataTableRef.current).DataTable({
-                columnDefs: [
-                    {
-                        targets: -1,
-                        responsivePriority: 1
-                    }
-                ],
-                lengthMenu: [5, 10, 20, 30, 40, 50],
-                processing: true,
-                pageLength: 5,
-                language: esES,
-                responsive: true,
-            });
-        });
-
-        return () => {
-            $(dataTableRef.current).DataTable().destroy(true);
-        };
-    };
-
     useEffect(() => {
         if (municipios.length > 0) {
-            initializeDataTable(municipios);
+            if ($.fn.DataTable.isDataTable(tableRef.current)) {
+                $(tableRef.current).DataTable().destroy();
+            }
+            $(tableRef.current).DataTable({
+                columnDefs:[
+                    {
+                      targets:-1,
+                      responsivePriority:1
+                    }
+                  ],
+                responsive: true,
+                language: esES,
+                paging: true,
+                lengthMenu: [
+                    [7, 10, 50, -1],
+                    ['7 Filas', '10 Filas', '50 Filas', 'Ver Todo']
+                ]
+            });
+
         }
-    }, [municipios]);
+    }, [municipios])
 
 
 
@@ -314,7 +306,7 @@ const Municipio = () => {
                             Añadir
                         </button>
 
-                        <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={dataTableRef} width={"100%"}>
+                        <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={tableRef} width={"100%"}>
                             <thead>
                                 <tr className="bg-gray-200">
                                     <th>id</th>
@@ -360,11 +352,11 @@ const Municipio = () => {
                         </h1>
                         <div className="max-w-xs">
                             <div>
+                            <label className="labeledit" htmlFor="nombre">Nombre</label>
                                 <input
                                     className="input-field"
                                     id="nombre"
                                     type="text"
-                                    placeholder="nombre"
                                     value={modalMunicipio.nombre}
                                     onChange={(e) =>
                                         setModalMunicipio({
@@ -389,7 +381,7 @@ const Municipio = () => {
                                     })}
                                 </div>
                                 <input defaultValue={dataSelect.departamentos_id ? dataSelect.departamentos_id.referencia ? dataSelect.departamentos_id.referencia : "" : ""} className="input-search" type="text" id="departamentos_id" />
-                                <label htmlFor="departamentos_id" >Departamento</label>
+                                <label htmlFor="departamentos_id" className="labeledit" >Departamento</label>
 
                             </div>
                             <button

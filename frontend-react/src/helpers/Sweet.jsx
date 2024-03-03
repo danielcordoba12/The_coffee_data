@@ -2,13 +2,17 @@ import Swal from 'sweetalert2';
 
 
 const Sweet = {
-    registroExitoso: () =>{
+    registroExitoso: (href) => {
         Swal.fire({
             title: 'Mensaje',
             icon: 'success',
             text: 'Registro exitoso',
             confirmButtonText: 'Cerrar'
-        })
+        }).then(() => {
+            if (href) {
+                location.href = href
+            }
+        });
     },
     registroFallido: () => {
         Swal.fire({
@@ -19,19 +23,19 @@ const Sweet = {
         });
     },
     confimarDeshabilitar: () => {
-        return Swal.fire ({
+        return Swal.fire({
             title: '¿Seguro que quiere desabilitarlo?',
-            text:'Puede que el dato se pierda',
+            text: 'Puede que el dato se pierda',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor:'#3085d6',
+            confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText : 'Si',
+            confirmButtonText: 'Si',
             cancelButtonText: 'Cancelar'
         });
     },
     deshabilitacionExitosa: () => {
-        Swal.fire ({
+        Swal.fire({
             title: 'Mensaje',
             icon: 'success',
             text: 'Se desactivo de forma exitosa',
@@ -39,7 +43,7 @@ const Sweet = {
         });
     },
     deshabilitacionFallida: () => {
-        Swal.fire ({
+        Swal.fire({
             title: 'Mensaje',
             icon: 'warning',
             text: 'No se logro desactivar',
@@ -47,7 +51,7 @@ const Sweet = {
         });
     },
     confimarHabilitar: () => {
-        return Swal.fire ({
+        return Swal.fire({
             title: '¿Seguro que quiere habilitarlo?',
             icon: 'warning',
             showCancelButton: true,
@@ -58,7 +62,7 @@ const Sweet = {
         });
     },
     habilitacionExitosa: () => {
-        Swal.fire ({
+        Swal.fire({
             title: 'Mensaje',
             icon: 'success',
             text: 'Se activo de forma exitosa',
@@ -66,7 +70,7 @@ const Sweet = {
         });
     },
     habilitacionFallida: () => {
-        Swal.fire ({
+        Swal.fire({
             title: 'Mensaje',
             icon: 'warning',
             text: 'No se logro activar',
@@ -75,14 +79,14 @@ const Sweet = {
     },
     actualizacionExitosa: () => {
         Swal.fire({
-            title:'Mensaje',
-            icon:'success',
+            title: 'Mensaje',
+            icon: 'success',
             text: 'Actualizacion exitosa',
             confirmButtonText: 'Cerrar'
         });
     },
-    actualizacionFallida: () =>{
-        Swal.fire ({
+    actualizacionFallida: () => {
+        Swal.fire({
             title: 'Mensaje',
             icon: 'warning',
             text: 'Actualizacion fallida',
@@ -91,5 +95,5 @@ const Sweet = {
     }
 
 
-} 
+}
 export default Sweet;
