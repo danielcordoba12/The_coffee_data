@@ -32,11 +32,11 @@ function App() {
         <Route path="usuario/actualizar/:id" element={<EditarUsuario />} />
         <Route path="municipio" element={<Municipio />} />
         <Route path="variedad" element={<Variedad />} />
-        <Route path="cafe" element={<Cafe />} />
+        <Route path="cafe" element={<Cafe/>} />
         <Route path="listar/muestra" element={<ListarMuestra />} />
         <Route path="editar/muestra/:id" element={<EditarMestra />} />
         <Route path="grafica" element={<Grafica />} />
-        <Route path="maquetado" element={<Maquetado />} />
+        <Route path="/home" element={<Maquetado />} />
 
 
         {/* Ruta no encontrada */}

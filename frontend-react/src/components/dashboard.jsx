@@ -170,13 +170,6 @@ function Dashboard() {
                                 </li>
 
                                 <li className="first-icon">
-                                    <Link to={"/home/maquetado"}>
-                                        <FontAwesomeIcon icon={faUsers} className="icon" />
-                                        <p id="paragraph">Maquetado</p>
-                                    </Link>
-                                </li>
-
-                                <li className="first-icon">
                                     <Link to={"/home/Usuario/listar"}>
                                         <FontAwesomeIcon icon={faUsers} className="icon" />
                                         <p id="paragraph">Usuarios</p>
