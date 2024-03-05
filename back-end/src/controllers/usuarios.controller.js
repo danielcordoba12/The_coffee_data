@@ -5,7 +5,7 @@ import { validationResult } from "express-validator";
     try {
         let error1 = validationResult(req);
         if (!error1.isEmpty()){
-            return res.status(200).json(error1);
+            return res.status(403).json(error1);
         }
         let data = req.body;
         console.log("user",data);
