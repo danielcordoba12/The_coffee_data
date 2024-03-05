@@ -310,15 +310,52 @@ export const activarAnalisis = async (req,res) =>{
 }
 
 export const actualizarAnalisis = async (req, res) => {
+    const [muestras] = await pool.query("SELECT id FROM muestras");
+    let opcionesmuestras = [];
+    for (let x = 0; x < muestras.length; x++) {
+        opcionesmuestras.push(muestras[x]["id"])
+    }
+
+    const [usuarios] = await pool.query("SELECT id FROM usuarios");
+    let opcionesusuarios = [];
+    for (let x = 0; x < usuarios.length; x++) {
+        opcionesusuarios.push(usuarios[x]["id"])
+    }
+
     try {
+
+        let data = {
+
+            "select": {
+                "muestras_id": {
+                    "value": req.body.muestras_id,
+                    "opciones": opcionesmuestras,
+                    "referencia": "la muestra"
+                },
+                "usuarios_id": {
+                    "value": req.body.usuarios_id,
+                    "opciones": opcionesusuarios,
+                    "referencia": "el usuario"
+                }
+            }
+        }
+        let validateInputs = validate(data)
+        if (validateInputs.status == false) {
+            return res.status(200).json({
+                "status": false,
+                "err": validateInputs.err
+
+            })
+        }
+        
         let error1 = validationResult(req);
         if (!error1.isEmpty()){
             return res.status(400).json(error1);
         }
         let id = req.params.id;
-        let data = req.body;
+        let data2 = req.body;
 
-        let sql = `UPDATE analisis SET muestras_id='${data.muestras_id}',usuarios_id='${data.usuarios_id}'WHERE id= ${id}`
+        let sql = `UPDATE analisis SET muestras_id='${data2.muestras_id}',usuarios_id='${data2.usuarios_id}'WHERE id= ${id}`
     
         // let sql = `update usuarios SET nombres ='${nombres}',direccion='${direccion}',telefono='${telefono}',correo ='${correo}' where  idusuario=${id}`;
 
