@@ -36,18 +36,18 @@ function Dashboard() {
 
   
 
-    useEffect(() => {
+        useEffect(() => {
 
-        const jwtToken = localStorage.getItem("token")
+            const jwtToken = localStorage.getItem("token")
 
-        const  decodedToken = JSON.parse(atob(jwtToken.split('.')[1]));
-        
- 
-        setDataUser(decodedToken.user[0]);
+            const  decodedToken = JSON.parse(atob(jwtToken.split('.')[1]));
+            
+    
+            setDataUser(decodedToken);
 
 
 
-    }, [])
+        }, [])
 
 
 
