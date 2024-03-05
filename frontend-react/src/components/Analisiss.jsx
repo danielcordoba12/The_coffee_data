@@ -442,7 +442,7 @@ const Analisis = () => {
                                         return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
                                     })}
                                 </div>
-                                <input defaultValue={datasSelect.muestras_id ? datasSelect.muestras_id.referencia ? datasSelect.muestras_id.referencia : "" : ""} className="" type="text" id="muestras_id" />
+                                <input defaultValue={datasSelect.muestras_id ? datasSelect.muestras_id.referencia ? datasSelect.muestras_id.referencia : "" : ""} className="input-search-d" type="text" id="muestras_id" />
                                 <label htmlFor="muestras_id" className="labelEdit">Muestras</label>
 
                             </div><br />
@@ -458,10 +458,10 @@ const Analisis = () => {
                                             }
                                         }
 
-                                        return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
+                                        return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.i; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
                                     })}
                                 </div>
-                                <input className="input-search-d" defaultValue={datasSelect.usuarios_id ? datasSelect.usuarios_id.referencia ? datasSelect.usuarios_id.referencia : "" : ""}  type="text" id="muestras_id" />
+                                <input className="input-search-d" defaultValue={datasSelect.usuarios_id ? datasSelect.usuarios_id.referencia ? datasSelect.usuarios_id.referencia : "" : ""}  type="text" id="usuarios_id" />
                                 <label htmlFor="usuarios_id"  className="labelEdit">Catador</label>
                             </div>
                             <button
@@ -469,7 +469,7 @@ const Analisis = () => {
                             onClick={() => {
                                 handleEditUser1({
                                     muestras_id: datasSelect.muestras_id ? datasSelect.muestras_id.value : "",
-                                    usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value : ""
+                                    usuarios_id: datasSelect.usuarios_id ? datasSelect.muestras_id.value : ""
                                 })
                             }}
                             >
