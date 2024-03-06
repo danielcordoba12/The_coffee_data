@@ -14,7 +14,7 @@ import "datatables.net-responsive-bs5";
 import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 
-const FincaView = () => {
+const FincaView = (user) => {
     const [fincas, setFincas] = useState([]);
     const [idFinca, setIdFinca] = useState([]);
     const [modalFinca, setModalFinca] = useState(null);
@@ -516,13 +516,16 @@ const FincaView = () => {
                                         <td>{task.noombre_vereda}</td>
                                         <td>
                                             <div className="btn-group">
-                                                <button
-                                                    type="button"
-                                                    className="btn-actu"
-                                                    onClick={() => { setFincaId(task.id); openEditarModal(task.id) }}
-                                                >
-                                                    Modificar
-                                                </button>
+                                                {user.user ? user.user.rol == 'administrador' ?
+                                                    <button
+                                                        type="button"
+                                                        className="btn-actu"
+                                                        onClick={() => { setFincaId(task.id); openEditarModal(task.id) }}
+                                                    >
+                                                        Modificar
+                                                    </button>
+                                                    : '' : ''}
+
                                                 <div className="btn-secondary">
                                                     Lotes
                                                     <div className="btn-subgroup up">
@@ -533,7 +536,7 @@ const FincaView = () => {
                                                         >
                                                             Ver Lotes
                                                         </button>
-
+                                                        {user.user ? user.user.rol == 'administrador' ?
                                                         <button
                                                             type="button"
                                                             className="btn-ver"
@@ -541,6 +544,7 @@ const FincaView = () => {
                                                         >
                                                             Registrar Lote
                                                         </button>
+                                                        : '' : ''}
                                                     </div>
                                                 </div>
                                             </div>
@@ -588,6 +592,7 @@ const FincaView = () => {
                                                     <th>N° Plantas</th>
                                                     <th>Variedad</th>
                                                     <th>Estado</th>
+                                                    
                                                     <th>modificar</th>
                                                 </tr>
                                             </thead>
@@ -604,13 +609,16 @@ const FincaView = () => {
                                                             <td>{lote.n_plantas}</td>
                                                             <td>{lote.nombre_variedad ? lote.nombre_variedad : <span className="span-no-registra"> No registra</span>}</td>
                                                             <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                                            <td><button
+                                                            
+                                                            <td>{user.user ? user.user.rol == 'administrador' ?
+                                                                <button
                                                                 type="button"
                                                                 className="btn-actu"
                                                                 onClick={() => openModal(lote.id)}
                                                             >
                                                                 Modificar
-                                                            </button></td>
+                                                            </button>
+                                                            : '' : ''}</td>
 
                                                         </tr>
                                                     })
