@@ -383,6 +383,7 @@ const ListarUsuarios = () => {
                   name="numero_documentos"
                   ref={numero_documentos}
                   placeholder=""
+                  className="form-empty"
                 />
                 <label htmlFor="numero_documentos">Número de documentos</label>
               </div>
@@ -394,6 +395,7 @@ const ListarUsuarios = () => {
                   name="telefono"
                   ref={telefono}
                   placeholder=""
+                  className="form-empty"
                 />
                 <label htmlFor="telefono">Teléfono</label>
               </div>
@@ -407,6 +409,7 @@ const ListarUsuarios = () => {
                   name="correo_electronico"
                   ref={correo_electronico}
                   placeholder=""
+                  className="form-empty"
                 />
                 <label htmlFor="correo_electronico">Correo Electrónico</label>
               </div>
@@ -420,6 +423,7 @@ const ListarUsuarios = () => {
                   name="user_password"
                   ref={user_password}
                   placeholder=""
+                  className="form-empty"
                 />
                 <label htmlFor="user_password">Contraseña</label>
               </div>
@@ -433,6 +437,7 @@ const ListarUsuarios = () => {
                   name="tipo_documento"
                   ref={tipo_documento}
                   placeholder=""
+                  className="form-empty"
                 />
                 <label htmlFor="tipo_documento">Tipo de Documento</label>
               </div>
@@ -444,6 +449,7 @@ const ListarUsuarios = () => {
                   name="rol"
                   ref={rol}
                   placeholder=""
+                  className="form-empty"
                 />
                 <label htmlFor="rol">Rol</label>
               </div>
@@ -455,6 +461,7 @@ const ListarUsuarios = () => {
                   name="cargo"
                   ref={cargo}
                   placeholder=""
+                  className="form-empty"
                 />
                 <label htmlFor="cargo">Cargo</label>
               </div>
