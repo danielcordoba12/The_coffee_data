@@ -506,9 +506,27 @@ export const buscarMuestra = async (req, res) => {
 export const listarMuestras = async (req, res) => {
 
     try {
-        // const [result] = await pool.query("SELECT m.id, m.fecha_creacion, m.cantidad, l.nombre as lote,f.nombre as finca, concat(u.nombre,' ',u.apellido)  as propietario,m.estado,m.cafes_id from muestras m join cafes c on m.cafes_id = c.id JOIN lotes l ON c.lotes_id = l.id JOIN fincas f ON l.fincas_id = f.id JOIN usuarios u ON f.usuarios_id = u.id ");
-        const [result] =await pool.query("select m.id AS id, m.fecha_creacion,c.id AS cafe, l.nombre as Lote, f.nombre AS Finca,m.estado,m.codigo_externo, u.nombre AS usuario, v.nombre AS variedad from muestras as m JOIN cafes AS c ON m.cafes_id = c.id  JOIN lotes AS l ON c.lotes_id = l.id JOIN fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id  JOIN variedades AS v ON c.variedades_id = v.id");
-        res.status(200).json(result);
+        let where = " "
+        if (req.user.rol != "administrador") {
+            where = " WHERE f.usuarios_id = " + req.user.id + " "
+        }
+        // const [result] =await pool.query("select m.id AS id, m.fecha_creacion,c.id AS cafe, l.nombre as Lote, f.nombre AS Finca,m.estado,m.codigo_externo, u.nombre AS usuario, v.nombre AS variedad from muestras as m JOIN cafes AS c ON m.cafes_id = c.id  JOIN lotes AS l ON c.lotes_id = l.id JOIN fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id  JOIN variedades AS v ON c.variedades_id = v.id");
+        // res.status(200).json(result);
+        const sql = "select m.id AS id, m.fecha_creacion,c.id AS cafe, l.nombre as Lote, f.nombre AS Finca,m.estado,m.codigo_externo, u.nombre AS usuario, v.nombre AS variedad from muestras as m JOIN cafes AS c ON m.cafes_id = c.id  JOIN lotes AS l ON c.lotes_id = l.id JOIN fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id  JOIN variedades AS v ON c.variedades_id = v.id";
+        // res.status(200).json(result);
+        const [result] = await pool.query(sql);
+
+        if (result.length > 0) {
+            res.status(200).json(result);
+        } else {
+            res.status(200).json({
+                result : result,
+                status: false,
+                message: "No se encontran muestras."
+            });
+            
+            }
+
     } catch (err) {
         res.status(200).json({
             massage: "Error en listar muestra :" + err

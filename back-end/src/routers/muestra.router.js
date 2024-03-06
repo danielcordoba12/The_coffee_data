@@ -9,7 +9,7 @@ const muestraRoute = Router()
 muestraRoute.post("/registrar",guardarMuestra);
 muestraRoute.put("/actualizar/:id",actualizarMuestra);
 muestraRoute.get("/buscar/:id",buscarMuestra);
-muestraRoute.get("/listar",listarMuestras);
+muestraRoute.get("/listar",validartoken,listarMuestras);
 muestraRoute.patch("/desactivar/:id",desactivarMuestra);
 muestraRoute.patch("/activar/:id",activarMuestra);
 
