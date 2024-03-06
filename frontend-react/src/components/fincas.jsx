@@ -16,6 +16,7 @@ import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 const FincaView = (user) => {
     const [fincas, setFincas] = useState([]);
+    const [idUsuario, setIdUsuario] = useState();
     const [idFinca, setIdFinca] = useState([]);
     const [modalFinca, setModalFinca] = useState(null);
     const [SelectedFincaId, setSelectedFincaId] = useState(null);
@@ -35,6 +36,12 @@ const FincaView = (user) => {
     const [mostrarOpciones, setMostrarOpciones] = useState(false);
     const tableRef = useRef();
     const tableRef2 = useRef();
+    const [isRegistrarModalOpenfinca, setRegistrarModalOpenfinca] = useState(false);
+    const [selectedMunicipio, setSelectedMunicipio] = useState("");
+
+
+    const noombre_vereda = useRef();
+
 
 
     const fincas_id = useRef();
@@ -97,7 +104,6 @@ const FincaView = (user) => {
             try {
                 const response = await Api.get("municipio/listar");
                 setMunicipios(response.data);
-                console.log("Municipios cargados:", response.data);
             } catch (error) {
                 console.error("Error fetching municipios:", error);
             }
@@ -136,6 +142,16 @@ const FincaView = (user) => {
         buscarUsuarios();
 
     }, []);
+
+    const openmodalregisfinca = () => {
+        setRegistrarModalOpenfinca(true);
+        console.log("modal" , setRegistrarModalOpenfinca);
+        console.log("si estoy funcionando");
+    };
+
+    const closeRegistrarModalfinca = () => {
+        setRegistrarModalOpenfinca(false);
+    };
 
     const openEditarModal = async (fincaId) => {
         setSelectedFincaId(fincaId);
@@ -451,6 +467,47 @@ const FincaView = (user) => {
         return `${year}-${month}-${day}`;
     }
 
+    const handleRegistrarfinca = async (data) => {
+        const fincaData = {
+            ...data
+        };
+
+        const headers = {
+            headers: {
+                token: "xd",
+            },
+        };
+
+        try {
+            const data = await Api.post("finca/registrar", fincaData, headers);
+            if (data.data.status == false) {
+                let keys = Object.keys(data.data.errors)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = data.data.errors[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+                }
+            } else { Sweet.registroExitoso();
+                closeRegistrarModalfinca();
+              
+                // closeRegistrarModal();
+                // const response = await Api.get("finca/listar");
+                setFincas(data.data);
+                location.href = "/home/finca"
+            }
+        } catch (error) {
+            console.error("Error al registrar la finca:", error);
+        }
+    };
+
     return (
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
@@ -468,6 +525,10 @@ const FincaView = (user) => {
 
 
                 <div className="container-fluid w-full">
+                <button className="btn-register-finca" onClick={() => { setIdUsuario(user.user.id); openmodalregisfinca() }} >
+                            Añadir
+                        </button>
+
 
 
                     <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
@@ -925,6 +986,73 @@ const FincaView = (user) => {
                         </div>
                     </div>
                 </div>
+            )}
+            {isRegistrarModalOpenfinca && (
+                <>
+                    <div className="overlay" onClick={closeRegistrarModal}></div>
+                    <div className="tabla-regis-finca">
+                        <h1 className="text-center font-bold underline text-3xl p-3 m-2">
+                            Registrar Finca
+                        </h1>
+                        <form
+                            className="contenido-regi"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleRegistrarfinca({
+                                    nombre: nombre.current.value,
+                                    longitud: longitud.current.value,
+                                    latitud: latitud.current.value,
+                                    usuarios_id: user.user.id,
+                                    municipios_id: selectedMunicipio,
+                                    noombre_vereda: noombre_vereda.current.value
+                                });
+                            }}
+                            method="post"
+                        >
+                            <div className="div-input">
+                                <input className="input-register" type="text" id="nombre" name="nombre" ref={nombre} placeholder="" />
+                                <label htmlFor="nombre">Nombre</label>
+                            </div>
+                            <div className="div-input">
+                                <input className="input-register" type="text" id="longitud" name="longitud" ref={longitud} placeholder="" />
+                                <label htmlFor="longitud">Longitud</label>
+                            </div>
+                            <div className="div-input">
+                                <input className="input-register" type="text" id="latitud" name="latitud" ref={latitud} placeholder="" />
+                                <label htmlFor="latitud">Latitud</label>
+                            </div>
+                            <div className="div-input">
+                                <select
+                                    className="input-register"
+                                    id="municipios_id"
+                                    name="municipios_id"
+                                    value={selectedMunicipio}
+                                    onChange={(e) => {
+                                        console.log("Municipio seleccionado:", e.target.value);
+                                        setSelectedMunicipio(e.target.value);
+                                    }}
+                                >
+                                    <option value="" disabled>Seleccione un municipio</option>
+                                    {municipios.map((municipio) => (
+                                        <option key={municipio.id} value={municipio.id}>
+                                            {municipio.nombre}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="div-input">
+                                <input className="input-register" type="text" id="noombre_vereda" name="noombre_vereda" ref={noombre_vereda} placeholder="" />
+                                <label htmlFor="noombre_vereda">nombre vereda</label>
+                            </div>
+                            <button className="btn-blue" type="submit">
+                                Registrar finca
+                            </button>
+                            <button className="close-modal-x" onClick={closeRegistrarModalfinca}>
+                                x
+                            </button>
+                        </form>
+                    </div>
+                </>
             )}
 
 
