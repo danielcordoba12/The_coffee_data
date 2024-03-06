@@ -61,8 +61,8 @@ const FincaView = () => {
                 language: esES,
                 paging: true,
                 lengthMenu: [
-                    [7],
-                    ['7 Filas']
+                    [6],
+                    ['6 Filas']
                 ]
             });
 
