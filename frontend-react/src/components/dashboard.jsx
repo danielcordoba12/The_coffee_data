@@ -11,7 +11,8 @@ function Dashboard() {
     const [tooltipHovered, setTooltipHovered] = useState(false);
     const [tooltipStates, setTooltipStates] = useState({});
     const [dataUser, setDataUser] = useState('');
-
+    const [rolAdmin,setRolAdmin] = useState(false)
+    const [rolCafetero,setCafetero] = useState(true)
     const menuWidth = menuDesplegado ? '220px' : '55px';
 
 
@@ -38,12 +39,22 @@ function Dashboard() {
 
         useEffect(() => {
 
+
             const jwtToken = localStorage.getItem("token")
 
             const  decodedToken = JSON.parse(atob(jwtToken.split('.')[1]));
             
-    
+            
+            console.log("decode token" , decodedToken.rol);
             setDataUser(decodedToken);
+            if (decodedToken.rol  ==  "catador") {
+                console.log("holis",rolCafetero)
+                setRolAdmin(true)
+                
+            }else{
+                console.log("holis 2", rolCafetero)
+                // setCafetero(!rolCafetero)
+            }
 
 
 
@@ -172,12 +183,16 @@ function Dashboard() {
                                     <p id="paragraph">Administrador</p>
                                 </li>
 
-                                <li className="first-icon">
+                                {rolAdmin ?  
+                                    <li className="first-icon">
                                     <Link to={"/home/Usuario/listar"}>
                                         <FontAwesomeIcon icon={faUsers} className="icon" />
                                         <p id="paragraph">Usuarios</p>
                                     </Link>
                                 </li>
+
+                                :""}
+                                
                                 <li className="first-icon">
                                     <Link to={"/home/finca"}>
                                         <FontAwesomeIcon icon={faToolbox} className="icon" />
@@ -192,12 +207,15 @@ function Dashboard() {
                                     </Link>
                                     {showTooltip && <span className="tooltip-content">Lotes</span>}
                                 </li>
-                                <li className="first-icon">
-                                    <Link to={"/home/cafe"}>
-                                        <FontAwesomeIcon icon={faChartColumn} className="icon" />
-                                        <p>Cafe</p>
-                                    </Link>
-                                </li>
+                                { rolAdmin ? 
+                                    <li className="first-icon">
+                                        <Link to={"/home/cafe"}>
+                                            <FontAwesomeIcon icon={faChartColumn} className="icon" />
+                                            <p>Cafe</p>
+                                        </Link>
+                                    </li>
+                                :""}
+                            
                                 <li className="first-icon">
                                     <Link to={"/home/listar/muestra"}>
                                         <FontAwesomeIcon icon={faVials} className="icon" />
@@ -226,8 +244,8 @@ function Dashboard() {
 
                                     </Link>
                                 </li>
-
-                                <li className="first-icon" >
+                                { rolAdmin ? 
+                                    <li className="first-icon" >
                                     <Link to={"/home/municipio"}>
                                         <FontAwesomeIcon icon={faSliders} className="icon" />
                                         <p className='paragraf-li' id="paragrafLi">Municipios</p>
@@ -236,14 +254,18 @@ function Dashboard() {
                                     <span className="tooltip">Contenido del tooltip</span>
                                 )} */}
                                 </li>
+                                :""}
+                                
 
-
-                                <li className="first-icon">
-                                    <Link to={"/home/variedad"} style={{ textDecoration: 'none', color: 'black !important' }}>
-                                        <FontAwesomeIcon icon={faSliders} className="icon" />
-                                        <p>Variedad</p>
-                                    </Link>
-                                </li>
+                                {rolAdmin ?
+                                    <li className="first-icon">
+                                        <Link to={"/home/variedad"} style={{ textDecoration: 'none', color: 'black !important' }}>
+                                            <FontAwesomeIcon icon={faSliders} className="icon" />
+                                            <p>Variedad</p>
+                                        </Link>
+                                    </li>
+                                :""}
+                                
 
 
                                 {/* {items.map((item, index) => (
