@@ -4,23 +4,26 @@ import Sweet from "../helpers/Sweet";
 import { useNavigate } from "react-router-dom";
 import '../style/analisis.css';
 import esES from "../languages/es-ES.json"
-  import $ from "jquery";
-  import "bootstrap";
-  import "datatables.net";
-  import "datatables.net-bs5";
-  import 'bootstrap/dist/css/bootstrap.min.css';
-  import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
- 
-  import "datatables.net-responsive";
-  import "datatables.net-responsive-bs5";
-  import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+import $ from "jquery";
+import "bootstrap";
+import "datatables.net";
+import "datatables.net-bs5";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+
+import "datatables.net-responsive";
+import "datatables.net-responsive-bs5";
+import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+import { Alert } from "bootstrap";
 
 
 
 
 const Analisis = () => {
-    
+
     const [analisis, setAnalisis] = useState([]);
+    const [statusSelect, setStatusSelect] = useState({});
+    const [key, setKey] = useState(0);
     const [ModalTipoAnalisis, setModalTipoAnalisis] = useState(null);
     const [ModalMuestras, setModalMuestras] = useState(null);
     const [muestraId, setMuestraId] = useState(null);
@@ -43,55 +46,45 @@ const Analisis = () => {
 
     const navigate = useNavigate()
 
-
     useEffect(() => {
-        const buscarAnalisis = async () => {
-            try {
-                const response = await Api.get('analisis/listar');
-                setAnalisis(response.data);
-                console.log(response)
-            } catch (error) {
-                console.error('Error fetching tasks:', error);
-            }
-        }
+
         buscarAnalisis();
-    }, []);
-
-    // useEffect(() => {
-    //     const buscartiposAnalisis = async () => {
-    //         try {
-    //             const response = await Api.get("analisis/listar");
-    //             settipoAnalisis(response.data);
-    //         } catch (error) {
-    //             console.error("Error fetching tasks:", error);
-    //         }
-    //     };
-    //     buscartiposAnalisis();
-    // }, []);
-
-    useEffect(() => {
-        const buscarMuestras = async () => {
-            try {
-                const response = await Api.get('muestra/listar');
-                setMuestra(response.data);
-            } catch (error) {
-                console.error('Error fetching tasks:', error);
-            }
-        }
         buscarMuestras();
-    }, []);
-    useEffect(() => {
-        const buscarUsuarios = async () => {
-            try {
-                const response = await Api.get('usuario/listarusuario');
-                console.log(response,"usuariissss")
-                setUsuario(response.data);
-            } catch (error) {
-                console.error('Error fetching tasks:', error);
-            }
-        }
         buscarUsuarios();
+
     }, []);
+
+
+    const buscarAnalisis = async () => {
+        try {
+            const response = await Api.get('analisis/listar');
+            setAnalisis(response.data);
+            console.log(response)
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
+    }
+
+    const buscarMuestras = async () => {
+        try {
+            const response = await Api.get('muestra/listar');
+            setMuestra(response.data);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
+    }
+
+
+    const buscarUsuarios = async () => {
+        try {
+            const response = await Api.get('usuario/listarusuario');
+            console.log(response, "usuariissss")
+            setUsuario(response.data);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
+    }
+
     const openModal = async (anaId) => {
         setselectAnalisisid(anaId);
         try {
@@ -101,12 +94,33 @@ const Analisis = () => {
             console.error('Error buscando el analisis', error);
         }
     };
-    const handleEditUser1 = async () => {
+    const handleEditUser1 = async (data) => {
         try {
-            await Api.put(`/analisis/update/${selectAnalisisid}`,modalAnalisis);
-            Sweet.actualizacionExitosa();
-            closeModalEdit();
-            // Recargar la lista de analisis después de la actualización
+            setModalAnalisis({})
+            const actualizar = await Api.put(`/analisis/update/${selectAnalisisid}`, data);
+            console.log(datasSelect,actualizar, data,"dataaaaaaaaaaaaaaaaaaa")
+            if (actualizar.data.status == false) {
+                let keys = Object.keys(actualizar.data.err)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(actualizar.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = actualizar.data.err[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+              Sweet.actualizacionExitosa("/home/analisis");
+                closeModalEdit(true); 
+
+            }
             const response = await Api.get("analisis/listar");
             setAnalisis(response.data);
         } catch (error) {
@@ -115,7 +129,7 @@ const Analisis = () => {
     };
     const handleEditUser2 = async () => {
         const result = await Sweet.confimarDeshabilitar({
-            
+
         });
         if (result.isConfirmed) {
             try {
@@ -136,9 +150,9 @@ const Analisis = () => {
                 closeModalEdit();
                 const response = await Api.get("analisis/listar");
                 setAnalisis(response.data);
-                }catch (error) {
+            } catch (error) {
                 console.error("Error activando el analisis: ", error);
-                }
+            }
         }
     };
 
@@ -167,8 +181,7 @@ const Analisis = () => {
     };
 
     const handleRegistrarAnalisis = async (data) => {
-        console.log(data, "data")
-        const AnalisisDta= {
+        const AnalisisDta = {
             ...data
         };
         const headers = {
@@ -196,22 +209,20 @@ const Analisis = () => {
 
                 }
             } else {
-                Sweet.registroExitoso();
-                console.log(data.data)
-                
-       
-                const response = await Api.get("analisis/listar");
-                setAnalisis(response.data);
-                location.href = "/home/analisis"
-                }
-                // console.log(data,"tiposssssss")
-                // const response = await Api.get("analisis/listar");
-                //  setAnalisis(response.data);
+                Sweet.registroExitoso("/home/analisis");
+                closeRegistrarAnalisisModal()
+            }
+
+            const response = await Api.get("analisis/listar");
+            setAnalisis(response.data);
+            // console.log(data,"tiposssssss")
+            // const response = await Api.get("analisis/listar");
+            //  setAnalisis(response.data);
         } catch (error) {
             console.error("Error al registrar el analisis:", error);
         }
     };
-    
+
     function clearFocusInput(Element) {
         let inputSearch = document.getElementById(Element)
 
@@ -269,6 +280,7 @@ const Analisis = () => {
                                     options[o].style.display = "none"
                                 }
                                 let referencia = inputSearch[s].getAttribute("id")
+                                console.log(referencia,"referenciaaa")
 
                                 if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
                                     let focusSelect = document.querySelectorAll(".option-select-focus")
@@ -309,87 +321,74 @@ const Analisis = () => {
         searchInput()
     }, [openModal]);
 
-    const dataTableRef = useRef(null);
-    const initializeDataTable = (analisis) => {
-        $(document).ready(function () {
-            $(dataTableRef.current).DataTable({
-                lengthMenu: [5, 10, 20, 30, 40, 50],
-                processing: true,
-                pageLength: 5,
-                language: {
-                    processing: "Procesando datos...",
-                },
-                responsive: true,
-            });
-        });
-
-        return () => {
-            $(dataTableRef.current).DataTable().destroy(true);
-        };
-    };
-
+    const tableRef = useRef();
     useEffect(() => {
-        if (analisis.length > 0) {
-            initializeDataTable(analisis);
+        if (usuarios.length > 0) {
+            if ($.fn.DataTable.isDataTable(tableRef.current)) {
+                $(tableRef.current).DataTable().destroy();
+            }
+            $(tableRef.current).DataTable({
+                columnsDefs: [
+                    {
+                        targets: -1,
+                        responsivePropiority: 1,
+                    },
+                ],
+                responsive: true,
+                lengthMenu: [[5, 10, 100 - 1],
+                ["5 Filas", "10 Filas", "100 Filas", "Ver todo"],
+                ],
+            });
         }
-    }, [analisis]);
-
-
-
-
-
-
-    
-
-
+    }, [usuarios]);
     return (
+
         <>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-        {modalAnalisis && <div className="overlay-d" onClick={closeModalEdit}></div>}
-        {aRegistrarModalOpen && (
-            <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
-            )}
+            <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
+            <div className="contTitle">
+                <h1 className="titleanalisis">Análisis</h1>
+                <button to="/analisis/registrar" className="btn-registrar-d" onClick={() => {
+                    openRegistrarAnalisisModal();
+                    setDataSelect({})
 
-                <div className="contTitle">
-                    <h1 className="titleanalisis">Análisis</h1>
-                    <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
+                }}>
                     Añadir
-                    </button>
-                </div>
-            
-                <div className="tablaAnalisis">    
-                    <div className="container-fluid w-full">
-                    <table id="table-d" style={{ width: "100%" }}className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                </button>
+            </div>
+
+            <div className="tablaAnalisis">
+                <div className="container-fluid w-full" key={key}>
+                    <table id="table-d" style={{ width: "100%" }} className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={tableRef}>
                         <thead>
                             <tr className="bg-gray-200">
-                            <th>id</th>
-                            <th>Fecha </th>
-                            <th>Tipo Análisis </th>
-                            <th>Consecutivo Informe </th>
-                            <th>Asignación </th>
-                            <th>Estado </th>
-                            <th>Propietario </th>
-                            <th>Finca </th>
-                            <th>Lote </th>
-                            <th>Variedad</th>
-                            <th>Opciones</th>
-                        </tr>
+                                <th>id</th>
+                                <th>Fecha </th>
+                                <th>Tipo Análisis </th>
+                                <th>Consecutivo Informe </th>
+                                <th>Catador</th>
+                                <th>Estado </th>
+                                <th>Propietario </th>
+                                <th>Finca </th>
+                                <th>Lote </th>
+                                <th>Variedad</th>
+                                <th>Opciones</th>
+                            </tr>
                         </thead>
                         <tbody className="bg-gray-200">
-                        {analisis.map((task) => (
+                            {analisis.map((task) => (
                                 <tr key={task.id_analisis}>
                                     <td>{task.id_analisis}</td>
-                                    <td>{task.fecha_analisis=formatDate(task.fecha_analisis)}</td>
+                                    <td>{task.fecha_analisis = formatDate(task.fecha_analisis)}</td>
                                     <td>{task.nombre_tipo_analisis}</td>
                                     <td className="conse" >{task.codigo_externo}</td>
                                     <td>{task.nombre_usuario}</td>
                                     <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                                     <td>{task.propietario}</td>
-                                    <td>{task.nombre_fincas}</td> 
-                                    <td>{task.nombre_lotes}</td> 
-                                    <td>{task.nombre_variedades}</td> 
+                                    <td>{task.nombre_fincas}</td>
+                                    <td>{task.nombre_lotes}</td>
+                                    <td>{task.nombre_variedades}</td>
                                     <td>
                                         <button
                                             type="button"
@@ -401,95 +400,94 @@ const Analisis = () => {
                                     </td>
                                 </tr>
                             ))}
-                            </tbody>
+                        </tbody>
                     </table>
+                </div>
+            </div>
+
+            {modalAnalisis && (
+                <div className="tablaEditAna">
+                    <div onClick={closeModalEdit} className="overlay-edit"></div>
+                    <div className="contEditAna">
+                        <h1 className="titleEditAna">Editar Análisis</h1><br />
+
+                        <div className="EditCampos">
+                            <br /><div className="div-input-d div-input-search-select">
+
+                                <div className="select-option-input-d">
+                                    {muestras.map((key, index) => {
+              
+
+                                        if (modalAnalisis.muestras_id) {
+                                            !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = modalAnalisis.muestras_id
+                                            if (key.id == modalAnalisis.muestras_id) {
+                                                !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.referencia = key.codigo_externo
+                                            }
+                                        }
+
+                                        return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
+                                    })}
+                                </div>
+                                <input defaultValue={datasSelect.muestras_id ? datasSelect.muestras_id.referencia ? datasSelect.muestras_id.referencia : "" : ""} className="input-search-d" type="text" id="muestras_id" />
+                                <label htmlFor="muestras_id" className="labelEdit">Muestras</label>
+
+                            </div><br />
+                            <div className="div-input-d div-input-search-select">
+
+                                <div className="select-option-input-d">
+
+                                    {usuarios.map((key, index) => {
+                                        if (modalAnalisis.usuarios_id) {
+                                            !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = modalAnalisis.usuarios_id
+                                            if (key.id == modalAnalisis.usuarios_id) {
+                                                !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.referencia = key.nombre
+                                            }
+                                        }
+
+                                        return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
+                                    })}
+                                </div>
+                                <input className="input-search-d" defaultValue={datasSelect.usuarios_id ? datasSelect.usuarios_id.referencia ? datasSelect.usuarios_id.referencia : "" : ""} type="text" id="usuarios_id" />
+                                <label htmlFor="usuarios_id" className="labelEdit">Catador</label>
+                            </div>
+                            <button
+                                className="btn-actualizar-d"
+                                onClick={() => {
+                             
+                                    handleEditUser1({
+                                        muestras_id: datasSelect.muestras_id ? datasSelect.muestras_id.value : "",
+                                        usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value : ""
+                                    })
+                                }}
+                            >
+                                Actualizar
+                            </button>
+                            {modalAnalisis.estado === 1 ? (
+                                <button
+                                    className="btn-desactivar-d"
+                                    onClick={handleEditUser2}
+                                >
+                                    Desactivar
+                                </button>
+                            ) : (
+                                <button
+                                    className="btn-activar-d"
+                                    onClick={handleEditUser3}
+                                >
+                                    Activar
+                                </button>
+                            )}
+                            <button
+                                className="close-modal-Edit"
+                                onClick={closeModalEdit}
+                            >
+                                X
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-        {modalAnalisis && (
-            <div className="tablaEditAna">
-                <h1 className="titleEditAna">Editar Análisis</h1>
-                <div className="Editcampos">
-                      <label htmlFor="" className="labelEdit">Muestra</label>
-                        <div className="div-input-d">
-                            <select
-
-                                className="input-edit-ana"
-                                id="muestras_id"
-                                name="muestras_id"
-                                value={modalAnalisis.muestras_id}
-                                onChange={(e) => {
-                                    console.log("Muestra seleccionada:", e.target.value);
-                                    setModalAnalisis({
-                                        ...modalAnalisis,
-                                        muestras_id: e.target.value,
-                                    });
-                                }}
-                            >
-                                <option value="" disabled>Seleccione una Muestra</option>
-                                {muestras.map((muestras) => (
-                                    <option key={muestras.id} value={muestras.id}>
-                                        {muestras.codigo_externo}
-                                    </option>
-                                ))}
-                            </select>
-                        </div><br />
-                        <label htmlFor="" className="labelEdit">Usuario</label>
-                        <div className="div-input-d">
-                            <select
-
-                                className="input-edit-ana"
-                                id="usuarios_id"
-                                name="usuarios_id"
-                                value={modalAnalisis.usuarios_id}
-                                onChange={(e) => {
-                                    console.log("Usuario seleccionado:", e.target.value);
-                                    setModalAnalisis({
-                                        ...modalAnalisis,
-                                        usuarios_id: e.target.value,
-                                    });
-                                }}
-                            >
-                                <option  value="" disabled>Seleccione un Usuario</option>
-                                {usuarios.map((usuarios) => (
-                                    <option key={usuarios.id} value={usuarios.id}>
-                                        {usuarios.nombre}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                   
-                    <button
-                        className="btn-actualizar-d"
-                        onClick={handleEditUser1}
-                    >
-                        Actualizar
-                    </button>
-                    {modalAnalisis.estado === 1 ? (
-                        <button
-                            className="btn-desactivar-d"
-                            onClick={handleEditUser2}
-                        >
-                            Desactivar
-                        </button>
-                    ) : (
-                        <button
-                            className="btn-activar-d"
-                            onClick={handleEditUser3}
-                        >
-                            Activar
-                        </button> 
-                    )}
-                    <button
-                        className="close-modal-Edit"
-                        onClick={closeModalEdit}
-                    >
-                        X
-                    </button>
-                </div>
-            </div>
-        )}
-
+            )}
             {aRegistrarModalOpen && (
                 <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
             )}
@@ -504,37 +502,37 @@ const Analisis = () => {
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleRegistrarAnalisis({
-                
-                                tipo_analisis_id: datasSelect.tipo_analisis_id ? datasSelect.tipo_analisis_id.value:"",
-                                muestras_id: datasSelect.muestras_id ? datasSelect.muestras_id.value:"",
-                                usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value:""
+
+                                tipo_analisis_id: datasSelect.tipo_analisis_id ? datasSelect.tipo_analisis_id.value : "",
+                                muestras_id: datasSelect.muestras_id ? datasSelect.muestras_id.value : "",
+                                usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value : ""
                             });
                         }}
                         method="post"
                     >
-                        
+
                         <div className="div-input-d-select div-input-search-select ">
-                        <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
-                            <select className="option-select-ana" name="tipo_analisis_id" id="1">
-                                <option value="">Fisico</option>
+                            <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
+                            <select className="select-tipe" name="tipo_analisis_id" id="1">
+                                <option value="1">Fisico</option>
                             </select>
                         </div>
                         <div className="div-input-d div-input-search-select">
-                            <input className="input-search-d" type="text" id="muestras_id"ref={muestras_id} />
-                            <label htmlFor="muestras_id"  className='label'>Muestra</label>
+                            <input className="input-search-d" type="text" id="muestras_id" ref={muestras_id} />
+                            <label htmlFor="muestras_id" className='label'>Muestra</label>
                             <div className="select-option-input-d">
                                 {muestras.map((key, index) => (
                                     (
-                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : "";datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
+                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
                                     )
                                 ))}
                             </div>
                         </div>
                         <div className="div-input-d div-input-search-select">
                             <input className="input-search-d" type="text" id="usuarios_id" ref={usuarios_id} />
-                            <label htmlFor="usuarios_id" className='label'>Usuario</label>
+                            <label htmlFor="usuarios_id" className='label'>Catador</label>
                             <div className="select-option-input-d">
-                                {usuarios.map((key, index) =>(
+                                {usuarios.map((key, index) => (
                                     (
                                         <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
                                     )
@@ -553,7 +551,7 @@ const Analisis = () => {
                     </form>
                 </div>
             )}
-    </>
+        </>
 
     )
 }
