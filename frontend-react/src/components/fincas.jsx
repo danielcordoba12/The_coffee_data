@@ -525,9 +525,11 @@ const FincaView = (user) => {
 
 
                 <div className="container-fluid w-full">
-                <button className="btn-register-finca" onClick={() => { setIdUsuario(user.user.id); openmodalregisfinca() }} >
+                {user.user ? user.user.rol == 'catador' ?
+                <button className="btn-añadir-finca" onClick={() => { setIdUsuario(user.user.id); openmodalregisfinca() }} >
                             Añadir
                         </button>
+                        : '' : ''}
 
 
 

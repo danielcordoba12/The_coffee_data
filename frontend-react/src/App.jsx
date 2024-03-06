@@ -71,7 +71,7 @@ function App() {
 
 
         {/* Ruta no encontrada */}
-        <Route path="*" element={<Navigate to="/home" />} />
+        {/* <Route path="*" element={<Navigate to="/home" />} /> */}
       </Route>
     </Routes>
   );
