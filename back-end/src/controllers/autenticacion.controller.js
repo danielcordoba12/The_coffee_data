@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { pool } from '../database/conexion.js';
 
-export const validarusuario = async(req, res) => {
+export const validarusuario = async (req, res) => {
     try {
         let { numero_documentos, user_password } = req.body;
         let sql = `SELECT id, nombre, rol, user_password FROM usuarios WHERE numero_documentos = '${numero_documentos}'`;
@@ -27,22 +27,23 @@ export const validarusuario = async(req, res) => {
 };
 
 
-export const validartoken = async(req,res,next)=>{
+export const validartoken = async (req, res, next) => {
     try {
-        let token_usuario= req.headers['token'];
+        let token_usuario = req.headers['token'];
         if (!token_usuario) {
-            return res.status(401).json({message: 'se requiere el token'});
+            return res.status(401).json({ message: 'se requiere el token' });
         } else {
-            const decoded=jwt.verify(token_usuario,process.env.AUT_SECRET,(error,decoded)=>{
+            const decoded = jwt.verify(token_usuario, process.env.AUT_SECRET, (error, decoded) => {
                 if (error) {
-                    return res.status(401).json({message: 'Token invalido',autorizad:false});
-                } 
+                    return res.status(401).json({ message: 'Token invalido', autorizad: false });
+                }
                 else {
+                    req["user"] = decoded
                     next();
                 }
             })
         }
     } catch (e) {
-        return res.status(500).json({message: 'error en validartoken' +e});
+        return res.status(500).json({ message: 'error en validartoken' + e });
     }
 };

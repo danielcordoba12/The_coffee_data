@@ -7,7 +7,7 @@ import { validarFinca } from '../validation/fincas.validator.js';
 
 const fincaRoute = Router();
 
-fincaRoute.get('/listar', listarFinca);
+fincaRoute.get('/listar', validartoken,listarFinca);
 fincaRoute.get('/buscar/:id', buscarFinca);
 fincaRoute.post('/registrar',  guardarFinca);
 fincaRoute.put('/actualizar/:id', actualizarFinca);

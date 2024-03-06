@@ -47,7 +47,7 @@ function Dashboard() {
             
             console.log("decode token" , decodedToken.rol);
             setDataUser(decodedToken);
-            if (decodedToken.rol  ==  "catador") {
+            if (decodedToken.rol  ==  "administrador") {
                 console.log("holis",rolCafetero)
                 setRolAdmin(true)
                 

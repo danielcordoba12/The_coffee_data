@@ -289,7 +289,7 @@ const ListarUsuarios = () => {
                                     <button type="button" className="btn-actualizar-mod" onClick={() => { setFormStatus(2), setRegistrarUsuarioModalOpen(true), buscarUsuario(usuario.id ? usuario.id : "") }}>
                                         actualizar
                                     </button>
-                                    <button className="btn-actualizar-mod" onClick={() => { setIdUsuario(usuario.id); openRegistrarModal() }}>
+                                    <button className="btn-register-finca" onClick={() => { setIdUsuario(usuario.id); openRegistrarModal() }}>
                                         Registrar Finca
                                     </button>
                                 </td>

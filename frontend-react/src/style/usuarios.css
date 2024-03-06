@@ -20,8 +20,9 @@
     text-align: center;
     /* Centra el contenido */
   }
+  
   .tabla-regis-finca h1 {
-    color: rgb(0, 0, 0);
+    color: #168A45;
     text-decoration: none   ;
     text-align: center;
     font-weight: bold;
@@ -164,18 +165,18 @@
     right: 10px;
     background: none;
     border: none;
-    color: rgb(0, 0, 0);
+    color: #168A45;
     font-size: 20px;
     cursor: pointer;
     font-weight: bold;
     padding: 10px 15px;
     border-radius: 4px;
-  
+  font-size: 1.5em;
 }
 
 .btn-blue {
 
-    background-color: #007bff;
+    background-color: #168A45;
     color: #fff;
     font-weight: bold;
     padding: 8px;
@@ -185,13 +186,22 @@
   }
   
   .btn-blue:hover {
-    background-color: #0056b3;
+    background-color: #168A45;
   }
   
   .btn-blue:focus {
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
   }
-
+.btn-register-finca{
+  color: white;
+  background-color: #168A45;
+  font-weight: bold;
+  padding: 8px 16px;
+  margin: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 /* Estilos adicionales */
 
 .search-container {

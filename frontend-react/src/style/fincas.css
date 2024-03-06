@@ -56,19 +56,10 @@
   border-radius: 4px;
 }
 
-.btn-actu {
-  background-color: #3498db;
-  color: #fff;
-  font-weight: bold;
-  padding: 8px 16px;
-  margin: 8px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+
 .btn-desactivar-finca{
-  background-color: #e74c3c;
-    color: #fff;
+  background-color:gainsboro;
+  color: black;
     font-weight: bold;
     padding: 8px;
     border-radius: 4px ;
@@ -77,11 +68,12 @@
     margin: 8px;
 }
 .btn-desactivar-finca:hover{
-  background-color: #f63c27 !important;
+  background-color: #B31312;
+  color: #f2f2f2;
 }
 .btn-activar-finca{
-  background-color: rgb(73, 191, 73);
-    color: #fff;
+  background-color:gainsboro;
+  color: black;
     font-weight: bold;
     padding: 8px;
     border-radius: 4px ;
@@ -89,8 +81,9 @@
     outline: none;
     margin: 8px;
 }
-.btn-activar-finca:hover{
-  background-color: #20f05b !important;
+.btn-activar-finca:hover{ 
+  color: white;
+  background-color:#008000;
 }
 /*usuario-label*/
 /* Styles for the label */
@@ -149,11 +142,7 @@
   width: 100%;
   margin: auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: rgb(30, 30, 30, 50%);
-  border-bottom: 1px black solid;
+
   max-height: 900px;
   /* Altura máxima para la tabla */
   overflow-y: auto;
@@ -188,22 +177,32 @@
   background-color: transparent;
 
 }
-
-.btn-actu {
-  background-color: #0099ff;
-  /* Color de fondo del botón */
-  color: #fff;
+.btn-actu-fin{
+  color: rgb(0, 0, 0);
+  background-color: gainsboro;
   font-weight: bold;
   padding: 8px 16px;
+  margin: 8px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  /* Efecto de transición al pasar el ratón */
+}
+.btn-actu-fin:hover{
+  background-color: #168A45; 
+}
+.btn-actu {
+  color: white;
+  background-color: #168A45;
+  font-weight: bold;
+  padding: 8px 16px;
+  margin: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .btn-actu:hover {
-  background-color: #207bb5;
+  background-color: #168A45;
   /* Cambio de color al pasar el ratón */
 }
 
@@ -295,7 +294,7 @@ body.modal-open {
   /* Centra el contenido */
 }
 .tabla-editar h1 {
-  color: rgb(0, 0, 0);
+  color: #168A45;
   text-decoration: none   ;
   text-align: center;
   font-weight: bold;
@@ -346,9 +345,7 @@ body.modal-open {
 
 
 
-.tabla-editar button:hover {
-  background-color: #2980b9;
-}
+
 
 .input-field {
   width: 100%;
@@ -368,10 +365,13 @@ body.modal-open {
 }
 
 .close-modal {
+  font-weight: bold;
+  font-size: 1.5em;
+  background-color: #ffffff;
   position: absolute;
   top: 10px;
   right: 10px;
-  color: #000000;
+  color: #168A45;
   padding: 8px 16px;
   border: none;
   cursor: pointer;
@@ -432,7 +432,7 @@ select option {
   /* Centra el contenido */
 }
 .tabla-regis h1 {
-  color: rgb(0, 0, 0);
+  color: #168A45;
   text-decoration: none   ;
   text-align: center;
   font-weight: bold;
@@ -481,7 +481,7 @@ select option {
   transition: all 0.5s;
 }
 
-.tabla-regis button {
+.tabla-regis {
   color: #000000;
   font-weight: bold;
   padding: 10px 15px;
@@ -490,9 +490,6 @@ select option {
   cursor: pointer;
 }
 
-.tabla-regis button:hover {
-  background-color: #207bb5;
-}
 
 
 
@@ -788,7 +785,7 @@ body {
   margin-left: 10%;
   font-weight: bold;
   letter-spacing: 0.1em;
-  color: rgb(0, 0, 0);
+  color: #168A45;
   font-size: 1.5rem;
   position: relative;
   top: 50px; /

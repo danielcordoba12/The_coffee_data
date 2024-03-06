@@ -6,9 +6,27 @@ import { validationResult } from 'express-validator';
 
 export const listarFinca = async (req, res) => {
   try {
+    let where = " "
+    if (req.user.rol != "administrador") {
+      where = " WHERE usuarios_id = " + req.user.id + " "
+    }
 
-    const [result] = await pool.query("SELECT f.id, f.fecha_creacion, f.nombre, f.longitud, f.latitud, u.nombre as nombre_usuario, m.nombre as nombre_municipio, f.estado, f.noombre_vereda from fincas f join usuarios u on u.id = f.usuarios_id join municipios m on m.id = f.municipios_id order by f.estado desc, f.fecha_creacion DESC");
-    res.status(200).json(result);
+    const sql = "SELECT f.id, f.fecha_creacion, f.nombre, f.longitud, f.latitud, u.nombre as nombre_usuario, m.nombre as nombre_municipio, f.estado, f.noombre_vereda from fincas f join usuarios u on u.id = f.usuarios_id join municipios m on m.id = f.municipios_id" + where + " order by f.estado desc, f.fecha_creacion DESC"
+
+
+    const [result] = await pool.query(sql);
+
+    if (result.length > 0) {
+      res.status(200).json(result);
+    } else {
+      res.status(200).json({
+        result : result,
+        status: false,
+        message: "No se encontran fincas."
+      });
+
+    }
+
 
 
   } catch (err) {
@@ -61,8 +79,8 @@ function validate(data) {
             errros[inputs[e]] = "Debe seleccionar una opción para " + referencia
           } else {
             let keysOptions = data[keys[x]][inputs[e]]["opciones"]
-            if(keysOptions.length > 0){
-              for (let o = 0; o < keysOptions.length; o++) { 
+            if (keysOptions.length > 0) {
+              for (let o = 0; o < keysOptions.length; o++) {
                 if (keysOptions[o] == data[keys[x]][inputs[e]]["value"]) {
                   result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
                   break
@@ -70,11 +88,11 @@ function validate(data) {
                   errros[inputs[e]] = +"Debe seleccionar una opción válida para el " + referencia
                 }
               }
-            }else{
+            } else {
               result[inputs[e]] = data[keys[x]][inputs[e]]["value"];
 
             }
-            
+
           }
 
         }
@@ -90,7 +108,7 @@ function validate(data) {
         }
       }
     }
-    console.log(errros,result)
+    console.log(errros, result)
     if (Object.keys(errros).length > 0) {
       return {
         status: false,
@@ -127,7 +145,7 @@ export const guardarFinca = async (req, res) => {
         // },
         "noombre_vereda": {
           "value": req.body.noombre_vereda,
-          "referencia":"El nombre de la vereda"
+          "referencia": "El nombre de la vereda"
         }
       },
       "select": {
@@ -149,7 +167,7 @@ export const guardarFinca = async (req, res) => {
       }
 
     }
-    console.log(data,"xddd");
+    console.log(data, "xddd");
     let validateInputs = validate(data)
     if (validateInputs.status == false) {
       return res.status(200).json({
@@ -225,7 +243,7 @@ export const actualizarFinca = async (req, res) => {
         // },
         "noombre_vereda": {
           "value": req.body.noombre_vereda,
-          "referencia":"El nombre de la vereda"
+          "referencia": "El nombre de la vereda"
         }
       },
       "select": {
