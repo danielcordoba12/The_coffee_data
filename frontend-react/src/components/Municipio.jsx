@@ -326,7 +326,7 @@ const Municipio = () => {
                                         <td>
                                             <button
                                                 type="button"
-                                                className="btn-act-municipio "
+                                                className="btn-modi-municipio "
                                                 onClick={() => {
                                                     openEditarModal(task.id);
 
