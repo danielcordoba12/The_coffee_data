@@ -218,7 +218,7 @@ const Variedad = () => {
                             <td>
                                 <button
                                     type="button"
-                                    className="btn-act-variedad"
+                                    className="btn-modi-variedad"
                                     onClick={() => openModal(task.id)}
                                 >
                                     Modificar
