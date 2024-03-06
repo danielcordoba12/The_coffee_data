@@ -456,6 +456,7 @@ function Grafica() {
           
         <thead>
           <tr>
+          {/* <th>Index</th> */}
           {/* <th hidden>Index</th> */}
           <th>ID</th>
           <th>Muestra</th>
@@ -475,6 +476,7 @@ function Grafica() {
                 {resultado.map((task,index) => (
                   
                   <tr key={task.id}>
+                    {/* <td>{index}</td> */}
                     {/* <td hidden>{index}</td> */}
                     <td>{task.id}</td>
                     <td>{task.muestra}</td>

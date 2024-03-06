@@ -21,6 +21,7 @@ import esES from "../languages/es-ES.json"
 const Analisis = () => {
     
     const [analisis, setAnalisis] = useState([]);
+    const [key, setKey] = useState(0);
     const [ModalTipoAnalisis, setModalTipoAnalisis] = useState(null);
     const [ModalMuestras, setModalMuestras] = useState(null);
     const [muestraId, setMuestraId] = useState(null);
@@ -101,12 +102,33 @@ const Analisis = () => {
             console.error('Error buscando el analisis', error);
         }
     };
-    const handleEditUser1 = async () => {
+    const handleEditUser1 = async (data) => {
         try {
-            await Api.put(`/analisis/update/${selectAnalisisid}`,modalAnalisis);
-            Sweet.actualizacionExitosa();
-            closeModalEdit();
-            // Recargar la lista de analisis después de la actualización
+
+            const actualizar = await Api.put(`/analisis/update/${selectAnalisisid}`, data);
+            console.log(actualizar, data)
+            if (actualizar.data.status == false) {
+                let keys = Object.keys(actualizar.data.err)
+                let h6Error = document.querySelectorAll(".h6-error");
+                for (let x = 0; x < h6Error.length; x++) {
+                    h6Error[x].remove()
+                }
+                console.log(actualizar.data)
+                for (let x = 0; x < keys.length; x++) {
+                    let h6 = document.createElement("h6")
+                    h6.innerHTML = actualizar.data.err[keys[x]]
+                    h6.classList.add("h6-error")
+                    if (document.getElementById(keys[x])) {
+                        let parent = document.getElementById(keys[x]).parentNode
+                        parent.appendChild(h6)
+                    }
+
+                }
+            } else {
+                Sweet.registroExitoso("/home/analisis");
+                closeModalEdit(true);
+
+            }
             const response = await Api.get("analisis/listar");
             setAnalisis(response.data);
         } catch (error) {
@@ -313,6 +335,12 @@ const Analisis = () => {
     const initializeDataTable = (analisis) => {
         $(document).ready(function () {
             $(dataTableRef.current).DataTable({
+                columnDefs:[
+                    {
+                        targets:-1,
+                        responsivePriority:1
+                      }
+                  ],
                 lengthMenu: [5, 10, 20, 30, 40, 50],
                 processing: true,
                 pageLength: 5,
@@ -322,36 +350,24 @@ const Analisis = () => {
                 responsive: true,
             });
         });
-
         return () => {
             $(dataTableRef.current).DataTable().destroy(true);
         };
     };
 
     useEffect(() => {
+        setKey(key + 1)
         if (analisis.length > 0) {
             initializeDataTable(analisis);
         }
     }, [analisis]);
 
-
-
-
-
-
-    
-
-
     return (
+
         <>
 
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-        {modalAnalisis && <div className="overlay-d" onClick={closeModalEdit}></div>}
-        {aRegistrarModalOpen && (
-            <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
-            )}
-
-
+      
                 <div className="contTitle">
                     <h1 className="titleanalisis">Análisis</h1>
                     <button to="/analisis/registrar" className="btn-registrar-d" onClick={openRegistrarAnalisisModal}>
@@ -360,7 +376,7 @@ const Analisis = () => {
                 </div>
             
                 <div className="tablaAnalisis">    
-                    <div className="container-fluid w-full">
+                    <div className="container-fluid w-full" key={key}>
                     <table id="table-d" style={{ width: "100%" }}className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                         <thead>
                             <tr className="bg-gray-200">
@@ -408,85 +424,80 @@ const Analisis = () => {
 
         {modalAnalisis && (
             <div className="tablaEditAna">
-                <h1 className="titleEditAna">Editar Análisis</h1>
-                <div className="Editcampos">
-                      <label htmlFor="" className="labelEdit">Muestra</label>
-                        <div className="div-input-d">
-                            <select
-
-                                className="input-edit-ana"
-                                id="muestras_id"
-                                name="muestras_id"
-                                value={modalAnalisis.muestras_id}
-                                onChange={(e) => {
-                                    console.log("Muestra seleccionada:", e.target.value);
-                                    setModalAnalisis({
-                                        ...modalAnalisis,
-                                        muestras_id: e.target.value,
-                                    });
-                                }}
-                            >
-                                <option value="" disabled>Seleccione una Muestra</option>
-                                {muestras.map((muestras) => (
-                                    <option key={muestras.id} value={muestras.id}>
-                                        {muestras.codigo_externo}
-                                    </option>
-                                ))}
-                            </select>
-                        </div><br />
-                        <label htmlFor="" className="labelEdit">Catador</label>
-                        <div className="div-input-d">
-                            <select
-
-                                className="input-edit-ana"
-                                id="usuarios_id"
-                                name="usuarios_id"
-                                value={modalAnalisis.usuarios_id}
-                                onChange={(e) => {
-                                    console.log("Usuario seleccionado:", e.target.value);
-                                    setModalAnalisis({
-                                        ...modalAnalisis,
-                                        usuarios_id: e.target.value,
-                                    });
-                                }}
-                            >
-                                <option  value="" disabled>Seleccione un Usuario</option>
-                                {usuarios.map((usuarios) => (
-                                    <option key={usuarios.id} value={usuarios.id}>
-                                        {usuarios.nombre}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                {/* <div onClick={closeModalEdit} className="overlay-edit"></div> */}
+                    <div className="Editcampos">
+                    <h1 className="titleEditAna">Editar Análisis</h1><br />
                    
-                    <button
-                        className="btn-actualizar-d"
-                        onClick={handleEditUser1}
-                    >
-                        Actualizar
-                    </button>
-                    {modalAnalisis.estado === 1 ? (
-                        <button
-                            className="btn-desactivar-d"
-                            onClick={handleEditUser2}
-                        >
-                            Desactivar
-                        </button>
-                    ) : (
-                        <button
-                            className="btn-activar-d"
-                            onClick={handleEditUser3}
-                        >
-                            Activar
-                        </button> 
-                    )}
-                    <button
-                        className="close-modal-Edit"
-                        onClick={closeModalEdit}
-                    >
-                        X
-                    </button>
-                </div>
+                            <br /><div className="div-input-d div-input-search-select">
+                           
+                                <div className="select-option-input-d">
+                                {muestras.map((key, index) => {
+                                        if (modalAnalisis.muestras_id) {
+                                            !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = modalAnalisis.muestras_id
+                                            if (key.id == modalAnalisis.muestras_id) {
+                                                !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.referencia = key.codigo_externo
+                                            }
+                                        }
+
+                                        return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
+                                    })}
+                                </div>
+                                <input defaultValue={datasSelect.muestras_id ? datasSelect.muestras_id.referencia ? datasSelect.muestras_id.referencia : "" : ""} className="input-search-d" type="text" id="muestras_id" />
+                                <label htmlFor="muestras_id" className="labelEdit">Muestras</label>
+
+                            </div><br />
+                            <div className="div-input-d div-input-search-select">
+                           
+                                <div className="select-option-input-d">
+
+                                    {usuarios.map((key, index) => {
+                                        if (modalAnalisis.usuarios_id) {
+                                            !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = modalAnalisis.usuarios_id
+                                            if (key.id == modalAnalisis.usuarios_id) {
+                                                !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.referencia = key.nombre
+                                            }
+                                        }
+
+                                        return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.i; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
+                                    })}
+                                </div>
+                                <input className="input-search-d" defaultValue={datasSelect.usuarios_id ? datasSelect.usuarios_id.referencia ? datasSelect.usuarios_id.referencia : "" : ""}  type="text" id="usuarios_id" />
+                                <label htmlFor="usuarios_id"  className="labelEdit">Catador</label>
+                            </div>
+                            <button
+                            className="btn-actualizar-d"
+                            onClick={() => {
+                                handleEditUser1({
+                                    muestras_id: datasSelect.muestras_id ? datasSelect.muestras_id.value : "",
+                                    usuarios_id: datasSelect.usuarios_id ? datasSelect.muestras_id.value : ""
+                                })
+                            }}
+                            >
+                                Actualizar
+                            </button>
+                            {modalAnalisis.estado === 1 ? (
+                                <button
+                                    className="btn-desactivar-d"
+                                    onClick={handleEditUser2}
+                                >
+                                    Desactivar
+                                </button>
+                            ) : (
+                                <button
+                                    className="btn-activar-d"
+                                    onClick={handleEditUser3}
+                                >
+                                    Activar
+                                </button> 
+                            )}
+                            <button
+                                className="close-modal-Edit"
+                                onClick={closeModalEdit}
+                            >
+                                X
+                            </button>
+                            </div>
+
             </div>
         )}
 
@@ -515,8 +526,8 @@ const Analisis = () => {
                         
                         <div className="div-input-d-select div-input-search-select ">
                         <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
-                            <select className="select-ana" name="tipo_analisis_id" id="1">
-                                <option value="">Fisico</option>
+                            <select className="select-tipe" name="tipo_analisis_id" id="1">
+                                <option value="1">Fisico</option>
                             </select>
                         </div>
                         <div className="div-input-d div-input-search-select">
