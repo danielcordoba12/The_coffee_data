@@ -15,6 +15,7 @@ import ListarMuestra from './components/ListarMuestra';
 import EditarMestra from './components/EditarMuestra';
 import Grafica from './components/Grafica';
 import Inicio from './components/login/Inicio';
+import PerfilUsuarios from './components/perfilUsuario';
 import Maquetado from './components/maquetado';
 import { useEffect } from 'react';
 function App() {
@@ -60,15 +61,17 @@ function App() {
         <Route path="usuario/actualizar/:id" element={<EditarUsuario />} />
         <Route path="municipio" element={<Municipio />} />
         <Route path="variedad" element={<Variedad />} />
-        <Route path="cafe" element={<Cafe />} />
+        <Route path="cafe" element={<Cafe/>} />
+        <Route path="Perfil" element={<PerfilUsuarios/>} />
         <Route path="listar/muestra" element={<ListarMuestra />} />
         <Route path="editar/muestra/:id" element={<EditarMestra />} />
         <Route path="grafica" element={<Grafica />} />
         <Route path="/home" element={<Maquetado />} />
 
 
+
         {/* Ruta no encontrada */}
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/home" />} />
       </Route>
     </Routes>
   );
