@@ -69,8 +69,7 @@ const lote = () => {
 
       {/* <img src="../../public/img/fondo.png" alt="" className="fondo2" /> */}
       <div className="tablalistar">
-        <h4 className="titu"> Listado de Lotes
-        </h4>
+      <h4 className="titulo-listado"> Listado de lotes</h4>
 
         <br />
         <br />
