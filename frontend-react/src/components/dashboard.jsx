@@ -36,16 +36,18 @@ function Dashboard() {
 
   
 
-    useEffect(() => {
-        const jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjpbeyJpZCI6MSwibm9tYnJlIjoiWWFuIGNhcmxvcyIsInJvbCI6ImNhdGFkb3IifV0sImlhdCI6MTcwOTE1NDA0MiwiZXhwIjoxNzA5MjQwNDQyfQ.4MGZ7eYX40aE2U7aPih2zGNSsAsDXjObOxvmAOVrLj8";
+        useEffect(() => {
 
-        // Decodificar el token JWT
-        const  decodedToken = JSON.parse(atob(jwtToken.split('.')[1]));
-        
-        // Mostrar el contenido decodificado en la consola
-        setDataUser(decodedToken.user[0]);
+            const jwtToken = localStorage.getItem("token")
 
-    }, [])
+            const  decodedToken = JSON.parse(atob(jwtToken.split('.')[1]));
+            
+    
+            setDataUser(decodedToken);
+
+
+
+        }, [])
 
 
 
@@ -54,6 +56,7 @@ function Dashboard() {
 
     const DesplegarMenu = () => {
         setMenuDesplegado(!menuDesplegado);
+        console.log("holis" ,dataUser);
 
     };
 
@@ -254,7 +257,7 @@ function Dashboard() {
                                     </li>
                                 ))} */}
 
-
+                                
                             </ul>
                         </div>
                         </div>

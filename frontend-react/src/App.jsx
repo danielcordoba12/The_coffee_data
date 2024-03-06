@@ -15,6 +15,7 @@ import ListarMuestra from './components/ListarMuestra';
 import EditarMestra from './components/EditarMuestra';
 import Grafica from './components/Grafica';
 import Inicio from './components/login/Inicio';
+import Maquetado from './components/maquetado';
 
 function App() {
   return (
@@ -31,10 +32,13 @@ function App() {
         <Route path="usuario/actualizar/:id" element={<EditarUsuario />} />
         <Route path="municipio" element={<Municipio />} />
         <Route path="variedad" element={<Variedad />} />
-        <Route path="cafe" element={<Cafe />} />
+        <Route path="cafe" element={<Cafe/>} />
         <Route path="listar/muestra" element={<ListarMuestra />} />
         <Route path="editar/muestra/:id" element={<EditarMestra />} />
         <Route path="grafica" element={<Grafica />} />
+        <Route path="/home" element={<Maquetado />} />
+
+
         {/* Ruta no encontrada */}
         <Route path="*" element={<NotFound />} />
       </Route>
