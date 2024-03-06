@@ -51,7 +51,11 @@ const Cafe = () => {
     useEffect(() => {
         const buscarLotes = async () => {
             try {
-                const response = await Api.get("lote/listar");
+                const response = await Api.get("lote/listar", {
+                    headers: {
+                        token: localStorage.getItem("token")
+                    }
+                });
                 setLotes(response.data);
             } catch (error) {
                 console.error("Error fetching tasks:", error);
