@@ -49,6 +49,10 @@ const ListarUsuarios = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    fetchMunicipios();
+    buscarUsuarios();
+  }, []);
+
     const fetchMunicipios = async () => {
       try {
         const response = await Api.get("municipio/listar");
@@ -57,10 +61,7 @@ const ListarUsuarios = () => {
         console.error("Error fetching municipios:", error);
       }
     };
-    fetchMunicipios();
-  }, []);
 
-  useEffect(() => {
     const buscarUsuarios = async () => {
       try {
         const response = await Api.get("usuario/listarusuario");
@@ -71,8 +72,6 @@ const ListarUsuarios = () => {
         console.error("Error fetching users:", error);
       }
     };
-    buscarUsuarios();
-  }, []);
 
   useEffect(() => {
     let inputRegister = document.querySelectorAll(".input-register");
@@ -115,29 +114,54 @@ const ListarUsuarios = () => {
   };
 
   const dataTableRef = useRef(null);
-  const initializeDataTable = (usuarios) => {
-    $(document).ready(function () {
-      $(dataTableRef.current).DataTable({
-        lengthMenu: [5, 10, 20, 30, 40, 50],
-        processing: true,
-        pageLength: 5,
-        language: {
-          processing: "Procesando datos...",
-        },
-        responsive: true,
-      });
-    });
 
-    return () => {
-      $(dataTableRef.current).DataTable().destroy(true);
-    };
-  };
+  const tableRef = useRef();
 
   useEffect(() => {
     if (usuarios.length > 0) {
-      initializeDataTable(usuarios);
+      if ($.fn.DataTable.isDataTable(tableRef.current)) {
+        $(tableRef.current).DataTable().destroy();
+      }
+      $(tableRef.current).DataTable({
+        columnDefs: [
+          {
+            targets: -1,
+            responsivePriority: 1,
+          },
+        ],
+        responsive: true,
+        
+        lengthMenu: [
+          [5, 10, 50, 100, -1],
+          ["5 Filas",,"10 Filas", "50 Filas", "100 Filas", "Ver Todo"],
+        ],
+      });
     }
   }, [usuarios]);
+
+  // const initializeDataTable = (usuarios) => {
+  //   $(document).ready(function () {
+  //     $(dataTableRef.current).DataTable({
+  //       lengthMenu: [5, 10, 20, 30, 40, 50],
+  //       processing: true,
+  //       pageLength: 5,
+  //       language: {
+  //         processing: "Procesando datos...",
+  //       },
+  //       responsive: true,
+  //     });
+  //   });
+
+  //   return () => {
+  //     $(dataTableRef.current).DataTable().destroy(true);
+  //   };
+  // };
+
+  // useEffect(() => {
+  //   if (usuarios.length > 0) {
+  //     initializeDataTable(usuarios);
+  //   }
+  // }, [usuarios]);
 
   const handleSubmit = async (e, status, id) => {
     e.preventDefault();
@@ -280,7 +304,7 @@ const ListarUsuarios = () => {
         <table
           style={{ width: "100%" }}
           className=" table table-stripped  border display reponsive nowrap b-4 bg-white"
-          ref={dataTableRef}
+          ref={tableRef}
         >
           <thead>
             <tr>
@@ -360,6 +384,9 @@ const ListarUsuarios = () => {
                   className="form-empty"
                 />
                 <label htmlFor="nombre">Nombre</label>
+                <div className="invalid-feedback is-invalid">
+                  Nombre Incorrecto
+                </div>
               </div>
               <div className="div-input">
                 <input
@@ -372,6 +399,9 @@ const ListarUsuarios = () => {
                   className="form-empty"
                 />
                 <label htmlFor="apellido">Apellido</label>
+                <div className="invalid-feedback is-invalid">
+                  apellido Incorrecto
+                </div>
               </div>
               <div className="div-input">
                 <input
@@ -386,6 +416,9 @@ const ListarUsuarios = () => {
                   className="form-empty"
                 />
                 <label htmlFor="numero_documentos">Número de documentos</label>
+                <div className="invalid-feedback is-invalid">
+                  Número Incorrecto
+                </div>
               </div>
               <div className="div-input">
                 <input
@@ -398,6 +431,9 @@ const ListarUsuarios = () => {
                   className="form-empty"
                 />
                 <label htmlFor="telefono">Teléfono</label>
+                <div className="invalid-feedback is-invalid">
+                  Telefono Incorrecto
+                </div>
               </div>
               <div className="div-input">
                 <input
@@ -412,6 +448,9 @@ const ListarUsuarios = () => {
                   className="form-empty"
                 />
                 <label htmlFor="correo_electronico">Correo Electrónico</label>
+                <div className="invalid-feedback is-invalid">
+                  correo Incorrecto
+                </div>
               </div>
               <div className="div-input">
                 <input
@@ -440,6 +479,9 @@ const ListarUsuarios = () => {
                   className="form-empty"
                 />
                 <label htmlFor="tipo_documento">Tipo de Documento</label>
+                <div className="invalid-feedback is-invalid">
+                  Tipo de Documento Incorrecto
+                </div>
               </div>
               <div className="div-input">
                 <input
@@ -452,6 +494,9 @@ const ListarUsuarios = () => {
                   className="form-empty"
                 />
                 <label htmlFor="rol">Rol</label>
+                <div className="invalid-feedback is-invalid">
+                  Rol Incorrecto
+                </div>
               </div>
               <div className="div-input">
                 <input
@@ -464,6 +509,9 @@ const ListarUsuarios = () => {
                   className="form-empty"
                 />
                 <label htmlFor="cargo">Cargo</label>
+                <div className="invalid-feedback is-invalid">
+                  Cargo Incorrecto
+                </div>
               </div>
               {formStatus === 1 ? (
                 <button className="btn-blue" type="submit">

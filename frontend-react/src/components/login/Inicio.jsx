@@ -31,13 +31,13 @@ function LoginForm() {
 
     return (
         <div className="background-container">
-            {/* <img src="../../public/img/fondo3.jpg" alt="" className="fondo2" /> */}
+            <img src="../../public/img/fondo5.jpg" alt="" className="fondo2" />
             
             <div className='centro'>
             <div className="wrapper active-popup">
 
                 <div className="form-box login">
-                <img src="../../public/img/logotrans2.png" width="300px" alt="" className="" />
+                <img src="../../public/img/nombrelogo.png" width="300px" alt="" className="nombrelogo" />
                     
                     <form onSubmit={handleSubmit}>
                         <div className="input-box">
