@@ -51,7 +51,11 @@ const Cafe = () => {
     useEffect(() => {
         const buscarLotes = async () => {
             try {
-                const response = await Api.get("lote/listar");
+                const response = await Api.get("lote/listar", {
+                    headers: {
+                        token: localStorage.getItem("token")
+                    }
+                });
                 setLotes(response.data);
             } catch (error) {
                 console.error("Error fetching tasks:", error);
@@ -382,7 +386,7 @@ const Cafe = () => {
                                             <td>
                                                 <button
                                                     type="button"
-                                                    className="btn-act-cafe"
+                                                    className="btn-modi-cafe"
                                                     onClick={() => openModal(task.id)}
                                                 >
                                                     Modificar
@@ -402,7 +406,7 @@ const Cafe = () => {
                 <div className="div-modal">
                     <div onClick={closeModal} className="fondo-modal"></div>
                     <div className="table-register-cafe">
-                        <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Cafe</h1>
+                        <h1 className="text-center font-bold underline text-3xl p-3 m-2 c-white" >Editar Cafe</h1>
                         <div className="max-w-xs">
 
                             <div className="div-input div-input-search-select">

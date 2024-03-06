@@ -6,7 +6,7 @@ import { validarLote } from "../validation/lote.validator.js";
 
 const loteRoute= Router();
 
-loteRoute.get('/listar',listarlote);
+loteRoute.get('/listar',validartoken,listarlote);
 
 loteRoute.get('/buscar/:id',buscarlote);
 

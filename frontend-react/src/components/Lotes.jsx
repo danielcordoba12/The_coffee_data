@@ -49,7 +49,11 @@ const lote = () => {
   useEffect(() => {
     const buscarLotes = async () => {
       try {
-        const response = await Api.get("lote/listar");
+        const response = await Api.get("lote/listar", {
+          headers: {
+              token: localStorage.getItem("token")
+          }
+      });
         setLotes(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -99,24 +103,21 @@ const lote = () => {
             </tr>
           </thead>
           <tbody>
-            {lotes
-              .filter((task) =>
-                task.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-              )
-              .map((task) => (
-                <tr key={task.id} className="border-t">
-                  <td>{task.id}</td>
-                  <td>{task.fecha_creacion}</td>
-                  <td>{task.nombre_usuario}</td>
-                  <td>{task.Nombre_Finca}</td>
-                  <td>{task.nombre}</td>
-                  <td>{task.longitud}</td>
-                  <td>{task.latitud}</td>
-                  <td>{task.n_plantas}</td>
-                  <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                 
-                </tr>
-              ))}
+          {lotes.length > 0 ? lotes
+          .map((task) => (
+            <tr key={task.id} className="border-t">
+              <td>{task.id}</td>
+              <td>{task.fecha_creacion}</td>
+              <td>{task.nombre_usuario}</td>
+              <td>{task.Nombre_Finca}</td>
+              <td>{task.nombre}</td>
+              <td>{task.longitud}</td>
+              <td>{task.latitud}</td>
+              <td>{task.n_plantas}</td>
+              <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+             
+            </tr>
+          )) : <tr><td colSpan={999999999999} className="p-5 text-center">{lotes.message}</td></tr>}
           </tbody>
         </table>
 

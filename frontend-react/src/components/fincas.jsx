@@ -109,7 +109,11 @@ const FincaView = () => {
     useEffect(() => {
         const buscarFincas = async () => {
             try {
-                const response = await Api.get("finca/listar");
+                const response = await Api.get("finca/listar", {
+                    headers: {
+                        token: localStorage.getItem("token")
+                    }
+                });
                 setFincas(response.data);
             } catch (error) {
                 console.error("Error fetching tasks:", error);
@@ -494,10 +498,11 @@ const FincaView = () => {
                         </thead>
 
                         <tbody>
-                            {fincas
-                                .filter((task) =>
-                                    task.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-                                )
+
+                            {fincas.length > 0 ? fincas
+                                /*  .filter((task) =>
+                                     task.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+                                 ) */
                                 .map((task) => (
                                     <tr key={task.id} className="border-t">
                                         <td className="td-id">{task.id}</td>
@@ -541,7 +546,7 @@ const FincaView = () => {
                                             </div>
                                         </td>
                                     </tr>
-                                ))}
+                                )) : <tr><td colSpan={999999999999} className="p-5 text-center">{fincas.message}</td></tr>}
                         </tbody>
 
                     </table>
@@ -562,58 +567,58 @@ const FincaView = () => {
                                 </div>
                                 <div className="modal-body">
 
-                                <div className="container-fluid w-full">
-                                    <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
-                                        ref={tableRef2}
-                                        cellPadding={0}
-                                        width={"100%"}
-                                        style={
-                                            {
-                                                width: "100%",
-                                                maxWidth: "100%"
+                                    <div className="container-fluid w-full">
+                                        <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+                                            ref={tableRef2}
+                                            cellPadding={0}
+                                            width={"100%"}
+                                            style={
+                                                {
+                                                    width: "100%",
+                                                    maxWidth: "100%"
+                                                }
                                             }
-                                        }
-                                    >
-                                        <thead>
-                                            <tr>
-                                                <th>Nombre</th>
-                                                <th>Finca</th>
-                                                <th>Latitud</th>
-                                                <th>Longitud</th>
-                                                <th>N° Plantas</th>
-                                                <th>Variedad</th>
-                                                <th>Estado</th>
-                                                <th>modificar</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                        >
+                                            <thead>
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Finca</th>
+                                                    <th>Latitud</th>
+                                                    <th>Longitud</th>
+                                                    <th>N° Plantas</th>
+                                                    <th>Variedad</th>
+                                                    <th>Estado</th>
+                                                    <th>modificar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                            {Object.keys(modalLotes).length > 0 ?
-                                                modalLotes.map((lote) => {
-                                                    console.log(lote)
-                                                    return <tr key={lote.id}>
-                                                        <td>{lote.nombre}</td>
-                                                        <td>{lote.nombre_finca}</td>
-                                                        <td>{lote.latitud}</td>
-                                                        <td>{lote.longitud}</td>
-                                                        <td>{lote.n_plantas}</td>
-                                                        <td>{lote.nombre_variedad ? lote.nombre_variedad : <span className="span-no-registra"> No registra</span>}</td>
-                                                        <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                                        <td><button
-                                                            type="button"
-                                                            className="btn-actu"
-                                                            onClick={() => openModal(lote.id)}
-                                                        >
-                                                            Modificar
-                                                        </button></td>
+                                                {Object.keys(modalLotes).length > 0 ?
+                                                    modalLotes.map((lote) => {
+                                                        console.log(lote)
+                                                        return <tr key={lote.id}>
+                                                            <td>{lote.nombre}</td>
+                                                            <td>{lote.nombre_finca}</td>
+                                                            <td>{lote.latitud}</td>
+                                                            <td>{lote.longitud}</td>
+                                                            <td>{lote.n_plantas}</td>
+                                                            <td>{lote.nombre_variedad ? lote.nombre_variedad : <span className="span-no-registra"> No registra</span>}</td>
+                                                            <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                                            <td><button
+                                                                type="button"
+                                                                className="btn-actu"
+                                                                onClick={() => openModal(lote.id)}
+                                                            >
+                                                                Modificar
+                                                            </button></td>
 
-                                                    </tr>
-                                                })
-                                                : <tr>
-                                                    <td className="text-center p-5" colSpan={1000000}>No hay nada para mostrar</td>
-                                                </tr>}
-                                        </tbody>
-                                    </table>
+                                                        </tr>
+                                                    })
+                                                    : <tr>
+                                                        <td className="text-center p-5" colSpan={1000000}>No hay nada para mostrar</td>
+                                                    </tr>}
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
@@ -735,7 +740,7 @@ const FincaView = () => {
                                 }
                             /></div>
                         <button
-                            className="btn-actu"
+                            className="btn-actu-fin"
                             onClick={handleEditUser1}
                         >
                             Actualizar
@@ -883,7 +888,7 @@ const FincaView = () => {
                                 />
                             </div>
                             <button
-                                className="btn-actu"
+                                className="btn-actu-fin"
                                 onClick={loteEditUser1}
                             >
                                 Actualizar
