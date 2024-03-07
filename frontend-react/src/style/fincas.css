@@ -8,6 +8,16 @@
   width: 100%;
 }
 
+.contTitle-finca {
+  position: relative;
+  top: 56px;
+  left: 26px;
+  background-color: white;
+  border-radius: 8px;
+  width: 93%;
+  height: 70px;
+}
+
 .btn-añadir-finca {
   position: relative;
   padding: 6px 10px;
@@ -21,7 +31,7 @@
   transition: background-color 0.3s;
   top: -20px;
   /* Ajusta la distancia desde la parte superior */
-  left: 15%;
+  left: 8%;
 }
 
 .table1 {
@@ -824,12 +834,13 @@ body {
 .titulo-listado {
   justify-content: center;
   text-align: left;
-  font-weight: bold;
+  font-weight: bold; 
   position: relative;
   font-family: Arial, Helvetica, sans-serif;
-  color: #168A45;
+  color:#168A45;
   font-size: 1.5rem;
   top: 25px;
+  left: 20px;
 }
 
 .fondo-over {
