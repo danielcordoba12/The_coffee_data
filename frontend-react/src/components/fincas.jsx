@@ -529,7 +529,6 @@ const FincaView = (user) => {
                     : '' : ''}
                     </div>
                 
-            <br /><br /><br /><br /><br />
 
 
             <div className="container-listado">

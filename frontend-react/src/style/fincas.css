@@ -817,8 +817,13 @@ body {
 }
 
 .container-listado {
-  background-color: white;
-
+  position: relative;
+  top: 95px;
+  left: 26px;
+  width: 93%;
+  height: 1000rem;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .contTitle {
