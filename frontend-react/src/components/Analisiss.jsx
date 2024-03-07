@@ -19,7 +19,7 @@ import { Alert } from "bootstrap";
 
 
 
-const Analisis = () => {
+const Analisis = (user) => {
 
     const [analisis, setAnalisis] = useState([]);
     const [statusSelect, setStatusSelect] = useState({});
@@ -57,7 +57,11 @@ const Analisis = () => {
 
     const buscarAnalisis = async () => {
         try {
-            const response = await Api.get('analisis/listar');
+            const response = await Api.get('analisis/listar', {
+                headers: {
+                    token: localStorage.getItem("token")
+                }
+            });
             setAnalisis(response.data);
             console.log(response)
         } catch (error) {
@@ -390,7 +394,8 @@ const Analisis = () => {
                             </tr>
                         </thead>
                         <tbody className="bg-gray-200">
-                            {analisis.map((task) => (
+                            { analisis.length > 0 ? analisis 
+                            .map((task) => (
                                 <tr key={task.id_analisis}>
                                     <td>{task.id_analisis}</td>
                                     <td>{task.fecha_analisis = formatDate(task.fecha_analisis)}</td>
@@ -412,7 +417,7 @@ const Analisis = () => {
                                         </button>
                                     </td>
                                 </tr>
-                            ))}
+                            )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
                         </tbody>
                     </table>
                 </div>
@@ -429,8 +434,6 @@ const Analisis = () => {
 
                                 <div className="select-option-input-d">
                                     {muestras.map((key, index) => {
-              
-
                                         if (modalAnalisis.muestras_id) {
                                             !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = modalAnalisis.muestras_id
                                             if (key.id == modalAnalisis.muestras_id) {
