@@ -353,7 +353,7 @@ const Cafe = () => {
 
 
                     <div className="container-list-cafe">
-                    <div className="container-fluid w-full">
+                    <div className="container-fluid w-full" key={key}>
                         <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" width={"100%"} ref={dataTableRef}>
 
                             <thead>
