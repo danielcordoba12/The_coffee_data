@@ -67,7 +67,11 @@ const Analisis = () => {
 
     const buscarMuestras = async () => {
         try {
-            const response = await Api.get('muestra/listar');
+            const response = await Api.get('muestra/listar', {
+                headers: {
+                    token: localStorage.getItem("token")
+                }
+            });
             setMuestra(response.data);
         } catch (error) {
             console.error('Error fetching tasks:', error);
