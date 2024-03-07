@@ -321,26 +321,35 @@ const Analisis = () => {
         searchInput()
     }, [openModal]);
 
-    const tableRef = useRef();
-    useEffect(() => {
-        if (usuarios.length > 0) {
-            if ($.fn.DataTable.isDataTable(tableRef.current)) {
-                $(tableRef.current).DataTable().destroy();
-            }
-            $(tableRef.current).DataTable({
-                columnsDefs: [
+    const dataTableRef = useRef(null);
+    const initializeDataTable = (analisis) => {
+        $(document).ready(function () {
+            $(dataTableRef.current).DataTable({
+                columnDefs:[
                     {
-                        targets: -1,
-                        responsivePropiority: 1,
-                    },
-                ],
+                        targets:-1,
+                        responsivePriority:1
+                      }
+                  ],
+                lengthMenu: [5, 10, 20, 30, 40, 50],
+                processing: true,
+                pageLength: 5,
+                language: esES,
                 responsive: true,
-                lengthMenu: [[5, 10, 100 - 1],
-                ["5 Filas", "10 Filas", "100 Filas", "Ver todo"],
-                ],
             });
+        });
+
+        return () => {
+            $(dataTableRef.current).DataTable().destroy(true);
+        };
+    };
+
+    useEffect(() => {
+        setKey(key + 1)
+        if (analisis.length > 0) {
+            initializeDataTable(analisis);
         }
-    }, [usuarios]);
+    }, [analisis]);
     return (
 
         <>
@@ -360,7 +369,7 @@ const Analisis = () => {
 
             <div className="tablaAnalisis">
                 <div className="container-fluid w-full" key={key}>
-                    <table id="table-d" style={{ width: "100%" }} className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={tableRef}>
+                    <table id="table-d" style={{ width: "100%" }} className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                         <thead>
                             <tr className="bg-gray-200">
                                 <th>id</th>
