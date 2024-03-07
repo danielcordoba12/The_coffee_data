@@ -655,8 +655,11 @@ const FincaView = (user) => {
                                                     <th>N° Plantas</th>
                                                     <th>Variedad</th>
                                                     <th>Estado</th>
+                                                    {user.user ? user.user.rol == 'administrador' ?
                                                     
                                                     <th>modificar</th>
+                                                    : '' : ''}
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -673,7 +676,8 @@ const FincaView = (user) => {
                                                             <td>{lote.nombre_variedad ? lote.nombre_variedad : <span className="span-no-registra"> No registra</span>}</td>
                                                             <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                                                             
-                                                            <td>{user.user ? user.user.rol == 'administrador' ?
+                                                            {user.user ? user.user.rol == 'administrador' ?
+                                                            <td>
                                                                 <button
                                                                 type="button"
                                                                 className="btn-actu"
@@ -681,8 +685,9 @@ const FincaView = (user) => {
                                                             >
                                                                 Modificar
                                                             </button>
-                                                            : '' : ''}</td>
+                                                            </td>
 
+                                                            : '' : ''}
                                                         </tr>
                                                     })
                                                     : <tr>
