@@ -4,6 +4,7 @@ import Api from "../services/api";
 import Sweet from "../helpers/Sweet";
 import "../style/cafe.css";
 import $ from "jquery";
+import esES from "../languages/es-ES.json"
 import "bootstrap"
 import "datatables.net";
 import "datatables.net-dt/css/dataTables.dataTables.min.css";
@@ -125,7 +126,7 @@ const Cafe = () => {
             console.error("Error editando el Cafe: ", error);
         }
     };
-    const handleEditUser2 = async () => {       
+    const handleEditUser2 = async () => {
         const result = await Sweet.confimarDeshabilitar({
         });
         if (result.isConfirmed) {
@@ -196,10 +197,10 @@ const Cafe = () => {
             } else {
                 Sweet.registroExitoso("/home/cafe");
                 closeRegistrarModal();
-                
+
             }
             const response = await Api.get("cafe/listar");
-                setCafes(response.data);
+            setCafes(response.data);
 
         } catch (error) {
             console.error("Error al registrar el cafe:", error);
@@ -307,18 +308,16 @@ const Cafe = () => {
     const initializeDataTable = (Cafes) => {
         $(document).ready(function () {
             $(dataTableRef.current).DataTable({
-                columnDefs:[
+                columnDefs: [
                     {
-                        targets:-1,
-                        responsivePriority:1
-                      }
-                  ],
+                        targets: -1,
+                        responsivePriority: 1
+                    }
+                ],
                 lengthMenu: [5, 10, 20, 30, 40, 50],
                 processing: true,
                 pageLength: 5,
-                language: {
-                    processing: "Procesando datos...",
-                },
+                language: esES,
                 responsive: true,
             });
         });
@@ -340,24 +339,22 @@ const Cafe = () => {
     return (<>
 
 
-        <div >
             <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
+            <div className="contTitle-coffe">
+                <h1 className="title-coffee">Café</h1>
+                    <button to="/cafe/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
+                        Añadir
+                    </button>
+                </div>
+            
 
 
 
-            <div className="bgr-c">
-                <div className="container-list-cafe">
-                    <h1 className="title-cafe"> Listado de  cafe</h1>
 
-
-
-                    <div className="container-fluid w-full" key={key} >
-                        <button to="/cafe/registrar" className="btn-register-cofee" onClick={openRegistrarModal}>
-                            Añadir
-                        </button>
-
-                        <table  className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" width={"100%"} ref={dataTableRef}>
+                    <div className="container-list-cafe">
+                    <div className="container-fluid w-full" key={key}>
+                        <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" width={"100%"} ref={dataTableRef}>
 
                             <thead>
                                 <tr className="bg-gray-200">
@@ -400,7 +397,6 @@ const Cafe = () => {
                         </table>
                     </div>
                 </div>
-            </div>
 
             {modalCafe && (
                 <div className="div-modal">
@@ -540,8 +536,6 @@ const Cafe = () => {
                     </div>
                 </div>
             )}
-        </div>
-
     </>
     )
 }

@@ -110,21 +110,21 @@ const FincaView = (user) => {
         };
         fetchMunicipios();
     }, []);
-
+    const buscarFincas = async () => {
+        try {
+            const response = await Api.get("finca/listar", {
+                headers: {
+                    token: localStorage.getItem("token")
+                }
+            });
+            setFincas(response.data);
+        } catch (error) {
+            console.error("Error fetching tasks:", error);
+        }
+    };
 
     useEffect(() => {
-        const buscarFincas = async () => {
-            try {
-                const response = await Api.get("finca/listar", {
-                    headers: {
-                        token: localStorage.getItem("token")
-                    }
-                });
-                setFincas(response.data);
-            } catch (error) {
-                console.error("Error fetching tasks:", error);
-            }
-        };
+
         buscarFincas();
     }, []);
 
@@ -145,7 +145,7 @@ const FincaView = (user) => {
 
     const openmodalregisfinca = () => {
         setRegistrarModalOpenfinca(true);
-        console.log("modal" , setRegistrarModalOpenfinca);
+        console.log("modal", setRegistrarModalOpenfinca);
         console.log("si estoy funcionando");
     };
 
@@ -213,8 +213,7 @@ const FincaView = (user) => {
             }
 
             // Recargar la lista de lotes después de la actualización
-            const response = await Api.get("finca/listar");
-            setFincas(response.data);
+
         } catch (error) {
             console.error("Error editando la finca: ", error);
         }
@@ -227,8 +226,7 @@ const FincaView = (user) => {
                 await Api.patch(`/finca/desactivar/${SelectedFincaId}`, modalFinca);
                 closeEditarModal();
                 // Recargar la lista de fincas después de la desactivación
-                const response = await Api.get("finca/listar");
-                setFincas(response.data);
+                buscarFincas()
             } catch (error) {
                 console.error("Error desactivando el Finca: ", error);
             }
@@ -242,8 +240,7 @@ const FincaView = (user) => {
                 await Api.patch(`/finca/activar/${SelectedFincaId}`, modalFinca);
                 closeEditarModal();
                 // Recargar la lista de fincas después de la activación
-                const response = await Api.get("finca/listar");
-                setFincas(response.data);
+                buscarFincas();
             } catch (error) {
                 console.error("Error activando el Finca: ", error);
             }
@@ -495,9 +492,10 @@ const FincaView = (user) => {
                         parent.appendChild(h6)
                     }
                 }
-            } else { Sweet.registroExitoso();
+            } else {
+                Sweet.registroExitoso();
                 closeRegistrarModalfinca();
-              
+
                 // closeRegistrarModal();
                 // const response = await Api.get("finca/listar");
                 setFincas(data.data);
@@ -518,21 +516,23 @@ const FincaView = (user) => {
             )}
 
             {/* <img src="../../public/img/fondo.png" alt="" className="fondo2" /> */}
+
+
+
+            
+                <div className="contTitle-finca">
+                    <h4 className="titulo-listado"> Fincas</h4>
+                    {user.user ? user.user.rol == 'catador' ?
+                    <button className="btn-añadir-finca" onClick={() => { setIdUsuario(user.user.id); openmodalregisfinca() }} >
+                        Añadir
+                    </button>
+                    : '' : ''}
+                    </div>
+                
+
+
             <div className="container-listado">
-                <h4 className="titulo-listado"> Listado de Fincas</h4>
-                <br />
-                <br />
-
-
                 <div className="container-fluid w-full">
-                {user.user ? user.user.rol == 'catador' ?
-                <button className="btn-añadir-finca" onClick={() => { setIdUsuario(user.user.id); openmodalregisfinca() }} >
-                            Añadir
-                        </button>
-                        : '' : ''}
-
-
-
                     <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
                         ref={tableRef}
                         cellPadding={0}
@@ -600,14 +600,14 @@ const FincaView = (user) => {
                                                             Ver Lotes
                                                         </button>
                                                         {user.user ? user.user.rol == 'administrador' ?
-                                                        <button
-                                                            type="button"
-                                                            className="btn-ver"
-                                                            onClick={() => { setIdFinca(task.id); openRegistrarModal() }}
-                                                        >
-                                                            Registrar Lote
-                                                        </button>
-                                                        : '' : ''}
+                                                            <button
+                                                                type="button"
+                                                                className="btn-ver"
+                                                                onClick={() => { setIdFinca(task.id); openRegistrarModal() }}
+                                                            >
+                                                                Registrar Lote
+                                                            </button>
+                                                            : '' : ''}
                                                     </div>
                                                 </div>
                                             </div>
@@ -655,7 +655,7 @@ const FincaView = (user) => {
                                                     <th>N° Plantas</th>
                                                     <th>Variedad</th>
                                                     <th>Estado</th>
-                                                    
+
                                                     <th>modificar</th>
                                                 </tr>
                                             </thead>
@@ -672,16 +672,16 @@ const FincaView = (user) => {
                                                             <td>{lote.n_plantas}</td>
                                                             <td>{lote.nombre_variedad ? lote.nombre_variedad : <span className="span-no-registra"> No registra</span>}</td>
                                                             <td>{lote.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                                            
+
                                                             <td>{user.user ? user.user.rol == 'administrador' ?
                                                                 <button
-                                                                type="button"
-                                                                className="btn-actu"
-                                                                onClick={() => openModal(lote.id)}
-                                                            >
-                                                                Modificar
-                                                            </button>
-                                                            : '' : ''}</td>
+                                                                    type="button"
+                                                                    className="btn-actu"
+                                                                    onClick={() => openModal(lote.id)}
+                                                                >
+                                                                    Modificar
+                                                                </button>
+                                                                : '' : ''}</td>
 
                                                         </tr>
                                                     })

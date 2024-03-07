@@ -197,6 +197,7 @@
     /* top: -2px; */
     transition: all 820ms;
     color: white;
+    text-decoration: none;
     /* background-color: red; */
 
 }
