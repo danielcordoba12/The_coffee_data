@@ -429,6 +429,7 @@ function Grafica() {
         <>        
         {/* <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" /> */}
 
+        <h1 className='title-grafica'>Graficar</h1> 
 
         <button className="btn-reg-mue" onClick={() => toggleModal(1)}>
           Graficas resultado
@@ -505,7 +506,8 @@ function Grafica() {
       </table>
 
               {/* <button onClick={buscarResultado(resultadoSelect.id,resultadoSelect.fecha_creacion)}>Graficar </button> */}
-              <button onClick={() => {
+              <button className='button-graficar'
+              onClick={() => {
                 buscarResultado(ids, fechas),
                 toggleModal();
               }}>Graficar</button>

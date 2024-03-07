@@ -720,11 +720,11 @@ useEffect(() => {
         {generarInputs()}
   
         <div className="buttons">
-          <button className="button button-aceptar" type="button" onClick={GuardarResultados}>
+          <button className="btn-reg-mue" type="button" onClick={GuardarResultados}>
             Enviar
           </button>
           
-          <button className="button button-cancel" type="button" onClick={hideAllModals}>
+          <button className="btn-reg-mue" type="button" onClick={hideAllModals}>
             Cancelar
           </button>
         </div>
@@ -741,11 +741,11 @@ useEffect(() => {
         <form className="formulario-muestra" method="post">
           {generarInputs2()}
           <div className="buttons">
-            <button className="button button-aceptar" type="button" onClick={() => actualizarResultado(resultadoSellecionado[3])}>
+            <button className="btn-reg-mue" type="button" onClick={() => actualizarResultado(resultadoSellecionado[3])}>
               Actualizar
             </button>
             
-            <button className="button button-cancel" type="button" onClick={hideAllModals}>
+            <button className="btn-reg-mue" type="button" onClick={hideAllModals}>
               Cancelar
             </button>
           </div>
@@ -769,7 +769,7 @@ useEffect(() => {
         {generarInputs3()}
       
         <div className="buttons">          
-          <button className="button button-cancel" type="button" onClick={hideAllModals}>
+          <button className="btn-reg-mue" type="button" onClick={hideAllModals}>
             Cancelar
           </button>
         </div>
@@ -781,6 +781,8 @@ useEffect(() => {
 {/* <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" /> */}
 
 <div className="main-container">
+<h1 className='title-registrar'>Listar resultados</h1> 
+  
   <button className="btn-reg-mue" onClick={() => setShowModal1(!showModal1)}>
       Registrar resultado
   </button>
@@ -832,7 +834,7 @@ useEffect(() => {
                   <td>
                     <button
                                   type="button"
-                                  className="btn-primary"
+                                  className="btn-reg-mue"
                                   onClick={() => { toggleModal(3), buscarResultado(task.analisis_id,convertirFechaSQL(task.fecha_creacion)) ;} }
                               >Mas
                               </button>

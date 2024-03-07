@@ -54,7 +54,7 @@
     }
   }
 
-  const Muestra = () => {
+  const Muestra = (user) => {
     const[muestra, setMuestra] = useState([]);
     // const [showModal,setShowModal] = useState(false);
     // const [showModal2, setShowModal2] = useState(false);
@@ -1032,7 +1032,7 @@ const RegistrarMuestra = async (data) => {
         <button className="btn-reg-mue" type="button" onClick={hideAllModals}> 
           Cancelar
       </button>
-        <button  className='button'  type="submit">Enviar</button>
+        <button  className='btn-reg-mue'  type="submit">Enviar</button>
 
 
       </div>
@@ -1049,6 +1049,8 @@ const RegistrarMuestra = async (data) => {
       {/* <img src="../../public/img/fondo.png" alt="" className="fondo-muestra" /> */}
 
       <div className="main-container">
+      <h1 className='title-registrar'>Listar Muestra</h1> 
+
         <button className="btn-reg-mue" onClick={() => toggleModal(1)}>
             Registrar muestra
         </button>
@@ -1070,13 +1072,24 @@ const RegistrarMuestra = async (data) => {
               <th>Lote</th>
               <th>Variedad</th>
               <th>Estado</th>
-              <th>Estado</th>
+              {user.user ? user.user.rol == 'administrador' ? 
+                <th>Estado</th>
+              : '' : ''}
+
+              {user.user ? user.user.rol == 'administrador' ? 
+
               <th>Actualizar</th>
-              <th>Mas</th>
+              : '' : ''}
+
+              {user.user ? user.user.rol == 'administrador' ? 
+                <th>Mas</th>
+              : '' : ''}
+
             </tr>
           </thead>
           <tbody>
-                  {muestra.map((task,index) => (
+                {muestra. length >0 ? muestra 
+                  .map((task,index) => (
                     <tr key={task.id}>
                       <td>{task.id}</td>
                       <td>{formatDate(task. fecha_creacion)}</td>
@@ -1087,9 +1100,11 @@ const RegistrarMuestra = async (data) => {
                       <td>{task.variedad}</td>
                       <td>{task.estado}</td>
                       <td> 
+                      
+                      
                         {task.estado === 0 ? (
                           <button
-                          className="btn-tertiary"
+                          className="btn-activar"
                           onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
                         >
                           Activar
@@ -1098,7 +1113,7 @@ const RegistrarMuestra = async (data) => {
                         
                           ) : (
                             <button
-                            className="btn-secondary"
+                            className="btn-desactivar"
                             onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
                           >
                             Desactivar
@@ -1106,7 +1121,10 @@ const RegistrarMuestra = async (data) => {
                             
                           )}  
                       </td>
+                      {user.user ? user.user.rol == 'administrador' ? 
+
                       <td>
+
                         <button className="btn-reg-mue"
                           onClick={() => {
                             toggleModal(2);   
@@ -1114,20 +1132,32 @@ const RegistrarMuestra = async (data) => {
                           }}
                           >
                         Editar</button>
+
                       </td>
+                      : '' : ''}
+                      {user.user ? user.user.rol == 'administrador' ? 
+
                       <td>
+
                         <button
-                                      type="button"
-                                      className="btn-primary"
-                                      onClick={() => { toggleModal(3) ,buscarMuestra(task.id)}}
-                                  >Mas
-                                  </button>
+                            type="button"
+                            className="btn-reg-mue"
+                            onClick={() => { toggleModal(3) ,buscarMuestra(task.id)}}
+                            >Mas
+                        </button>
+
                       </td>
+                      : '' : ''}
+
+                      
+                      
 
 
                     </tr>
-                  ))}
-                </tbody>
+                  ))
+
+                :  <tr><td colSpan={999999999999} className="p-5 text-center">{muestra.message}</td></tr>}
+                                  </tbody>
         </table>
         </div>
       </div>

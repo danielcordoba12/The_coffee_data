@@ -512,7 +512,7 @@ export const listarMuestras = async (req, res) => {
         }
         // const [result] =await pool.query("select m.id AS id, m.fecha_creacion,c.id AS cafe, l.nombre as Lote, f.nombre AS Finca,m.estado,m.codigo_externo, u.nombre AS usuario, v.nombre AS variedad from muestras as m JOIN cafes AS c ON m.cafes_id = c.id  JOIN lotes AS l ON c.lotes_id = l.id JOIN fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id  JOIN variedades AS v ON c.variedades_id = v.id");
         // res.status(200).json(result);
-        const sql = "select m.id AS id, m.fecha_creacion,c.id AS cafe, l.nombre as Lote, f.nombre AS Finca,m.estado,m.codigo_externo, u.nombre AS usuario, v.nombre AS variedad from muestras as m JOIN cafes AS c ON m.cafes_id = c.id  JOIN lotes AS l ON c.lotes_id = l.id JOIN fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id  JOIN variedades AS v ON c.variedades_id = v.id";
+        const sql = "select m.id AS id, m.fecha_creacion,c.id AS cafe, l.nombre as Lote, f.nombre AS Finca,m.estado,m.codigo_externo, u.nombre AS usuario, v.nombre AS variedad from muestras as m JOIN cafes AS c ON m.cafes_id = c.id  JOIN lotes AS l ON c.lotes_id = l.id JOIN fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id  JOIN variedades AS v ON c.variedades_id = v.id" + where ;
         // res.status(200).json(result);
         const [result] = await pool.query(sql);
 
