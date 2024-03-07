@@ -3,8 +3,16 @@ import { useEffect, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faSeedling,
   faUser,
+  faMicroscope,
   faHelmetSafety,
+  faMapLocationDot,
+  faMountainSun,
+  faBorderAll,
+  faPlantWilt,
+  faHouse,
+  faClipboardCheck,
   faBars,
   faUsers,
   faToolbox,
@@ -220,14 +228,14 @@ function Dashboard() {
                 />
                 <ul id="listaItemsUl" className="listaItemsUl">
                   <li className="first-icon">
-                    <FontAwesomeIcon icon={faHelmetSafety} className="icon " />
-                    <p id="paragraph">Administrador</p>
+                  <FontAwesomeIcon icon={faHouse} className="icon"/>
+                    <p id="paragraph">Dashboard</p>
                   </li>
 
                   {rolAdmin ? (
                     <li className="first-icon">
                       <Link to={"/home/Usuario/listar"}>
-                        <FontAwesomeIcon icon={faUsers} className="icon" />
+                      <FontAwesomeIcon icon={faUser} className="icon" />
                         <p id="paragraph">Usuarios</p>
                       </Link>
                     </li>
@@ -237,7 +245,7 @@ function Dashboard() {
 
                   <li className="first-icon">
                     <Link to={"/home/finca"}>
-                      <FontAwesomeIcon icon={faToolbox} className="icon" />
+                    <FontAwesomeIcon icon={faMountainSun} className="icon" />
                       <p>Fincas</p>
                     </Link>
                     {showTooltip && (
@@ -246,7 +254,7 @@ function Dashboard() {
                   </li>
                   <li className="first-icon">
                     <Link to={"/home/lote"}>
-                      <FontAwesomeIcon icon={faToolbox} className="icon" />
+                    <FontAwesomeIcon icon={faBorderAll}  className="icon"/>
                       <p>Lotes</p>
                     </Link>
                     {showTooltip && (
@@ -257,7 +265,7 @@ function Dashboard() {
                     <li className="first-icon">
                       <Link to={"/home/cafe"}>
                         <FontAwesomeIcon
-                          icon={faChartColumn}
+                          icon={faSeedling}
                           className="icon"
                         />
                         <p>Cafe</p>
@@ -275,28 +283,28 @@ function Dashboard() {
                   </li>
                   <li className="first-icon">
                     <Link to={"/home/analisis"}>
-                      <FontAwesomeIcon icon={faPhone} className="icon" />
+                    <FontAwesomeIcon icon={faMicroscope} className="icon" />
                       <p>Analisis</p>
                     </Link>
                   </li>
 
                   <li className="first-icon">
                     <Link to={"/home/resultado"}>
-                      <FontAwesomeIcon icon={faVials} className="icon" />
+                    <FontAwesomeIcon icon={faClipboardCheck} className="icon" />
                       <p>Resultado</p>
                       {/* <h3 className='tooltip-li'>Resultado</h3>  */}
                     </Link>
                   </li>
                   <li className="first-icon">
                     <Link to={"/home/grafica"}>
-                      <FontAwesomeIcon icon={faVials} className="icon" />
+                      <FontAwesomeIcon icon={faChartColumn}  className="icon"/>
                       <p>Grafica</p>
                     </Link>
                   </li>
                   {rolAdmin ? (
                     <li className="first-icon">
                       <Link to={"/home/municipio"}>
-                        <FontAwesomeIcon icon={faSliders} className="icon" />
+                      <FontAwesomeIcon icon={faMapLocationDot} className="icon" />
                         <p className="paragraf-li" id="paragrafLi">
                           Municipios
                         </p>
@@ -318,7 +326,7 @@ function Dashboard() {
                           color: "black !important",
                         }}
                       >
-                        <FontAwesomeIcon icon={faSliders} className="icon" />
+                        <FontAwesomeIcon icon={faPlantWilt}  className="icon"/>
                         <p>Variedad</p>
                       </Link>
                     </li>
