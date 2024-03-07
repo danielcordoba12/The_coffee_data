@@ -1,12 +1,5 @@
 /* clases de la tabla listar cafe */
 
-.title-cafe {
-  color: #168A45;
-  font: bold;
-  display: flex;
-  justify-content: center;
-  margin-top: 0;
-}
 
 .bgr-c {
   background-color: rgb(234, 241, 243);
@@ -14,6 +7,27 @@
 
 /* clases del modal registrar  */
 
+.contTitle-coffe {
+  position: relative;
+  top: 56px;
+  left: 26px;
+  background-color: white;
+  border-radius: 8px;
+  width: 93%;
+  height: auto;
+}
+
+.title-coffee {
+  justify-content: center;
+  text-align: left;
+  font-weight: bold;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #168A45;
+  font-size: 1.5rem;
+  top: 25px;
+  left: 35px;
+}
 
 .btn-modi-cafe {
   color: white;
@@ -37,7 +51,8 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
-.btn-act-cafe:hover{
+
+.btn-act-cafe:hover {
   background-color: #168A45;
   color: white;
 }
@@ -61,7 +76,7 @@
 }
 
 .table-register-cafe h1 {
-  color:#168A45;
+  color: #168A45;
   text-decoration: none;
   text-align: center;
   font-weight: bold;
@@ -108,19 +123,25 @@
 }
 
 .btn-register-cofee {
+  display: flex;
   position: relative;
-  padding: 6px 10px;
+  width: 75px;
+  padding: 10px 10px;
+  background-color: #168A45;
   color: white;
-  background-color:#168A45;
-  font-weight: bold;
-  padding: 8px 16px;
+  left: 150px;
+  top: -15px;
+  position: relative;
+  text-decoration: none;
   border: none;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  top: 30px;
-  /* Ajusta la distancia desde la parte superior */
-  left: 180px;
+  font-size: 1rem;
+  /* border: 1px solid grey; */
+  font-weight: bold;
   /* Ajusta la distancia desde la derecha */
 }
 
@@ -148,6 +169,16 @@
 
 .input-search {
   color: black;
+}
+
+.container-list-cafe {
+  position: relative;
+  top: 95px;
+  left: 26px;
+  width: 93%;
+  height: 1000rem;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 
@@ -253,7 +284,7 @@
 }
 
 .btn-desactivar {
-  background-color:gainsboro;
+  background-color: gainsboro;
   color: black;
   font-weight: bold;
   padding: 8px;
@@ -264,12 +295,12 @@
 }
 
 .btn-desactivar:hover {
-  background-color:#B31312;
+  background-color: #B31312;
   color: #f2f2f2;
 }
 
 .btn-activar {
-  background-color:gainsboro;
+  background-color: gainsboro;
   color: black;
   font-weight: bold;
   padding: 8px;
@@ -281,5 +312,5 @@
 
 .btn-activar:hover {
   color: white;
-  background-color:#008000;
+  background-color: #008000;
 }
