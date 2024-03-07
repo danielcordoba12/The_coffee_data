@@ -7,7 +7,7 @@ const analisisRoute = Router();
 
 
 analisisRoute.post("/registrar",guardarAnalisis);
-analisisRoute.get("/listar", listarAnalisis);
+analisisRoute.get("/listar",validartoken, listarAnalisis);
 // analisisRoute.get("/listarp", listarPropietario);
 analisisRoute.get("/buscar/:id",buscaranalisis);
 analisisRoute.put("/update/:id",actualizarAnalisis);
