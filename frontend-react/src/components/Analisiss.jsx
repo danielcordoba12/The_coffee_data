@@ -366,6 +366,7 @@ const Analisis = (user) => {
 
             <div className="contTitle">
                 <h1 className="titleanalisis">Análisis</h1>
+                {user.user ? user.user.rol == 'administrador' ?
                 <button to="/analisis/registrar" className="btn-registrar-d" onClick={() => {
                     openRegistrarAnalisisModal();
                     setDataSelect({})
@@ -373,6 +374,7 @@ const Analisis = (user) => {
                 }}>
                     Añadir
                 </button>
+                : '' : ''}
             </div>
 
             <div className="tablaAnalisis">
@@ -433,7 +435,8 @@ const Analisis = (user) => {
                             <br /><div className="div-input-d div-input-search-select">
 
                                 <div className="select-option-input-d">
-                                    {muestras.map((key, index) => {
+                                    {muestras.length > 0 ? muestras
+                                    .map((key, index) => {
                                         if (modalAnalisis.muestras_id) {
                                             !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = modalAnalisis.muestras_id
                                             if (key.id == modalAnalisis.muestras_id) {
@@ -442,12 +445,13 @@ const Analisis = (user) => {
                                         }
 
                                         return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
-                                    })}
+                                    }):<tr><td ></td></tr>}
                                 </div>
                                 <input defaultValue={datasSelect.muestras_id ? datasSelect.muestras_id.referencia ? datasSelect.muestras_id.referencia : "" : ""} className="input-search-d" type="text" id="muestras_id" />
                                 <label htmlFor="muestras_id" className="labelEdit">Muestras</label>
 
                             </div><br />
+                            {user.user ? user.user.rol == 'administrador' ?
                             <div className="div-input-d div-input-search-select">
 
                                 <div className="select-option-input-d">
@@ -462,10 +466,13 @@ const Analisis = (user) => {
 
                                         return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
                                     })}
+                                    
                                 </div>
+                                
                                 <input className="input-search-d" defaultValue={datasSelect.usuarios_id ? datasSelect.usuarios_id.referencia ? datasSelect.usuarios_id.referencia : "" : ""} type="text" id="usuarios_id" />
                                 <label htmlFor="usuarios_id" className="labelEdit">Catador</label>
                             </div>
+                            : '' : ''}
                             <button
                                 className="btn-actualizar-d"
                                 onClick={() => {
