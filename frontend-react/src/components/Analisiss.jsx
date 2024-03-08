@@ -143,8 +143,7 @@ const Analisis = (user) => {
             try {
                 await Api.patch(`analisis/desactivar/${selectAnalisisid}`, modalAnalisis);
                 closeModalEdit();
-                const response = await Api.get("analisis/listar");
-                setAnalisis(response.data);
+                buscarAnalisis();
             } catch (error) {
                 console.error("Error desactivando el Analisis: ", error);
             }
@@ -156,8 +155,7 @@ const Analisis = (user) => {
             try {
                 await Api.patch(`/analisis/activar/${selectAnalisisid}`, modalAnalisis);
                 closeModalEdit();
-                const response = await Api.get("analisis/listar");
-                setAnalisis(response.data);
+                buscarAnalisis();
             } catch (error) {
                 console.error("Error activando el analisis: ", error);
             }
