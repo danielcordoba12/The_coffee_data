@@ -8,10 +8,9 @@ import $ from "jquery";
 import "bootstrap";
 import "datatables.net";
 import "datatables.net-bs5";
-import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
-import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+
 
 
 const FincaView = (user) => {
@@ -357,7 +356,7 @@ const FincaView = (user) => {
 
         try {
             setLoadingLotes(true);
-            const response = await Api.get(`/lote/listarPorFinca/${fincaId}`);
+            const response = await Api.get(`/lote/listarPorFinca/${fincaId}`,);
 
             setModalLotes(response.data);
         } catch (error) {
