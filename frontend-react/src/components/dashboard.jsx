@@ -55,10 +55,10 @@ function Dashboard() {
 
     const decodedToken = JSON.parse(atob(jwtToken.split(".")[1]));
 
-    console.log("decode token", decodedToken.rol);
+    // console.log("decode token", decodedToken.rol);
     setDataUser(decodedToken);
     if (decodedToken.rol == "administrador") {
-      console.log("holis", rolCafetero);
+      // console.log("holis", rolCafetero);
       setRolAdmin(true);
     } else {
       console.log("holis 2", rolCafetero);
