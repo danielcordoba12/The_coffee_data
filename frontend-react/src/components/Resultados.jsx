@@ -5,14 +5,15 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faX }  from'@fortawesome/free-solid-svg-icons'
 import Api from "../services/api";
 import esES from "../languages/es-ES.json"
+import { localhost } from "../services/api";
 import $ from "jquery";
 import "bootstrap";
 import "datatables.net";
 import "datatables.net-bs5";
-import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+// import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
-import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+// import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 
 
@@ -617,11 +618,12 @@ useEffect(() => {
         fecha: fechaActual,
         analisis_id: cafes_id.value
       }));
+      console.log(typeof localhost);
 
       // setDatos(datosConAnalisisId);
       // const datosValidos = datosConAnalisisId.filter(dato => dato.valor !== null || dato.valor !== undefined);
 
-      const response = await fetch("http://localhost:4000/resultado/registrar", {
+      const response = await fetch(`http://${localhost}:4000/resultado/registrar`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -654,7 +656,7 @@ useEffect(() => {
   async function listarResultado(){
     try{
 
-      const response = await fetch('http://localhost:4000/resultado/listar',{
+      const response = await fetch(`http://${localhost}:4000/resultado/listar`,{
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -670,7 +672,7 @@ useEffect(() => {
 
 
   function buscarResultado(id,fecha_creacion) {
-    fetch(`http://localhost:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion}`,{
+    fetch(`http://${localhost}:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion}`,{
       method:'GET',
       headers: {
         'Content-type': 'application/json',
@@ -701,7 +703,7 @@ useEffect(() => {
       
     }));
 
-    fetch(`http://localhost:4000/resultado/update/${id}`, {
+    fetch(`http://${localhost}:4000/resultado/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

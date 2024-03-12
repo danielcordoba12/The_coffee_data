@@ -10,10 +10,12 @@ import $ from "jquery";
 import "bootstrap";
 import "datatables.net";
 import "datatables.net-bs5";
-import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+// import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
-import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+import { localhost } from "../services/api";
+
+// import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 
 
@@ -114,7 +116,7 @@ function Grafica() {
   async function listarResultado(){
     try{
 
-      const response = await fetch('http://localhost:4000/resultado/listar',{
+      const response = await fetch(`http://${localhost}:4000/resultado/listar`,{
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -141,7 +143,7 @@ function Grafica() {
   
       // Realizar las llamadas fetch
       Promise.all(id.map((id, index) => {
-          return fetch(`http://localhost:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion[index]}`, {
+          return fetch(`http://${localhost}:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion[index]}`, {
               method: 'GET',
               headers: {
                   'Content-type': 'application/json',

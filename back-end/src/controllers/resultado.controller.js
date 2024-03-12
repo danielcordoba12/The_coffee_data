@@ -40,7 +40,7 @@ export const guardarResultado = async (req, res) => {
             });
         }
     } catch (error) {
-    console.log(datos)
+    // console.log(datos)
 
         res.status(500).json({
             "status": 500,
