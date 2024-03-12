@@ -7,14 +7,8 @@ import esES from "../languages/es-ES.json"
 import $ from "jquery";
 import "bootstrap"
 import "datatables.net";
-import "datatables.net-dt/css/dataTables.dataTables.min.css";
-import "datatables.net-dt/css/dataTables.dataTables.css";
 import 'datatables.net-responsive';
 import 'datatables.net-responsive-dt';
-import 'datatables.net-responsive-dt/css/responsive.dataTables.min.css';
-import 'datatables.net-responsive-dt/css/responsive.dataTables.css';
-import 'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
-import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css';
 import 'datatables.net-bs5';
 
 

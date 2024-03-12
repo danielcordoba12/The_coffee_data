@@ -8,7 +8,7 @@ const resultadoRoute = Router();
 
 
 resultadoRoute.post("/registrar",guardarResultado);
-resultadoRoute.get("/listar",listarResultados);
+resultadoRoute.get("/listar",validartoken,listarResultados);
 resultadoRoute.get("/buscar/:id",buscarResultado);
 resultadoRoute.put("/update/:id",actualizarResultado);
 resultadoRoute.delete("/delete/:id",eliminarResultado);

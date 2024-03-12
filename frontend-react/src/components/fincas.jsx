@@ -209,6 +209,7 @@ const FincaView = (user) => {
                 Sweet.actualizacionExitosa();
                 setModalFinca(false)
                 closeModal();
+                buscarFincas();
             }
 
             // Recargar la lista de lotes después de la actualización

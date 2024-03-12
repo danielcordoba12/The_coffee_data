@@ -5,19 +5,20 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faX }  from'@fortawesome/free-solid-svg-icons'
 import Api from "../services/api";
 import esES from "../languages/es-ES.json"
+import { localhost } from "../services/api";
 import $ from "jquery";
 import "bootstrap";
 import "datatables.net";
 import "datatables.net-bs5";
-import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
+// import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
-import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
+// import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 
 
 
-function Resultado() {
+function Resultado(user) {
   const [datos, setDatos] = useState([]);
   const [nuevosDatos, setNuevosDatos] = useState([]);
   const [resultado,setResultado] = useState([]);
@@ -87,7 +88,7 @@ function Resultado() {
 
 
   const inicializarDatos = () => {
-      const nuevosDatos = Array.from({ length: 25 }, (_, index) => ({
+      const nuevosDatos = Array.from({ length: 29 }, (_, index) => ({
         valor: "",
       analisis_id: "",
       variables_id: (index + 1).toString(),
@@ -137,7 +138,7 @@ useEffect(()=>{
     for (let s = 0; s < divOptions.length; s++) {
       if(!e.target == divOptions[s] || !divOptions[s].contains(e.target)){
         let options = divOptions[s].querySelectorAll(".select-options-cafe")
-        console.log(options[0])
+        // console.log(options[0])
         if(options.length> 0){
           options[0].style.display = "none"
         } 
@@ -275,9 +276,44 @@ useEffect(() => {
   
 
   const camposEntrada2 = (index, field, value) => {
+  
     const nuevosDatos = datos.map((dato, i) =>
       i === index ? { ...dato, [field]: value } : dato
     );
+    console.log("j",index,"i",field,"dato",value)
+
+    // if(index == 3 ){
+    //   const nuevosDatos = datos.map((dato, i) =>
+    //   i === index ? { ...dato, [field]: 120 } : dato
+      
+    // );
+    // nuevosDatos[3][field] = 120;
+    // return nuevosDatos
+      // setDatos(nuevosDatos)  
+    // }
+
+    if (index == index) { // Input 5
+      const valorInput1 = nuevosDatos[0].valor; // Valor del input 1
+      const valorInput2 = nuevosDatos[2].valor; // Valor del input 2
+  
+      // Realiza el cálculo y actualiza el valor del input 5
+      const nuevoValorInput5 = /* Tu cálculo */( valorInput2 *  100) / valorInput1;
+      nuevosDatos[3].valor = nuevoValorInput5;
+
+      const nuevoValorInput6 = /* Tu cálculo */valorInput1 - valorInput2 ;
+      nuevosDatos[4].valor = nuevoValorInput6;
+
+
+    }
+
+
+    const inputElement = document.getElementById(`input-${datos[index].variables_id}`);
+    if (inputElement) {
+      inputElement.value = value;
+    }
+    console.log("nice2",nuevosDatos);
+
+
     setDatos(nuevosDatos);
   };
 
@@ -380,39 +416,50 @@ useEffect(() => {
     // let cafes_id = dataSelect.cafes_id;
     // console.log("este es cafes_id " + cafes_id);
     // setCafesId(dataSelect.cafes_id)
+      // console.log("hola mundo");
+
     for (let i = 0; i < labelText.length; i += numColumnas) {
       
-      const fila = labelText.slice(i, i + numColumnas);
+      const fila = datos.slice(i, i + numColumnas);
       // for (let i = 0; i < datos.length; i += numColumnas) {
       
       //   const fila = datos.slice(i, i + numColumnas);
-      
+        // console.log("hola mundo");
       filas.push(
+
         
         <div className="columna" key={i}>
           
           {fila.map((dato, j) => (
+        
             
             <div className="container-input" key={dato.variables_id}>
               <input
                 type="text"
                 id={`input-${dato.variables_id}`}
                 value={dato.valor}
+                // value={dato.valor}
+
                 className="input"
                 placeholder=""
                 onChange={(e) => camposEntrada2(i + j, "valor", e.target.value)}
               />
               <label htmlFor={`input-${dato.variables_id}`} className="label">
+                {           
+                // console.log("j",j,"i",i,"dato",dato)
+                // console.log("dato",dato.variables_id, dato.valor) 
+                }
                 {labelText[i + j]}
               </label>
             </div>
-          ))}
-          
+          ))}        
         </div>
-        
+
       );
+
       
     }
+  
   
     // Agregar una columna separada para el análisis
     filas.push(
@@ -423,7 +470,8 @@ useEffect(() => {
                         <div className="select-options-cafe" 
 
                         >
-                            {analisis.map((key, index) => (
+                            {analisis.length > 0 && analisis
+                            .map((key, index) => (
                                 (
                                     <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafes_id").value = key.id_analisis;!dataSelect.cafes_id ? dataSelect.cafes_id = {} : "".dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id_analisis}>
                                       
@@ -571,11 +619,12 @@ useEffect(() => {
         fecha: fechaActual,
         analisis_id: cafes_id.value
       }));
+      console.log(typeof localhost);
 
       // setDatos(datosConAnalisisId);
       // const datosValidos = datosConAnalisisId.filter(dato => dato.valor !== null || dato.valor !== undefined);
 
-      const response = await fetch("http://localhost:4000/resultado/registrar", {
+      const response = await fetch(`http://${localhost}:4000/resultado/registrar`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -608,11 +657,11 @@ useEffect(() => {
   async function listarResultado(){
     try{
 
-      const response = await fetch('http://localhost:4000/resultado/listar',{
+      const response = await fetch(`http://${localhost}:4000/resultado/listar`, {
         method: "GET",
         headers: {
-          "content-type": "application/json",
-        },
+          token: localStorage.getItem("token")
+      }
       })
       const data = await response.json();
       setResultado(data)
@@ -624,11 +673,11 @@ useEffect(() => {
 
 
   function buscarResultado(id,fecha_creacion) {
-    fetch(`http://localhost:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion}`,{
-      method:'GET',
+    fetch(`http://${localhost}:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion}`,{
       headers: {
         'Content-type': 'application/json',
       },
+      method:'GET'
     })
       .then((res) => res.json())
       .then((data) => {
@@ -655,7 +704,7 @@ useEffect(() => {
       
     }));
 
-    fetch(`http://localhost:4000/resultado/update/${id}`, {
+    fetch(`http://${localhost}:4000/resultado/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -673,7 +722,7 @@ useEffect(() => {
         console.log("Resultado del servidor:", result);
         Sweet.actualizacionExitosa();
         hideAllModals();
-        listarResultado();
+        listarResultado(); 
       })
       .catch((error) => {
         console.error("Error al procesar la solicitud", error);
@@ -685,7 +734,11 @@ useEffect(() => {
   useEffect(() => {
     const buscarUsuarios = async () => {
         try {
-            const response = await Api.get('analisis/listar');
+            const response = await Api.get('analisis/listar',{
+              headers: {
+                  token: localStorage.getItem("token")
+              }
+          });
             setAnalisi(response.data);
             console.log("Soy data de analisis", response.data);
         } catch (error) {
@@ -809,7 +862,8 @@ useEffect(() => {
         </tr>
       </thead>
       <tbody>
-              {resultado.map((task,index) => (
+              {resultado.length > 0 ? resultado
+              .map((task,index) => (
                 <tr key={task.id}>
                   <td>{task.id}</td>
                   {/* <td>{formatDate(task. fecha_creacion)}</td> */}
@@ -841,7 +895,7 @@ useEffect(() => {
                   </td>
 
                 </tr>
-              ))}
+              )): <tr><td colSpan={999999999999} className="p-5 text-center">{resultado.message}</td></tr>}
             </tbody>
     </table>
   </div>
