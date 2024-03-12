@@ -312,7 +312,7 @@ const ListarUsuarios = () => {
           <thead>
             <tr>
               <th>id</th>
-              <th>nombre</th>
+              <th>Nombre</th>
               <th>Apellido</th>
               <th>Numero de documento</th>
               <th>Telefono</th>
