@@ -10,13 +10,15 @@ import $ from "jquery";
 import "bootstrap";
 import "datatables.net";
 import "datatables.net-bs5";
+// import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
+// import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 
 
 
-function Resultado() {
+function Resultado(user) {
   const [datos, setDatos] = useState([]);
   const [nuevosDatos, setNuevosDatos] = useState([]);
   const [resultado,setResultado] = useState([]);
@@ -468,7 +470,8 @@ useEffect(() => {
                         <div className="select-options-cafe" 
 
                         >
-                            {analisis.map((key, index) => (
+                            {analisis.length > 0 && analisis
+                            .map((key, index) => (
                                 (
                                     <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafes_id").value = key.id_analisis;!dataSelect.cafes_id ? dataSelect.cafes_id = {} : "".dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id_analisis}>
                                       
@@ -654,11 +657,11 @@ useEffect(() => {
   async function listarResultado(){
     try{
 
-      const response = await fetch(`http://${localhost}:4000/resultado/listar`,{
+      const response = await fetch(`http://${localhost}:4000/resultado/listar`, {
         method: "GET",
         headers: {
-          "content-type": "application/json",
-        },
+          token: localStorage.getItem("token")
+      }
       })
       const data = await response.json();
       setResultado(data)
@@ -671,10 +674,10 @@ useEffect(() => {
 
   function buscarResultado(id,fecha_creacion) {
     fetch(`http://${localhost}:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion}`,{
-      method:'GET',
       headers: {
         'Content-type': 'application/json',
       },
+      method:'GET'
     })
       .then((res) => res.json())
       .then((data) => {
@@ -719,7 +722,7 @@ useEffect(() => {
         console.log("Resultado del servidor:", result);
         Sweet.actualizacionExitosa();
         hideAllModals();
-        listarResultado();
+        listarResultado(); 
       })
       .catch((error) => {
         console.error("Error al procesar la solicitud", error);
@@ -731,7 +734,11 @@ useEffect(() => {
   useEffect(() => {
     const buscarUsuarios = async () => {
         try {
-            const response = await Api.get('analisis/listar');
+            const response = await Api.get('analisis/listar',{
+              headers: {
+                  token: localStorage.getItem("token")
+              }
+          });
             setAnalisi(response.data);
             console.log("Soy data de analisis", response.data);
         } catch (error) {
@@ -855,7 +862,8 @@ useEffect(() => {
         </tr>
       </thead>
       <tbody>
-              {resultado.map((task,index) => (
+              {resultado.length > 0 ? resultado
+              .map((task,index) => (
                 <tr key={task.id}>
                   <td>{task.id}</td>
                   {/* <td>{formatDate(task. fecha_creacion)}</td> */}
@@ -887,7 +895,7 @@ useEffect(() => {
                   </td>
 
                 </tr>
-              ))}
+              )): <tr><td colSpan={999999999999} className="p-5 text-center">{resultado.message}</td></tr>}
             </tbody>
     </table>
   </div>

@@ -11,18 +11,12 @@
   import "bootstrap";
   import "datatables.net";
   import "datatables.net-bs5";
-<<<<<<< HEAD
+
+
   import 'datatables.net-bs5/js/dataTables.bootstrap5.min.js';
   import "datatables.net-responsive";
   import "datatables.net-responsive-bs5";
-=======
-  // import 'bootstrap/dist/css/bootstrap.min.css';
-  // import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
-  import 'datatables.net-bs5/js/dataTables.bootstrap5.min.js';
-  import "datatables.net-responsive";
-  import "datatables.net-responsive-bs5";
-  // import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
->>>>>>> 6dd9c2e3f3e405e0d618f8fe9240aedefb672675
+
 
   // import 'bootstrap/dist/css/bootstrap.min.css';
   // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
