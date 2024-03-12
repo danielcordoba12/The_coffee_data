@@ -5,12 +5,15 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faX }  from'@fortawesome/free-solid-svg-icons'
 import Api from "../services/api";
 import esES from "../languages/es-ES.json"
+import { localhost } from "../services/api";
 import $ from "jquery";
 import "bootstrap";
 import "datatables.net";
 import "datatables.net-bs5";
+// import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
+// import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
 
 
@@ -85,7 +88,7 @@ function Resultado() {
 
 
   const inicializarDatos = () => {
-      const nuevosDatos = Array.from({ length: 25 }, (_, index) => ({
+      const nuevosDatos = Array.from({ length: 29 }, (_, index) => ({
         valor: "",
       analisis_id: "",
       variables_id: (index + 1).toString(),
@@ -135,7 +138,7 @@ useEffect(()=>{
     for (let s = 0; s < divOptions.length; s++) {
       if(!e.target == divOptions[s] || !divOptions[s].contains(e.target)){
         let options = divOptions[s].querySelectorAll(".select-options-cafe")
-        console.log(options[0])
+        // console.log(options[0])
         if(options.length> 0){
           options[0].style.display = "none"
         } 
@@ -273,9 +276,44 @@ useEffect(() => {
   
 
   const camposEntrada2 = (index, field, value) => {
+  
     const nuevosDatos = datos.map((dato, i) =>
       i === index ? { ...dato, [field]: value } : dato
     );
+    console.log("j",index,"i",field,"dato",value)
+
+    // if(index == 3 ){
+    //   const nuevosDatos = datos.map((dato, i) =>
+    //   i === index ? { ...dato, [field]: 120 } : dato
+      
+    // );
+    // nuevosDatos[3][field] = 120;
+    // return nuevosDatos
+      // setDatos(nuevosDatos)  
+    // }
+
+    if (index == index) { // Input 5
+      const valorInput1 = nuevosDatos[0].valor; // Valor del input 1
+      const valorInput2 = nuevosDatos[2].valor; // Valor del input 2
+  
+      // Realiza el cálculo y actualiza el valor del input 5
+      const nuevoValorInput5 = /* Tu cálculo */( valorInput2 *  100) / valorInput1;
+      nuevosDatos[3].valor = nuevoValorInput5;
+
+      const nuevoValorInput6 = /* Tu cálculo */valorInput1 - valorInput2 ;
+      nuevosDatos[4].valor = nuevoValorInput6;
+
+
+    }
+
+
+    const inputElement = document.getElementById(`input-${datos[index].variables_id}`);
+    if (inputElement) {
+      inputElement.value = value;
+    }
+    console.log("nice2",nuevosDatos);
+
+
     setDatos(nuevosDatos);
   };
 
@@ -378,39 +416,50 @@ useEffect(() => {
     // let cafes_id = dataSelect.cafes_id;
     // console.log("este es cafes_id " + cafes_id);
     // setCafesId(dataSelect.cafes_id)
+      // console.log("hola mundo");
+
     for (let i = 0; i < labelText.length; i += numColumnas) {
       
-      const fila = labelText.slice(i, i + numColumnas);
+      const fila = datos.slice(i, i + numColumnas);
       // for (let i = 0; i < datos.length; i += numColumnas) {
       
       //   const fila = datos.slice(i, i + numColumnas);
-      
+        // console.log("hola mundo");
       filas.push(
+
         
         <div className="columna" key={i}>
           
           {fila.map((dato, j) => (
+        
             
             <div className="container-input" key={dato.variables_id}>
               <input
                 type="text"
                 id={`input-${dato.variables_id}`}
                 value={dato.valor}
+                // value={dato.valor}
+
                 className="input"
                 placeholder=""
                 onChange={(e) => camposEntrada2(i + j, "valor", e.target.value)}
               />
               <label htmlFor={`input-${dato.variables_id}`} className="label">
+                {           
+                // console.log("j",j,"i",i,"dato",dato)
+                // console.log("dato",dato.variables_id, dato.valor) 
+                }
                 {labelText[i + j]}
               </label>
             </div>
-          ))}
-          
+          ))}        
         </div>
-        
+
       );
+
       
     }
+  
   
     // Agregar una columna separada para el análisis
     filas.push(
@@ -569,11 +618,12 @@ useEffect(() => {
         fecha: fechaActual,
         analisis_id: cafes_id.value
       }));
+      console.log(typeof localhost);
 
       // setDatos(datosConAnalisisId);
       // const datosValidos = datosConAnalisisId.filter(dato => dato.valor !== null || dato.valor !== undefined);
 
-      const response = await fetch("http://localhost:4000/resultado/registrar", {
+      const response = await fetch(`http://${localhost}:4000/resultado/registrar`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -606,7 +656,7 @@ useEffect(() => {
   async function listarResultado(){
     try{
 
-      const response = await fetch('http://localhost:4000/resultado/listar',{
+      const response = await fetch(`http://${localhost}:4000/resultado/listar`,{
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -622,7 +672,7 @@ useEffect(() => {
 
 
   function buscarResultado(id,fecha_creacion) {
-    fetch(`http://localhost:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion}`,{
+    fetch(`http://${localhost}:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion}`,{
       method:'GET',
       headers: {
         'Content-type': 'application/json',
@@ -653,7 +703,7 @@ useEffect(() => {
       
     }));
 
-    fetch(`http://localhost:4000/resultado/update/${id}`, {
+    fetch(`http://${localhost}:4000/resultado/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

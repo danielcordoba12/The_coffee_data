@@ -11,28 +11,29 @@ import resultadoRoute from "./src/routers/resultado.router.js";
 import cafeRoute from "./src/routers/cafe.router.js";
 import departamentoRoute from "./src/routers/departamento.route.js"; 
 import autRoute from "./src/routers/autenticacion.router.js";
-import bodyParser from "body-parser";
 import cors from 'cors';
 
 
 const app = express();
 
+const host = process.env.DB_HOST
+
+
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: `http://${host}:5173`,
     credentials : true,
 }));
-
-
 
 app.use(express.json());
 // app.use(bodyParser.urlencoded({extended:false}));Poder trabajar con el formato json
 
 
+
 app.use((re,res,next)=>{
-    res.setHeader("Access-Control-Allow-Origin","http://localhost:5173");
-    res.setHeader("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,PATCH");
-    res.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization");
-    res.setHeader("Access-Control-Allow-Credentials","true");
+    res.setHeader(`Access-Control-Allow-Origin`,`http://${host}:5173`);
+    res.setHeader(`Access-Control-Allow-Methods`,`GET,POST,PUT,DELETE,PATCH`);
+    res.setHeader(`Access-Control-Allow-Headers`,`Content-Type, Authorization`);
+    res.setHeader(`Access-Control-Allow-Credentials`,`true`);
     next();
 
 });

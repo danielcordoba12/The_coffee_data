@@ -4,6 +4,7 @@
   import {faX }  from'@fortawesome/free-solid-svg-icons'
   // import '../style/RegistrarMuestra.css'
   import Api from "../services/api";
+  import { localhost } from "../services/api";
   import Sweet from "../helpers/Sweet";
   import esES from "../languages/es-ES.json"
   import $ from "jquery";
@@ -30,7 +31,7 @@
         }
         return false;
       } else {
-        const response = await fetch('http://localhost:4000/muestra/listar', {
+        const response = await fetch(`http://${localhost}:4000/muestra/listar`, {
           method: 'GET',
           headers: {
             'content-type': 'application/json',
@@ -409,7 +410,7 @@ const RegistrarMuestra = async (data) => {
     // }
   
     function buscarMuestra(id) {
-      fetch(`http://localhost:4000/muestra/buscar/${id}`,{
+      fetch(`http://${localhost}:4000/muestra/buscar/${id}`,{
         method:'GET',
         headers: {
           'Content-type': 'application/json',
@@ -426,7 +427,7 @@ const RegistrarMuestra = async (data) => {
     function desactivarMuestra(id){
       Sweet.confimarDeshabilitar().then((result) => {
         if(result.isConfirmed) {
-          fetch(`http://localhost:4000/muestra/desactivar/${id}`,{
+          fetch(`http://${localhost}:4000/muestra/desactivar/${id}`,{
             method: 'PATCH',
             headers: {
                 "content-type": "application/json"
@@ -452,7 +453,7 @@ const RegistrarMuestra = async (data) => {
     function activarMuestra(id){
       Sweet.confimarHabilitar().then((result) => {
         if(result.isConfirmed) {
-          fetch(`http://localhost:4000/muestra/activar/${id}`,{
+          fetch(`http://${localhost}:4000/muestra/activar/${id}`,{
             method: 'PATCH',
             headers: {
                 "content-type": "application/json"
