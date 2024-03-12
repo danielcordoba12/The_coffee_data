@@ -55,7 +55,7 @@ function App() {
         <Route path="resultado" element={<Resultado />} />
         <Route path="finca" element={<Finca user={dataUser} />} />
         <Route path="lote" element={<Lote />} />
-        <Route path="analisis" element={<Analisis />} />
+        <Route path="analisis" element={<Analisis user={dataUser}/>} />
         <Route path="usuario" element={<Registrarusuarios />} />
         <Route path="usuario/listar" element={<ListarUsuarios />} />
         <Route path="usuario/actualizar/:id" element={<EditarUsuario />} />

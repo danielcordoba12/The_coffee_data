@@ -227,9 +227,11 @@ function Dashboard() {
                   onClick={DesplegarMenu}
                 />
                 <ul id="listaItemsUl" className="listaItemsUl">
-                  <li className="first-icon">
+                <li className="first-icon">
+                <Link to={"/home"}>
                   <FontAwesomeIcon icon={faHouse} className="icon"/>
-                    <p id="paragraph">Dashboard</p>
+                    <p id="paragraph">Home</p>
+                    </Link>
                   </li>
 
                   {rolAdmin ? (

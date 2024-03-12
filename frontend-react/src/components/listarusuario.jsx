@@ -361,7 +361,7 @@ const ListarUsuarios = () => {
           <div className="overlay" onClick={closeRegistrarUsuarioModal}></div>
           <div className="tabla-regis-finca">
             <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-              Registrar Usuario
+              Actualizar Usuario
             </h1>
             <form
               className="contenido-regi"
@@ -519,7 +519,7 @@ const ListarUsuarios = () => {
                 </button>
               ) : formStatus === 2 ? (
                 <button className="btn-blue" type="submit">
-                  Actualziar usuario
+                  Actualizar usuario
                 </button>
               ) : (
                 ""
