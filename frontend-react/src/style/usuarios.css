@@ -1,8 +1,6 @@
 
 /* Estilos CSS para la tabla con clase table1 */
 
-
-
 .tabla-regis-finca {
     position: fixed;
     top: 50%;
@@ -20,7 +18,35 @@
     text-align: center;
     /* Centra el contenido */
   }
-  
+  .contTliteUser {
+       position: relative;
+       top: 56px;
+       left: 26px;
+       background-color: white;
+       border-radius: 8px;
+       width: 93%;
+       height: 70px;
+     }
+  .tablalistar{
+    position: relative;
+    top: 95px;
+    left: 26px;
+    width: 93%;
+    height: 1000rem;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  .titleuser{
+    justify-content: center;
+    text-align: left;
+    top: 23px;
+    left: 34px;
+    font-weight: bold;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #168A45;
+    font-size: 1.5rem;
+  }
   .tabla-regis-finca h1 {
     color: #168A45;
     text-decoration: none   ;
@@ -225,24 +251,25 @@
     color: #ffffff; /* Placeholder blanco */
 }
 
-.btn-registrar {
-    display: inline-block;
-    width: 150px;
-    padding: 10px 20px;
-    background-color: #168A45;
-    /* Color de fondo */
-    color: white;
-    /* Color del texto */
-    text-decoration: none;
-    /* Quitar subrayado del enlace */
-    border: none;
-    /* Quitar borde */
-    border-radius: 4px;
-    /* Añadir esquinas redondeadas */
-    cursor: pointer;
-    /* Cambiar cursor al pasar por encima */
-    font-size: 16px;
-    /* Tamaño del texto */
+.btn-registrar-user {
+display: flex;
+  position: relative;
+  width: 75px;
+  padding: 10px 10px;
+  background-color: #168A45;
+  color: white;
+  left: 150px;
+  top: -15px;
+  position: relative;
+  text-decoration: none;
+  border: none;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
 }
 select option {
   color: #000000;

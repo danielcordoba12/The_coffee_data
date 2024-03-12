@@ -123,11 +123,11 @@ const Analisis = (user) => {
                 }
             } else {
               Sweet.actualizacionExitosa("/home/analisis");
-                closeModalEdit(true); 
+                closeModalEdit();
+                buscarAnalisis();
 
             }
-            const response = await Api.get("analisis/listar");
-            setAnalisis(response.data);
+    
         } catch (error) {
             console.error("Error editando el Analisis: ", error);
         }
@@ -531,9 +531,8 @@ const Analisis = (user) => {
 
                         <div className="div-input-d-select div-input-search-select ">
                             <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
-                            <select className="select-tipe" name="tipo_analisis_id" id="1">
-                                <option value="1">Fisico</option>
-                            </select>
+                            <label className="label-tipe-ana" htmlFor="tipo_analisis_id">Fisico</label>
+                        
                         </div>
                         <div className="div-input-d div-input-search-select">
                             <input className="input-search-d" type="text" id="muestras_id" ref={muestras_id} />

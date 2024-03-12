@@ -283,12 +283,14 @@ const ListarUsuarios = () => {
   };
 
   return (
+
+
     <>
-      <div className="tablalistar">
-        <h1 className="titu">Usuarios</h1>
-        <br />
+  
+      <div className="contTliteUser">
+        <h1 className="titleuser">Usuario</h1>
         <button
-          className="btn-registrar"
+          className="btn-registrar-user"
           onClick={() => {
             setFormStatus(1);
             setRegistrarUsuarioModalOpen(true);
@@ -296,8 +298,12 @@ const ListarUsuarios = () => {
             openRegistrarUsuarioModal;
           }}
         >
-          Registrar Usuario
+          Añadir
         </button>
+
+      </div>
+
+      <div className="tablalistar">
         <table
           style={{ width: "100%" }}
           className=" table table-stripped  border display reponsive nowrap b-4 bg-white"
@@ -335,7 +341,7 @@ const ListarUsuarios = () => {
                         buscarUsuario(usuario.id ? usuario.id : "");
                     }}
                   >
-                    actualizar
+                    Modificar
                   </button>
                   <button
                     className="btn-actualizar-mod"
@@ -358,7 +364,7 @@ const ListarUsuarios = () => {
           <div className="overlay" onClick={closeRegistrarUsuarioModal}></div>
           <div className="tabla-regis-finca">
             <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-              Actualizar Usuario
+              Registrar Usuario
             </h1>
             <form
               className="contenido-regi"
@@ -516,7 +522,7 @@ const ListarUsuarios = () => {
                 </button>
               ) : formStatus === 2 ? (
                 <button className="btn-blue" type="submit">
-                  Actualizar usuario
+                  Actualizar
                 </button>
               ) : (
                 ""
@@ -628,7 +634,7 @@ const ListarUsuarios = () => {
                 <label htmlFor="noombre_vereda">nombre vereda</label>
               </div>
               <button className="btn-blue" type="submit">
-                Registrar finca
+                Registrar Finca
               </button>
               <button className="close-modal-x" onClick={closeRegistrarModal}>
                 x
