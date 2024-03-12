@@ -52,7 +52,7 @@ function App() {
       <Route path="/" element={<Inicio />} />
       {/* <Route /> */}
       <Route path="/home" element={<Dashboard />} >
-        <Route path="resultado" element={<Resultado />} />
+        <Route path="resultado" element={<Resultado user={dataUser} />} />
         <Route path="finca" element={<Finca user={dataUser} />} />
         <Route path="lote" element={<Lote />} />
         <Route path="analisis" element={<Analisis user={dataUser}/>} />

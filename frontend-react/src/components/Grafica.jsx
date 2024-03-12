@@ -119,8 +119,8 @@ function Grafica() {
       const response = await fetch(`http://${localhost}:4000/resultado/listar`,{
         method: "GET",
         headers: {
-          "content-type": "application/json",
-        },
+          token: localStorage.getItem("token")
+      },
       })
       const data = await response.json();
       setResultado(data)
