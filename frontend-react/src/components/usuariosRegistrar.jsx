@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import Api from "../services/api";
+import Api from "../services/Api";
 import { useNavigate } from "react-router-dom";
-import '../style/analisis.css'
+import '../style/usuarios.css'
 
 const Registrarusuarios= () => {
     const nombre = useRef();
@@ -94,7 +94,7 @@ const Registrarusuarios= () => {
                 <label htmlFor="cargo">cargo</label>
             </div>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 m-2 rounded focus:outline-none focus:shadow-outline"
-                type="submit">Registro usuario</button>
+                type="submit">Registrar</button>
         </form>
     </>
     )
