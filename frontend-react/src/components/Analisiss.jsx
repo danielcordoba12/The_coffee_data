@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Api from "../services/api";
+import Api from "../services/Api";
 import Sweet from "../helpers/Sweet";
 import { useNavigate } from "react-router-dom";
 import '../style/analisis.css';
@@ -376,7 +376,7 @@ const Analisis = (user) => {
                 <div className="container-fluid w-full" key={key}>
                     <table id="table-d" style={{ width: "100%" }} className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                         <thead>
-                            <tr className="bg-gray-200">
+                            <tr className="bg-gray-200 text-center">
                                 <th>id</th>
                                 <th>Fecha </th>
                                 <th>Tipo Análisis </th>
@@ -390,7 +390,7 @@ const Analisis = (user) => {
                                 <th>Opciones</th>
                             </tr>
                         </thead>
-                        <tbody className="bg-gray-200">
+                        <tbody className="bg-gray-200 text-center">
                             { analisis.length > 0 ? analisis 
                             .map((task) => (
                                 <tr key={task.id_analisis}>
@@ -531,9 +531,9 @@ const Analisis = (user) => {
 
                         <div className="div-input-d-select div-input-search-select ">
                             <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
-                            <label className="label-tipe-ana" htmlFor="tipo_analisis_id">Fisico</label>
+                            <label className="select-tipe" htmlFor="tipo_analisis_id">Fisico</label>
                         
-                        </div>
+                        </div><br />
                         <div className="div-input-d div-input-search-select">
                             <input className="input-search-d" type="text" id="muestras_id" ref={muestras_id} />
                             <label htmlFor="muestras_id" className='label'>Muestra</label>

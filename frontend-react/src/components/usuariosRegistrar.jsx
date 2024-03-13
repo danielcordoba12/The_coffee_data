@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import Api from "../services/api";
+import Api from "../services/Api";
 import { useNavigate } from "react-router-dom";
 import '../style/usuarios.css'
 

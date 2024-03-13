@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import Api from "../services/api";
+import Api from "../services/Api";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../style/usuarios.css";
-import api from "../services/api";
 import Sweet from "../helpers/Sweet";
 import EncryptionComponent from "../components/crypt/criptar.jsx";
 import bcrypt from "bcryptjs";
@@ -314,11 +313,11 @@ const ListarUsuarios = () => {
               <th>id</th>
               <th>Nombre</th>
               <th>Apellido</th>
-              <th>Numero de documento</th>
+              <th>Numero de documento </th>
               <th>Telefono</th>
-              <th>correo</th>
+              <th>Correo</th>
               <th>Estado</th>
-              <th>opciones</th>
+              <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
@@ -361,10 +360,10 @@ const ListarUsuarios = () => {
 
       {isRegistrarUsuarioModalOpen && (
         <>
-          <div className="overlay" onClick={closeRegistrarUsuarioModal}></div>
+          <div className="overlay-u" onClick={closeRegistrarUsuarioModal}></div>
           <div className="tabla-regis-finca">
-            <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-              Registrar Usuario
+            <h1 className="titleRegistrarUser">
+                Usuario
             </h1>
             <form
               className="contenido-regi"
@@ -517,8 +516,8 @@ const ListarUsuarios = () => {
                 </div>
               </div>
               {formStatus === 1 ? (
-                <button className="btn-blue" type="submit">
-                  Registrar Usuario
+                <button className="btn-regis-u" type="submit">
+                  Registrar
                 </button>
               ) : formStatus === 2 ? (
                 <button className="btn-blue" type="submit">
@@ -531,7 +530,7 @@ const ListarUsuarios = () => {
                 className="close-modal-x"
                 onClick={closeRegistrarUsuarioModal}
               >
-                x
+                X
               </button>
             </form>
           </div>
@@ -540,7 +539,7 @@ const ListarUsuarios = () => {
 
       {isRegistrarModalOpen && (
         <>
-          <div className="overlay" onClick={closeRegistrarModal}></div>
+          <div className="overlay-u" onClick={closeRegistrarModal}></div>
           <div className="tabla-regis-finca">
             <h1 className="text-center font-bold underline text-3xl p-3 m-2">
               Registrar Finca
@@ -633,7 +632,7 @@ const ListarUsuarios = () => {
                 />
                 <label htmlFor="noombre_vereda">nombre vereda</label>
               </div>
-              <button className="btn-blue" type="submit">
+              <button className="btn-regis-user" type="submit">
                 Registrar Finca
               </button>
               <button className="close-modal-x" onClick={closeRegistrarModal}>
