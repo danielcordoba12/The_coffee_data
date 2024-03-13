@@ -374,9 +374,9 @@ const Analisis = (user) => {
 
             <div className="tablaAnalisis">
                 <div className="container-fluid w-full" key={key}>
-                    <table id="table-d" style={{ width: "100%" }} className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                    <table id="table-d" style={{ width: "100%" }} className=" table table-stripped display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                         <thead>
-                            <tr className="bg-gray-200 text-center">
+                            <tr className="bg-gray-200">
                                 <th>id</th>
                                 <th>Fecha </th>
                                 <th>Tipo Análisis </th>
@@ -390,7 +390,7 @@ const Analisis = (user) => {
                                 <th>Opciones</th>
                             </tr>
                         </thead>
-                        <tbody className="bg-gray-200 text-center">
+                        <tbody className="bg-gray-200">
                             { analisis.length > 0 ? analisis 
                             .map((task) => (
                                 <tr key={task.id_analisis}>
@@ -531,7 +531,7 @@ const Analisis = (user) => {
 
                         <div className="div-input-d-select div-input-search-select ">
                             <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
-                            <label className="select-tipe" htmlFor="tipo_analisis_id">Fisico</label>
+                            <label className="label-tipe-ana" htmlFor="tipo_analisis_id">Fisico</label>
                         
                         </div><br />
                         <div className="div-input-d div-input-search-select">
