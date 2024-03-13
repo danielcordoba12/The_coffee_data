@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faX }  from'@fortawesome/free-solid-svg-icons'
 import Api from "../services/api";
 import esES from "../languages/es-ES.json"
-import { localhost } from "../services/api";
+import { localhost } from "../services/Api";
 import $ from "jquery";
 import "bootstrap";
 import "datatables.net";
@@ -88,7 +88,7 @@ function Resultado(user) {
 
 
   const inicializarDatos = () => {
-      const nuevosDatos = Array.from({ length: 29 }, (_, index) => ({
+      const nuevosDatos = Array.from({ length: 30 }, (_, index) => ({
         valor: "",
       analisis_id: "",
       variables_id: (index + 1).toString(),
@@ -191,35 +191,36 @@ useEffect(() => {
 
 
   const labelText = [
-    'Peso',
-    'Humedad',
+    'Peso C.P.S ',
     'Peso Cisco',
-    'Merma por trilla',
-    'Peso total de la almendra ',
-    'Almendra sana ',
+    'Peso total de la almendra',
     'Peso defectos totales ',
-    'Factor de rendimiento',
     'Peso de almendra sana',
-    'Porcentaje de defectos ',
     'Negro total o parcial ',
-    'Cardenillo ',
-    'Vinagre ',
-    'Cristalizado ',
-    'Veteado ',
-    'Ámbar ',
-    'Sobresecado (g)',
-    'Mordido ',
-    'Picado',
-    'Averanado ',
+    'Vinagre (g) ',
+    'Vetado',
+    'Sobresecado',
+    'Picado por insectos  ',
     'Inmaduro ',
-    'Aplastado',
-    'Flojo',
-    'Decolorado ',
+    'Flojo ',
     'Malla 18 ',
-    'Malla 15 ',
     'Malla 17 ',
-    'Malla 14 ',
     'Malla 16 ',
+    'Humedad',
+    'Merma por trilla',
+    'Porcentaje de almendra sana ',
+    'Factor de rendimiento ',
+    'Porcentaje de defectos totales ',
+    'Cristalizado',
+    'Cardenillo  ',
+    'Ámbar',
+    'Mordido',
+    'Averanado ',
+    'Aplastado ',
+    'Decolorado ',
+    'Malla 15  ',
+    'Malla 14' ,
+    'Mallas menores '
     // 'analisis'
     // Otras mallas o campos pueden agregarse según sea necesario
   ];
@@ -412,7 +413,7 @@ useEffect(() => {
   ///////////////////////////////////////////////////77Fin de respaldo/////////////////////////////////////////////////////
   const generarInputs = () => {
     const filas = [];
-    const numColumnas = 9;
+    const numColumnas = 15;
     // let cafes_id = dataSelect.cafes_id;
     // console.log("este es cafes_id " + cafes_id);
     // setCafesId(dataSelect.cafes_id)
@@ -421,6 +422,8 @@ useEffect(() => {
     for (let i = 0; i < labelText.length; i += numColumnas) {
       
       const fila = datos.slice(i, i + numColumnas);
+      // const fila = datos.slice(i, i + numColumnas);
+
       // for (let i = 0; i < datos.length; i += numColumnas) {
       
       //   const fila = datos.slice(i, i + numColumnas);
@@ -466,7 +469,7 @@ useEffect(() => {
       <div className="columna" key="analisis">
         <div className="container-input div-input-search-select">
         <input className="input-search-cafe " type="text" id="cafes_id" />
-                        <label htmlFor="cafes_id" className='label'>Analisis</label>
+                        <label htmlFor="cafes_id" className='label-analisis-resultado'>Analisis</label>
                         <div className="select-options-cafe" 
 
                         >
@@ -495,7 +498,7 @@ useEffect(() => {
   
   const generarInputs2 = () => {
     const filas = [];
-    const numColumnas = 9;
+    const numColumnas = 15;
   
     for (let i = 0; i < resultadoSellecionado.length; i += numColumnas) {
       const fila = resultadoSellecionado.slice(i, i + numColumnas);
@@ -513,14 +516,14 @@ useEffect(() => {
                   type="text"
                   id={`input-${dato.variables_id}-${index}`}
                   value={dato.valor || ''}
-                  className='input'
+                  className='input-actualizar'
                   placeholder=""
                   onChange={(e) => {
                     console.log("Input change detected");
                     camposEntrada(index, "valor", e.target.value);
                   }}
                 />
-                <label htmlFor={`input-${dato.variables_id}`} className='label'>
+                <label htmlFor={`input-${dato.variables_id}`} className='label-actualizar'>
                   {labelText[index]}
                 </label>
               </div>
@@ -538,7 +541,7 @@ useEffect(() => {
 
   const generarInputs3 = () => {
     const filas = [];
-    const numColumnas = 9;
+    const numColumnas = 15;
 
     for (let i = 0; i < datos.length; i += numColumnas) {
       const fila = datos.slice(i, i + numColumnas);
@@ -555,11 +558,11 @@ useEffect(() => {
                   type="text"
                   id={`input-${datos.variables_id}-${x}`}
                   value={resultadoSellecionado[x]?.valor || ''}
-                  className='input'
+                  className='input-actualizar '
                   placeholder=""
                   readOnly
                 />
-                <label htmlFor={`input-${dato.variables_id}`} className='label'>
+                <label htmlFor={`input-${dato.variables_id}`} className='label-actualizar'>
                   {labelText[i + j]}
                 </label>
               </div>
@@ -568,6 +571,7 @@ useEffect(() => {
         </div>
       );
     }
+    
 
     return filas;
   };
@@ -812,11 +816,11 @@ useEffect(() => {
 
     {showModal3 ? 
       <div className="main-content-registrar" id="modalInfo3" >
-      <div className="container-tittle">
+      {/* <div className="container-tittle"> */}
       <h1 className='title-registrar-resultado'>Visualizar resultado</h1> 
 
 
-      </div>
+      {/* </div> */}
       <form className="formulario-muestra" method="post">
 
         {generarInputs3()}

@@ -13,7 +13,7 @@ import "datatables.net-bs5";
 // import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
-import { localhost } from "../services/api";
+import { localhost } from "../services/Api";
 
 // import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 

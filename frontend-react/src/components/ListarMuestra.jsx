@@ -3,8 +3,8 @@
   import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
   import {faX }  from'@fortawesome/free-solid-svg-icons'
   // import '../style/RegistrarMuestra.css'
-  import Api from "../services/api";
-  import { localhost } from "../services/api";
+  import Api from "../services/Api";
+  import { localhost } from "../services/Api";
   import Sweet from "../helpers/Sweet";
   import esES from "../languages/es-ES.json"
   import $ from "jquery";
@@ -962,24 +962,24 @@ const RegistrarMuestra = async (data) => {
 
   </div>
         <div className='container-input'>
-          <input type="date" id="fecha_creacion" name="fecha_creacion" className='input input-register' ref={fecha_creacion} placeholder='' />
-          <label htmlFor="fecha_creacion" className='label-muestra'>Campo 1:</label>
+          <input type="date" id="fecha_creacion" name="fecha_creacion" className=' input-register' ref={fecha_creacion} placeholder='' />
+          <label htmlFor="fecha_creacion" className='label'>Campo 1:</label>
           
         </div>
         <div className='container-input'>
-          <input type="text" id="codigo_externo" name="codigo_externo" className='input input-register' placeholder=''  ref={codigo_externo}   />
+          <input type="text" id="codigo_externo" name="codigo_externo" className='input-register' placeholder=''  ref={codigo_externo}   />
           <label htmlFor="codigo_externo" className='label'>Codigo externo</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="consecutivo_informe" name="consecutivo_informe" className='input input-register' ref={consecutivo_informe} placeholder=''  onBlur={(e) => console.log(e.target.value)}/>
+          <input type="text" id="consecutivo_informe" name="consecutivo_informe" className=' input-register' ref={consecutivo_informe} placeholder=''  onBlur={(e) => console.log(e.target.value)}/>
           <label htmlFor="consecutivo_informe" className='label'>Consecutivo informe</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="muestreo" name="muestreo" className='input input-register' ref={muestreo} placeholder=''  />
+          <input type="text" id="muestreo" name="muestreo" className=' input-register' ref={muestreo} placeholder=''  />
           <label htmlFor="muestreo" className='label'>Muestreo</label>
         </div>
         <div className='container-input'>
-          <input type="text" id="preparacion_muestra" name="preparacion_muestra" className='input input-register' ref={preparacion_muestra} placeholder=''  />
+          <input type="text" id="preparacion_muestra" name="preparacion_muestra" className=' input-register' ref={preparacion_muestra} placeholder=''  />
           <label htmlFor="preparacion_muestra" className='label'>Preparacion de la muestra</label>
         </div>
         <div className='container-input'>
