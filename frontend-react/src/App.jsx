@@ -62,7 +62,7 @@ function App() {
         <Route path="municipio" element={<Municipio />} />
         <Route path="variedad" element={<Variedad />} />
         <Route path="cafe" element={<Cafe/>} />
-        <Route path="Perfil" element={<PerfilUsuarios/>} />
+        <Route path="Perfil" element={<PerfilUsuarios user={dataUser}/>} />
         <Route path="listar/muestra" element={<ListarMuestra user={dataUser}/>} />
         <Route path="editar/muestra/:id" element={<EditarMestra />} />
         <Route path="grafica" element={<Grafica />} />
