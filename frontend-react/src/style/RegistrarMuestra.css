@@ -39,7 +39,7 @@
 }
 
 
-.formulario-muestra  {
+.formulario-resultado  {
   /* backdrop-filter: blur(10px); */
   /* background-color: #fff; */
   padding: 15px;
@@ -59,6 +59,8 @@
 
 
 }
+
+
 .title-registrar-muestras{
   margin-bottom: 0px;
   display: flex;
@@ -70,12 +72,12 @@
   font-size: 2.5em;
   color: black;
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-    background-color: rgb(250, 250, 250);
+    background-color: rgb(255, 0, 0);
   /* border-bottom:1px black solid;   */
   border: none;
 }
 .title-registrar-resultado{
-  background-color: rgb(234, 241, 243);
+  background-color: rgb(240, 234, 243);
   color: #168A45;
   width: 1030px;
   height: 45px;
@@ -188,7 +190,7 @@
   background-color: #168A45;
 
 }
-.formulario-muestra input + label {
+.formulario-resultado input + label {
   position: absolute;
   top: 50%;
   left: 50px;
@@ -198,7 +200,7 @@
   pointer-events: none;
   transition: transform 0.3s, font-size 0.3s, color 0.3s;
 }
-.formulario-muestra input + .label-actualizar {
+.formulario-resultado input + .label-actualizar {
   position: absolute;
   top: 50%;
   left: 90px;
@@ -210,8 +212,8 @@
 }
 
 
-.formulario-muestra input:focus + label,
-.formulario-muestra input:not(:placeholder-shown) + label {
+.formulario-resultado input:focus + label,
+.formulario-resultado input:not(:placeholder-shown) + label {
   transform: translateY(-100%) scale(1.2);
   font-size: 12px;
   color: black;
@@ -317,12 +319,7 @@
   width: 100%;
   height: 100vh;
 } */
-.formulario-muestra{
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-}
 .btn-activar{
   background-color:gainsboro;
   color: black;
@@ -351,16 +348,16 @@
   z-index: 12;
   font-family: Arial, sans-serif;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   /* background-color: red; */
   backdrop-filter: blur(10px);
-  /* background-color: rgba(30, 30, 30, 0.925); */
+  /* background-color: #f30808ec; */
   width: 100%;
   padding: 0;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   height: 100vh;
 
 }
@@ -510,15 +507,16 @@
 
 .select-options-cafe{
   display: block;
-  position: absolute;
+  position: relative;
+  left: 60px;
   color: black;
-  background-color: rgb(255, 255, 255);
+  background-color: #ffffff;
 
-  width: 100%;
+  width: 80%;
 
   z-index: 1;
 
-  top: 100%;
+  top: 10%;
 
   max-height: 100px;
 
@@ -552,5 +550,77 @@
   color:  white;
   outline: none;
   color:  rgb(0, 0, 0) ;
+
+}
+.formulario-muestra  {
+  padding: 15px;
+  border-radius: 0px 0px 8px 8px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  /* top: 45px; */
+  background-color: rgb(255, 255, 255);
+  justify-content: space-between;
+  max-width: 1030px;
+  width: 100%;
+  height: 82vh;
+
+}
+.formulario-muestra input + .label-actualizar {
+  position: absolute;
+  top: 50%;
+  left: 90px;
+  transform: translateY(-50%);
+  color: black;
+  font-size: 16px;
+  pointer-events: none;
+  transition: transform 0.3s, font-size 0.3s, color 0.3s;
+}
+
+
+
+.formulario-muestra input:focus + label,
+.formulario-muestra input:not(:placeholder-shown) + label {
+  transform: translateY(-100%) scale(1.2);
+  font-size: 12px;
+  color: black;
+  top: 10px;
+
+  transition: all 0.5s;
+}
+
+.title-registrar-muestra{
+
+  background-color: rgb(255, 255, 255);
+  color: #168A45;
+  width: 1030px;
+  height: 45px;
+  /* z-index: -1; */
+  position: absolute;
+  /* bottom : 45%; */
+  top: 11px;
+
+
+
+}
+@media only screen and (min-height: 832px) {
+  /* Agrega aquí tus estilos para dispositivos de escritorio o pantallas grandes */
+  .title-registrar-muestra{
+
+    background-color: rgb(255, 255, 255);
+    color: #168A45;
+    width: 1030px;
+    height: 45px;
+    /* z-index: -1; */
+    position: absolute;
+    /* bottom : 45%; */
+    top: 40px;
+  
+  
+  
+  }
+
+
 
 }

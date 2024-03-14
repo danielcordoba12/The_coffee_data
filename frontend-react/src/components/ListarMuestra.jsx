@@ -641,7 +641,9 @@ const RegistrarMuestra = async (data) => {
 
       <div>
         {showModal3 ? 
-          <div id="modalInfo3" className="modal-info"   >
+          <div id="modalInfo3" className=" main-content-actualizar"   >
+      <h1 className='title-registrar-muestra'>Visualizar muestra</h1> 
+
           {/* <h1 className='title-registrar-resultado'>Datos muestra</h1>  */}
     
         <form className="formulario-muestra"  method="post">
@@ -649,9 +651,9 @@ const RegistrarMuestra = async (data) => {
               <FontAwesomeIcon icon={faX} className="faX"/>
           </div>
         {/* <table className="info-complete"> */}
-            <tbody>
-            <tr>
-                <td>
+            {/* <tbody> */}
+            {/* <tr> */}
+                {/* <td> */}
                 <div className="columna">
     
                 {/* <div className='container-input'>
@@ -669,7 +671,7 @@ const RegistrarMuestra = async (data) => {
     
                 </div>  */}
                 <div className='container-input'>
-                    <input  className=' input-register-muestra' value={formatDate(muestraSeleccionada.fecha_creacion)}/>
+                    <input  className='input-register-muestra' value={formatDate(muestraSeleccionada.fecha_creacion)}/>
                     <label className='label-muestra'>Fecha de creacion</label>
     
                 </div>
@@ -715,8 +717,8 @@ const RegistrarMuestra = async (data) => {
                 </div>
                 
                 </div>
-              </td>
-              <td>
+              {/* </td> */}
+              {/* <td> */}
                 <div className="columna">
 
                 <div className='container-input'>
@@ -751,7 +753,7 @@ const RegistrarMuestra = async (data) => {
                 </div>
                 <div className='container-input'>
                   <input type="text" className="input-register-muestra" value={muestraSeleccionada.tiempo_secado} />
-                  <label className='lablabel-muestrael'>Tiempo de secado</label>
+                  <label className='label-muestra'>Tiempo de secado</label>
     
     
                 </div>
@@ -775,11 +777,11 @@ const RegistrarMuestra = async (data) => {
               
     
                 </div>
-              </td>
+              {/* </td> */}
               
               
-            </tr>
-          </tbody>
+            {/* </tr> */}
+          {/* </tbody> */}
         {/* </table> */}
       </form>
     
@@ -788,10 +790,10 @@ const RegistrarMuestra = async (data) => {
             
 
 {showModal2 ?  <div className= {`main-content-actualizar `}  id="modalInfo2" >
-<h1 className='title-registrar-resultado'>Actualizar muestra</h1> 
+<h1 className='title-registrar-muestra'>Actualizar muestra</h1> 
 
 
-    <form className="formulario-muestra info-complete"  >
+    <form className="formulario-muestra"  >
       <div className="columna">
         <div className='container-input'>
           <input type="hidden" value={muestraSeleccionada.id || ''} onChange={(e) => setMuestraSeleccionada({...muestraSeleccionada,id:e.target.value})} disabled />
@@ -916,8 +918,8 @@ const RegistrarMuestra = async (data) => {
   </div>: ""}
        
        {showModal1 ?
-        <div className={`main-content-registrar`}   id="modalInfo1 "   >
-      <h1 className='title-registrar-resultado'>Registrar muestra</h1> 
+        <div className={`main-content-actualizar`}   id="modalInfo1 "   >
+      <h1 className='title-registrar-muestra'>Registrar muestra</h1> 
 
         {/* {showModal && ( */}
            {/* Registrar Muestra */}

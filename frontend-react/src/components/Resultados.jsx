@@ -295,14 +295,16 @@ useEffect(() => {
 
     if (index == index) { // Input 5
       const valorInput1 = nuevosDatos[0].valor; // Valor del input 1
-      const valorInput2 = nuevosDatos[2].valor; // Valor del input 2
+      const valorInput2 = nuevosDatos[1].valor; // Valor del input 2
   
       // Realiza el cálculo y actualiza el valor del input 5
       const nuevoValorInput5 = /* Tu cálculo */( valorInput2 *  100) / valorInput1;
-      nuevosDatos[3].valor = nuevoValorInput5;
+      nuevosDatos[16].valor = nuevoValorInput5 + "%";
 
       const nuevoValorInput6 = /* Tu cálculo */valorInput1 - valorInput2 ;
-      nuevosDatos[4].valor = nuevoValorInput6;
+      nuevosDatos[2].valor = nuevoValorInput6;
+
+      
 
 
     }
@@ -770,7 +772,7 @@ useEffect(() => {
       <div className={`main-content-registrar`} id="modalInfo1" >
       <h1 className='title-registrar-resultado'>Registrar resultado</h1> 
 
-      <form className="formulario-muestra"
+      <form className="formulario-resultado"
       
       method="post">
         
@@ -795,7 +797,7 @@ useEffect(() => {
 
       <h1 className='title-registrar-resultado'>Actualizar resultado</h1> 
       
-        <form className="formulario-muestra" method="post">
+        <form className="formulario-resultado" method="post">
           {generarInputs2()}
           <div className="buttons">
             <button className="btn-reg-mue" type="button" onClick={() => actualizarResultado(resultadoSellecionado[3])}>
@@ -821,7 +823,7 @@ useEffect(() => {
 
 
       {/* </div> */}
-      <form className="formulario-muestra" method="post">
+      <form className="formulario-resultado" method="post">
 
         {generarInputs3()}
       
