@@ -377,17 +377,17 @@ const Analisis = (user) => {
                     <table id="table-d" style={{ width: "100%" }} className=" table table-hover rounded-circle  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                         <thead>
                             <tr className="bg-gray-200">
-                                <th>id</th>
-                                <th>Fecha </th>
-                                <th>Tipo Análisis </th>
-                                <th>Consecutivo Informe </th>
-                                <th>Catador</th>
-                                <th>Estado </th>
-                                <th>Propietario </th>
-                                <th>Finca </th>
-                                <th>Lote </th>
-                                <th>Variedad</th>
-                                <th>Opciones</th>
+                                <th className="text-muted">id</th>
+                                <th className="text-muted">Fecha </th>
+                                <th className="text-muted">Tipo Análisis </th>
+                                <th className="text-muted">Consecutivo Informe </th>
+                                <th className="text-muted">Catador</th>
+                                <th className="text-muted">Estado </th>
+                                <th className="text-muted">Propietario </th>
+                                <th className="text-muted"> Finca </th>
+                                <th className="text-muted">Lote </th>
+                                <th className="text-muted">Variedad</th>
+                                <th className="text-muted">Opciones</th>
                             </tr>
                         </thead>
                         <tbody className="bg-gray-200 text-center">
