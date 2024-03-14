@@ -362,7 +362,7 @@ const Analisis = (user) => {
             <div className="contTitle">
                 <h1 className="titleanalisis">Análisis</h1>
                 {user.user ? user.user.rol == 'administrador' ?
-                <button to="/analisis/registrar" className="btn-registrar-d rounded" onClick={() => {
+                <button to="/analisis/registrar" className="btn-registrar-d" onClick={() => {
                     openRegistrarAnalisisModal();
                     setDataSelect({})
 
@@ -376,21 +376,21 @@ const Analisis = (user) => {
                 <div className="container-fluid w-full" key={key}>
                     <table id="table-d" style={{ width: "100%" }} className=" table table-hover rounded-circle  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                         <thead>
-                            <tr className="bg-gray-200 ">
-                                <th className="text-muted">id</th>
-                                <th className="text-muted">Fecha </th>
-                                <th className="text-muted">Tipo Análisis </th>
-                                <th className="text-muted">Consecutivo Informe </th>
-                                <th className="text-muted">Catador</th>
-                                <th className="text-muted">Estado </th>
-                                <th className="text-muted">Propietario </th>
-                                <th className="text-muted">Finca </th>
-                                <th className="text-muted">Lote </th>
-                                <th className="text-muted">Variedad</th>
-                                <th className="text-muted">Opciones</th>
+                            <tr className="bg-gray-200">
+                                <th>id</th>
+                                <th>Fecha </th>
+                                <th>Tipo Análisis </th>
+                                <th>Consecutivo Informe </th>
+                                <th>Catador</th>
+                                <th>Estado </th>
+                                <th>Propietario </th>
+                                <th>Finca </th>
+                                <th>Lote </th>
+                                <th>Variedad</th>
+                                <th>Opciones</th>
                             </tr>
                         </thead>
-                        <tbody className="bg-gray-200">
+                        <tbody className="bg-gray-200 text-center">
                             { analisis.length > 0 ? analisis 
                             .map((task) => (
                                 <tr key={task.id_analisis}>
@@ -407,7 +407,7 @@ const Analisis = (user) => {
                                     <td>
                                         <button
                                             type="button"
-                                            className="btn-actualizar-mod rounded"
+                                            className="btn-actualizar-mod rou"
                                             onClick={() => openModal(task.id_analisis)}
                                         >
                                             Modificar
