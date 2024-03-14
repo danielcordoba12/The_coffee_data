@@ -362,7 +362,7 @@ const Analisis = (user) => {
             <div className="contTitle">
                 <h1 className="titleanalisis">Análisis</h1>
                 {user.user ? user.user.rol == 'administrador' ?
-                <button to="/analisis/registrar" className="btn-registrar-d" onClick={() => {
+                <button to="/analisis/registrar" className="btn-registrar-d rounded" onClick={() => {
                     openRegistrarAnalisisModal();
                     setDataSelect({})
 
@@ -374,40 +374,40 @@ const Analisis = (user) => {
 
             <div className="tablaAnalisis">
                 <div className="container-fluid w-full" key={key}>
-                    <table id="table-d" style={{ width: "100%" }} className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                    <table id="table-d" style={{ width: "100%" }} className=" table table-hover rounded-circle  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                         <thead>
-                            <tr className="bg-gray-200 text-center">
-                                <th>id</th>
-                                <th>Fecha </th>
-                                <th>Tipo Análisis </th>
-                                <th>Consecutivo Informe </th>
-                                <th>Catador</th>
-                                <th>Estado </th>
-                                <th>Propietario </th>
-                                <th>Finca </th>
-                                <th>Lote </th>
-                                <th>Variedad</th>
-                                <th>Opciones</th>
+                            <tr className="bg-gray-200 ">
+                                <th className="text-muted">id</th>
+                                <th className="text-muted">Fecha </th>
+                                <th className="text-muted">Tipo Análisis </th>
+                                <th className="text-muted">Consecutivo Informe </th>
+                                <th className="text-muted">Catador</th>
+                                <th className="text-muted">Estado </th>
+                                <th className="text-muted">Propietario </th>
+                                <th className="text-muted">Finca </th>
+                                <th className="text-muted">Lote </th>
+                                <th className="text-muted">Variedad</th>
+                                <th className="text-muted">Opciones</th>
                             </tr>
                         </thead>
-                        <tbody className="bg-gray-200 text-center">
+                        <tbody className="bg-gray-200">
                             { analisis.length > 0 ? analisis 
                             .map((task) => (
                                 <tr key={task.id_analisis}>
-                                    <td>{task.id_analisis}</td>
-                                    <td>{task.fecha_analisis = formatDate(task.fecha_analisis)}</td>
-                                    <td>{task.nombre_tipo_analisis}</td>
-                                    <td className="conse" >{task.codigo_externo}</td>
-                                    <td>{task.nombre_usuario}</td>
-                                    <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                    <td>{task.propietario}</td>
-                                    <td>{task.nombre_fincas}</td>
-                                    <td>{task.nombre_lotes}</td>
-                                    <td>{task.nombre_variedades}</td>
+                                    <td className="text-muted">{task.id_analisis}</td>
+                                    <td className="text-muted">{task.fecha_analisis = formatDate(task.fecha_analisis)}</td>
+                                    <td className="text-muted">{task.nombre_tipo_analisis}</td>
+                                    <td className="text-muted" >{task.codigo_externo}</td>
+                                    <td className="text-muted">{task.nombre_usuario}</td>
+                                    <td className="text-muted">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                    <td className="text-muted">{task.propietario}</td>
+                                    <td className="text-muted">{task.nombre_fincas}</td>
+                                    <td className="text-muted">{task.nombre_lotes}</td>
+                                    <td className="text-muted">{task.nombre_variedades}</td>
                                     <td>
                                         <button
                                             type="button"
-                                            className="btn-actualizar-mod"
+                                            className="btn-actualizar-mod rounded"
                                             onClick={() => openModal(task.id_analisis)}
                                         >
                                             Modificar
