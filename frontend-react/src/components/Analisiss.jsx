@@ -422,7 +422,7 @@ const Analisis = (user) => {
 
             {modalAnalisis && (
                 <div className="tablaEditAna">
-                    <div onClick={closeModalEdit} className="overlay-edit"></div>
+                    <div className="overlay-edit"></div>
                     <div className="contEditAna">
                         <h1 className="titleEditAna">Editar Análisis</h1><br />
 
@@ -507,7 +507,7 @@ const Analisis = (user) => {
 
             )}
             {aRegistrarModalOpen && (
-                <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
+                <div className="overlay-d"></div>
             )}
             {aRegistrarModalOpen && (
                 <div className="contRegistrarAna">
