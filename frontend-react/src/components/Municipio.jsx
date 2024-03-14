@@ -426,7 +426,7 @@ const Municipio = () => {
 
                             <div className="div-input div-input-search-select">
                                 <input className="input-search" type="text" id="departamentos_id" />
-                                <label htmlFor="departamentos_id" >Variedad</label>
+                                <label htmlFor="departamentos_id" >Departamento</label>
                                 <div className="select-options-input">
                                     {departamentos.map((key, index) => (
                                         (
