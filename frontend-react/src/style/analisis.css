@@ -32,6 +32,10 @@ option{
 
 
 }
+.card{
+  border-radius: .5rem;
+  background-color: black;
+}
 .btn-desactivar-d {
   background-color:gainsboro;
   color: black;
@@ -154,6 +158,24 @@ margin-bottom: 14px;
 border-radius: 4px;
 cursor: pointer;
 }
+.active>.page-link{
+    z-index: 3;
+    color: white !important;
+    background-color:#008000 !important;
+    border-color: #008000 !important;
+
+}
+.page-link {
+  position: relative;
+  display: block;
+  padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
+  font-size: var(--bs-pagination-font-size);
+  color:#008000  !important;
+  text-decoration: none;
+  background-color: white ! ;
+  border: green solid brown !important;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
 .tablaAnalisis{
 position: relative;
 top: 95px;
@@ -163,6 +185,7 @@ height: 1000rem;
 overflow: hidden;
 border-radius: 8px;
 }
+
  .encabezado{
  position: relative;
 top: 100px;

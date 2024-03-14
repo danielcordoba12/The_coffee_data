@@ -374,9 +374,9 @@ const Analisis = (user) => {
 
             <div className="tablaAnalisis">
                 <div className="container-fluid w-full" key={key}>
-                    <table id="table-d" style={{ width: "100%" }} className=" table table-hover rounded-circle  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                    <table id="table-d" style={{ width: "100%" }} className="table table-hover rounded-3 overflow-hidden display responsive nowrap shadow" ref={dataTableRef}>
                         <thead>
-                            <tr className="bg-gray-200">
+                            <tr className="bg-black-200">
                                 <th className="text-muted">id</th>
                                 <th className="text-muted">Fecha </th>
                                 <th className="text-muted">Tipo Análisis </th>
@@ -407,7 +407,7 @@ const Analisis = (user) => {
                                     <td>
                                         <button
                                             type="button"
-                                            className="btn-actualizar-mod rou"
+                                            className="btn-actualizar-mod"
                                             onClick={() => openModal(task.id_analisis)}
                                         >
                                             Modificar
@@ -416,7 +416,7 @@ const Analisis = (user) => {
                                 </tr>
                             )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
                         </tbody>
-                    </table>
+                        </table>
                 </div>
             </div>
 
@@ -531,7 +531,7 @@ const Analisis = (user) => {
 
                         <div className="div-input-d-select div-input-search-select ">
                             <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
-                            <label className="select-tipe" htmlFor="tipo_analisis_id">Fisico</label>
+                            <label className="label-tipe-ana" htmlFor="tipo_analisis_id">Fisico</label>
                         
                         </div><br />
                         <div className="div-input-d div-input-search-select">
