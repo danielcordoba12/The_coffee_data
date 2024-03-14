@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import bcrypt from "bcryptjs";
+import Swal from 'sweetalert2';
 
 const UserProfile = (user) => {
   const [userInfo, setUserInfo] = useState({
     displayName: user.user.nombre,
-    apellido: '',
-    telefono: '',
-    email: '',
+    apellido: user.user.apellido,
+    telefono: user.user.telefono,
+    email: user.user.email,
     rol: user.user.rol,
     password: '',
     newPassword: '',
@@ -20,9 +22,7 @@ const UserProfile = (user) => {
 
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
-    navigate('/');
-  };
+  const handleNavigate = () => navigate('/');
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -33,11 +33,32 @@ const UserProfile = (user) => {
   const handleSaveInfo = () => {
     console.log("Información guardada:", userInfo);
     setEditingInfo(false);
+    Swal.fire({
+      icon: 'success',
+      title: '¡Información Guardada!',
+      showConfirmButton: false,
+      timer: 1500
+    });
   };
 
   const handleSavePassword = () => {
-    console.log("Contraseña guardada:", userInfo.newPassword);
-    setEditingPassword(false);
+    if (userInfo.newPassword === userInfo.confirmPassword) {
+      const hashedPassword = bcrypt.hashSync(userInfo.newPassword, 10);
+      console.log("Contraseña guardada:", hashedPassword);
+      setEditingPassword(false);
+      Swal.fire({
+        icon: 'success',
+        title: '¡Contraseña Guardada!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'Las contraseñas no coinciden',
+      });
+    }
   };
 
   const handlePhotoChange = (e) => {
@@ -75,8 +96,6 @@ const UserProfile = (user) => {
                 )}
               </div>
               <h2 className="card-title mb-0">Perfil de Usuario</h2>
-              
-              <img width="20%" src="../../public/img/profile.jpg" alt="" />
               <p className="text-muted">{userInfo.rol}</p>
             </div>
             <div className="mb-3">
@@ -100,9 +119,9 @@ const UserProfile = (user) => {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label">Telefono</label>
+              <label className="form-label">Teléfono</label>
               <input
-                type="number"
+                type="text"
                 className="form-control"
                 value={userInfo.telefono}
                 onChange={(e) => setUserInfo({ ...userInfo, telefono: e.target.value })}
