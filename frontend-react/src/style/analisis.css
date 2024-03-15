@@ -453,7 +453,7 @@ select{
 }
 .titleEditAna{
   position: relative;
-  top: 25px;
+  top: 15px;
   text-align: center;
   font-size: 1.5px;
   color: #168A45;
@@ -471,8 +471,8 @@ select{
 }
 .close-modal-Edit{
   position: absolute;
-  top: -118px;
-  right: -45px;
+  top: -130px;
+  right: -47px;
   background: none;
   border: none;
   color: #168A45;
@@ -481,5 +481,4 @@ select{
   font-weight: bold;
   padding: 10px 15px;
   border-radius: 4px;
-
 }

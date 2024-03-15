@@ -387,7 +387,7 @@ const Analisis = (user) => {
                                 <th className="text-muted"> Finca </th>
                                 <th className="text-muted">Lote </th>
                                 <th className="text-muted">Variedad</th>
-                                <th className="text-muted">Opciones</th>
+                                <th className="text-muted"> Opciones</th>
                             </tr>
                         </thead>
                         <tbody className="bg-gray-200 text-center">
@@ -407,7 +407,7 @@ const Analisis = (user) => {
                                     <td>
                                         <button
                                             type="button"
-                                            className="btn-actualizar-mod"
+                                            className="btn-actualizar-mod rounded-3"
                                             onClick={() => openModal(task.id_analisis)}
                                         >
                                             Modificar
@@ -482,7 +482,7 @@ const Analisis = (user) => {
                             </button>
                             {modalAnalisis.estado === 1 ? (
                                 <button
-                                    className="btn-desactivar-d"
+                                    className="btn-desactivar-d "
                                     onClick={handleEditUser2}
                                 >
                                     Desactivar
