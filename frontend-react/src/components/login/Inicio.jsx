@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './LoginForm.css'; // Asegúrate de tener un archivo de estilos CSS para este formulario
-
+import { localhost } from '../../services/Api';
 
 
 function LoginForm() {
@@ -12,7 +12,7 @@ function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:4000/validacion/validar', {
+            const response = await axios.post(`http://${localhost}:4000/validacion/validar`, {
                 numero_documentos,
                 user_password
             });

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react"
 import { useNavigate } from "react-router-dom";
-import Api from "../services/api";
+import Api from "../services/Api";
 import '../style/variedad.css';
 import Sweet from "../helpers/Sweet";
 import esES from "../languages/es-ES.json"

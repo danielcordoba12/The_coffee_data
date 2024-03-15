@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react"
 import { useNavigate } from "react-router-dom";
-import Api from "../services/api";
+import Api from "../services/Api";
 import Sweet from "../helpers/Sweet";
 import "../style/cafe.css";
 import $ from "jquery";
@@ -10,7 +10,7 @@ import "datatables.net";
 import 'datatables.net-responsive';
 import 'datatables.net-responsive-dt';
 import 'datatables.net-bs5';
-import api from "../services/api";
+
 
 
 const Cafe = () => {
