@@ -45,7 +45,7 @@ export const listarUsuario = async (req, res) => {
 
     try {
         
-        const [result] = await pool.query("select id, nombre, apellido, numero_documentos,telefono, correo_electronico, user_password, tipo_documento, rol, cargo from usuarios");
+        const [result] = await pool.query("select * from usuarios");
         res.status(200).json(result);
     } catch (err) {
         res.status(200).json({
@@ -155,3 +155,45 @@ export const desactivarUsuario = async (req, res) => {
       res.status(200).json({ mensaje: 'Error en activarUsuario: ' + err });
     }
   };
+
+  export const CambioPerfilUsuario = async (req, res) => {
+    try {
+        let error1 = validationResult(req);
+        if (!error1.isEmpty()){
+            return res.status(200).json(error1);
+        }
+        let id = req.params.id;
+        let { nombre, apellido, telefono,correo_electronico,user_password,} = req.body;
+
+
+        let sql = `UPDATE usuarios SET nombre='${nombre}',apellido='${apellido}',telefono='${telefono}',correo_electronico ='${correo_electronico}',user_password='${user_password}', WHERE  id =${id}`
+    
+        // let sql = `update usuarios SET nombres ='${nombres}',direccion='${direccion}',telefono='${telefono}',correo ='${correo}' where  idusuario=${id}`;
+
+        console.log("user",sql);
+
+        const [rows] = await pool.query(sql);
+
+        if (rows.affectedRows > 0) {
+            res.status(200).json({
+                "status": 200,
+                "message": "El usuario se actuaizo con exito!"
+            }
+            );
+        } else {
+            res.status(200).json({
+                "status": 200,
+                "message": "El usuario no fue actualizado!"
+
+            }
+            );
+        }
+    }         catch (error) {
+        res.status(200).json({
+            "status": 200,
+            "message": "error en en el servidor" + error 
+        }
+        );
+        
+    }
+};
