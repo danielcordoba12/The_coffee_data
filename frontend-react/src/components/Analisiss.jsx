@@ -387,7 +387,9 @@ const Analisis = (user) => {
                                 <th className="text-muted"> Finca </th>
                                 <th className="text-muted">Lote </th>
                                 <th className="text-muted">Variedad</th>
+                                {user.user ? user.user.rol == 'administrador' ? 
                                 <th className="text-muted"> Opciones</th>
+                                : '' : ''}
                             </tr>
                         </thead>
                         <tbody className="bg-gray-200 text-center">
@@ -404,6 +406,7 @@ const Analisis = (user) => {
                                     <td className="text-muted">{task.nombre_fincas}</td>
                                     <td className="text-muted">{task.nombre_lotes}</td>
                                     <td className="text-muted">{task.nombre_variedades}</td>
+                                    {user.user ? user.user.rol == 'administrador' ? 
                                     <td>
                                         <button
                                             type="button"
@@ -413,6 +416,7 @@ const Analisis = (user) => {
                                             Modificar
                                         </button>
                                     </td>
+                                    : '' : ''}
                                 </tr>
                             )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
                         </tbody>
