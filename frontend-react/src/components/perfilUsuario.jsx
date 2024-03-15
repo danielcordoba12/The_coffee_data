@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import bcrypt from "bcryptjs";
 import Swal from 'sweetalert2';
 
+
 const UserProfile = (user) => {
   const [userInfo, setUserInfo] = useState({
     displayName: user.user.nombre,
@@ -16,6 +17,14 @@ const UserProfile = (user) => {
     photo: null,
     additionalInfo: 'Información adicional del usuario'
   });
+
+  async function buscarUsuario(id) {
+    if (id) {
+      const response = await Api.get("/usuario/buscarusuario/" + id);
+      setUserUpdate(response.data);
+    }
+  }
+
 
   const [editingInfo, setEditingInfo] = useState(false);
   const [editingPassword, setEditingPassword] = useState(false);

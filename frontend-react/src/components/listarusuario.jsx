@@ -91,6 +91,34 @@ const ListarUsuarios = () => {
     }
   }, [isRegistrarModalOpen]);
 
+  const handleEditUser2 = async () => {
+    const result = await Sweet.confimarDeshabilitar({});
+    if (result.isConfirmed) {
+        try {
+            await Api.patch(`/usuario/desactivar/${SelectedUsuarioId}`, userUpdate);
+            isRegistrarUsuarioModalOpen();
+            // Recargar la lista de fincas después de la desactivación
+            buscarUsuarios()
+        } catch (error) {
+            console.error("Error desactivando el usuario: ", error);
+        }
+    }
+};
+
+const handleEditUser3 = async () => {
+    const result = await Sweet.confimarHabilitar({});
+    if (result.isConfirmed) {
+        try {
+            await Api.patch(`/usuario/activar/${SelectedUsuarioId}`, userUpdate);
+            isRegistrarUsuarioModalOpen();
+            // Recargar la lista de fincas después de la activación
+            buscarUsuarios();
+        } catch (error) {
+            console.error("Error activando el usuario: ", error);
+        }
+    }
+};
+
   const openRegistrarModal = () => {
     setRegistrarModalOpen(true);
     console.log("modal", setRegistrarModalOpen);
@@ -454,20 +482,23 @@ const ListarUsuarios = () => {
                   correo Incorrecto
                 </div>
               </div>
-              <div className="div-input">
-                <input
-                  defaultValue={
-                    userUpdate[0] ? userUpdate[0].user_password : ""
-                  }
-                  type="password"
-                  id="user_password"
-                  name="user_password"
-                  ref={user_password}
-                  placeholder=""
-                  className="form-empty"
-                />
-                <label htmlFor="user_password">Contraseña</label>
-              </div>
+              {formStatus === 1 ? (
+                <div className="div-input">
+                  <input
+                    type="password"
+                    id="user_password"
+                    name="user_password"
+                    ref={user_password}
+                    placeholder=""
+                    className="form-empty"
+                  />
+                  <label htmlFor="user_password">Contraseña</label>
+                </div>
+              ) : (
+                <>
+  
+                </>
+              )}
               <div className="div-input">
                 <input
                   defaultValue={
@@ -523,6 +554,7 @@ const ListarUsuarios = () => {
                 <button className="btn-blue" type="submit">
                   Actualizar
                 </button>
+                
               ) : (
                 ""
               )}
