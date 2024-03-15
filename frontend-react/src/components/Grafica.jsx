@@ -13,7 +13,7 @@ import "datatables.net-bs5";
 // import "datatables.net-bs5/css/DataTables.bootstrap5.min.css";
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
-import { localhost } from "../services/api";
+import { localhost } from "../services/Api";
 
 // import "datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css";
 
@@ -471,13 +471,13 @@ function Grafica() {
           <th>Fecha</th>
           <th>Fecha</th>
           <th>Graficar</th>
-          <th>jjj</th>
+          {/* <th>jjj</th> */}
 
           </tr>
         </thead>
         <tbody>
-                {resultado.map((task,index) => (
-                  
+            {resultado.length > 0 ? resultado
+                  .map((task,index) => (
                   <tr key={task.id}>
                     {/* <td>{index}</td> */}
                     {/* <td hidden>{index}</td> */}
@@ -497,13 +497,14 @@ function Grafica() {
                         idcheck(index,task.analisis_id,task.fecha_creacion)
                         }}/>
                     </td>
-                    <td>
-                      <button onClick={() => idcheck(task.id,task.fecha_creacion)}>holis</button>
-                      
-                    </td>
+                      {/* <td>
+                        <button onClick={() => idcheck(task.id,task.fecha_creacion)}>holis</button>
+                        
+                      </td> */}
 
                   </tr>
-                ))}
+                              )): <tr><td colSpan={999999999999} className="p-5 text-center">{resultado.message}</td></tr>}
+
                 
               </tbody>
               

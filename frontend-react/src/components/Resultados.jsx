@@ -3,9 +3,9 @@ import '../style/RegistrarMuestra.css'
 import Sweet from "../helpers/Sweet";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faX }  from'@fortawesome/free-solid-svg-icons'
-import Api from "../services/api";
+import Api from "../services/Api";
 import esES from "../languages/es-ES.json"
-import { localhost } from "../services/api";
+import { localhost } from "../services/Api";
 import $ from "jquery";
 import "bootstrap";
 import "datatables.net";
@@ -88,7 +88,7 @@ function Resultado(user) {
 
 
   const inicializarDatos = () => {
-      const nuevosDatos = Array.from({ length: 29 }, (_, index) => ({
+      const nuevosDatos = Array.from({ length: 30 }, (_, index) => ({
         valor: "",
       analisis_id: "",
       variables_id: (index + 1).toString(),
@@ -191,35 +191,36 @@ useEffect(() => {
 
 
   const labelText = [
-    'Peso',
-    'Humedad',
+    'Peso C.P.S ',
     'Peso Cisco',
-    'Merma por trilla',
-    'Peso total de la almendra ',
-    'Almendra sana ',
+    'Peso total de la almendra',
     'Peso defectos totales ',
-    'Factor de rendimiento',
     'Peso de almendra sana',
-    'Porcentaje de defectos ',
     'Negro total o parcial ',
-    'Cardenillo ',
-    'Vinagre ',
-    'Cristalizado ',
-    'Veteado ',
-    'Ámbar ',
-    'Sobresecado (g)',
-    'Mordido ',
-    'Picado',
-    'Averanado ',
+    'Vinagre (g) ',
+    'Vetado',
+    'Sobresecado',
+    'Picado por insectos  ',
     'Inmaduro ',
-    'Aplastado',
-    'Flojo',
-    'Decolorado ',
+    'Flojo ',
     'Malla 18 ',
-    'Malla 15 ',
     'Malla 17 ',
-    'Malla 14 ',
     'Malla 16 ',
+    'Humedad',
+    'Merma por trilla',
+    'Porcentaje de almendra sana ',
+    'Factor de rendimiento ',
+    'Porcentaje de defectos totales ',
+    'Cristalizado',
+    'Cardenillo  ',
+    'Ámbar',
+    'Mordido',
+    'Averanado ',
+    'Aplastado ',
+    'Decolorado ',
+    'Malla 15  ',
+    'Malla 14' ,
+    'Mallas menores '
     // 'analisis'
     // Otras mallas o campos pueden agregarse según sea necesario
   ];
@@ -293,15 +294,43 @@ useEffect(() => {
     // }
 
     if (index == index) { // Input 5
+
+      function toNumber(value) {
+        return isNaN(value) || value === '' ? 0 : parseFloat(value);
+    }
+
+    
       const valorInput1 = nuevosDatos[0].valor; // Valor del input 1
-      const valorInput2 = nuevosDatos[2].valor; // Valor del input 2
+      const valorInput2 = nuevosDatos[1].valor; // Valor del input 2
+
+      // const valorInput4 = nuevosDatos[4].valor; // Valor del input 2
+
+
+      const valorInput7 = nuevosDatos[7].valor;
+      const valorInput9 = nuevosDatos[9].valor;
+      const valorInput10 = nuevosDatos[10].valor;
+      const valorInput11 = nuevosDatos[11].valor;
+      const valorInput23 = nuevosDatos[23].valor;
+      const valorInput24 = nuevosDatos[24].valor;
+      const valorInput25 = nuevosDatos[25].valor;
+
+      const defectosTotales = toNumber(valorInput7) + toNumber(valorInput9) + toNumber(valorInput10) + toNumber(valorInput11) + toNumber(valorInput23) + toNumber(valorInput24) + toNumber(valorInput25);
+
+      nuevosDatos[3].valor = defectosTotales
+
+
   
       // Realiza el cálculo y actualiza el valor del input 5
       const nuevoValorInput5 = /* Tu cálculo */( valorInput2 *  100) / valorInput1;
-      nuevosDatos[3].valor = nuevoValorInput5;
+      nuevosDatos[16].valor = nuevoValorInput5 ;
 
       const nuevoValorInput6 = /* Tu cálculo */valorInput1 - valorInput2 ;
-      nuevosDatos[4].valor = nuevoValorInput6;
+      nuevosDatos[2].valor = nuevoValorInput6;
+
+
+      nuevosDatos[4].valor = nuevoValorInput6 - defectosTotales   ;
+
+      
 
 
     }
@@ -412,7 +441,7 @@ useEffect(() => {
   ///////////////////////////////////////////////////77Fin de respaldo/////////////////////////////////////////////////////
   const generarInputs = () => {
     const filas = [];
-    const numColumnas = 9;
+    const numColumnas = 15;
     // let cafes_id = dataSelect.cafes_id;
     // console.log("este es cafes_id " + cafes_id);
     // setCafesId(dataSelect.cafes_id)
@@ -421,6 +450,8 @@ useEffect(() => {
     for (let i = 0; i < labelText.length; i += numColumnas) {
       
       const fila = datos.slice(i, i + numColumnas);
+      // const fila = datos.slice(i, i + numColumnas);
+
       // for (let i = 0; i < datos.length; i += numColumnas) {
       
       //   const fila = datos.slice(i, i + numColumnas);
@@ -466,7 +497,7 @@ useEffect(() => {
       <div className="columna" key="analisis">
         <div className="container-input div-input-search-select">
         <input className="input-search-cafe " type="text" id="cafes_id" />
-                        <label htmlFor="cafes_id" className='label'>Analisis</label>
+                        <label htmlFor="cafes_id" className='label-analisis-resultado'>Analisis</label>
                         <div className="select-options-cafe" 
 
                         >
@@ -475,7 +506,7 @@ useEffect(() => {
                                 (
                                     <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafes_id").value = key.id_analisis;!dataSelect.cafes_id ? dataSelect.cafes_id = {} : "".dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id_analisis}>
                                       
-                                      {key.id_analisis + "," + key.consecutivo_informe+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
+                                      {key.id_analisis + "," + key.codigo_externo+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
                                 )
                             ))}
                         </div>
@@ -495,7 +526,7 @@ useEffect(() => {
   
   const generarInputs2 = () => {
     const filas = [];
-    const numColumnas = 9;
+    const numColumnas = 15;
   
     for (let i = 0; i < resultadoSellecionado.length; i += numColumnas) {
       const fila = resultadoSellecionado.slice(i, i + numColumnas);
@@ -513,14 +544,14 @@ useEffect(() => {
                   type="text"
                   id={`input-${dato.variables_id}-${index}`}
                   value={dato.valor || ''}
-                  className='input'
+                  className='input-actualizar'
                   placeholder=""
                   onChange={(e) => {
                     console.log("Input change detected");
                     camposEntrada(index, "valor", e.target.value);
                   }}
                 />
-                <label htmlFor={`input-${dato.variables_id}`} className='label'>
+                <label htmlFor={`input-${dato.variables_id}`} className='label-actualizar'>
                   {labelText[index]}
                 </label>
               </div>
@@ -538,7 +569,7 @@ useEffect(() => {
 
   const generarInputs3 = () => {
     const filas = [];
-    const numColumnas = 9;
+    const numColumnas = 15;
 
     for (let i = 0; i < datos.length; i += numColumnas) {
       const fila = datos.slice(i, i + numColumnas);
@@ -555,11 +586,11 @@ useEffect(() => {
                   type="text"
                   id={`input-${datos.variables_id}-${x}`}
                   value={resultadoSellecionado[x]?.valor || ''}
-                  className='input'
+                  className='input-actualizar '
                   placeholder=""
                   readOnly
                 />
-                <label htmlFor={`input-${dato.variables_id}`} className='label'>
+                <label htmlFor={`input-${dato.variables_id}`} className='label-actualizar'>
                   {labelText[i + j]}
                 </label>
               </div>
@@ -568,6 +599,7 @@ useEffect(() => {
         </div>
       );
     }
+    
 
     return filas;
   };
@@ -766,7 +798,7 @@ useEffect(() => {
       <div className={`main-content-registrar`} id="modalInfo1" >
       <h1 className='title-registrar-resultado'>Registrar resultado</h1> 
 
-      <form className="formulario-muestra"
+      <form className="formulario-resultado"
       
       method="post">
         
@@ -791,7 +823,7 @@ useEffect(() => {
 
       <h1 className='title-registrar-resultado'>Actualizar resultado</h1> 
       
-        <form className="formulario-muestra" method="post">
+        <form className="formulario-resultado" method="post">
           {generarInputs2()}
           <div className="buttons">
             <button className="btn-reg-mue" type="button" onClick={() => actualizarResultado(resultadoSellecionado[3])}>
@@ -812,12 +844,12 @@ useEffect(() => {
 
     {showModal3 ? 
       <div className="main-content-registrar" id="modalInfo3" >
-      <div className="container-tittle">
+      {/* <div className="container-tittle"> */}
       <h1 className='title-registrar-resultado'>Visualizar resultado</h1> 
 
 
-      </div>
-      <form className="formulario-muestra" method="post">
+      {/* </div> */}
+      <form className="formulario-resultado" method="post">
 
         {generarInputs3()}
       
@@ -835,10 +867,11 @@ useEffect(() => {
 
 <div className="main-container">
 <h1 className='title-registrar'>Listar resultados</h1> 
-  
+{user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
   <button className="btn-reg-mue" onClick={() => setShowModal1(!showModal1)}>
       Registrar resultado
   </button>
+  : '' : ''}
 
   <div className="container-fluid w-full">
     <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
@@ -855,7 +888,9 @@ useEffect(() => {
           <th>Lote</th>
           <th>Tipo analisis</th>
           <th>Fecha</th>
+          {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
           <th>Actualizar</th>
+          : '' : ''}
           <th>Mas</th>
 
 
@@ -874,7 +909,7 @@ useEffect(() => {
                   <td>{task.lote}</td>
                   <td>{task.tipo_analisis}</td>
                   <td>{formatDate(task.fecha_creacion)}</td>
-
+                  {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
                   <td>
                     <button className="btn-reg-mue"
                       onClick={() => {
@@ -884,6 +919,7 @@ useEffect(() => {
                       >
                     Editar</button>
                   </td>
+                  : '' : ''}
 
                   <td>
                     <button

@@ -353,7 +353,7 @@ const ListarUsuarios = () => {
                 <td>{usuario.numero_documentos}</td>
                 <td>{usuario.telefono}</td>
                 <td>{usuario.correo_electronico}</td>
-                <td>{usuario.estado === 1 ? "Activo" : "desactivado"}</td>
+                <td>{usuario.estado === 1 ? "Activo"  :  "desactivado"}</td>
                 <td>
                   <button
                     type="button"

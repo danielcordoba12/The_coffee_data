@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import '../style/RegistrarMuestra.css'
-import Api from "../services/api";
+import Api from "../services/Api";
 const EditarMestra = () => {
 
   const { id } = useParams();
