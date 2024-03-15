@@ -7,13 +7,13 @@
   font-size: 1rem;
 
 }
-
 .overlay-edit{
-  background-color: rgba(128, 128, 128, 0.209);
+    background-color: rgba(128, 128, 128, 0.44);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+    backdrop-filter: blur(5px);
     height: 100%;
     z-index: 9;
 
@@ -21,15 +21,17 @@
 option{
   color: #808080;
 }
-.select-tipe{
+.label-tipe-ana{
   border: none;
   border-radius: 7px;
-  outline: none; 
+  outline: none;
+  position: relative;
+  top: -14px;
   width: 55%;
-  
+  color: black;
+
+
 }
-
-
 .btn-desactivar-d {
   background-color:gainsboro;
   color: black;
@@ -52,7 +54,6 @@ option{
 .div-input-d{
   color: #808080;
 }
-
 .btn-activar-d {
   background-color:gainsboro;
   color: black;
@@ -70,7 +71,6 @@ option{
 .btn-activar-d:hover{
   color: white;
   background-color:#008000;
-
 }
 
 .input-edit-ana{
@@ -95,7 +95,6 @@ font-family: Arial, Helvetica, sans-serif;
 color:#168A45;
 font-size: 1.5rem;
 }
-
 .btn-registrar-d{
 display: flex;
 position: relative;
@@ -114,30 +113,15 @@ justify-content: center;
 border-radius: 4px;
 cursor: pointer;
 font-size: 1rem;
-/* border: 1px solid grey; */
 font-weight: bold;
-
 }
-/* .btn-registrar-d:hover {
-background-color: #0b2e4be7;
 
-} */
- .contTitle{
-  position: relative;
-  top: 56px;
-  left: 26px;
-  background-color: white;
-  border-radius: 8px;
-  width: 93%;
-  height: 70px;
-}
 .titleanalisis{
   position: relative;
   left: 35px;
   font-size: 1.5rem;
   top: 25px;
 }
-
 .btn-actualizar-d{ 
 color: black;
 position: relative;
@@ -169,19 +153,8 @@ margin-left: 15px;
 margin-bottom: 14px;
 border-radius: 4px;
 cursor: pointer;
-/* border: 1px solid gray; */
-
-
 }
-/* 
-.btn-actualizar-mod:hover {
-background-color:#0b2e4be2; 
-} */
-
 .tablaAnalisis{
-/* display: inline-table; */
-/* justify-content: center;
-align-items: center; */
 position: relative;
 top: 95px;
 left: 26px;
@@ -208,9 +181,6 @@ width: 100%;
   color: #808080;
 
 }
-
-/* 
-estilos de registro de analisis css */
 .contRegistrarAna{
   position: fixed;
   top: 50%;
@@ -225,7 +195,6 @@ estilos de registro de analisis css */
   height: 500px;
   width: 500px;
   text-align: center;
-
 }
 .EditCampos input{
   width: 95%;
@@ -274,15 +243,21 @@ font-weight: bold;
   border-radius: 8px;
 
 }
+.table{
+  border-radius: 10px;
+  border: 1px solid black;
+
+}
 .formRegiAna{
   display: block;
   top: 90px;
   position: relative;
 }
 .overlay-d{
-  background-color: rgba(128, 128, 128, 0.209);
+  background-color: rgba(128, 128, 128, 0.44);
   position: fixed;
   top: 0;
+  backdrop-filter: blur(5px);
   left: 0;
   width: 100%;
   height: 100%;
@@ -305,13 +280,10 @@ font-weight: bold;
   padding: 10px;
   font-size: 11px;
   display: none;
-
 }
 .contRegistrarAna div {
   margin-bottom: 15px;
 }
-
-
 .select-option-input-d>div {
 
   margin: 0 !important;
@@ -320,9 +292,7 @@ font-weight: bold;
   cursor: pointer;
   border-radius: 4px;
 }
-
 .select-option-input-d>div:hover {
-
   background-color: #80808024;
   display: block;
 }
@@ -360,7 +330,7 @@ font-weight: bold;
   font-size: 12px;
   color: rgb(0, 0, 0);
   top: 10px;
-  transition: all 0.5s;
+  transition: all 0.2s;
 }
 .close-modal-Ana{
   position: absolute;
@@ -374,33 +344,26 @@ font-weight: bold;
   font-weight: bold;
   padding: 10px 15px;
   border-radius: 4px;
-  
-}
 
+}
 .input-search-d{
   color: #808080;
   background-color: whitesmoke;
 }
-
 .div-input-d{
   color: black;
   position: relative;
 }
-
 .select-invisility {
 
   width: 0;
-
   height: 0;
-
 }
 .option-select-focus {
   background-color: rgb(61 194 145);
-
 }
 label{
   color: #808080;
-
 }
 .tipe-ana{
   left: -32px;

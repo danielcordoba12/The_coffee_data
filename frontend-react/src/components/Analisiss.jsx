@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Api from "../services/api";
+import Api from "../services/Api";
 import Sweet from "../helpers/Sweet";
 import { useNavigate } from "react-router-dom";
 import '../style/analisis.css';
@@ -123,11 +123,11 @@ const Analisis = (user) => {
                 }
             } else {
               Sweet.actualizacionExitosa("/home/analisis");
-                closeModalEdit(true); 
+                closeModalEdit();
+                buscarAnalisis();
 
             }
-            const response = await Api.get("analisis/listar");
-            setAnalisis(response.data);
+    
         } catch (error) {
             console.error("Error editando el Analisis: ", error);
         }
@@ -374,40 +374,40 @@ const Analisis = (user) => {
 
             <div className="tablaAnalisis">
                 <div className="container-fluid w-full" key={key}>
-                    <table id="table-d" style={{ width: "100%" }} className=" table table-stripped  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
+                    <table id="table-d" style={{ width: "100%" }} className=" table table-hover rounded-circle  border display reponsive nowrap b-4 bg-white" ref={dataTableRef}>
                         <thead>
                             <tr className="bg-gray-200">
-                                <th>id</th>
-                                <th>Fecha </th>
-                                <th>Tipo Análisis </th>
-                                <th>Consecutivo Informe </th>
-                                <th>Catador</th>
-                                <th>Estado </th>
-                                <th>Propietario </th>
-                                <th>Finca </th>
-                                <th>Lote </th>
-                                <th>Variedad</th>
-                                <th>Opciones</th>
+                                <th className="text-muted">id</th>
+                                <th className="text-muted">Fecha </th>
+                                <th className="text-muted">Tipo Análisis </th>
+                                <th className="text-muted">Consecutivo Informe </th>
+                                <th className="text-muted">Catador</th>
+                                <th className="text-muted">Estado </th>
+                                <th className="text-muted">Propietario </th>
+                                <th className="text-muted"> Finca </th>
+                                <th className="text-muted">Lote </th>
+                                <th className="text-muted">Variedad</th>
+                                <th className="text-muted">Opciones</th>
                             </tr>
                         </thead>
-                        <tbody className="bg-gray-200">
+                        <tbody className="bg-gray-200 text-center">
                             { analisis.length > 0 ? analisis 
                             .map((task) => (
                                 <tr key={task.id_analisis}>
-                                    <td>{task.id_analisis}</td>
-                                    <td>{task.fecha_analisis = formatDate(task.fecha_analisis)}</td>
-                                    <td>{task.nombre_tipo_analisis}</td>
-                                    <td className="conse" >{task.codigo_externo}</td>
-                                    <td>{task.nombre_usuario}</td>
-                                    <td className="cont-estado">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                    <td>{task.propietario}</td>
-                                    <td>{task.nombre_fincas}</td>
-                                    <td>{task.nombre_lotes}</td>
-                                    <td>{task.nombre_variedades}</td>
+                                    <td className="text-muted">{task.id_analisis}</td>
+                                    <td className="text-muted">{task.fecha_analisis = formatDate(task.fecha_analisis)}</td>
+                                    <td className="text-muted">{task.nombre_tipo_analisis}</td>
+                                    <td className="text-muted" >{task.codigo_externo}</td>
+                                    <td className="text-muted">{task.nombre_usuario}</td>
+                                    <td className="text-muted">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                    <td className="text-muted">{task.propietario}</td>
+                                    <td className="text-muted">{task.nombre_fincas}</td>
+                                    <td className="text-muted">{task.nombre_lotes}</td>
+                                    <td className="text-muted">{task.nombre_variedades}</td>
                                     <td>
                                         <button
                                             type="button"
-                                            className="btn-actualizar-mod"
+                                            className="btn-actualizar-mod rou"
                                             onClick={() => openModal(task.id_analisis)}
                                         >
                                             Modificar
@@ -422,7 +422,7 @@ const Analisis = (user) => {
 
             {modalAnalisis && (
                 <div className="tablaEditAna">
-                    <div onClick={closeModalEdit} className="overlay-edit"></div>
+                    <div className="overlay-edit"></div>
                     <div className="contEditAna">
                         <h1 className="titleEditAna">Editar Análisis</h1><br />
 
@@ -507,7 +507,7 @@ const Analisis = (user) => {
 
             )}
             {aRegistrarModalOpen && (
-                <div className="overlay-d" onClick={closeRegistrarAnalisisModal}></div>
+                <div className="overlay-d"></div>
             )}
             {aRegistrarModalOpen && (
                 <div className="contRegistrarAna">
@@ -531,10 +531,9 @@ const Analisis = (user) => {
 
                         <div className="div-input-d-select div-input-search-select ">
                             <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
-                            <select className="select-tipe" name="tipo_analisis_id" id="1">
-                                <option value="1">Fisico</option>
-                            </select>
-                        </div>
+                            <label className="select-tipe" htmlFor="tipo_analisis_id">Fisico</label>
+                        
+                        </div><br />
                         <div className="div-input-d div-input-search-select">
                             <input className="input-search-d" type="text" id="muestras_id" ref={muestras_id} />
                             <label htmlFor="muestras_id" className='label'>Muestra</label>
