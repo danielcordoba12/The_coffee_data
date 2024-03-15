@@ -329,3 +329,6 @@ select option {
   color: #000000;
   background: rgb(255, 255, 255);
 }
+.dnone{
+  display: none;
+}
