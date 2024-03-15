@@ -390,7 +390,7 @@ const Analisis = (user) => {
                                 <th className="text-muted"> Opciones</th>
                             </tr>
                         </thead>
-                        <tbody className="bg-gray-200 text-center">
+                        <tbody className="bg-gray-200">
                             { analisis.length > 0 ? analisis 
                             .map((task) => (
                                 <tr key={task.id_analisis}>

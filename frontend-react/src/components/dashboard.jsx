@@ -214,7 +214,7 @@ function Dashboard() {
             id="nav"
             style={{ width: menuWidth }}
           >
-            <div className="contenedor-imagen">
+            <div className="contenedor-imagen shadow">
               {/* <h1>Mi Componente con Imagen</h1> */}
               {/* <img src={imgNav} alt="Descripción de la imagen" className="imagen-estilo" /> */}
               {/* <img src="../../public/img/fondoMenuVertical2.webp" alt="" className='fondo-nav'/> */}
@@ -351,11 +351,11 @@ function Dashboard() {
             </div>
           </nav>
         </div>
-        <div className="nav-header">
+        <div className="nav-header shadow">
           <div className="header">
             <div className="container-logo">
               <div className="logo">
-                <svg
+                {/* <svg
                   className="logoSena"
                   xmlns="http://www.w3.org/2000/svg"
                   id="a"
@@ -381,14 +381,14 @@ function Dashboard() {
                     className="b"
                     d="M31.8,32.7s.04-.07,.04-.07l16.48,27.28-4.38,2.28-10.62-17.81c-.63-1.05-2.14-1.05-2.76,0-3.54,5.98-10.55,17.81-10.55,17.81l-4.28-2.12s15.19-25.87,16.07-27.37"
                   />
-                </svg>
+                </svg> */}
               </div>
             </div>
 
-            <div className="empty"></div>
+            {/* <div className="empty"></div>
             <div className="container-title-dasboard">
               <h1 className="title-dasboard">The Coffee data</h1>
-            </div>
+            </div> */}
 
             <div className="empty"></div>
 
