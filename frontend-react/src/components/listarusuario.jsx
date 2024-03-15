@@ -49,25 +49,25 @@ const ListarUsuarios = () => {
     buscarUsuarios();
   }, []);
 
-    const fetchMunicipios = async () => {
-      try {
-        const response = await Api.get("municipio/listar");
-        setMunicipios(response.data);
-      } catch (error) {
-        console.error("Error fetching municipios:", error);
-      }
-    };
+  const fetchMunicipios = async () => {
+    try {
+      const response = await Api.get("municipio/listar");
+      setMunicipios(response.data);
+    } catch (error) {
+      console.error("Error fetching municipios:", error);
+    }
+  };
 
-    const buscarUsuarios = async () => {
-      try {
-        const response = await Api.get("usuario/listarusuario");
-        console.log(response);
-        setUsuarios(response.data);
-        console.log(response, "useeeer");
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
+  const buscarUsuarios = async () => {
+    try {
+      const response = await Api.get("usuario/listarusuario");
+      console.log(response);
+      setUsuarios(response.data);
+      console.log(response, "useeeer");
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   useEffect(() => {
     let inputRegister = document.querySelectorAll(".input-register");
@@ -94,30 +94,30 @@ const ListarUsuarios = () => {
   const handleEditUser2 = async () => {
     const result = await Sweet.confimarDeshabilitar({});
     if (result.isConfirmed) {
-        try {
-            await Api.patch(`/usuario/desactivar/${SelectedUsuarioId}`, userUpdate);
-            isRegistrarUsuarioModalOpen();
-            // Recargar la lista de fincas después de la desactivación
-            buscarUsuarios()
-        } catch (error) {
-            console.error("Error desactivando el usuario: ", error);
-        }
+      try {
+        await Api.patch(`/usuario/desactivar/${SelectedUsuarioId}`, userUpdate);
+        isRegistrarUsuarioModalOpen();
+        // Recargar la lista de fincas después de la desactivación
+        buscarUsuarios();
+      } catch (error) {
+        console.error("Error desactivando el usuario: ", error);
+      }
     }
-};
+  };
 
-const handleEditUser3 = async () => {
+  const handleEditUser3 = async () => {
     const result = await Sweet.confimarHabilitar({});
     if (result.isConfirmed) {
-        try {
-            await Api.patch(`/usuario/activar/${SelectedUsuarioId}`, userUpdate);
-            isRegistrarUsuarioModalOpen();
-            // Recargar la lista de fincas después de la activación
-            buscarUsuarios();
-        } catch (error) {
-            console.error("Error activando el usuario: ", error);
-        }
+      try {
+        await Api.patch(`/usuario/activar/${SelectedUsuarioId}`, userUpdate);
+        isRegistrarUsuarioModalOpen();
+        // Recargar la lista de fincas después de la activación
+        buscarUsuarios();
+      } catch (error) {
+        console.error("Error activando el usuario: ", error);
+      }
     }
-};
+  };
 
   const openRegistrarModal = () => {
     setRegistrarModalOpen(true);
@@ -154,10 +154,10 @@ const handleEditUser3 = async () => {
           },
         ],
         responsive: true,
-        
+
         lengthMenu: [
           [5, 10, 50, 100, -1],
-          ["5 Filas",,"10 Filas", "50 Filas", "100 Filas", "Ver Todo"],
+          ["5 Filas", , "10 Filas", "50 Filas", "100 Filas", "Ver Todo"],
         ],
       });
     }
@@ -310,10 +310,7 @@ const handleEditUser3 = async () => {
   };
 
   return (
-
-
     <>
-  
       <div className="contTliteUser">
         <h1 className="titleuser">Usuario</h1>
         <button
@@ -327,7 +324,6 @@ const handleEditUser3 = async () => {
         >
           Añadir
         </button>
-
       </div>
 
       <div className="tablalistar">
@@ -390,9 +386,7 @@ const handleEditUser3 = async () => {
         <>
           <div className="overlay-u" onClick={closeRegistrarUsuarioModal}></div>
           <div className="tabla-regis-finca">
-            <h1 className="titleRegistrarUser">
-                Usuario
-            </h1>
+            <h1 className="titleRegistrarUser">Usuario</h1>
             <form
               className="contenido-regi"
               onSubmit={(e) => {
@@ -496,7 +490,17 @@ const handleEditUser3 = async () => {
                 </div>
               ) : (
                 <>
-  
+                  <div className="dnone">
+                    <input
+                      type="password"
+                      id="user_password"
+                      name="user_password"
+                      ref={user_password}
+                      placeholder=""
+                      className=""
+                    />
+                    <label htmlFor="user_password">Contraseña</label>
+                  </div>
                 </>
               )}
               <div className="div-input">
@@ -554,7 +558,6 @@ const handleEditUser3 = async () => {
                 <button className="btn-blue" type="submit">
                   Actualizar
                 </button>
-                
               ) : (
                 ""
               )}
