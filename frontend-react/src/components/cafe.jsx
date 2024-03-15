@@ -394,7 +394,7 @@ const Cafe = () => {
 
             {modalCafe && (
                 <div className="div-modal">
-                    <div onClick={closeModal} className="fondo-modal"></div>
+                    <div  className="fondo-modal"></div>
                     <div className="table-register-cafe">
                         <h1 className="text-center font-bold underline text-3xl p-3 m-2 c-white" >Editar Cafe</h1>
                         <div className="max-w-xs">
@@ -476,7 +476,7 @@ const Cafe = () => {
 
             {isRegistrarModalOpen && (
                 <div className="div-modal">
-                    <div onClick={closeRegistrarModal} className="fondo-modal"></div>
+                    <div  className="fondo-modal"></div>
                     <div className="table-register-cafe">
                         <h1 className="">
                             Registrar Cafe
