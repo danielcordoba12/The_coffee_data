@@ -343,13 +343,13 @@ const RegistrarMuestra = async (data) => {
               }
           }
       } else {
-          Sweet.registroExitoso();
+          buscarMuestra();
+          Sweet.registroExitoso("/home/listar/muestra");
           hideAllModals();
-          listarMuestra();  
           // closeRegistrarModal();
           // const response = await Api.get("finca/listar");
           setCafes(response.data);
-          // location.href = "/finca"
+          location.href = "/home/listar/muestra"
       }
   } catch (error) {
       console.error("Error al registrar la muestra:", error);
@@ -517,8 +517,6 @@ const RegistrarMuestra = async (data) => {
 		// 	});
     // }
     async function actualizarMuestra (id) {
-      alert("muestraSeleccionada");
-      console.log(muestraSeleccionada,"ahhhh")
       try {
       console.log("este es la info de actualizar" ,muestraSeleccionada);
 
@@ -549,7 +547,6 @@ const RegistrarMuestra = async (data) => {
                       // const response = await Api.get("lote/listar");
                       // setLotes(response.data);
                   } catch (error) {
-      console.log("este es la info de actualizar" ,muestraSeleccionada);
 
                       console.error("Error al actualizar lote: ", error);
                   }

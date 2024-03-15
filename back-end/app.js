@@ -20,7 +20,7 @@ const host = process.env.DB_HOST
 
 
 app.use(cors({
-    origin: `http://192.168.100.160:5173`,
+    origin: `http://localhost:5173`,
     credentials : true,
 }));
 
@@ -30,7 +30,7 @@ app.use(express.json());
 
 
 app.use((re,res,next)=>{
-    res.setHeader(`Access-Control-Allow-Origin`,`http://192.168.100.160:5173`);
+    res.setHeader(`Access-Control-Allow-Origin`,`http://localhost:5173`);
     res.setHeader(`Access-Control-Allow-Methods`,`GET,POST,PUT,DELETE,PATCH`);
     res.setHeader(`Access-Control-Allow-Headers`,`Content-Type, Authorization`);
     res.setHeader(`Access-Control-Allow-Credentials`,`true`);
