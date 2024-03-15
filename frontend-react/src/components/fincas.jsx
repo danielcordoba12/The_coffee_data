@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Api from "../services/api";
+import Api from "../services/Api";
 import "../style/fincas.css";
 import Sweet from "../helpers/Sweet";
 import esES from "../languages/es-ES.json"
@@ -622,7 +622,7 @@ const FincaView = (user) => {
             {isLotesModalOpen && (
                 <div className="modal-div-fin">
                     <div className="modal modal-ver-lotes" tabIndex="-1" role="dialog" style={{ display: isLotesModalOpen ? 'block' : 'none' }} >
-                        <div className="fondo-over" onClick={() => setLotesModalOpen(false)} ></div>
+                        <div className="fondo-over"  ></div>
                         <div className="modal-dialog" role="document">
                             <div className="modal-contents">
                                 <div className="modal-header">
@@ -842,7 +842,7 @@ const FincaView = (user) => {
             )}
 
             {isRegistrarModalOpen && (
-                <div className="overlay" onClick={closeRegistrarModal}></div>
+                <div className="overlay" ></div>
             )}
             {isRegistrarModalOpen && (
                 <div className="tabla-regis">
@@ -901,7 +901,7 @@ const FincaView = (user) => {
 
             {modalLote && (
                 <div className="div-modal-edit" >
-                    <div className="overlay" onClick={closeModal} ></div>
+                    <div className="overlay"  ></div>
                     <div className="tabla-editar">
 
                         <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Lote</h1>

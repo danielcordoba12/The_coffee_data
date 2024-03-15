@@ -110,7 +110,7 @@ function validate(data) {
           // Validación para float
           if (data[keys[x]][inputs[e]]["value"] == "" || data[keys[x]][inputs[e]]["value"] == undefined) {
             errros[inputs[e]] = referencia + " no puede estar vacío";
-          } else if (!/^-?\d+(\.\d+)?$/.test(data[keys[x]][inputs[e]]["value"])) {
+          } else if (!/^-?\d+(\.\d+)?°?$/.test(data[keys[x]][inputs[e]]["value"])) {
             errros[inputs[e]] = referencia + " debe ser un número decimal";
           } else {
             result[inputs[e]] = parseFloat(data[keys[x]][inputs[e]]["value"]);

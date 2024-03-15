@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Api from "../services/api";
+import Api from "../services/Api";
 import '../style/municipio.css';
 import Sweet from "../helpers/Sweet";
 import $ from "jquery";
@@ -339,7 +339,7 @@ const Municipio = () => {
             </div>
             {modalMunicipio && (
                 <div className="div-modal">
-                    <div onClick={closeEditarModal} className="fondo-modal"></div>
+                    <div  className="fondo-modal"></div>
                     <div className="table-register-municipio">
                         <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                             Editar Municipio
@@ -401,7 +401,7 @@ const Municipio = () => {
 
             {isRegistrarModalOpen && (
                 <div className="div-modal">
-                    <div onClick={closeRegistrarModal} className="fondo-modal"></div>
+                    <div  className="fondo-modal"></div>
                     <div className="table-register-municipio">
                         <h1 className="text-center font-bold underline text-3xl p-3 m-2">
                             Registrar Municipio
