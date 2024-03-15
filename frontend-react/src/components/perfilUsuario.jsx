@@ -24,10 +24,10 @@ const UserProfile = () => {
       // Lógica para obtener los datos del usuario desde el servidor
       // Simulación de datos de usuario
       const userData = {
-        displayName: 'John',
-        apellido: 'Doe',
+        displayName: 'Jaider  ',
+        apellido: 'Pastrana',
         telefono: '123456789',
-        email: 'john.doe@example.com',
+        email: 'aider_pastrana@example.com',
         photo: 'url_de_la_foto' // La URL de la foto del usuario
       };
       setUserInfo(userData);
