@@ -471,7 +471,7 @@ function Grafica() {
           <th>Fecha</th>
           <th>Fecha</th>
           <th>Graficar</th>
-          <th>jjj</th>
+          {/* <th>jjj</th> */}
 
           </tr>
         </thead>
@@ -497,10 +497,10 @@ function Grafica() {
                         idcheck(index,task.analisis_id,task.fecha_creacion)
                         }}/>
                     </td>
-                    <td>
-                      <button onClick={() => idcheck(task.id,task.fecha_creacion)}>holis</button>
-                      
-                    </td>
+                      {/* <td>
+                        <button onClick={() => idcheck(task.id,task.fecha_creacion)}>holis</button>
+                        
+                      </td> */}
 
                   </tr>
                               )): <tr><td colSpan={999999999999} className="p-5 text-center">{resultado.message}</td></tr>}

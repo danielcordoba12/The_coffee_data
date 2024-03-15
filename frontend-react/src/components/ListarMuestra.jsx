@@ -537,11 +537,12 @@ const RegistrarMuestra = async (data) => {
                       let parent = document.getElementById(keys[x]).parentNode
                       parent.appendChild(h6)
                   }
-
+                
               }
           } else {
               Sweet.actualizacionExitosa();
               hideAllModals();
+              listarMuestra();
           }
                       // Recargar la lista de lotes después de la actualización
                       // const response = await Api.get("lote/listar");
