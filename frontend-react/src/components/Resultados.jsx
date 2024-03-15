@@ -3,7 +3,7 @@ import '../style/RegistrarMuestra.css'
 import Sweet from "../helpers/Sweet";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faX }  from'@fortawesome/free-solid-svg-icons'
-import Api from "../services/api";
+import Api from "../services/Api";
 import esES from "../languages/es-ES.json"
 import { localhost } from "../services/Api";
 import $ from "jquery";
@@ -294,15 +294,41 @@ useEffect(() => {
     // }
 
     if (index == index) { // Input 5
+
+      function toNumber(value) {
+        return isNaN(value) || value === '' ? 0 : parseFloat(value);
+    }
+
+    
       const valorInput1 = nuevosDatos[0].valor; // Valor del input 1
       const valorInput2 = nuevosDatos[1].valor; // Valor del input 2
+
+      // const valorInput4 = nuevosDatos[4].valor; // Valor del input 2
+
+
+      const valorInput7 = nuevosDatos[7].valor;
+      const valorInput9 = nuevosDatos[9].valor;
+      const valorInput10 = nuevosDatos[10].valor;
+      const valorInput11 = nuevosDatos[11].valor;
+      const valorInput23 = nuevosDatos[23].valor;
+      const valorInput24 = nuevosDatos[24].valor;
+      const valorInput25 = nuevosDatos[25].valor;
+
+      const defectosTotales = toNumber(valorInput7) + toNumber(valorInput9) + toNumber(valorInput10) + toNumber(valorInput11) + toNumber(valorInput23) + toNumber(valorInput24) + toNumber(valorInput25);
+
+      nuevosDatos[3].valor = defectosTotales
+
+
   
       // Realiza el cálculo y actualiza el valor del input 5
       const nuevoValorInput5 = /* Tu cálculo */( valorInput2 *  100) / valorInput1;
-      nuevosDatos[16].valor = nuevoValorInput5 + "%";
+      nuevosDatos[16].valor = nuevoValorInput5 ;
 
       const nuevoValorInput6 = /* Tu cálculo */valorInput1 - valorInput2 ;
       nuevosDatos[2].valor = nuevoValorInput6;
+
+
+      nuevosDatos[4].valor = nuevoValorInput6 - defectosTotales   ;
 
       
 
@@ -480,7 +506,7 @@ useEffect(() => {
                                 (
                                     <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafes_id").value = key.id_analisis;!dataSelect.cafes_id ? dataSelect.cafes_id = {} : "".dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id_analisis}>
                                       
-                                      {key.id_analisis + "," + key.consecutivo_informe+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
+                                      {key.id_analisis + "," + key.codigo_externo+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
                                 )
                             ))}
                         </div>

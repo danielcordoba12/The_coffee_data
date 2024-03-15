@@ -476,8 +476,8 @@ function Grafica() {
           </tr>
         </thead>
         <tbody>
-                {resultado.map((task,index) => (
-                  
+            {resultado.length > 0 ? resultado
+                  .map((task,index) => (
                   <tr key={task.id}>
                     {/* <td>{index}</td> */}
                     {/* <td hidden>{index}</td> */}
@@ -503,7 +503,8 @@ function Grafica() {
                     </td>
 
                   </tr>
-                ))}
+                              )): <tr><td colSpan={999999999999} className="p-5 text-center">{resultado.message}</td></tr>}
+
                 
               </tbody>
               
