@@ -1055,10 +1055,12 @@ const RegistrarMuestra = async (data) => {
 
       <div className="main-container">
       <h1 className='title-registrar'>Listar Muestra</h1> 
+      {user.user ? user.user.rol == 'administrador' ? 
 
         <button className="btn-reg-mue" onClick={() => toggleModal(1)}>
             Registrar muestra
         </button>
+        : '' : ''}
 
         <div className="container-fluid w-full">
         {/* <table className="table-muestra"> */}
@@ -1093,7 +1095,7 @@ const RegistrarMuestra = async (data) => {
             </tr>
           </thead>
           <tbody>
-                {muestra. length >0 ? muestra 
+                {muestra. length > 0 ? muestra 
                   .map((task,index) => (
                     <tr key={task.id}>
                       <td>{task.id}</td>
@@ -1153,15 +1155,10 @@ const RegistrarMuestra = async (data) => {
 
                       </td>
                       : '' : ''}
-
-                      
-                      
-
-
                     </tr>
                   ))
 
-                :  <tr><td colSpan={999999999999} className="p-5 text-center">{muestra.message}</td></tr>}
+                : <tr><td colSpan={999999999999} className="p-5 text-center">{muestra.message}</td></tr>}
                                   </tbody>
         </table>
         </div>
