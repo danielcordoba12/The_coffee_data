@@ -468,7 +468,7 @@ export const actualizarMuestra = async (req, res) => {
             );
         }
     } catch (e) {
-        res.status(200).json({
+        res.status(500).json({
             "status": 200,
             "message": "Error en el servidor " + e
         });
@@ -485,7 +485,7 @@ export const buscarMuestra = async (req, res) => {
 
         res.status(200).json(result);
     } catch (err) {
-        res.status(200).json({
+        res.status(500).json({
             massage: "Error en listar la muestra :" + err
         });
     }
@@ -528,7 +528,7 @@ export const listarMuestras = async (req, res) => {
             }
 
     } catch (err) {
-        res.status(200).json({
+        res.status(500).json({
             massage: "Error en listar muestra :" + err
         });
     }
@@ -566,7 +566,7 @@ export const desactivarMuestra = async (req,res) =>{
         }
     }  
     } catch (error) {
-        res.status(200).json({
+        res.status(500).json({
             "status": 200,
             "message": "error en en el servidor" + error
         }
@@ -606,8 +606,8 @@ export const activarMuestra = async (req,res) =>{
         }
     }  
     } catch (error) {
-        res.status(200).json({
-            "status": 200,
+        res.status(500).json({
+            "status": 500,
             "message": "error en en el servidor" + error
         }
         );

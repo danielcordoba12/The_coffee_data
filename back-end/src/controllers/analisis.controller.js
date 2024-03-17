@@ -87,19 +87,23 @@ function validate(data) {
 
 export const guardarAnalisis = async (req, res) => {
 
+    await pool.query('START TRANSACTION')
+
     const [muestras] = await pool.query("SELECT id FROM muestras");
     let opcionesmuestras = [];
     for (let x = 0; x < muestras.length; x++) {
         opcionesmuestras.push(muestras[x]["id"])
     }
 
-    const [usuarios] = await pool.query("SELECT id FROM usuarios");
-    let opcionesusuarios = [];
-    for (let x = 0; x < usuarios.length; x++) {
-        opcionesusuarios.push(usuarios[x]["id"])
-    }
+    // const [usuarios] = await pool.query("SELECT id FROM usuarios");
+    // let opcionesusuarios = [];
+    // for (let x = 0; x < usuarios.length; x++) {
+    //     opcionesusuarios.push(usuarios[x]["id"])
+    // }
 
     try {
+
+
 
         let data = {
 
@@ -130,12 +134,20 @@ export const guardarAnalisis = async (req, res) => {
             return res.status(400).json(error1);
         }
         let data1 = req.body;
-        console.log('user', data1);
+        console.log('este es la info ', data1);
 
         let sql = 'INSERT INTO analisis(tipo_analisis_id,muestras_id,usuarios_id) VALUES (?,?,?)';
         const [rows] = await pool.query(sql, [1, data1.muestras_id, data1.usuarios_id]);
 
-        if (rows.affectedRows > 0) {
+
+
+        let sql2= 'INSERT INTO usuarios(analisis_id, usuarios_id) VALUES (?,?)';
+        const [rows2] = await pool.query(sql2, [data.analisis_id, data.usuarios_id]); 
+
+
+        await pool.query('COMMIT')
+
+        if (rows.affectedRows > 0 && rows2.affectedRows > 0) {
             res.status(200).json({
                 "status": 200,
                 "menssage": "Registro de analisis exitoso..!"
@@ -143,13 +155,15 @@ export const guardarAnalisis = async (req, res) => {
 
 
         } else {
+            await pool.query('ROLLBACK');
             res.status(200).json({
                 "status": 401,
                 "menssage": "No se registro"
             });
         }
     } catch (error) {
-        res.status(200).json({
+        await pool.query('ROLLBACK');
+        res.status(500).json({
             "status": 500,
             "menssage": "error en el sevidor" + error
         });
@@ -179,10 +193,9 @@ export const listarAnalisis = async (req, res) => {
         const sql = `SELECT   
         a.id AS id_analisis,
         m.codigo_externo AS codigo_externo,
-        us.nombre AS nombre_usuario,
+
         a.fecha_analisis,
         a.estado,vd.nombre AS nombre_variedades,
-        u.nombre AS propietario,
         f.nombre AS nombre_fincas,
         l.nombre AS nombre_lotes,
         ta.nombre AS nombre_tipo_analisis
@@ -199,10 +212,8 @@ export const listarAnalisis = async (req, res) => {
     JOIN   
         fincas f ON f.id = l.fincas_id
     JOIN   
-        usuarios u ON u.id = f.usuarios_id
-    JOIN   
-        usuarios us ON us.id = a.usuarios_id
-    JOIN   
+        catadores ca ON ca.id = a.id
+    JOIN
         tipos_analisis ta ON ta.id = a.tipo_analisis_id
         ` + where + `
     GROUP BY   

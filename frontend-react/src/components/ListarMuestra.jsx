@@ -348,7 +348,6 @@ const RegistrarMuestra = async (data) => {
           hideAllModals();
           // closeRegistrarModal();
           // const response = await Api.get("finca/listar");
-          setCafes(response.data);
           location.href = "/home/listar/muestra"
       }
   } catch (error) {
@@ -1078,7 +1077,7 @@ const RegistrarMuestra = async (data) => {
               <th>Finca</th>
               <th>Lote</th>
               <th>Variedad</th>
-              <th hidden>Estado</th>
+              <th>Estado</th>
               {user.user ? user.user.rol == 'administrador' ? 
                 <th>Estado</th>
               : '' : ''}
@@ -1105,7 +1104,8 @@ const RegistrarMuestra = async (data) => {
                       <td>{task.Finca}</td>
                       <td>{task.Lote}</td>
                       <td>{task.variedad}</td>
-                      <td hidden>{task.estado}</td>
+                      <td>{task.estado}</td>
+                      {user.user ? user.user.rol == 'administrador' ? 
                       <td> 
                       
                       
@@ -1128,6 +1128,7 @@ const RegistrarMuestra = async (data) => {
                             
                           )}  
                       </td>
+                      : '' : ''}
                       {user.user ? user.user.rol == 'administrador' ? 
 
                       <td>

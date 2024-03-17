@@ -33,12 +33,16 @@ const Analisis = (user) => {
     const [tipo_analisis, settipo_analisis] = useState([]);
     const [usuarios, setUsuario] = useState([]);
     const [datasSelect, setDataSelect] = useState({});
+    const [inputValue, setInputValue] = useState('');
+
 
 
     const tipo_analisis_id = useRef();
     const muestras_id = useRef();
     const usuarios_id = useRef();
 
+
+    const [usuariosSeleccionados, setUsuariosSeleccionados] = useState([]);
 
 
     const navigate = useNavigate()
@@ -82,7 +86,7 @@ const Analisis = (user) => {
 
     const buscarUsuarios = async () => {
         try {
-            const response = await Api.get('usuario/listarusuario');
+            const response = await Api.get('usuario/listar/catador');
             console.log(response, "usuariissss")
             setUsuario(response.data);
         } catch (error) {
@@ -185,8 +189,14 @@ const Analisis = (user) => {
 
     const handleRegistrarAnalisis = async (data) => {
         const AnalisisDta = {
-            ...data
+            muestras_id: data.muestras_id,
+            tipo_analisis_id: data.tipo_analisis_id,
+            usuarios_id: datasSelect.usuarios_id
         };
+        // console.log("datos" , datasSelect.usuarios_id[0].id);
+        console.log("datos" , AnalisisDta);
+
+        
         const headers = {
             headers: {
                 token: "xd",
@@ -228,94 +238,105 @@ const Analisis = (user) => {
 
     function clearFocusInput(Element) {
         let inputSearch = document.getElementById(Element)
-
+    
         if (inputSearch) {
-
             let divOptions = inputSearch.parentNode.querySelectorAll(".select-option-input-d");
             if (divOptions.length > 0) {
-                divOptions[0].style.display = "none"
+                // Ocultar todas las opciones
+                divOptions.forEach(div => div.style.display = "none");
             }
+    
             let select = inputSearch.parentNode.querySelectorAll(".option-select-ana")
             for (let s = 0; s < select.length; s++) {
-                let elementvalue = inputSearch.getAttribute("id")
-
-                if (datasSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")) {
-                    select[s].classList.add("option-select-focus")
+                let elementvalue = inputSearch.getAttribute("id");
+    
+                // Verificar si el valor de select[s] está presente en datasSelect
+                if (datasSelect[elementvalue] && datasSelect[elementvalue].value == select[s].getAttribute("data-id")) {
+                    select[s].classList.add("option-select-focus");
                 } else {
-                    select[s].classList.remove("option-select-focus")
+                    select[s].classList.remove("option-select-focus");
                 }
-
             }
         }
     }
+    
+    // useEffect(() => {
+    //     window.addEventListener("click", function (e) {
+    //         let divOptions = document.querySelectorAll(".div-input-search-select");
+    //         for (let s = 0; s < divOptions.length; s++) {
+    //             if (!e.target == divOptions[s] || !divOptions[s].contains(e.target)) {
+    //                 let options = divOptions[s].querySelectorAll(".select-option-input-d")
+    //                 if (options.length > 0) {
+    //                     options[0].style.display = "none"
+    //                 }
+    //             }
+    //         }
+    //     })
+    // }, [])
+
     useEffect(() => {
-        window.addEventListener("click", function (e) {
-            let divOptions = document.querySelectorAll(".div-input-search-select");
-            for (let s = 0; s < divOptions.length; s++) {
-                if (!e.target == divOptions[s] || !divOptions[s].contains(e.target)) {
-                    let options = divOptions[s].querySelectorAll(".select-option-input-d")
-                    if (options.length > 0) {
-                        options[0].style.display = "none"
-                    }
-                }
-            }
-        })
-    }, [])
+        setInputValue(getSelectedNames()); // Actualizar el valor del input cuando cambia el estado datasSelect
+    }, [datasSelect]);
+
+    function getSelectedNames() {
+        if (!datasSelect.usuarios_id) return ''; // Si no hay usuarios seleccionados, devolver una cadena vacía
+        return datasSelect.usuarios_id.map(user => user?.name || '').join(', '); // Obtener los nombres de los usuarios seleccionados y unirlos con una coma
+    }
+    
+    function handleInputChange(event) {
+        setInputValue(event.target.value); // Actualizar el valor del input con cada cambio
+    }
 
     function searchInput() {
-        let inputSearch = document.querySelectorAll(".input-search-d")
-
+        let inputSearch = document.querySelectorAll(".input-search-d");
 
         if (inputSearch.length > 0) {
-            for (let s = 0; s < inputSearch.length; s++) {
-
-                inputSearch[s].addEventListener("input", function () {
-                    let parent = inputSearch[s].parentNode
+            inputSearch.forEach(input => {
+                input.addEventListener("input", function () {
+                    let parent = input.parentNode;
                     if (parent) {
-                        let selectOptionsInput = parent.querySelectorAll(".select-option-input-d");
-                        if (selectOptionsInput[0]) {
-                            selectOptionsInput[0].style.display = "block"
-                            let options = selectOptionsInput[0].querySelectorAll("div");
-                            for (let o = 0; o < options.length; o++) {
-                                if (options[o].innerHTML.toLowerCase().includes(inputSearch[s].value.toLowerCase())) {
-                                    options[o].style.display = "block"
+                        let selectOptionsInput = parent.querySelector(".select-option-input-d");
+                        if (selectOptionsInput) {
+                            selectOptionsInput.style.display = "block";
+                            let options = selectOptionsInput.querySelectorAll("div");
+                            let inputValue = input.value.toLowerCase();
+                            let commaIndex = inputValue.lastIndexOf(",");
+                            let searchValue = inputValue.substring(commaIndex === -1 ? 0 : commaIndex + 1).trim();
+                            
+                            options.forEach(option => {
+                                if (option.innerHTML.toLowerCase().includes(searchValue)) {
+                                    option.style.display = "block";
                                 } else {
-                                    options[o].style.display = "none"
+                                    option.style.display = "none";
                                 }
-                                let referencia = inputSearch[s].getAttribute("id")
-                                console.log(referencia,"referenciaaa")
 
-                                if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
-                                    let focusSelect = document.querySelectorAll(".option-select-focus")
-                                    if (focusSelect.length > 0) {
-                                        focusSelect[0].classList.remove("option-select-focus")
-                                    }
-                                    inputSearch[s].value = options[o].innerHTML
-                                    if (!datasSelect[inputSearch[s].getAttribute("data-id")]) {
-                                        datasSelect[inputSearch[s].getAttribute("data-id")] = {}
-                                    }
-                                    datasSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
-                                    options[o].classList.add("option-select-focus")
-                                    if (!datasSelect[referencia]) {
-                                        datasSelect[referencia] = {}
-                                    }
-                                    datasSelect[referencia]["value"] = options[o].getAttribute("data-id");
-                                    options[o].parentNode.style.display = "none"
-                                    break
-                                } else {
-                                    if (!datasSelect[referencia]) {
-                                        datasSelect[referencia] = {}
-                                    }
-                                    datasSelect[referencia]["value"] = "";
-                                    options[o].classList.remove("option-select-focus")
-                                }
-                            }
+                                if (option.innerHTML.toLowerCase() === searchValue) {
+                                    let referencia = input.getAttribute("id");
+                                    let dataId = option.getAttribute("data-id");
+
+                                    // Actualizamos el estado datasSelect para agregar el nuevo valor
+                                    setDataSelect(prevState => ({
+                                        ...prevState,
+                                        [referencia]: [...(prevState[referencia] || []), dataId]
+                                    }));
+                                    
+                                    // Resto del código para manejar las opciones seleccionadas
+                                    // clearFocusInput(referencia);
+                                } 
+                                // else {
+                                //     clearFocusInput(referencia);
+                                // }
+                            });
                         }
                     }
-                })
-            }
+                });
+            });
         }
+        console.log(datasSelect);
     }
+    
+
+    
     useEffect(() => {
         searchInput()
     }, [aRegistrarModalOpen]);
@@ -341,6 +362,13 @@ const Analisis = (user) => {
                 responsive: true,
             });
         });
+
+
+        const agregarUsuario = (usuario) => {
+            if (usuariosSeleccionados.length < 5) {
+                setUsuariosSeleccionados([...usuariosSeleccionados, usuario]);
+            }
+        };
 
         return () => {
             $(dataTableRef.current).DataTable().destroy(true);
@@ -527,7 +555,8 @@ const Analisis = (user) => {
 
                                 tipo_analisis_id: datasSelect.tipo_analisis_id ? datasSelect.tipo_analisis_id.value : "",
                                 muestras_id: datasSelect.muestras_id ? datasSelect.muestras_id.value : "",
-                                usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value : ""
+                                // usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value : ""
+
                             });
                         }}
                         method="post"
@@ -542,21 +571,31 @@ const Analisis = (user) => {
                             <input className="input-search-d" type="text" id="muestras_id" ref={muestras_id} />
                             <label htmlFor="muestras_id" className='label'>Muestra</label>
                             <div className="select-option-input-d">
-                                {muestras.map((key, index) => (
+                                {muestras.length > 0 ? muestras
+                                .map((key, index) => (
                                     (
                                         <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
                                     )
-                                ))}
+                                    
+                                )): null}
                             </div>
                         </div>
                         <div className="div-input-d div-input-search-select">
-                            <input className="input-search-d" type="text" id="usuarios_id" ref={usuarios_id} />
+                        <input className="input-search-d" type="text" id="usuarios_id" value={inputValue} onChange={handleInputChange} />
+
                             <label htmlFor="usuarios_id" className='label'>Catador</label>
                             <div className="select-option-input-d">
                                 {usuarios.map((key, index) => (
-                                    (
-                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
-                                    )
+                                    <div className="option-select-ana" data-id={key.id} onClick={() => { 
+                                        const inputValue = key.nombre + ' ' + key.apellido;
+                                        setDataSelect(prevState => ({
+                                            ...prevState,
+                                            usuarios_id: [...(prevState.usuarios_id || []), { id: key.id, name: inputValue }]
+                                        }));
+                                        clearFocusInput("usuarios_id");
+                                    }} key={key.id}>
+                                        {key.nombre} {key.apellido}
+                                    </div>
                                 ))}
                             </div>
                         </div>

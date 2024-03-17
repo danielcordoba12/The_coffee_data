@@ -305,7 +305,7 @@ useEffect(() => {
 
       // const valorInput4 = nuevosDatos[4].valor; // Valor del input 2
 
-
+/////////////DEFECTOS TOTALES////////////////////
       const valorInput7 = nuevosDatos[7].valor;
       const valorInput9 = nuevosDatos[9].valor;
       const valorInput10 = nuevosDatos[10].valor;
@@ -317,20 +317,37 @@ useEffect(() => {
       const defectosTotales = toNumber(valorInput7) + toNumber(valorInput9) + toNumber(valorInput10) + toNumber(valorInput11) + toNumber(valorInput23) + toNumber(valorInput24) + toNumber(valorInput25);
 
       nuevosDatos[3].valor = defectosTotales
-
+///////////////////////////////////////////////////////
 
   
-      // Realiza el cálculo y actualiza el valor del input 5
+//////////////////////////////////////MERMA POR TRILLA///////////////////
       const nuevoValorInput5 = /* Tu cálculo */( valorInput2 *  100) / valorInput1;
+
+
       nuevosDatos[16].valor = nuevoValorInput5 ;
 
+
+/////////////////////////peso total almendra////////////////////////
       const nuevoValorInput6 = /* Tu cálculo */valorInput1 - valorInput2 ;
       nuevosDatos[2].valor = nuevoValorInput6;
 
-
+////////////////////////////////PESO ALMENDRA SANA////////////////////////////////////
       nuevosDatos[4].valor = nuevoValorInput6 - defectosTotales   ;
 
       
+/////////////////////////////////FACTOR DE RENDIMIENTO///////////////////////////
+
+    const almendraSana = nuevosDatos[4].valor
+    const factorRendimiento = (valorInput1 * 70) /  almendraSana;
+    nuevosDatos[18].valor =  factorRendimiento.toFixed(0);
+
+
+///////////////////////////////////////
+
+const porcentajeDefectos = /* Tu cálculo */( defectosTotales *  100) / valorInput1;
+nuevosDatos[19].valor = porcentajeDefectos;
+const PorcentajeAlmendraSana = /* Tu cálculo */( almendraSana *  100) / valorInput1;
+nuevosDatos[17].valor = PorcentajeAlmendraSana;
 
 
     }

@@ -11,6 +11,7 @@ import resultadoRoute from "./src/routers/resultado.router.js";
 import cafeRoute from "./src/routers/cafe.router.js";
 import departamentoRoute from "./src/routers/departamento.route.js"; 
 import autRoute from "./src/routers/autenticacion.router.js";
+import catadorRoute from "./src/routers/catadores.route.js";
 import cors from 'cors';
 
 
@@ -48,7 +49,8 @@ app.use('/analisis',analisisRoute);
 app.use('/resultado',resultadoRoute);
 app.use('/cafe',cafeRoute);
 app.use('/departamento',departamentoRoute);
-app.use('/validacion',autRoute)
+app.use('/validacion',autRoute);
+app.use('/catador',catadorRoute);
 
 
 
