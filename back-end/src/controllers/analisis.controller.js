@@ -113,11 +113,11 @@ export const guardarAnalisis = async (req, res) => {
                     "opciones": opcionesmuestras,
                     "referencia": "la muestra"
                 },
-                "usuarios_id": {
-                    "value": req.body.usuarios_id,
-                    "opciones": opcionesusuarios,
-                    "referencia": "el usuario"
-                }
+                // "usuarios_id": {
+                //     "value": req.body.usuarios_id,
+                //     "opciones": opcionesusuarios,
+                //     "referencia": "el usuario"
+                // }
             }
         }
         let validateInputs = validate(data)
@@ -134,15 +134,20 @@ export const guardarAnalisis = async (req, res) => {
             return res.status(400).json(error1);
         }
         let data1 = req.body;
-        console.log('este es la info ', data1);
+        // console.log('este es la info ', data1);
+        for (let i = 0; i < data1.usuarios_id.length; i++) {
+            console.log("data",data1.usuarios_id[i].id);
+            
+        }
 
-        let sql = 'INSERT INTO analisis(tipo_analisis_id,muestras_id,usuarios_id) VALUES (?,?,?)';
-        const [rows] = await pool.query(sql, [1, data1.muestras_id, data1.usuarios_id]);
+        let sql = 'INSERT INTO analisis(tipo_analisis_id,muestras_id) VALUES (?,?)';
+        const [rows] = await pool.query(sql, [1, data1.muestras_id]);
+        const analisis_id = rows.insertId;
 
-
-
-        let sql2= 'INSERT INTO usuarios(analisis_id, usuarios_id) VALUES (?,?)';
-        const [rows2] = await pool.query(sql2, [data.analisis_id, data.usuarios_id]); 
+       
+        console.log("analisis desde el backend", analisis_id);
+        let sql2= 'INSERT INTO catadores(analisis_id, usuarios_id) VALUES (?,?)';
+        const [rows2] = await pool.query(sql2, [analisis_id, data.usuarios_id]); 
 
 
         await pool.query('COMMIT')
