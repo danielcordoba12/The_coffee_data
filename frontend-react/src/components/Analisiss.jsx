@@ -126,7 +126,6 @@ const Analisis = (user) => {
 
                 }
             } else {
-              Sweet.actualizacionExitosa("/home/analisis");
                 closeModalEdit();
                 buscarAnalisis();
 
@@ -222,12 +221,13 @@ const Analisis = (user) => {
 
                 }
             } else {
-                Sweet.registroExitoso("/home/analisis");
-                closeRegistrarAnalisisModal()
+                buscarAnalisis();
+                Sweet.registroExitoso();
+                closeRegistrarAnalisisModal();
+
             }
 
-            const response = await Api.get("analisis/listar");
-            setAnalisis(response.data);
+            // setAnalisis(response.data);
             // console.log(data,"tiposssssss")
             // const response = await Api.get("analisis/listar");
             //  setAnalisis(response.data);
@@ -428,7 +428,7 @@ const Analisis = (user) => {
                                     <td className="text-muted">{task.fecha_analisis = formatDate(task.fecha_analisis)}</td>
                                     <td className="text-muted">{task.nombre_tipo_analisis}</td>
                                     <td className="text-muted" >{task.codigo_externo}</td>
-                                    <td className="text-muted">{task.nombre_usuario}</td>
+                                    <td className="text-muted">{task.catador}</td>
                                     <td className="text-muted">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                                     <td className="text-muted">{task.propietario}</td>
                                     <td className="text-muted">{task.nombre_fincas}</td>

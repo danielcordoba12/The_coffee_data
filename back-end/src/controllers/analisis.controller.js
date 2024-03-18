@@ -135,24 +135,30 @@ export const guardarAnalisis = async (req, res) => {
         }
         let data1 = req.body;
         // console.log('este es la info ', data1);
-        for (let i = 0; i < data1.usuarios_id.length; i++) {
-            console.log("data",data1.usuarios_id[i].id);
-            
-        }
+        
 
         let sql = 'INSERT INTO analisis(tipo_analisis_id,muestras_id) VALUES (?,?)';
         const [rows] = await pool.query(sql, [1, data1.muestras_id]);
         const analisis_id = rows.insertId;
 
-       
-        console.log("analisis desde el backend", analisis_id);
-        let sql2= 'INSERT INTO catadores(analisis_id, usuarios_id) VALUES (?,?)';
-        const [rows2] = await pool.query(sql2, [analisis_id, data.usuarios_id]); 
+        let rows2 = [];
+
+
+        for (let i = 0; i < data1.usuarios_id.length; i++) {
+            
+            console.log("data",data1.usuarios_id[i].id);
+            console.log("analisis desde el backend", analisis_id);
+            let sql2= 'INSERT INTO catadores(analisis_id, usuarios_id) VALUES (?,?)';
+            const [result] = await pool.query(sql2, [analisis_id, data1.usuarios_id[i].id]); 
+            rows2.push(result);
+            
+        }
+        
 
 
         await pool.query('COMMIT')
 
-        if (rows.affectedRows > 0 && rows2.affectedRows > 0) {
+        if (rows.affectedRows > 0 && rows2.every(row => row.affectedRows > 0)) {
             res.status(200).json({
                 "status": 200,
                 "menssage": "Registro de analisis exitoso..!"
@@ -195,29 +201,36 @@ export const listarAnalisis = async (req, res) => {
         if (req.user.rol != "administrador") {
             where = " WHERE a.usuarios_id = " + req.user.id + " "
         }
-        const sql = `SELECT   
+        const sql = `SELECT
         a.id AS id_analisis,
         m.codigo_externo AS codigo_externo,
-
         a.fecha_analisis,
-        a.estado,vd.nombre AS nombre_variedades,
+        a.estado,
+        vd.nombre AS nombre_variedades,
         f.nombre AS nombre_fincas,
         l.nombre AS nombre_lotes,
-        ta.nombre AS nombre_tipo_analisis
-    FROM   
+        ta.nombre AS nombre_tipo_analisis,
+        (
+            SELECT GROUP_CONCAT(' ',u.nombre,' ',u.apellido)
+            FROM catadores ca
+            JOIN usuarios u ON u.id = ca.usuarios_id
+            WHERE ca.analisis_id = a.id
+        ) AS catador,
+        uc.nombre AS propietario
+    FROM
         analisis a
-    JOIN   
+    JOIN
         muestras m ON m.id = a.muestras_id
-    JOIN   
+    JOIN
         cafes c ON c.id = m.cafes_id
-    JOIN   
+    JOIN
         variedades vd ON vd.id = c.variedades_id
-    JOIN   
+    JOIN
         lotes l ON l.id = c.lotes_id
-    JOIN   
+    JOIN
         fincas f ON f.id = l.fincas_id
-    JOIN   
-        catadores ca ON ca.id = a.id
+    JOIN
+        usuarios uc ON uc.id = f.usuarios_id
     JOIN
         tipos_analisis ta ON ta.id = a.tipo_analisis_id
         ` + where + `
@@ -227,14 +240,14 @@ export const listarAnalisis = async (req, res) => {
         const [result] = await pool.query(sql);
         if (result.length > 0) {
             res.status(200).json(result);
-          } else {
+        } else {
             res.status(200).json({
-              result : result,
-              status: false,
-              message: "No se encontran analisis."
-            });
-      
-          }
+                result : result,
+                status: false,
+                message: "No se encontran analisis."
+        });
+    
+        }
 
     } catch (err) {
         res.status(500).json({
