@@ -8,46 +8,46 @@ const maquetado = () => {
     <div className="contenedor-principal">
   <div className="analytics-container">
     <div className="analytics-item">
-      <p className="name">Analytics</p>
+      <p className="name">Usuarios</p>
       <p className="value">201</p>
       <p className="description">Orders</p>
     </div>
   </div>
   <div className="order-container">
     <div className="order-item">
-      <p className="name">Approved</p>
+      <p className="name">Fincas</p>
       <p className="value">36</p>
     </div>
   </div>
   <div className="additional-container">
   <div className="new-order-container">
     <div className="new-order-item">
-      <p className="new-name">Approved</p>
+      <p className="new-name">Lotes</p>
       <p className="new-value">36</p>
     </div>
   </div>
   <div className="new-order-container">
     <div className="new-order-item">
-      <p className="new-name">Users</p>
+      <p className="new-name">Café</p>
       <p className="new-value">36,394949</p>
     </div>
   </div>
 </div>
   <div className="other-data">
     <div className="data-item">
-      <p className="name">Month total</p>
+      <p className="name">Muestras</p>
       <p className="value">25,410</p>
     </div>
   </div>
   <div className="other-data">
     <div className="data-item">
-      <p className="name">Car</p>
+      <p className="name">Analisis</p>
       <p className="value">Customer order</p>
     </div>
   </div>
   <div className="double-width-container">
     <div className="analytics-item">
-      <p className="name">Analytics</p>
+      <p className="name">Resultado</p>
       <p className="value">201</p>
       <p className="description">Orders</p>
     </div>
@@ -55,13 +55,13 @@ const maquetado = () => {
   <div className="additional-container">
   <div className="new-order-container2">
     <div className="new-order-item">
-      <p className="new-name">Approved</p>
+      <p className="new-name">Grafica</p>
       <p className="new-value">36</p>
     </div>
   </div>
   <div className="new-order-container2">
     <div className="new-order-item">
-      <p className="new-name">Users</p>
+      <p className="new-name">Variedad</p>
       <p className="new-value">36,394949</p>
     </div>
   </div>
