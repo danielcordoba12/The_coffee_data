@@ -391,7 +391,7 @@ function Dashboard() {
               </div> */}
             </div>
 
-            {/* <div className="empty"></div>
+            <div className="empty"></div>
             <div className="container-title-dasboard">
             <div className="container-username">
               <Link to="/home/Perfil" className="container-username">
@@ -406,19 +406,7 @@ function Dashboard() {
             </div>
             </div>
 
-            <div className="empty"></div>
-
-            {/* <div className="container-username">
-              <Link to="/home/Perfil" className="container-username">
-                <div className="container-icon">
-                  <FontAwesomeIcon icon={faUser} className="FaUser" />
-                </div>
-                <div className="username">
-                  <h2>{dataUser.nombre}</h2>
-                  <h3>{dataUser.rol}</h3>
-                </div>
-              </Link>
-            </div> */}
+    
           </div>
         </div>
         <div className="content-container">
