@@ -452,7 +452,7 @@ const RegistrarMuestra = async (data) => {
         }
       })
     }
-    function activarMuestra(id){
+    function  activarMuestra(id){
       Sweet.confimarHabilitar().then((result) => {
         if(result.isConfirmed) {
           fetch(`http://${localhost}:4000/muestra/activar/${id}`,{

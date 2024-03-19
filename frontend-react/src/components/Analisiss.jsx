@@ -8,6 +8,8 @@ import $ from "jquery";
 import "bootstrap";
 import "datatables.net";
 import "datatables.net-bs5";
+import { jsPDF } from "jspdf";
+import autoTable from 'jspdf-autotable'
 
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
@@ -119,7 +121,7 @@ const Analisis = (user) => {
         try {
             setModalAnalisis({})
             const actualizar = await Api.put(`/analisis/update/${selectAnalisisid}`, data);
-            console.log(datasSelect,actualizar, data,"dataaaaaaaaaaaaaaaaaaa")
+            console.log(datasSelect, actualizar, data, "dataaaaaaaaaaaaaaaaaaa")
             if (actualizar.data.status == false) {
                 let keys = Object.keys(actualizar.data.err)
                 let h6Error = document.querySelectorAll(".h6-error");
@@ -142,7 +144,7 @@ const Analisis = (user) => {
                 buscarAnalisis();
 
             }
-    
+
         } catch (error) {
             console.error("Error editando el Analisis: ", error);
         }
@@ -161,17 +163,36 @@ const Analisis = (user) => {
             }
         }
     };
-    const handleEditUser3 = async () => {
-        const result = await Sweet.confimarHabilitar({});
-        if (result.isConfirmed) {
+    const handleEditUser3 = async (analisis,catador) => {
+        Sweet.confimarHabilitar().then(async (result) => {
+            if (result.isConfirmed) {
+
             try {
-                await Api.patch(`/analisis/activar/${selectAnalisisid}`, modalAnalisis);
+                
+                await Api.patch(`/catador/activar/analisis/${catador}/catador/${analisis}`);
+            closeModalCatador();
+                    
+                if(data.status == 200) {
+                    Sweet.habilitacionExitosa();
+                    buscarUsuarios();
+                    closeModalCatador();
+
+                }
+
+                    if(data.status == 404) {
+                        Sweet.habilitacionFallida(); 
+                    }
                 closeModalEdit();
-                buscarAnalisis();
+
             } catch (error) {
                 console.error("Error activando el analisis: ", error);
             }
         }
+            })
+
+            buscarcatador(analisis);
+
+
     };
 
 
@@ -369,7 +390,7 @@ const Analisis = (user) => {
     const initializeDataTable = (analisis) => {
         $(document).ready(function () {
             $(dataTableRef.current).DataTable({
-                columnDefs:[
+                columnDefs: [
                     {
                         targets:-1,
                         responsivePriority:1
@@ -418,14 +439,14 @@ const Analisis = (user) => {
             <div className="contTitle">
                 <h1 className="titleanalisis">Análisis</h1>
                 {user.user ? user.user.rol == 'administrador' ?
-                <button to="/analisis/registrar" className="btn-registrar-d" onClick={() => {
-                    openRegistrarAnalisisModal();
-                    setDataSelect({})
+                    <button to="/analisis/registrar" className="btn-registrar-d" onClick={() => {
+                        openRegistrarAnalisisModal();
+                        setDataSelect({})
 
-                }}>
-                    Añadir
-                </button>
-                : '' : ''}
+                    }}>
+                        Añadir
+                    </button>
+                    : '' : ''}
             </div>
 
             <div className="tablaAnalisis">
@@ -437,15 +458,15 @@ const Analisis = (user) => {
                                 <th className="text-muted">Fecha </th>
                                 <th className="text-muted">Tipo Análisis </th>
                                 <th className="text-muted">Consecutivo Informe </th>
-                                <th className="text-muted">Catador</th>
-                                <th className="text-muted">Estado </th>
-                                <th className="text-muted">Propietario </th>
-                                <th className="text-muted"> Finca </th>
+                                <th className="text-muted">Propietario</th>
+                                <th className="text-muted">Finca </th>
                                 <th className="text-muted">Lote </th>
-                                <th className="text-muted">Variedad</th>
-                                {user.user ? user.user.rol == 'administrador' ? 
-                                <th className="text-muted"> Opciones</th>
-                                : '' : ''}
+                                <th className="text-muted"> Variedad </th>
+                                <th className="text-muted">Catadores </th>
+                                <th className="text-muted">Estado</th>
+                                {user.user ? user.user.rol == 'administrador' ?
+                                    <th className="text-muted"> Opciones</th>
+                                    : '' : ''}
                             </tr>
                         </thead>
                         <tbody className="bg-gray-200 text-center">
@@ -456,6 +477,12 @@ const Analisis = (user) => {
                                     <td className="text-muted">{task.fecha_analisis = formatDate(task.fecha_analisis)}</td>
                                     <td className="text-muted">{task.nombre_tipo_analisis}</td>
                                     <td className="text-muted" >{task.codigo_externo}</td>
+
+                                    <td className="text-muted">{task.propietario}</td>
+                                    <td className="text-muted">{task.nombre_fincas}</td>
+                                    <td className="text-muted">{task.nombre_lotes}</td>
+                                    <td className="text-muted">{task.nombre_variedades}</td>
+
                                     <td>
                                         <button
                                             type="button"
@@ -465,12 +492,26 @@ const Analisis = (user) => {
                                             Catadores 
                                         </button>
                                     </td>
-                                    <td className="text-muted">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
-                                    <td className="text-muted">{task.propietario}</td>
-                                    <td className="text-muted">{task.nombre_fincas}</td>
-                                    <td className="text-muted">{task.nombre_lotes}</td>
-                                    <td className="text-muted">{task.nombre_variedades}</td>
-                                    {user.user ? user.user.rol == 'administrador' ? 
+                                    <td className="text-muted">
+                                    {task.estado === 0 ? (
+                                        <button
+                                        className="btn-activar"
+                                        onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
+                                        >
+                                        Finalizado
+                                        </button>
+
+                                        
+                                        ) : (
+                                            <button
+                                            className="btn-desactivar"
+                                            onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                                        >
+                                            Pendiente
+                                        </button>
+                                            
+                                        )}     
+                                    </td>                                    {user.user ? user.user.rol == 'administrador' ? 
                                     <td>
                                         <button
                                             type="button"
@@ -484,7 +525,7 @@ const Analisis = (user) => {
                                 </tr>
                             )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
                         </tbody>
-                        </table>
+                    </table>
                 </div>
             </div>
 
@@ -499,47 +540,47 @@ const Analisis = (user) => {
 
                                 <div className="select-option-input-d">
                                     {muestras.length > 0 ? muestras
-                                    .map((key, index) => {
-                                        if (modalAnalisis.muestras_id) {
-                                            !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = modalAnalisis.muestras_id
-                                            if (key.id == modalAnalisis.muestras_id) {
-                                                !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.referencia = key.codigo_externo
+                                        .map((key, index) => {
+                                            if (modalAnalisis.muestras_id) {
+                                                !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = modalAnalisis.muestras_id
+                                                if (key.id == modalAnalisis.muestras_id) {
+                                                    !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.referencia = key.codigo_externo
+                                                }
                                             }
-                                        }
 
-                                        return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
-                                    }):<tr><td ></td></tr>}
+                                            return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
+                                        }) : <tr><td ></td></tr>}
                                 </div>
                                 <input defaultValue={datasSelect.muestras_id ? datasSelect.muestras_id.referencia ? datasSelect.muestras_id.referencia : "" : ""} className="input-search-d" type="text" id="muestras_id" />
                                 <label htmlFor="muestras_id" className="labelEdit">Muestras</label>
 
                             </div><br />
                             {user.user ? user.user.rol == 'administrador' ?
-                            <div className="div-input-d div-input-search-select">
+                                <div className="div-input-d div-input-search-select">
 
-                                <div className="select-option-input-d">
+                                    <div className="select-option-input-d">
 
-                                    {usuarios.map((key, index) => {
-                                        if (modalAnalisis.usuarios_id) {
-                                            !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = modalAnalisis.usuarios_id
-                                            if (key.id == modalAnalisis.usuarios_id) {
-                                                !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.referencia = key.nombre
+                                        {usuarios.map((key, index) => {
+                                            if (modalAnalisis.usuarios_id) {
+                                                !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = modalAnalisis.usuarios_id
+                                                if (key.id == modalAnalisis.usuarios_id) {
+                                                    !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.referencia = key.nombre
+                                                }
                                             }
-                                        }
 
-                                        return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
-                                    })}
-                                    
+                                            return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
+                                        })}
+
+                                    </div>
+
+                                    <input className="input-search-d" defaultValue={datasSelect.usuarios_id ? datasSelect.usuarios_id.referencia ? datasSelect.usuarios_id.referencia : "" : ""} type="text" id="usuarios_id" />
+                                    <label htmlFor="usuarios_id" className="labelEdit">Catador</label>
                                 </div>
-                                
-                                <input className="input-search-d" defaultValue={datasSelect.usuarios_id ? datasSelect.usuarios_id.referencia ? datasSelect.usuarios_id.referencia : "" : ""} type="text" id="usuarios_id" />
-                                <label htmlFor="usuarios_id" className="labelEdit">Catador</label>
-                            </div>
-                            : '' : ''}
+                                : '' : ''}
                             <button
                                 className="btn-actualizar-d"
                                 onClick={() => {
-                             
+
                                     handleEditUser1({
                                         muestras_id: datasSelect.muestras_id ? datasSelect.muestras_id.value : "",
                                         usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value : ""
@@ -601,7 +642,7 @@ const Analisis = (user) => {
                         <div className="div-input-d-select div-input-search-select ">
                             <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
                             <label className="label-tipe-ana" htmlFor="tipo_analisis_id">Fisico</label>
-                        
+
                         </div><br />
                         <div className="div-input-d div-input-search-select">
                             <input className="input-search-d" type="text" id="muestras_id" ref={muestras_id} />
@@ -655,15 +696,29 @@ const Analisis = (user) => {
                 <div className="overlay-d"></div>
             )}
             {modalCatador && (
+                
+                
                 <div className="contRegistrarCatador">
+                    <button
+                            className="close-modal-Ana2"
+                            onClick={() => closeModalCatador()}
+
+                        >
+                            X
+                        </button>
                     <h1 className="titleRegistrar">
+                        
                         Catadores
                     </h1>
-                    <div className="tablaAnalisis">
+                
+                    {/* <div className="tablaAnalisis"> */}
                 <div className="container-fluid w-full" key={key}>
+                    
                     <table id="table-d" style={{ width: "100%" }} className="table table-hover rounded-3 overflow-hidden display responsive nowrap shadow" ref={dataTableRef}>
+                        
                         <thead>
                             <tr className="bg-black-200">
+                                <th hidden>if analisis</th>
                                 <th className="text-muted">id</th>
                                 <th className="text-muted">Nombre </th>
                                 <th className="text-muted">Apellido </th>
@@ -680,16 +735,17 @@ const Analisis = (user) => {
                             { catadores.length > 0 ? catadores 
                             .map((task) => (
                                 <tr key={task.id}>
+                                    <td hidden>{task.analisis_id}</td>
                                     <td className="text-muted">{task.id}</td>
                                     <td className="text-muted">{task.nombre}</td>
                                     <td className="text-muted">{task.apellidos}</td>
                                     <td className="text-muted">                     
-                      
-                      
+                
+                    
                                     {task.estado === 0 ? (
                                         <button
                                         className="btn-activar"
-                                        onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
+                                        onClick={() => {  handleEditUser3(task.analisis_id,task.id)}}
                                         >
                                         Finalizado
                                         </button>
@@ -705,9 +761,6 @@ const Analisis = (user) => {
                                             
                                         )}  
                                     </td>
-                                    {/* <td className="text-muted">{task.estado}</td> */}
-
-
 
                                     {user.user ? user.user.rol == 'administrador' ? 
                                     <td>
@@ -723,21 +776,15 @@ const Analisis = (user) => {
                                 </tr>
                             )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
                         </tbody>
+                        
                         </table>
                 </div>
-            </div>
-                    <form
-                        className="formRegiAna"
+            {/* </div> */}
+            
 
-                    >
-                        <button
-                            className="close-modal-Ana"
-                            onClick={closeRegistrarAnalisisModal}
-                        >
-                            X
-                        </button>
-                    </form>
+                    
                 </div>
+                
             )}
         </>
 

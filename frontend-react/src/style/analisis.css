@@ -384,6 +384,24 @@ font-weight: bold;
   border-radius: 4px;
 
 }
+.close-modal-Ana2{
+  position: absolute;
+  /* top: -150px; */
+  /* right: -10px; */
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  color: #168A45;
+  font-size: 36px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 4px;
+
+
+}
+
 .input-search-d{
   color: #808080;
   background-color: whitesmoke;
@@ -496,4 +514,7 @@ select{
   font-weight: bold;
   padding: 10px 15px;
   border-radius: 4px;
+}
+.contTitle{
+  height: 70px !important;
 }

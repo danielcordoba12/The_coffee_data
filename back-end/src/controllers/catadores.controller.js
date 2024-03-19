@@ -81,14 +81,11 @@ export const desactivarCatadores = async (req, res) => {
         const id2 = req.params.id2;
 
 
-        // Desactivar el estado de los catadores asociados al análisis
         await pool.query('UPDATE catadores SET estado = 0 WHERE id  = ?', [id]);
 
-        // Verificar si todos los catadores están desactivados
         const [resultCatadores] = await pool.query('SELECT COUNT(*) AS total FROM catadores WHERE analisis_id  = ? AND estado != 0', [id2]);
-        console.log("cd",resultCatadores[0].total);
+
         if (resultCatadores[0].total === 0) {
-            // Desactivar el análisis si todos los catadores están desactivados
             const [resultAnalisis] = await pool.query('UPDATE  analisis SET estado = 0 WHERE id = ?', [id2]);
 
             if (resultAnalisis.changedRows === 0) {
@@ -100,14 +97,45 @@ export const desactivarCatadores = async (req, res) => {
 
             return res.status(200).json({
                 status: 200,
-                message: "Se desactivó el análisis y todos los catadores asociados"
+                message: "Se desactivó el análisis"
             });
         }
 
-        // Si hay catadores activos, devolver un mensaje indicando que solo se desactivaron los catadores
+
         return res.status(200).json({
             status: 200,
-            message: "Se desactivaron los catadores asociados al análisis"
+            message: "Se desactivo el catador"
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: 500,
+            message: "Error en el servidor: " + error.message
+        });
+    }
+};
+
+
+export const activarCatadores = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const id2 = req.params.id2;
+
+        // Activar el estado del catador a 1
+        await pool.query('UPDATE catadores SET estado = 1 WHERE id = ?', [id]);
+
+        // Activar el estado del análisis a 1
+        const [result] = await pool.query('UPDATE analisis SET estado = 1 WHERE id = ?', [id2]);
+
+        if (result.changedRows === 0) {
+            return res.status(200).json({
+                status: 200,
+                message: "No se encontró el análisis para activar"
+            });
+        }
+
+        return res.status(200).json({
+            status: 200,
+            message: "Se activó el catador y el análisis"
         });
     } catch (error) {
         res.status(500).json({
