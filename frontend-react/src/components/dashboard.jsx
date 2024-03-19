@@ -33,7 +33,6 @@ function Dashboard() {
   const [rolAdmin, setRolAdmin] = useState(false);
   const [rolCafetero, setCafetero] = useState(true);
   const menuWidth = menuDesplegado ? "220px" : "65px";
-  const menuLeft = "15px";
 
   // const fetchUserData = async () => {
   //     try {
@@ -216,6 +215,10 @@ function Dashboard() {
             style={{ width: menuWidth}}
           >
             <div className="contenedor-imagen">
+              <div className="logotcd">
+                <img className="cup-logo" src="../../public/img/cup_tcd.png" alt="logo the coffee data" />
+                <h2 className="title-proyect none">The Coffee Data </h2>
+              </div>
               {/* <h1>Mi Componente con Imagen</h1> */}
               {/* <img src={imgNav} alt="Descripción de la imagen" className="imagen-estilo" /> */}
               {/* <img src="../../public/img/fondoMenuVertical2.webp" alt="" className='fondo-nav'/> */}
@@ -229,7 +232,6 @@ function Dashboard() {
               </div>
       
               <div className="lista-items">
-               
                 <ul id="listaItemsUl" className="listaItemsUl">
                 <li className="first-icon">
                 <Link to={"/home"}>
@@ -241,7 +243,7 @@ function Dashboard() {
                   {rolAdmin ? (
                     <li className="first-icon">
                       <Link to={"/home/Usuario/listar"}>
-                      <FontAwesomeIcon icon={faUser} className="icon" />
+                      <FontAwesomeIcon  icon={faUser} className="icon" />
                         <p id="paragraph">Usuarios</p>
                       </Link>
                     </li>

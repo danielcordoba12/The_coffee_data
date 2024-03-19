@@ -2,13 +2,22 @@
     padding: 0;
     margin: 0;
 }
+.title-proyect{
+    font-size: 1.2rem;
+    display: block;
+    position: relative;
+    color: grey;
+    top: 10px;
+}
+.none{
+    display: none
+
+}
 .main-container-dasboard {
     display: flex;
     flex-direction: column;
     width: 100%;
-    /* height: calc(100vh + 50px); */
     height: 100vh;
-    /* background-color: rgb(245, 7, 7); */
     background-color: rgb(235, 240, 245);
 }
 .content-container {
@@ -18,24 +27,18 @@
 }
 .container-outlet {
     display: flex;
-    /* background-color: #9de617; */
-
 }
 .nav {
     top: 0;
     left: 0;
     width: 90px;
     height: 96vh;
-    /* Ajusta la altura al viewport del navegador */
     color: #fff;
-    /* padding: 20px; */
     text-decoration: none;
     display: flex;
     flex-direction: row;
     flex: 1;
     position: relative;
-    /* background-color: #0B2E4B; */
-    /* transition: all 800ms; */
     transition: 0.5s ease-in-out;
 }
 .contenedor-imagen {
@@ -45,26 +48,20 @@
     background-color: whitesmoke;
     background-size: cover;
     background-position: center; 
-    /* background-color:black ; */
     } 
 .lista-items ul {
-
     display: flex;
     flex-direction: column;
-    /* gap: 2vh; */
     align-items: start;
     justify-content: start;
-    text-align: center;
-    /* overflow: hidden; */
-    /* margin-left: 100; */
-    margin-left: -30px;
+    text-align: left;
+    margin-left: -20px;
     max-height: 700px;
     margin-top: 90px;
-
 }
 .lista-items ul li p {
     margin-top: 1rem;
-
+    font-weight: 600;
 }
 .lista-items ul li {
     display: inline-flex;
@@ -76,17 +73,16 @@
     color: #168A45;
     cursor: pointer;
     background-color: whitesmoke;
-    box-shadow: 0 0 4px rgba(245, 245, 245, 0.935), 0 0 7px rgba(245, 245, 245, 0.975);
+    box-shadow: 0 0 4px grey, 0 0 7px white;
     float: right;
     width: 32px;
     height: 32px;
     display: flex;
-    left: 15px;
-
+    left: 20px;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    margin-top: 45px;
+    margin-top: -5px;
 }
 .container-icon-desplegable.icon-menu {
     font-size: 1.5em;
@@ -94,9 +90,7 @@
     margin-top: 200px; 
     display: flex;
     cursor: pointer;
-    /* position: relative;
-    left: 0;
-    right: 0; */
+
 }
 /* /////////////////////////////////////HEAD NAV (Title,User name)////////////////////// */
 /* HEAD */
@@ -124,7 +118,6 @@
 }
 .logo svg {
     width: 130px;
-    /* Ajusta el tamaño del logo */
     height: auto;
     fill: white;
     /* Cambia el color del logo */
@@ -154,8 +147,6 @@
 .empty {
     flex: 1;
 }
-
-
 .container-title-dasboard {
     display: flex;
     background-color: #168A45;
@@ -165,40 +156,34 @@
     justify-content: center;
     transition: all 820ms;
 }
-
 .container-logo {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
 }
-
 .logo {
     width: 50px;
     /* background-color: green; */
 }
-
 .container-title-dasboard:hover {
     color: rgb(50, 12, 204);
     cursor: pointer;
 }
-
 .empty {
     height: 100%;
 }
-
 .title-dasboard {
     font-size: 2em;
     font-weight: 400;
     color: white;
 }
-
 /* Username */
 .container-username {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: left;
+    /* text-align: left; */
     position: relative;
     align-items: center;
     /* top: -2px; */
@@ -206,51 +191,27 @@
     color: white;
     text-decoration: none;
     /* background-color: red; */
-
 }
-
 .container-username:hover {
     color: gainsboro;
     cursor: pointer;
 }
-
 .FaUser {
     font-size: 1.5em;
     padding-right: 20px;
-    /* margin-top: 16px; */
     font-size: 2em;
-    /* color: white;   */
 }
-
 .username h2 {
-    /* margin-top: 12px; */
     font-size: 1.5em;
-    /* color: white;   */
     margin-top: 8px;
 }
 .username h3 {
-    /* margin-top: 12px; */
     font-size: 1.2em;
     margin-top: -10px;
-    /* color: white;   */
-    /* margin-top: 2px; */
 }
-
-
 /* /////////////////////////////////////////////////////LISTA ITEMS////////////////////////////////////////////////// */
-.lista-items {
-    /*
-    display: table-column-group;
-    display: block;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative; */
+.lista-items {  
     width: 100%;
-    /* height: 100%; */
-    /* background-color: aqua; */
-    /* max-height: 97%; */
-
 }
 h2{
     position: relative;
@@ -261,7 +222,6 @@ h2{
     top: 5px;
     left: 10px;
 }
-
 .nav ul li a,
 .first-icon {
     display: inline-flex;
@@ -272,11 +232,21 @@ h2{
     overflow: hidden;
 
 }
+.logotcd{
+    display: flex;
+    position: relative;
+    top: 30px;
+    justify-content: center;
+    align-items: center;
+}
+.cup-logo{
+    position: relative;
+    top: 0;
+    left: 0;
+}
 
 .lista-items ul li :hover,
 .first-icon:hover {
-    /* background-color: rgba(196, 11, 11, 0.918); */
-    border-radius: 10px;
     cursor: pointer;
     color: #168A45;
 }
@@ -284,11 +254,10 @@ h2{
 .lista-items ul li {
     display: flex;
     height: 50px;
-    padding: 5px 5px 5px 12px;
+    padding: 5px 15px 5px 10px;
     width: 100%;
     font-size: 1em;
     transition: all 6ms;
-
 }
 
 .lista-items ul li p {
@@ -297,9 +266,7 @@ h2{
     white-space: nowrap;
     /* Evita el salto de línea */
     overflow: hidden;
-
 }
-
 .icon {
     margin-right: 32px;
 }
@@ -307,37 +274,15 @@ h2{
 .lista-items ul li:hover {
     background-color: white;
     transition: all 0.2s ease-in-out;
-    border-radius: 10px;
     cursor: pointer;
+    margin-left: -5px;
+    border-radius: 10px;
     color: #168A45;
 }
-
-
-/* .fondo{
-    left: 0;
-    top: 0;
-    width: 100%;
-    position: fixed;
-} */
 .first-icon {
-    margin-top: 22px;
+    margin-top: 10px;
 }
 
-/* .main-tooltip-li{
-    width: 12px;
-    height: 12px;
-} */
-
-/* .tooltip-li{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-
-} */
-/* .li-dasboard ul li .tooltip-li{
-    margin-top:12px ;
-} */
 .tooltip {
     position: absolute;
     background-color: rgba(211, 21, 21, 0.7);
@@ -371,13 +316,24 @@ h2{
     /* Asegura que esté por encima de otros elementos */
     left: 50px;
 }
-
 .li-dasboard:hover .tooltip {
     display: block;
     /* Muestra el tooltip cuando se hace hover en el contenedor */
 }
-
-
+/* .active{
+    color: #168A45;  
+    font-weight:600;
+    padding: 0;
+}
+.active::before{
+    content: "";
+    position: absolute;
+    height: 10%;
+    width: 4px;
+    border-radius: 10px;
+    left: 0;
+    background-color: black;
+} */
 #mainConterDasboard {
     display: grid !important;
     grid-template-columns: auto 1fr;
@@ -386,13 +342,11 @@ h2{
     position: fixed;
     height: 100%;
 }
-
 .container-outlet {
     grid-row-start: 1;
     grid-row-end: 3;
     height: 100%;
 }
-
 #nav{
     height: 100%;
 }
