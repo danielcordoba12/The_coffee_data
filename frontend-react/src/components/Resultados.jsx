@@ -24,6 +24,7 @@ function Resultado(user) {
   const [resultado,setResultado] = useState([]);
   const [resultadoSellecionado,setResultadoSeleccionado] = useState([])
   const [analisis , setAnalisi] = useState([])
+  const [catador , setCatador] = useState([])
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
@@ -83,7 +84,8 @@ function Resultado(user) {
 
 
   useEffect(()=>{
-    listarResultado()
+    listarResultado();
+    listarCatador();
   },[]);
 
 
@@ -626,7 +628,7 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
   ////////////////////////////////////////////////DATA TABLE//////////////////////////////////////////
 
   useEffect(()=> {
-    if (resultado.length > 0 ) {
+    if (catador.length > 0 ) {
       if($.fn.DataTable.isDataTable(tableRef.current)) {
         $(tableRef.current).DataTable().destroy();
       }
@@ -719,6 +721,14 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
       console.error("Error" + e);
     }
   }
+  const listarCatador = async () => {
+    try {
+        const response = await Api.get('catador/listar');
+        setCatador(response.data);
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+    }
+}
 
 
   function buscarResultado(id,fecha_creacion) {
@@ -891,20 +901,17 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
   : '' : ''}
 
   <div className="container-fluid w-full">
-    <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+  <table id="table-d" style={{ width: "100%" }} className="table table-hover rounded-3 overflow-hidden display responsive nowrap shadow" 
         ref={tableRef}
         cellPadding={0}
         width= "100%">
     <thead>
         <tr>
           <th>ID</th>
-          <th>Muestra</th>
-          <th>Cantidad</th>
-          <th>Usuario</th>
-          <th>Finca</th>
-          <th>Lote</th>
-          <th>Tipo analisis</th>
-          <th>Fecha</th>
+          <th>Analisis</th>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>Estado</th>
           {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
           <th>Actualizar</th>
           : '' : ''}
@@ -914,18 +921,34 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
         </tr>
       </thead>
       <tbody>
-              {resultado.length > 0 ? resultado
+              {catador.length > 0 ? catador
               .map((task,index) => (
                 <tr key={task.id}>
                   <td>{task.id}</td>
                   {/* <td>{formatDate(task. fecha_creacion)}</td> */}
-                  <td>{task.muestra}</td>
-                  <td>{task.valor}</td>
-                  <td>{task.usuario}</td>
-                  <td>{task.finca}</td>
-                  <td>{task.lote}</td>
-                  <td>{task.tipo_analisis}</td>
-                  <td>{formatDate(task.fecha_creacion)}</td>
+                  <td>{task.analisis_id}</td>
+                  <td>{task.nombre}</td>
+                  <td>{task.apellidos}</td>
+                  <td>
+                        {task.estado === 0 ? (
+                                        <button
+                                        className="btn-activar"
+                                        onClick={() => {  handleEditUser3(task.analisis_id,task.id)}}
+                                        >
+                                        Finalizado
+                                        </button>
+
+                                        
+                                        ) : (
+                                            <button
+                                            className="btn-desactivar"
+                                            onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                                        >
+                                            Pendiente
+                                        </button>
+                                            
+                                        )}  
+                  </td>
                   {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
                   <td>
                     <button className="btn-reg-mue"

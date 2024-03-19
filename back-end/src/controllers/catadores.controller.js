@@ -44,7 +44,7 @@ export const guardarCatador = async (req, res) => {
 export const listar= async (req, res) => {
 
     try {     
-        const [result] = await pool.query(`select analisis_id,usuarios_id from catadores`);
+        const [result] = await pool.query(`SELECT ca.id, ca.analisis_id, u.nombre AS nombre, u.apellido AS apellidos, ca.estado FROM  catadores ca JOIN usuarios u ON u.id = ca.usuarios_id  `);
         if (result.length > 0) {
             res.status(200).json(result);
             } else {
