@@ -11,7 +11,8 @@ import "datatables.net";
 import "datatables.net-bs5";
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable'
-
+import ReactDOMServer from 'react-dom/server';
+import AnalisisHTMLView from './AnalisisHTMLView';
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
 import { Alert } from "bootstrap";
@@ -360,31 +361,7 @@ const Analisis = (user) => {
     }, [analisis]);
 
 
-    const pdf = (id) => {
-        // Buscar el análisis correspondiente por su ID
-        const analisisSeleccionado = analisis.find(analisis => analisis.id_analisis === id);
-
-        if (analisisSeleccionado) {
-            // Crear el documento PDF
-            const doc = new jsPDF();
-            const columns = ["Fecha", "Tipo Análisis", "Consecutivo Informe", "Catador", "Propietario", "Finca", "Lote", "Variedad"];
-            const data = [
-                [`${analisisSeleccionado.fecha_analisis}`, `${analisisSeleccionado.nombre_tipo_analisis}`, `${analisisSeleccionado.codigo_externo}`, `${analisisSeleccionado.nombre_usuario}`
-                    , `${analisisSeleccionado.propietario}`, `${analisisSeleccionado.nombre_fincas}`, `${analisisSeleccionado.nombre_lotes}`, `${analisisSeleccionado.nombre_variedades}`]
-            ];
-
-            doc.autoTable({
-                startY: 30,
-                head: [columns],
-                body: data
-            });
-
-            doc.save(`Analisis_${analisisSeleccionado.id_analisis}.pdf`);
-        } else {
-            console.error('No se encontró el análisis con el ID especificado.');
-        }
-    };
-
+ 
 
     return (
 
@@ -438,13 +415,14 @@ const Analisis = (user) => {
                                         <td className="text-muted">{task.propietario}</td>
                                         <td className="text-muted">{task.nombre_fincas}</td>
                                         <td className="text-muted">{task.nombre_lotes}</td>
+                                        
                                         <td className="text-muted">{task.nombre_variedades}</td>
                                         {user.user ? user.user.rol == 'administrador' ?
                                             <td className="btn-container">
                                                 <FontAwesomeIcon
                                                     icon= {faFilePdf}
                                                     className="btn-pdf rounded-3"
-                                                    onClick={() => pdf(task.id_analisis)}
+                                                    
                                                 />
                                                 <button
                                                     type="button"
