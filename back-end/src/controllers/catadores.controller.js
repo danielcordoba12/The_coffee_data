@@ -61,3 +61,58 @@ export const listar= async (req, res) => {
         });
     }
 };
+
+export const buscarCatador = async (req, res) => {
+    try {
+        let id = req.params.id;
+        // const [result] = await pool.query("SELECT ca.id, ca.analisis_id, u.nombre AS Catador FROM catadores ca JOIN usuarios u ON u.id = ca.id WHERE ca.analisis_id = " + id);
+        const [result] = await pool.query("SELECT ca.id, ca.analisis_id, u.nombre AS nombre, u.apellido AS apellidos, ca.estado FROM  catadores ca JOIN usuarios u ON u.id = ca.usuarios_id  WHERE ca.analisis_id = " + id);
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(200).json({
+            massage: "Error en listar usuario: " + err
+        });
+    }
+};
+
+export const desactivarCatadores = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const id2 = req.params.id2;
+
+
+        // Desactivar el estado de los catadores asociados al análisis
+        await pool.query('UPDATE catadores SET estado = 0 WHERE id  = ?', [id]);
+
+        // Verificar si todos los catadores están desactivados
+        const [resultCatadores] = await pool.query('SELECT COUNT(*) AS total FROM catadores WHERE analisis_id  = ? AND estado != 0', [id2]);
+        console.log("cd",resultCatadores[0].total);
+        if (resultCatadores[0].total === 0) {
+            // Desactivar el análisis si todos los catadores están desactivados
+            const [resultAnalisis] = await pool.query('UPDATE  analisis SET estado = 0 WHERE id = ?', [id2]);
+
+            if (resultAnalisis.changedRows === 0) {
+                return res.status(404).json({
+                    status: 404,
+                    message: "No se encontró el análisis para desactivar"
+                });
+            }
+
+            return res.status(200).json({
+                status: 200,
+                message: "Se desactivó el análisis y todos los catadores asociados"
+            });
+        }
+
+        // Si hay catadores activos, devolver un mensaje indicando que solo se desactivaron los catadores
+        return res.status(200).json({
+            status: 200,
+            message: "Se desactivaron los catadores asociados al análisis"
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: 500,
+            message: "Error en el servidor: " + error.message
+        });
+    }
+};

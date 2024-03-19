@@ -19,6 +19,7 @@ import { Alert } from "bootstrap";
 const Analisis = (user) => {
 
     const [analisis, setAnalisis] = useState([]);
+    const [catadores, setCatadores] = useState([]);
     const [statusSelect, setStatusSelect] = useState({});
     const [key, setKey] = useState(0);
     const [ModalTipoAnalisis, setModalTipoAnalisis] = useState(null);
@@ -28,6 +29,7 @@ const Analisis = (user) => {
     const [selectAnalisisid, setselectAnalisisid] = useState(null);
     const [modalAnalisis, setModalAnalisis] = useState(null);
     const [aRegistrarModalOpen, setaRegistrarModalOpen] = useState(false)
+    const [modalCatador, setModalCatador] = useState(false)
     const [tipos_analisis, settipoAnalisis] = useState([]);
     const [muestras, setMuestra] = useState([]);
     const [tipo_analisis, settipo_analisis] = useState([]);
@@ -93,6 +95,16 @@ const Analisis = (user) => {
             console.error('Error fetching tasks:', error);
         }
     }
+    const buscarcatador = async (anaId) => {
+    try {
+        const response = await Api.get(`catador/buscar/${anaId}`);
+        setCatadores(response.data);
+    } catch (error) {
+        console.error('Error buscando el analisis', error);
+    }
+
+};
+
 
     const openModal = async (anaId) => {
         setselectAnalisisid(anaId);
@@ -184,6 +196,14 @@ const Analisis = (user) => {
 
     const closeRegistrarAnalisisModal = () => {
         setaRegistrarModalOpen(false);
+    };
+
+    
+    const openModalCatador = () => {
+        setModalCatador(true);
+    };
+    const closeModalCatador = () => {
+        setModalCatador(false);
     };
 
     const handleRegistrarAnalisis = async (data) => {
@@ -353,8 +373,8 @@ const Analisis = (user) => {
                     {
                         targets:-1,
                         responsivePriority:1
-                      }
-                  ],
+                    }
+                ],
                 lengthMenu: [5, 10, 20, 30, 40, 50],
                 processing: true,
                 pageLength: 5,
@@ -362,18 +382,19 @@ const Analisis = (user) => {
                 responsive: true,
             });
         });
+        
+        dataTableRef
 
 
-        const agregarUsuario = (usuario) => {
-            if (usuariosSeleccionados.length < 5) {
-                setUsuariosSeleccionados([...usuariosSeleccionados, usuario]);
-            }
-        };
+
 
         return () => {
             $(dataTableRef.current).DataTable().destroy(true);
         };
     };
+
+    /////////////////// DATA TABLE CAFETERO////////////////////
+    
 
     useEffect(() => {
         setKey(key + 1)
@@ -381,6 +402,13 @@ const Analisis = (user) => {
             initializeDataTable(analisis);
         }
     }, [analisis]);
+
+
+    const agregarUsuario = (usuario) => {
+        if (usuariosSeleccionados.length < 5) {
+            setUsuariosSeleccionados([...usuariosSeleccionados, usuario]);
+        }
+    };
     return (
 
         <>
@@ -428,7 +456,15 @@ const Analisis = (user) => {
                                     <td className="text-muted">{task.fecha_analisis = formatDate(task.fecha_analisis)}</td>
                                     <td className="text-muted">{task.nombre_tipo_analisis}</td>
                                     <td className="text-muted" >{task.codigo_externo}</td>
-                                    <td className="text-muted">{task.catador}</td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="btn-actualizar-mod rounded-3"
+                                            onClick={() =>{openModalCatador(),buscarcatador(task.id_analisis)}}
+                                        >
+                                            Catadores 
+                                        </button>
+                                    </td>
                                     <td className="text-muted">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                                     <td className="text-muted">{task.propietario}</td>
                                     <td className="text-muted">{task.nombre_fincas}</td>
@@ -602,6 +638,98 @@ const Analisis = (user) => {
 
                         <button className="btn-register-d"
                             type="submit">Registrar</button>
+                        <button
+                            className="close-modal-Ana"
+                            onClick={closeRegistrarAnalisisModal}
+                        >
+                            X
+                        </button>
+                    </form>
+                </div>
+            )}
+
+
+            {/* //////////////////////////MODAL CATADOR //////////////////////////////////////////7 */}
+            
+            {modalCatador && (
+                <div className="overlay-d"></div>
+            )}
+            {modalCatador && (
+                <div className="contRegistrarCatador">
+                    <h1 className="titleRegistrar">
+                        Catadores
+                    </h1>
+                    <div className="tablaAnalisis">
+                <div className="container-fluid w-full" key={key}>
+                    <table id="table-d" style={{ width: "100%" }} className="table table-hover rounded-3 overflow-hidden display responsive nowrap shadow" ref={dataTableRef}>
+                        <thead>
+                            <tr className="bg-black-200">
+                                <th className="text-muted">id</th>
+                                <th className="text-muted">Nombre </th>
+                                <th className="text-muted">Apellido </th>
+                                <th className="text-muted">Estado </th>
+
+
+
+                                {user.user ? user.user.rol == 'administrador' ? 
+                                <th className="text-muted"> Opciones</th>
+                                : '' : ''}
+                            </tr>
+                        </thead>
+                        <tbody className="bg-gray-200 text-center">
+                            { catadores.length > 0 ? catadores 
+                            .map((task) => (
+                                <tr key={task.id}>
+                                    <td className="text-muted">{task.id}</td>
+                                    <td className="text-muted">{task.nombre}</td>
+                                    <td className="text-muted">{task.apellidos}</td>
+                                    <td className="text-muted">                     
+                      
+                      
+                                    {task.estado === 0 ? (
+                                        <button
+                                        className="btn-activar"
+                                        onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
+                                        >
+                                        Finalizado
+                                        </button>
+
+                                        
+                                        ) : (
+                                            <button
+                                            className="btn-desactivar"
+                                            onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                                        >
+                                            Pendiente
+                                        </button>
+                                            
+                                        )}  
+                                    </td>
+                                    {/* <td className="text-muted">{task.estado}</td> */}
+
+
+
+                                    {user.user ? user.user.rol == 'administrador' ? 
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="btn-actualizar-mod rounded-3"
+                                            onClick={() => openModal(task.id_analisis)}
+                                        >
+                                            Modificar
+                                        </button>
+                                    </td>
+                                    : '' : ''}
+                                </tr>
+                            )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
+                        </tbody>
+                        </table>
+                </div>
+            </div>
+                    <form
+                        className="formRegiAna"
+
+                    >
                         <button
                             className="close-modal-Ana"
                             onClick={closeRegistrarAnalisisModal}

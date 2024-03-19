@@ -1112,7 +1112,7 @@ const RegistrarMuestra = async (data) => {
                         {task.estado === 0 ? (
                           <button
                           className="btn-activar"
-                          onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
+                          onClick={() => { setUpdateModal(false); activarMuestra(task.id)}}
                         >
                           Activar
                         </button>
@@ -1121,7 +1121,7 @@ const RegistrarMuestra = async (data) => {
                           ) : (
                             <button
                             className="btn-desactivar"
-                            onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                            onClick={() => { setUpdateModal(false); desactivarMuestra(task.id)}}
                           >
                             Desactivar
                           </button>

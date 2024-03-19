@@ -28,9 +28,9 @@ function Resultado(user) {
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
   const tableRef = useRef();
-  const [cafesId, setCafesId] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
-  const [dataSelect, setDataSelect] = useState({});
+    const [cafesId, setCafesId] = useState("");
+    const [selectedOption, setSelectedOption] = useState("");
+    const [dataSelect, setDataSelect] = useState({});
 
   const [filtro, setFiltro] = useState('');
 

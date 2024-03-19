@@ -219,6 +219,21 @@ width: 100%;
   width: 500px;
   text-align: center;
 }
+.contRegistrarCatador{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1001;
+  max-height: 95%;
+  max-width: 90%;
+  /* height: 700px; */
+  width: 900px;
+  text-align: center;
+}
 .EditCampos input{
   width: 95%;
   position: relative;

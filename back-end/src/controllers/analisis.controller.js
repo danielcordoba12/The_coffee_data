@@ -210,12 +210,8 @@ export const listarAnalisis = async (req, res) => {
         f.nombre AS nombre_fincas,
         l.nombre AS nombre_lotes,
         ta.nombre AS nombre_tipo_analisis,
-        (
-            SELECT GROUP_CONCAT(' ',u.nombre,' ',u.apellido)
-            FROM catadores ca
-            JOIN usuarios u ON u.id = ca.usuarios_id
-            WHERE ca.analisis_id = a.id
-        ) AS catador,
+        SUBSTRING_INDEX(catador, ' ', 1) AS nombre_catador,
+        SUBSTRING_INDEX(catador, ' ', -1) AS apellido_catador,
         uc.nombre AS propietario
     FROM
         analisis a
@@ -233,6 +229,16 @@ export const listarAnalisis = async (req, res) => {
         usuarios uc ON uc.id = f.usuarios_id
     JOIN
         tipos_analisis ta ON ta.id = a.tipo_analisis_id
+    JOIN
+        (
+            SELECT 
+                ca.analisis_id,
+                CONCAT(u.nombre, ' ', u.apellido) AS catador
+            FROM 
+                catadores ca
+            JOIN 
+                usuarios u ON u.id = ca.usuarios_id
+        ) AS catador_table ON catador_table.analisis_id = a.id
         ` + where + `
     GROUP BY   
         a.id;
