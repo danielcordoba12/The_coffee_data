@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Api from "../services/Api";
 import Sweet from "../helpers/Sweet";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../style/analisis.css';
 import esES from "../languages/es-ES.json"
 import $ from "jquery";
@@ -14,7 +15,9 @@ import autoTable from 'jspdf-autotable'
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
 import { Alert } from "bootstrap";
-
+import {
+    faFilePdf
+  } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -360,28 +363,28 @@ const Analisis = (user) => {
     const pdf = (id) => {
         // Buscar el análisis correspondiente por su ID
         const analisisSeleccionado = analisis.find(analisis => analisis.id_analisis === id);
-    
+
         if (analisisSeleccionado) {
             // Crear el documento PDF
             const doc = new jsPDF();
-            const columns = ["Fecha", "Tipo Análisis","Consecutivo Informe","Catador","Propietario","Finca","Lote","Variedad"];
+            const columns = ["Fecha", "Tipo Análisis", "Consecutivo Informe", "Catador", "Propietario", "Finca", "Lote", "Variedad"];
             const data = [
                 [`${analisisSeleccionado.fecha_analisis}`, `${analisisSeleccionado.nombre_tipo_analisis}`, `${analisisSeleccionado.codigo_externo}`, `${analisisSeleccionado.nombre_usuario}`
-                , `${analisisSeleccionado.propietario}`,`${analisisSeleccionado.nombre_fincas}`,`${analisisSeleccionado.nombre_lotes}`,`${analisisSeleccionado.nombre_variedades}`]
+                    , `${analisisSeleccionado.propietario}`, `${analisisSeleccionado.nombre_fincas}`, `${analisisSeleccionado.nombre_lotes}`, `${analisisSeleccionado.nombre_variedades}`]
             ];
-    
+
             doc.autoTable({
                 startY: 30,
                 head: [columns],
                 body: data
             });
-    
+
             doc.save(`Analisis_${analisisSeleccionado.id_analisis}.pdf`);
         } else {
             console.error('No se encontró el análisis con el ID especificado.');
         }
     };
-    
+
 
     return (
 
@@ -437,14 +440,12 @@ const Analisis = (user) => {
                                         <td className="text-muted">{task.nombre_lotes}</td>
                                         <td className="text-muted">{task.nombre_variedades}</td>
                                         {user.user ? user.user.rol == 'administrador' ?
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    className="btn-actualizar-mod rounded-3"
+                                            <td className="btn-container">
+                                                <FontAwesomeIcon
+                                                    icon= {faFilePdf}
+                                                    className="btn-pdf rounded-3"
                                                     onClick={() => pdf(task.id_analisis)}
-                                                >
-                                                    pdf
-                                                </button>
+                                                />
                                                 <button
                                                     type="button"
                                                     className="btn-actualizar-mod rounded-3"
