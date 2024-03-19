@@ -1,27 +1,30 @@
 /* estilos de listado de analisis */
-.select-div-tip{
+.select-div-tip {
   color: #808080;
   position: relative;
   left: -50px;
-  top:-15px;
+  top: -15px;
   font-size: 1rem;
 
 }
-.overlay-edit{
-    background-color: rgba(128, 128, 128, 0.44);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    backdrop-filter: blur(5px);
-    height: 100%;
-    z-index: 9;
+
+.overlay-edit {
+  background-color: rgba(128, 128, 128, 0.44);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  backdrop-filter: blur(5px);
+  height: 100%;
+  z-index: 9;
 
 }
-option{
+
+option {
   color: #808080;
 }
-.label-tipe-ana{
+
+.label-tipe-ana {
   border: none;
   border-radius: 7px;
   outline: none;
@@ -32,12 +35,14 @@ option{
 
 
 }
-.card{
+
+.card {
   border-radius: .5rem;
   background-color: black;
 }
+
 .btn-desactivar-d {
-  background-color:gainsboro;
+  background-color: gainsboro;
   color: black;
   font-weight: bold;
   padding: 8px 16px;
@@ -50,16 +55,18 @@ option{
   border-radius: 4px;
   cursor: pointer;
 }
-.btn-desactivar-d:hover{
-  background-color:#B31312;
+
+.btn-desactivar-d:hover {
+  background-color: #B31312;
   color: #f2f2f2;
 }
 
-.div-input-d{
+.div-input-d {
   color: #808080;
 }
+
 .btn-activar-d {
-  background-color:gainsboro;
+  background-color: gainsboro;
   color: black;
   font-weight: bold;
   padding: 8px 16px;
@@ -72,12 +79,13 @@ option{
   border-radius: 4px;
   cursor: pointer;
 }
-.btn-activar-d:hover{
+
+.btn-activar-d:hover {
   color: white;
-  background-color:#008000;
+  background-color: #008000;
 }
 
-.input-edit-ana{
+.input-edit-ana {
   left: 0.1px;
   top: 0.1px;
   width: 100%;
@@ -90,112 +98,134 @@ option{
   background-color: rgb(234, 241, 243);
   color: rgba(128, 128, 128, 0.743);
 }
-.titleanalisis{
-justify-content: center;
-text-align: left;
-font-weight: bold; 
-position: relative;
-font-family: Arial, Helvetica, sans-serif;
-color:#168A45;
-font-size: 1.5rem;
-}
-.btn-registrar-d{
-display: flex;
-position: relative;
-width: 75px;
-padding: 10px 10px;
-background-color:#168A45; 
-color:white;
-left: 150px;
-top: -15px;
-position: relative;
-text-decoration: none;
-border: none;
-height: 30px;
-align-items: center;
-justify-content: center;
-border-radius: 4px;
-cursor: pointer;
-font-size: 1rem;
-font-weight: bold;
+
+.titleanalisis {
+  justify-content: center;
+  text-align: left;
+  font-weight: bold;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #168A45;
+  font-size: 1.5rem;
 }
 
-.titleanalisis{
+.btn-registrar-d {
+  display: flex;
+  position: relative;
+  width: 75px;
+  padding: 10px 10px;
+  background-color: #168A45;
+  color: white;
+  left: 150px;
+  top: -15px;
+  position: relative;
+  text-decoration: none;
+  border: none;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.titleanalisis {
   position: relative;
   left: 35px;
   font-size: 1.5rem;
   top: 25px;
 }
-.btn-actualizar-d{ 
-color: black;
-position: relative;
-font-weight: bold;
-padding: 8px 16px;
-border: none;
-left: 85px;
-top: 40px;
-margin-bottom: 14px;
-border-radius: 4px;
-cursor: pointer;
-background-color: gainsboro;
-/* border: 0.5px solid grey; */
-transition: background-color 0.3s; 
+
+.btn-actualizar-d {
+  color: black;
+  position: relative;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: none;
+  left: 85px;
+  top: 40px;
+  margin-bottom: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: gainsboro;
+  /* border: 0.5px solid grey; */
+  transition: background-color 0.3s;
 }
-.btn-actualizar-d:hover{
+
+.btn-actualizar-d:hover {
   background-color: #008000;
   color: white;
 }
-.btn-actualizar-mod{
-color: white;
-background-color: #168A45;
-position: relative;
-font-weight: bold;
-padding: 8px 16px;
-border: none;
-top: 10px;
-margin-left: 15px;
-margin-bottom: 14px;
-border-radius: 4px;
-cursor: pointer;
+
+.btn-actualizar-mod {
+  color: white;
+  background-color: #168A45;
+  position: relative;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
-.active>.page-link{
-    z-index: 3;
-    color: white !important;
-    background-color:#008000 !important;
-    border-color: #008000 !important;
+.btn-container{
+  display: flex;
+  gap: 16px;
+}
+
+.btn-pdf {
+  color: white;
+  background-color: rgb(203, 6, 6);
+  position: relative;
+  font-weight: bold;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+}
+
+.active>.page-link {
+  z-index: 3;
+  color: white !important;
+  background-color: #008000 !important;
+  border-color: #008000 !important;
 
 }
+
 .page-link {
   position: relative;
   display: block;
   padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
   font-size: var(--bs-pagination-font-size);
-  color:#008000  !important;
+  color: #008000 !important;
   text-decoration: none;
-  background-color: white ! ;
+  background-color: white !;
   border: green solid brown !important;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
-.tablaAnalisis{
-position: relative;
-top: 95px;
-left: 26px;
-width: 93%;
-height: 1000rem;
-overflow: hidden;
-border-radius: 8px;
+
+.tablaAnalisis {
+  position: relative;
+  top: 95px;
+  left: 26px;
+  width: 93%;
+  height: 1000rem;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
- .encabezado{
- position: relative;
-top: 100px;
-width: 100%;
- left: 135px;
- text-align: center;
- color: #808080;
+.encabezado {
+  position: relative;
+  top: 100px;
+  width: 100%;
+  left: 135px;
+  text-align: center;
+  color: #808080;
 }
 
-.cuerpodatos{
+.cuerpodatos {
   position: relative;
   left: 135px;
   top: 124px;
@@ -204,7 +234,8 @@ width: 100%;
   color: #808080;
 
 }
-.contRegistrarAna{
+
+.contRegistrarAna {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -219,7 +250,8 @@ width: 100%;
   width: 500px;
   text-align: center;
 }
-.EditCampos input{
+
+.EditCampos input {
   width: 95%;
   position: relative;
   left: -25px;
@@ -234,7 +266,8 @@ width: 100%;
   outline: none;
 
 }
-.contRegistrarAna input{
+
+.contRegistrarAna input {
   width: 85%;
   position: relative;
   left: -25px;
@@ -249,34 +282,40 @@ width: 100%;
   outline: none;
 
 }
-.contenido-regi-d{
-background-color: rgb(138, 138, 156);
-width: 70%;
-height: 600px;
+
+.contenido-regi-d {
+  background-color: rgb(138, 138, 156);
+  width: 70%;
+  height: 600px;
 
 }
-.titleRegistrar{
-text-align: center;
-color: #168A45;
-margin-top: 13px;
-font-size: 1.5rem;
-font-weight: bold;
+
+.titleRegistrar {
+  text-align: center;
+  color: #168A45;
+  margin-top: 13px;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
-.cuerpodatos{
+
+.cuerpodatos {
   border-radius: 8px;
 
 }
-.table{
+
+.table {
   border-radius: 10px;
   border: 1px solid black;
 
 }
-.formRegiAna{
+
+.formRegiAna {
   display: block;
   top: 90px;
   position: relative;
 }
-.overlay-d{
+
+.overlay-d {
   background-color: rgba(128, 128, 128, 0.44);
   position: fixed;
   top: 0;
@@ -286,10 +325,12 @@ font-weight: bold;
   height: 100%;
   z-index: 9;
 }
-.input-search-d{
-  background-color:rgb(255, 255, 255);
+
+.input-search-d {
+  background-color: rgb(255, 255, 255);
 }
-.select-option-input-d{
+
+.select-option-input-d {
   display: block;
   position: absolute;
   color: black;
@@ -304,9 +345,11 @@ font-weight: bold;
   font-size: 11px;
   display: none;
 }
+
 .contRegistrarAna div {
   margin-bottom: 15px;
 }
+
 .select-option-input-d>div {
 
   margin: 0 !important;
@@ -315,14 +358,16 @@ font-weight: bold;
   cursor: pointer;
   border-radius: 4px;
 }
+
 .select-option-input-d>div:hover {
   background-color: #80808024;
   display: block;
 }
-.btn-register-d{
+
+.btn-register-d {
   display: flex;
   padding: 10px 10px;
-  background-color:#168A45; 
+  background-color: #168A45;
   color: white;
   float: right;
   right: 59px;
@@ -338,24 +383,27 @@ font-weight: bold;
   font-size: 1rem;
   font-weight: bold;
 }
-.contRegistrarAna input + label{
+
+.contRegistrarAna input+label {
   position: absolute;
   top: 2%;
   left: 10px;
   transform: translateY(-50%);
   font-size: 16px;
   pointer-events: none;
-  
+
 }
-.contRegistrarAna input:focus + label,
-.contRegistrarAna:not(:placeholder-shown) + label {
-  transform: translateY(-130%) scale(1.2) ;
+
+.contRegistrarAna input:focus+label,
+.contRegistrarAna:not(:placeholder-shown)+label {
+  transform: translateY(-130%) scale(1.2);
   font-size: 12px;
   color: rgb(0, 0, 0);
   top: 10px;
   transition: all 0.2s;
 }
-.close-modal-Ana{
+
+.close-modal-Ana {
   position: absolute;
   top: -150px;
   right: -10px;
@@ -369,51 +417,60 @@ font-weight: bold;
   border-radius: 4px;
 
 }
-.input-search-d{
+
+.input-search-d {
   color: #808080;
   background-color: whitesmoke;
 }
-.div-input-d{
+
+.div-input-d {
   color: black;
   position: relative;
 }
+
 .select-invisility {
 
   width: 0;
   height: 0;
 }
+
 .option-select-focus {
   background-color: rgb(61 194 145);
 }
-label{
+
+label {
   color: #808080;
 }
-.tipe-ana{
+
+.tipe-ana {
   left: -32px;
   position: relative;
   top: -15px;
 }
-select{
+
+select {
   position: relative;
   top: -12px;
   width: 60%;
   background-color: whitesmoke;
   text-decoration: none;
 }
+
 /* styles from tableEditAna */
 
-.tablaEditAna{
-    position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9;
+.tablaEditAna {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9;
 }
-.contEditAna{
+
+.contEditAna {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -428,7 +485,8 @@ select{
   width: 500px;
   text-align: center;
 }
-.tablaEditAna input{
+
+.tablaEditAna input {
   width: 95%;
   position: relative;
   left: 5px;
@@ -443,7 +501,8 @@ select{
   outline: none;
 
 }
-.EditCampos{
+
+.EditCampos {
   position: fixed;
   z-index: 1001;
   width: 90%;
@@ -451,7 +510,8 @@ select{
   top: 60px;
 
 }
-.titleEditAna{
+
+.titleEditAna {
   position: relative;
   top: 15px;
   text-align: center;
@@ -459,9 +519,10 @@ select{
   color: #168A45;
   font-size: 1.5rem;
   font-weight: bold;
-  
+
 }
- .EditCampos .labelEdit{
+
+.EditCampos .labelEdit {
   color: #808080;
   text-align: left;
   display: flex;
@@ -469,7 +530,8 @@ select{
   top: -81px;
   position: relative;
 }
-.close-modal-Edit{
+
+.close-modal-Edit {
   position: absolute;
   top: -130px;
   right: -47px;
@@ -482,6 +544,7 @@ select{
   padding: 10px 15px;
   border-radius: 4px;
 }
-.contTitle{
+
+.contTitle {
   height: 70px !important;
 }
