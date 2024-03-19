@@ -201,9 +201,12 @@
     padding-right: 20px;
     font-size: 2em;
 }
-.username h2 {
+.username h2{
     font-size: 1.5em;
     margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .username h3 {
     font-size: 1.2em;
@@ -220,7 +223,9 @@ h2{
 .username p{
     position: relative;
     top: 5px;
-    left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .nav ul li a,
 .first-icon {
