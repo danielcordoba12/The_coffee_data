@@ -1,10 +1,12 @@
-
 import { Router } from 'express';
-// import {validarusuario} from '../validation/usuario.js';
-import {validarusuario} from '../controllers/autenticacion.controller.js';
+import { validarusuario, obtenerDatosUsuario } from '../controllers/autenticacion.controller.js';
 
-const autRoute= Router();
+const autRoute = Router();
 
-autRoute.post('/validar',validarusuario);
-// validarusuario
+// Ruta para validar usuario al iniciar sesión
+autRoute.post('/validar', validarusuario);
+
+// Ruta para obtener los datos completos del usuario
+autRoute.get('/cambioperfil', obtenerDatosUsuario); // Cambiado a método GET ya que estamos obteniendo datos
+
 export default autRoute;

@@ -47,3 +47,25 @@ export const validartoken = async (req, res, next) => {
         return res.status(500).json({ message: 'error en validartoken' + e });
     }
 };
+
+export const obtenerDatosUsuario = async (req, res) => {
+    try {
+        // Extrae el usuario del objeto de solicitud
+        const user = req.user;
+
+        // Realiza una consulta a la base de datos para obtener los datos completos del usuario
+        let sql = `SELECT id, nombre, apellido, telefono, email, rol FROM usuarios WHERE id = '${user.id}'`;
+        const [rows] = await pool.query(sql);
+
+        // Verifica si se encontraron datos del usuario
+        if (rows.length > 0) {
+            const userData = rows[0];
+            // Retorna los datos del usuario
+            return res.status(200).json(userData);
+        } else {
+            return res.status(404).json({ message: "Datos de usuario no encontrados" });
+        }
+    } catch (e) {
+        return res.status(500).json({ message: 'Error en el servidor: ' + e });
+    }
+};

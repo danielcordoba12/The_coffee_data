@@ -1,35 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bcrypt from "bcryptjs";
 import Swal from 'sweetalert2';
 
-
-const UserProfile = (user) => {
+const UserProfile = () => {
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
-    displayName: user.user.nombre,
-    apellido: user.user.apellido,
-    telefono: user.user.telefono,
-    email: user.user.email,
-    rol: user.user.rol,
-    password: '',
+    displayName: '',
+    apellido: '',
+    telefono: '',
+    email: '',
     newPassword: '',
     confirmPassword: '',
-    photo: null,
-    additionalInfo: 'Información adicional del usuario'
+    photo: ''
   });
-
-  async function buscarUsuario(id) {
-    if (id) {
-      const response = await Api.get("/usuario/buscarusuario/" + id);
-      setUserUpdate(response.data);
-    }
-  }
-
-
   const [editingInfo, setEditingInfo] = useState(false);
   const [editingPassword, setEditingPassword] = useState(false);
 
-  const navigate = useNavigate();
+  // Función para cargar los datos del usuario al montar el componente
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Lógica para obtener los datos del usuario desde el servidor
+      // Simulación de datos de usuario
+      const userData = {
+        displayName: 'Jaider  ',
+        apellido: 'Pastrana',
+        telefono: '123456789',
+        email: 'aider_pastrana@example.com',
+        photo: 'url_de_la_foto' // La URL de la foto del usuario
+      };
+      setUserInfo(userData);
+    } else {
+      // Si no hay token, redirigir al usuario a la página de inicio de sesión
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleNavigate = () => navigate('/');
 
@@ -37,37 +43,6 @@ const UserProfile = (user) => {
     localStorage.removeItem('token');
     handleNavigate();
     console.log("Cerrando sesión...");
-  };
-
-  const handleSaveInfo = () => {
-    console.log("Información guardada:", userInfo);
-    setEditingInfo(false);
-    Swal.fire({
-      icon: 'success',
-      title: '¡Información Guardada!',
-      showConfirmButton: false,
-      timer: 1500
-    });
-  };
-
-  const handleSavePassword = () => {
-    if (userInfo.newPassword === userInfo.confirmPassword) {
-      const hashedPassword = bcrypt.hashSync(userInfo.newPassword, 10);
-      console.log("Contraseña guardada:", hashedPassword);
-      setEditingPassword(false);
-      Swal.fire({
-        icon: 'success',
-        title: '¡Contraseña Guardada!',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: '¡Error!',
-        text: 'Las contraseñas no coinciden',
-      });
-    }
   };
 
   const handlePhotoChange = (e) => {
@@ -78,6 +53,48 @@ const UserProfile = (user) => {
         photo: URL.createObjectURL(file)
       });
     }
+  };
+
+  const handleSaveInfo = () => {
+    if (!userInfo.displayName || !userInfo.apellido || !userInfo.telefono || !userInfo.email) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Por favor, completa todos los campos.',
+      });
+      return;
+    }
+
+    // Lógica para enviar los datos actualizados del usuario al servidor
+    console.log("Guardando información del usuario:", userInfo);
+    // Simulación de éxito
+    Swal.fire({
+      icon: 'success',
+      title: '¡Datos actualizados!',
+      text: 'Los datos del usuario se han actualizado correctamente.',
+    });
+    setEditingInfo(false);
+  };
+
+  const handleSavePassword = () => {
+    if (!userInfo.newPassword || !userInfo.confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Por favor, completa ambos campos de contraseña.',
+      });
+      return;
+    }
+
+    // Lógica para enviar la nueva contraseña al servidor
+    console.log("Guardando nueva contraseña:", userInfo.newPassword);
+    // Simulación de éxito
+    Swal.fire({
+      icon: 'success',
+      title: '¡Contraseña actualizada!',
+      text: 'La contraseña se ha actualizado correctamente.',
+    });
+    setEditingPassword(false);
   };
 
   return (
@@ -111,7 +128,7 @@ const UserProfile = (user) => {
               <label className="form-label">Nombre</label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control form-empty"
                 value={userInfo.displayName}
                 onChange={(e) => setUserInfo({ ...userInfo, displayName: e.target.value })}
                 disabled={!editingInfo}
@@ -121,7 +138,7 @@ const UserProfile = (user) => {
               <label className="form-label">Apellido</label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control form-empty"
                 value={userInfo.apellido}
                 onChange={(e) => setUserInfo({ ...userInfo, apellido: e.target.value })}
                 disabled={!editingInfo}
@@ -131,7 +148,7 @@ const UserProfile = (user) => {
               <label className="form-label">Teléfono</label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control form-empty"
                 value={userInfo.telefono}
                 onChange={(e) => setUserInfo({ ...userInfo, telefono: e.target.value })}
                 disabled={!editingInfo}
@@ -141,20 +158,19 @@ const UserProfile = (user) => {
               <label className="form-label">Correo Electrónico</label>
               <input
                 type="email"
-                className="form-control"
+                className="form-control form-empty"
                 value={userInfo.email}
                 onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
                 disabled={!editingInfo}
               />
             </div>
-            
             {editingPassword && (
               <>
                 <div className="mb-3">
                   <label className="form-label">Nueva Contraseña</label>
                   <input
                     type="password"
-                    className="form-control"
+                    className="form-control form-empty"
                     value={userInfo.newPassword}
                     onChange={(e) => setUserInfo({ ...userInfo, newPassword: e.target.value })}
                   />
@@ -163,7 +179,7 @@ const UserProfile = (user) => {
                   <label className="form-label">Confirmar Contraseña</label>
                   <input
                     type="password"
-                    className="form-control"
+                    className="form-control form-empty"
                     value={userInfo.confirmPassword}
                     onChange={(e) => setUserInfo({ ...userInfo, confirmPassword: e.target.value })}
                   />

@@ -867,10 +867,11 @@ useEffect(() => {
 
 <div className="main-container">
 <h1 className='title-registrar'>Listar resultados</h1> 
-  
+{user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
   <button className="btn-reg-mue" onClick={() => setShowModal1(!showModal1)}>
       Registrar resultado
   </button>
+  : '' : ''}
 
   <div className="container-fluid w-full">
     <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
@@ -887,7 +888,9 @@ useEffect(() => {
           <th>Lote</th>
           <th>Tipo analisis</th>
           <th>Fecha</th>
+          {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
           <th>Actualizar</th>
+          : '' : ''}
           <th>Mas</th>
 
 
@@ -906,7 +909,7 @@ useEffect(() => {
                   <td>{task.lote}</td>
                   <td>{task.tipo_analisis}</td>
                   <td>{formatDate(task.fecha_creacion)}</td>
-
+                  {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
                   <td>
                     <button className="btn-reg-mue"
                       onClick={() => {
@@ -916,6 +919,7 @@ useEffect(() => {
                       >
                     Editar</button>
                   </td>
+                  : '' : ''}
 
                   <td>
                     <button

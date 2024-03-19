@@ -13,7 +13,7 @@ import {
   faPlantWilt,
   faHouse,
   faClipboardCheck,
-  faBars,
+  faChevronLeft,
   faUsers,
   faToolbox,
   faMagnifyingGlassChart,
@@ -32,7 +32,7 @@ function Dashboard() {
   const [dataUser, setDataUser] = useState("");
   const [rolAdmin, setRolAdmin] = useState(false);
   const [rolCafetero, setCafetero] = useState(true);
-  const menuWidth = menuDesplegado ? "220px" : "55px";
+  const menuWidth = menuDesplegado ? "220px" : "65px";
 
   // const fetchUserData = async () => {
   //     try {
@@ -212,20 +212,26 @@ function Dashboard() {
           <nav
             className={`nav ${menuDesplegado ? "menu-desplegado" : ""}`}
             id="nav"
-            style={{ width: menuWidth }}
+            style={{ width: menuWidth}}
           >
-            <div className="contenedor-imagen shadow">
+            <div className="contenedor-imagen">
+              <div className="logotcd">
+                <img className="cup-logo" src="../../public/img/cup_tcd.png" alt="logo the coffee data" />
+                <h2 className="title-proyect none">The Coffee Data </h2>
+              </div>
               {/* <h1>Mi Componente con Imagen</h1> */}
               {/* <img src={imgNav} alt="Descripción de la imagen" className="imagen-estilo" /> */}
               {/* <img src="../../public/img/fondoMenuVertical2.webp" alt="" className='fondo-nav'/> */}
-
-              <div className="lista-items">
-                <FontAwesomeIcon
-                  icon={faBars}
+              <div className="container-icon-desplegable" onClick={DesplegarMenu}>
+              <FontAwesomeIcon
+                  icon={faChevronLeft}
                   className="icon-menu"
                   id="iconMenu"
-                  onClick={DesplegarMenu}
+             
                 />
+              </div>
+      
+              <div className="lista-items">
                 <ul id="listaItemsUl" className="listaItemsUl">
                 <li className="first-icon">
                 <Link to={"/home"}>
@@ -237,7 +243,7 @@ function Dashboard() {
                   {rolAdmin ? (
                     <li className="first-icon">
                       <Link to={"/home/Usuario/listar"}>
-                      <FontAwesomeIcon icon={faUser} className="icon" />
+                      <FontAwesomeIcon  icon={faUser} className="icon" />
                         <p id="paragraph">Usuarios</p>
                       </Link>
                     </li>
@@ -354,8 +360,8 @@ function Dashboard() {
         <div className="nav-header shadow">
           <div className="header">
             <div className="container-logo">
-              <div className="logo">
-                {/* <svg
+              {/* <div className="logo">
+                <svg
                   className="logoSena"
                   xmlns="http://www.w3.org/2000/svg"
                   id="a"
@@ -381,18 +387,28 @@ function Dashboard() {
                     className="b"
                     d="M31.8,32.7s.04-.07,.04-.07l16.48,27.28-4.38,2.28-10.62-17.81c-.63-1.05-2.14-1.05-2.76,0-3.54,5.98-10.55,17.81-10.55,17.81l-4.28-2.12s15.19-25.87,16.07-27.37"
                   />
-                </svg> */}
-              </div>
+                </svg>
+              </div> */}
             </div>
 
             {/* <div className="empty"></div>
             <div className="container-title-dasboard">
-              <h1 className="title-dasboard">The Coffee data</h1>
-            </div> */}
+            <div className="container-username">
+              <Link to="/home/Perfil" className="container-username">
+                <div className="container-icon">
+                  <FontAwesomeIcon icon={faUser} className="FaUser" />
+                </div>
+                <div className="username">
+                  <h2>{dataUser.nombre}</h2>
+                  <p>{dataUser.rol}</p>
+                </div>
+              </Link>
+            </div>
+            </div>
 
             <div className="empty"></div>
 
-            <div className="container-username">
+            {/* <div className="container-username">
               <Link to="/home/Perfil" className="container-username">
                 <div className="container-icon">
                   <FontAwesomeIcon icon={faUser} className="FaUser" />
@@ -402,7 +418,7 @@ function Dashboard() {
                   <h3>{dataUser.rol}</h3>
                 </div>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="content-container">

@@ -37,9 +37,16 @@
 .order-item .name,
 .data-item .name,
 .new-order-item .name {
-  color: #3498db; /* Color para los nombres */
-}
+  color: #168A45; /* Color para los nombres */
 
+}
+a{
+  text-decoration: none;
+  color: #168A45;
+}
+a:hover{
+  color: #008000;
+}
 .analytics-item .value,
 .order-item .value,
 .data-item .value,
@@ -100,7 +107,7 @@
 }
 
 .new-name {
-  color: #3498db;
+  color: #168A45;
 }
 
 .new-value {
@@ -114,7 +121,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   padding: 100px;
-  color: #ecf0f1;
+  color: #168A45;
 }
 
 
