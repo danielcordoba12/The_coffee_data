@@ -262,6 +262,7 @@ h2{
 
 .lista-items ul li p {
     width: 200px;
+    font-weight: 700;
     /* Ajusta el tamaño del contenedor según tus necesidades */
     white-space: nowrap;
     /* Evita el salto de línea */
