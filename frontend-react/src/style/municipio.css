@@ -1,3 +1,4 @@
+
 .title-municipio {
   color: #168A45;
   font: bold;
@@ -6,9 +7,6 @@
   margin-top: 0;
 }
 
-.bgr-m {
-  background-color: rgb(234, 241, 243);
-}
 
 /* css de registrar y actualizar municipio */
 .btn-modi-municipio{
@@ -155,4 +153,8 @@
   transition: transform 0.3s, font-size 0.3s, color 0.3s;
   color: black;
 
+}
+
+.container-fluid{
+  margin-left: 35px !important;
 }

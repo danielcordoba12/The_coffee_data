@@ -300,23 +300,23 @@ const Municipio = () => {
                             Añadir
                         </button>
 
-                        <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" ref={tableRef} width={"100%"}>
+                        <table className="table table-hover rounded-3 overflow-hidden display responsive nowrap shadow" ref={tableRef} width={"100%"}>
                             <thead>
                                 <tr className="bg-gray-200">
-                                    <th>id</th>
-                                    <th>Fecha Creación</th>
-                                    <th>Nombre</th>
-                                    <th>Departamento</th>
-                                    <th>Opciones</th>
+                                    <th className="text-muted">id</th>
+                                    <th className="text-muted">Fecha Creación</th>
+                                    <th className="text-muted">Nombre</th>
+                                    <th className="text-muted">Departamento</th>
+                                    <th className="text-muted">Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {municipios.map((task) => (
                                     <tr key={task.id} className="border-t">
-                                        <td>{task.id}</td>
-                                        <td>{formatDate(task.fecha_creacion)}</td>
-                                        <td>{task.nombre}</td>
-                                        <td>{task.nombre_departamento}</td>
+                                        <td className="text-muted">{task.id}</td>
+                                        <td className="text-muted">{formatDate(task.fecha_creacion)}</td>
+                                        <td className="text-muted">{task.nombre}</td>
+                                        <td className="text-muted">{task.nombre_departamento}</td>
                                         <td>
                                             <button
                                                 type="button"

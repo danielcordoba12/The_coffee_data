@@ -77,7 +77,7 @@ const lote = () => {
         <br />
         <br />
 
-        <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+        <table className=" table table-hover rounded-3 overflow-hidden display responsive nowrap shadow"
                         ref={tableRef}
                         cellPadding={0}
                         width="100%"
@@ -90,30 +90,30 @@ const lote = () => {
                         >
           <thead>
             <tr className="bg-gray-200">
-              <th>id</th>
-              <th>Fecha Creación</th>
-              <th>Propietario</th>
-              <th>Finca</th>
-              <th>lote</th>
-              <th>Longitud</th>
-              <th>Latitud</th>
-              <th>N° plantas</th>
-              <th>Estado</th>
+              <th className="text-muted">id</th>
+              <th className="text-muted">Fecha Creación</th>
+              <th className="text-muted">Propietario</th>
+              <th className="text-muted">Finca</th>
+              <th className="text-muted">lote</th>
+              <th className="text-muted">Longitud</th>
+              <th className="text-muted">Latitud</th>
+              <th className="text-muted">N° plantas</th>
+              <th className="text-muted">Estado</th>
             </tr>
           </thead>
           <tbody>
           {lotes.length > 0 ? lotes
           .map((task) => (
             <tr key={task.id} className="border-t">
-              <td>{task.id}</td>
-              <td>{task.fecha_creacion}</td>
-              <td>{task.nombre_usuario}</td>
-              <td>{task.Nombre_Finca}</td>
-              <td>{task.nombre}</td>
-              <td>{task.longitud}</td>
-              <td>{task.latitud}</td>
-              <td>{task.n_plantas}</td>
-              <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+              <td className="text-muted">{task.id}</td>
+              <td className="text-muted">{task.fecha_creacion}</td>
+              <td className="text-muted">{task.nombre_usuario}</td>
+              <td className="text-muted">{task.Nombre_Finca}</td>
+              <td className="text-muted">{task.nombre}</td>
+              <td className="text-muted">{task.longitud}</td>
+              <td className="text-muted">{task.latitud}</td>
+              <td className="text-muted">{task.n_plantas}</td>
+              <td className="text-muted">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
              
             </tr>
           )) : <tr><td colSpan={999999999999} className="p-5 text-center">{lotes.message}</td></tr>}

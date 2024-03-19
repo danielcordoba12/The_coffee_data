@@ -818,7 +818,7 @@ body {
 .container-listado {
   position: relative;
   top: 95px;
-  left: 26px;
+  left: 1px;
   width: 93%;
   height: 1000rem;
   overflow: hidden;
