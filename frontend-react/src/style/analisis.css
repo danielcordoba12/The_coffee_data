@@ -547,4 +547,11 @@ select {
 
 .contTitle {
   height: 70px !important;
+  position: relative;
+  top: 56px;
+  left: 26px;
+  background-color: white;
+  border-radius: 8px;
+  width: 93%;
+
 }

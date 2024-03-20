@@ -101,9 +101,9 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
-  top: 30px;
+  top: -46px;
   /* Ajusta la distancia desde la parte superior */
-  left: 180px;
+  left: 130px;
   /* Ajusta la distancia desde la derecha */
 }
 
