@@ -171,11 +171,7 @@
   width: 100%;
   margin: auto;
   padding: 20px;
-
   max-height: 900px;
-  /* Altura máxima para la tabla */
-  overflow-y: auto;
-  /* Agrega scroll vertical si el contenido excede la altura máxima */
 }
 
 
@@ -773,9 +769,9 @@ body {
 
 }
 
-.modal-ver-lotes .modal-body {
+/* .modal-ver-lotes .modal-body {
   overflow: auto;
-}
+} */
 
 
 .modal-contents {
@@ -820,8 +816,6 @@ body {
   top: 95px;
   left: 1px;
   width: 93%;
-  height: 1000rem;
-  overflow: hidden;
   border-radius: 8px;
 }
 
@@ -838,10 +832,10 @@ body {
 .titulo-listado {
   justify-content: center;
   text-align: left;
-  font-weight: bold; 
+  font-weight: bold;
   position: relative;
   font-family: Arial, Helvetica, sans-serif;
-  color:#168A45;
+  color: #168A45;
   font-size: 1.5rem;
   top: 25px;
   left: 20px;
@@ -907,3 +901,13 @@ select option {
   left: 10px;
   transition: all 0.5s;
 }
+
+.bg-white table {
+  width: 90% !important;
+  max-width: 100%;
+
+}
+
+  .table {
+    overflow: visible !important;
+  }

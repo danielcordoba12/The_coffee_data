@@ -176,8 +176,6 @@
   top: 95px;
   left: 26px;
   width: 93%;
-  height: 1000rem;
-  overflow: hidden;
   border-radius: 8px;
 }
 
@@ -313,4 +311,7 @@
 .btn-activar:hover {
   color: white;
   background-color: #008000;
+}
+.table {
+  overflow: visible !important;
 }

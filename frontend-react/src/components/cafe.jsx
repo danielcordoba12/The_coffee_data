@@ -348,18 +348,19 @@ const Cafe = () => {
 
                     <div className="container-list-cafe">
                     <div className="container-fluid w-full" key={key}>
-                        <table className="table table-stripped table-bordered border display reponsive nowrap b-4 bg-white" width={"100%"} ref={dataTableRef}>
+                        <table className="table table-hover rounded-3 display responsive nowrap shadow" 
+                        width={"100%"} ref={dataTableRef}>
 
                             <thead>
                                 <tr className="bg-gray-200">
-                                    <th>id</th>
-                                    <th>Propietario</th>
-                                    <th>finca</th>
-                                    <th>Municipio</th>
-                                    <th>lote</th>
-                                    <th>variedad</th>
-                                    <th>Estado</th>
-                                    <th>opciones</th>
+                                    <th className="text-muted">id</th>
+                                    <th className="text-muted">Propietario</th>
+                                    <th className="text-muted">finca</th>
+                                    <th className="text-muted">Municipio</th>
+                                    <th className="text-muted">lote</th>
+                                    <th className="text-muted">variedad</th>
+                                    <th className="text-muted">Estado</th>
+                                    <th className="text-muted">opciones</th>
 
                                 </tr>
                             </thead>
@@ -367,13 +368,13 @@ const Cafe = () => {
                                 {cafes
                                     .map((task) => (
                                         <tr key={task.id} className="border-t">
-                                            <td>{task.id}</td>
-                                            <td>{task.nombre_usuario}</td>
-                                            <td>{task.nombre_finca}</td>
-                                            <td>{task.nombre_municipio}</td>
-                                            <td>{task.numero_lote}</td>
-                                            <td>{task.nombre_variedad}</td>
-                                            <td>{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+                                            <td className="text-muted">{task.id}</td>
+                                            <td className="text-muted">{task.nombre_usuario}</td>
+                                            <td className="text-muted">{task.nombre_finca}</td>
+                                            <td className="text-muted">{task.nombre_municipio}</td>
+                                            <td className="text-muted">{task.numero_lote}</td>
+                                            <td className="text-muted">{task.nombre_variedad}</td>
+                                            <td className="text-muted">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
                                             <td>
                                                 <button
                                                     type="button"

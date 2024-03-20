@@ -72,12 +72,13 @@ const lote = () => {
 
       {/* <img src="../../public/img/fondo.png" alt="" className="fondo2" /> */}
       <div className="tablalistar">
-      <h4 className="titulo-listado"> Listado de lotes</h4>
-
+      <div className="contTitle-lote">
+      <h4 className="titulo-lote">Lotes</h4>
+      </div>
         <br />
         <br />
 
-        <table className=" table table-hover rounded-3 overflow-hidden display responsive nowrap shadow"
+        <table className=" table table-hover rounded-3 display responsive nowrap shadow"
                         ref={tableRef}
                         cellPadding={0}
                         width="100%"
