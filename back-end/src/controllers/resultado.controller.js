@@ -17,8 +17,8 @@ export const guardarResultado = async (req, res) => {
         let resultadoExitoso = true; // Variable para verificar si al menos un resultado fue exitoso
 
         for (const dato of data) {
-            const sql = 'INSERT INTO resultados(valor, analisis_id, variables_id, fecha_creacion) VALUES (?, ?, ?, ?)';
-            const [rows] = await pool.query(sql, [dato.valor, dato.analisis_id, dato.variables_id, dato.fecha]);
+            const sql = 'INSERT INTO resultados(valor,variables_id, fecha_creacion,catadores_id) VALUES (?, ?, ?, ?)';
+            const [rows] = await pool.query(sql, [dato.valor,  dato.variables_id, dato.fecha,dato.analisis_id]);
     
         if (rows.affectedRows <= 0) {
             // Si no se registró un resultado, establece resultadoExitoso a false
@@ -58,8 +58,8 @@ export const buscarResultado = async (req, res) => {
 
         // const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id =  ${id} AND  r.fecha_creacion = '2023-03-03 00:00:00';`)
 
-const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id = ${id} AND  r.fecha_creacion = '${fecha}';`)
-        
+        const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id   Join catadores ca ON ca.id = r.catadores_id join analisis as t on t.id = ca.analisis_id WHERE r.catadores_id = ${id} AND  r.fecha_creacion = '${fecha}';`)
+                
 
 
     //     const [result] = await pool.query(`    

@@ -25,6 +25,7 @@ function Resultado(user) {
   const [resultadoSellecionado,setResultadoSeleccionado] = useState([])
   const [analisis , setAnalisi] = useState([])
   const [catador , setCatador] = useState([])
+  const [catadorId , setCatadorId] = useState("")
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
@@ -346,10 +347,10 @@ useEffect(() => {
 
 ///////////////////////////////////////
 
-const porcentajeDefectos = /* Tu cálculo */( defectosTotales *  100) / valorInput1;
-nuevosDatos[19].valor = porcentajeDefectos;
-const PorcentajeAlmendraSana = /* Tu cálculo */( almendraSana *  100) / valorInput1;
-nuevosDatos[17].valor = PorcentajeAlmendraSana;
+  const porcentajeDefectos = /* Tu cálculo */( defectosTotales *  100) / valorInput1;
+  nuevosDatos[19].valor = porcentajeDefectos;
+  const PorcentajeAlmendraSana = /* Tu cálculo */( almendraSana *  100) / valorInput1;
+  nuevosDatos[17].valor = PorcentajeAlmendraSana;
 
 
     }
@@ -373,7 +374,6 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
         i === index ? { ...dato, [field]: value } : dato
         
       );
-      console.log("Nuevo estado:", nuevosDatos);
       return nuevosDatos;
     });
   };
@@ -460,7 +460,7 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
   ///////////////////////////////////////////////////77Fin de respaldo/////////////////////////////////////////////////////
   const generarInputs = () => {
     const filas = [];
-    const numColumnas = 15;
+    const numColumnas = 10;
     // let cafes_id = dataSelect.cafes_id;
     // console.log("este es cafes_id " + cafes_id);
     // setCafesId(dataSelect.cafes_id)
@@ -512,30 +512,30 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
   
   
     // Agregar una columna separada para el análisis
-    filas.push(
-      <div className="columna" key="analisis">
-        <div className="container-input div-input-search-select">
-        <input className="input-search-cafe " type="text" id="cafes_id" />
-                        <label htmlFor="cafes_id" className='label-analisis-resultado'>Analisis</label>
-                        <div className="select-options-cafe" 
+    // filas.push(
+    //   <div className="columna" key="analisis">
+    //     <div className="container-input div-input-search-select">
+    //     <input className="input-search-cafe " type="text" id="cafes_id" />
+    //                     <label htmlFor="cafes_id" className='label-analisis-resultado'>Analisis</label>
+    //                     <div className="select-options-cafe" 
 
-                        >
-                            {analisis.length > 0 && analisis
-                            .map((key, index) => (
-                                (
-                                    <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafes_id").value = key.id_analisis;!dataSelect.cafes_id ? dataSelect.cafes_id = {} : "".dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id_analisis}>
+    //                     >
+    //                         {analisis.length > 0 && analisis
+    //                         .map((key, index) => (
+    //                             (
+    //                                 <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafes_id").value = key.id_analisis;!dataSelect.cafes_id ? dataSelect.cafes_id = {} : "".dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id_analisis}>
                                       
-                                      {key.id_analisis + "," + key.codigo_externo+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
-                                )
-                            ))}
-                        </div>
-                        {
+    //                                   {key.id_analisis + "," + key.codigo_externo+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
+    //                             )
+    //                         ))}
+    //                     </div>
+    //                     {
 
-                        //  console.log("este es cafes_id " + cafes_id )
-                        }
-        </div>
-      </div>
-    );
+    //                     //  console.log("este es cafes_id " + cafes_id )
+    //                     }
+    //     </div>
+    //   </div>
+    // );
   
     return filas;
   };
@@ -668,9 +668,9 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
       const datosConAnalisisId = datos.map((dato) => ({
         ...dato,
         fecha: fechaActual,
-        analisis_id: cafes_id.value
+        analisis_id: catadorId
       }));
-      console.log(typeof localhost);
+      console.log("xxxx",datosConAnalisisId );
 
       // setDatos(datosConAnalisisId);
       // const datosValidos = datosConAnalisisId.filter(dato => dato.valor !== null || dato.valor !== undefined);
@@ -894,11 +894,7 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
 
 <div className="main-container">
 <h1 className='title-registrar'>Listar resultados</h1> 
-{user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
-  <button className="btn-reg-mue" onClick={() => setShowModal1(!showModal1)}>
-      Registrar resultado
-  </button>
-  : '' : ''}
+
 
   <div className="container-fluid w-full">
   <table id="table-d" style={{ width: "100%" }} className="table table-hover rounded-3 overflow-hidden display responsive nowrap shadow" 
@@ -912,6 +908,7 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
           <th>Nombre</th>
           <th>Apellidos</th>
           <th>Estado</th>
+          <th>Registrar</th>
           {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
           <th>Actualizar</th>
           : '' : ''}
@@ -948,6 +945,14 @@ nuevosDatos[17].valor = PorcentajeAlmendraSana;
                                         </button>
                                             
                                         )}  
+                  </td>
+                  <td>
+                  {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
+                    <button className="btn-reg-mue" onClick={() => {setShowModal1(!showModal1);
+                    setCatadorId(task.id)}}>
+                        Registrar resultado
+                    </button>
+                    : '' : ''}
                   </td>
                   {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
                   <td>
