@@ -181,7 +181,7 @@
   z-index: -1;
 }
 
-.tablalistar {
+.tablalistar-lote {
   width: 100%;
   margin: auto;
   padding: 20px;
@@ -256,4 +256,33 @@
 
 .btn-registrar-lote:hover {
   background-color: #2980b9;
+}
+
+.contTitle-lote {
+  position: relative;
+  top: 56%;
+  left: -30px;
+  background-color: white;
+  border-radius: 8px;
+  width: 102%;
+  height: 70px;
+}
+.titulo-lote{
+  justify-content: center;
+  text-align: left;
+  font-weight: bold; 
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  color:#168A45;
+  font-size: 1.5rem;
+  top: 25px;
+  left: 20px;
+}
+
+.table {
+  overflow: visible !important;
+}
+.container-fluid-l{
+  width: 93%;
+  margin-left: 35px !important;
 }

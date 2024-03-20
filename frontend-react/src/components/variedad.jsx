@@ -179,10 +179,11 @@ const Variedad = () => {
 
 <div className="bgr-v">
     <div className="container-list-variedad">
-        <h1 className="title-variedad"> Listado de  variedad</h1>
+    <div className="contTitle-finca">
+        <h1 className="title-variedad"> Variedad</h1>
 
-
-
+</div>
+<br /><br />
         <div className="container-fluid w-full">
             <button to="/variedad/registrar" className="btn-añadir-variedad" onClick={openRegistrarModal}>
                 Añadir
