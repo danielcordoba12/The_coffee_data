@@ -85,7 +85,7 @@ function Resultado(user) {
 
 
   useEffect(()=>{
-    listarResultado();
+    // listarResultado();
     listarCatador();
   },[]);
 
@@ -690,7 +690,8 @@ useEffect(() => {
         console.log("Resultado del servidor:", result);
         Sweet.registroExitoso();
         hideAllModals()
-        listarResultado();
+        // listarResultado();
+        listarCatador();
 
       }
 
@@ -705,22 +706,22 @@ useEffect(() => {
 
   };
 
-  async function listarResultado(){
-    try{
+  // async function listarResultado(){
+  //   try{
 
-      const response = await fetch(`http://${localhost}:4000/resultado/listar`, {
-        method: "GET",
-        headers: {
-          token: localStorage.getItem("token")
-      }
-      })
-      const data = await response.json();
-      setResultado(data)
-      // return data
-    }catch(e){
-      console.error("Error" + e);
-    }
-  }
+  //     const response = await fetch(`http://${localhost}:4000/resultado/listar`, {
+  //       method: "GET",
+  //       headers: {
+  //         token: localStorage.getItem("token")
+  //     }
+  //     })
+  //     const data = await response.json();
+  //     setResultado(data)
+  //     // return data
+  //   }catch(e){
+  //     console.error("Error" + e);
+  //   }
+  // }
   const listarCatador = async () => {
     try {
         const response = await Api.get('catador/listar');
@@ -732,7 +733,7 @@ useEffect(() => {
 
 
   function buscarResultado(id,fecha_creacion) {
-    fetch(`http://${localhost}:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion}`,{
+    fetch(`http://${localhost}:4000/resultado/buscar/${id}`,{
       headers: {
         'Content-type': 'application/json',
       },
@@ -781,7 +782,8 @@ useEffect(() => {
         console.log("Resultado del servidor:", result);
         Sweet.actualizacionExitosa();
         hideAllModals();
-        listarResultado(); 
+        // listarResultado(); 
+        listarCatador();
       })
       .catch((error) => {
         console.error("Error al procesar la solicitud", error);
@@ -959,7 +961,7 @@ useEffect(() => {
                     <button className="btn-reg-mue"
                       onClick={() => {
                         toggleModal(2);
-                        buscarResultado(task.analisis_id,convertirFechaSQL( task.fecha_creacion));
+                        buscarResultado(task.id);
                       }}
                       >
                     Editar</button>
@@ -970,7 +972,7 @@ useEffect(() => {
                     <button
                                   type="button"
                                   className="btn-reg-mue"
-                                  onClick={() => { toggleModal(3), buscarResultado(task.analisis_id,convertirFechaSQL(task.fecha_creacion)) ;} }
+                                  onClick={() => { toggleModal(3); buscarResultado(task.id) ;} }
                               >Mas
                               </button>
                   </td>

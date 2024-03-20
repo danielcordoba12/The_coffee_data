@@ -53,14 +53,14 @@ export const guardarResultado = async (req, res) => {
 export const buscarResultado = async (req, res) => {
     try {
         let id = req.params.id;
-        let fecha = req.query.fecha_creacion;         // const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id =  ${id} ORDER BY r.fecha_creacion;`);
+        // let fecha = req.query.fecha_creacion;         // const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id =  ${id} ORDER BY r.fecha_creacion;`);
 
 
         // const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join analisis as t on r.analisis_id = t.id WHERE analisis_id =  ${id} AND  r.fecha_creacion = '2023-03-03 00:00:00';`)
 
-        const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id   Join catadores ca ON ca.id = r.catadores_id join analisis as t on t.id = ca.analisis_id WHERE r.catadores_id = ${id} AND  r.fecha_creacion = '${fecha}';`)
+        // const [result] = await pool.query(`SELECT r.id,r.valor, t.id AS Analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id   Join catadores ca ON ca.id = r.catadores_id join analisis as t on t.id = ca.analisis_id WHERE r.catadores_id = ${id} AND  r.fecha_creacion = '${fecha}';`)
                 
-
+        const [result] = await pool.query(`SELECT r.id, r.valor as valor, v.nombre ,u.nombre AS catador, m.consecutivo_informe AS Informe  FROM resultados r JOIN catadores ca ON ca.id = r.catadores_id JOIN usuarios u ON u.id = ca.usuarios_id JOIN analisis a ON ca.analisis_id  = a.id JOIN muestras m ON a.muestras_id = m.id  JOIN variables v ON v.id = r.variables_id WHERE ca.id = ${id}`)
 
     //     const [result] = await pool.query(`    
     
