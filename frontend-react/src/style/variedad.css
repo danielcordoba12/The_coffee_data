@@ -1,9 +1,13 @@
 .title-variedad {
-  color: #168A45;
-  font: bold;
-  display: flex;
   justify-content: center;
-  margin-top: 0;
+  text-align: left;
+  font-weight: bold;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #168A45;
+  font-size: 1.5rem;
+  top: 25px;
+  left: 20px;
 }
 
 

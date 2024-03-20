@@ -347,7 +347,7 @@ const Cafe = () => {
 
 
                     <div className="container-list-cafe">
-                    <div className="container-fluid w-full" key={key}>
+                    <div className="container-fluid" key={key}>
                         <table className="table table-hover rounded-3 display responsive nowrap shadow" 
                         width={"100%"} ref={dataTableRef}>
 

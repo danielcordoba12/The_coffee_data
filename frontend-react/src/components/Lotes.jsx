@@ -71,10 +71,13 @@ const lote = () => {
       
 
       {/* <img src="../../public/img/fondo.png" alt="" className="fondo2" /> */}
-      <div className="tablalistar">
+      <div className="tablalistar-lote">
+      <div className="container-fluid-l ">
+        <br />   <br />
       <div className="contTitle-lote">
       <h4 className="titulo-lote">Lotes</h4>
       </div>
+        <br />
         <br />
         <br />
 
@@ -120,7 +123,7 @@ const lote = () => {
           )) : <tr><td colSpan={999999999999} className="p-5 text-center">{lotes.message}</td></tr>}
           </tbody>
         </table>
-
+        </div>
       </div>
 
     </>

@@ -819,15 +819,7 @@ body {
   border-radius: 8px;
 }
 
-.contTitle {
-  position: relative;
-  top: 56px;
-  left: 26px;
-  background-color: white;
-  border-radius: 8px;
-  width: 93%;
-  height: auto;
-}
+
 
 .titulo-listado {
   justify-content: center;
@@ -910,4 +902,7 @@ select option {
 
   .table {
     overflow: visible !important;
+  }
+  .container-fluid{
+    width: 99% !important;
   }

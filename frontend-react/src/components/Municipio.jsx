@@ -291,9 +291,10 @@ const Municipio = () => {
 
             <div className="bgr-m">
                 <div className="container-list-Municipio">
-                    <h1 className="title-municipio"> Listado de  Municipio</h1>
-
-
+                    <div className="titulo-municipio">
+                    <h1 className="title-municipio">Municipio</h1>
+                    </div>
+<br /><br />
 
                     <div className="container-fluid w-full">
                         <button to="/Municipio/registrar" className="btn-añadir-municipio" onClick={openRegistrarModal}>

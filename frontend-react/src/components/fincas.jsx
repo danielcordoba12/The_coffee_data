@@ -532,7 +532,7 @@ const FincaView = (user) => {
 
 
             <div className="container-listado">
-                <div className="container-fluid w-full">
+                <div className="container-fluid w-100">
                     <table className="table table-hover rounded-3 display responsive nowrap shadow"
                         ref={tableRef}
                         cellPadding={0}

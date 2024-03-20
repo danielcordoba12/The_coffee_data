@@ -315,3 +315,6 @@
 .table {
   overflow: visible !important;
 }
+.container-fluid{
+  width: 98% !important;
+}
