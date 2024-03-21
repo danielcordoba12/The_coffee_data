@@ -41,16 +41,16 @@ function LoginForm() {
     return (
         <div className="background-container">
             <img src="../../public/img/fondo6.png" alt="" className="fondo2" />
-            <div class="content-header">
-                <div class="limiter-width-page">
-                    <div class="header-page">
-                        <div class="header-logo"><img src="../../public/img/logoSena.png" alt="" /></div>
-                        <div class="right-logo"><img src="../../public/img/logoEscuela.png" alt="" /></div>
-                        <div class="empresa-logo"><img src="../../public/img/nombrelogo.png" alt="" /></div>
+            <div className="content-header">
+                <div className="limiter-width-page">
+                    <div className="header-page">
+                        <div className="header-logo"><img src="../../public/img/logoSena.png" alt="" /></div>
+                        <div className="right-logo"><img src="../../public/img/logoEscuela.png" alt="" /></div>
+                        <div className="empresa-logo"><img src="../../public/img/nombrelogo.png" alt="" /></div>
                     </div>
                 </div>
                 <header>
-                    <div class="menu-visible">
+                    <div className="menu-visible">
                         <button className="btn-iniciar-sesion" onClick={openIngresarModal}>
                             Iniciar Sesión
                         </button>
@@ -63,11 +63,9 @@ function LoginForm() {
             {modallogin && (
                 <div className='centro'>
                     <div className="wrapper active-popup">
-
-                        <div className="form-box login">
-                        <div onClick={closeSalirModal} className="icon-close">×</div>
-                            <img src="../../public/img/nombrelogo.png" width="300px" alt="" className="nombrelogo" />
-
+                        <h2 className="title-ini">Login</h2>
+                        <div className="form-box login" id='aver'>
+                            <div className="icon-close" onClick={closeSalirModal}>×</div>
                             <form onSubmit={handleSubmit}>
                                 <div className="input-box">
                                     <label htmlFor="numero_documento">Número de Documento:</label>
@@ -90,13 +88,12 @@ function LoginForm() {
                                     />
                                 </div>
                                 {error && <p className="error-message">{error}</p>}
-                                <button type="submit" className="btn-submit">Iniciar Sesion</button>
-                                
+                                <button type="submit" className="btn-submit">Iniciar Sesión</button>
                             </form>
                         </div>
-                       
                     </div>
                 </div>
+
             )}
         </div>
     );

@@ -10,9 +10,6 @@ import "bootstrap";
 import "datatables.net";
 import "datatables.net-bs5";
 import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable'
-import ReactDOMServer from 'react-dom/server';
-import AnalisisHTMLView from './AnalisisHTMLView';
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
 import { Alert } from "bootstrap";
