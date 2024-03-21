@@ -8,6 +8,15 @@ function LoginForm() {
     const [numero_documentos, setNumeroDocumentos] = useState('');
     const [user_password, setUserPassword] = useState('');
     const [error, setError] = useState('');
+    const [modallogin, setModallogin] = useState(null);
+
+    const openIngresarModal = () => {
+        setModallogin(true);
+    };
+
+    const closeSalirModal = () => {
+        setModallogin(false);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,42 +40,64 @@ function LoginForm() {
 
     return (
         <div className="background-container">
-            <img src="../../public/img/fondo5.jpg" alt="" className="fondo2" />
-            
-            <div className='centro'>
-            <div className="wrapper active-popup">
-
-                <div className="form-box login">
-                <img src="../../public/img/nombrelogo.png" width="300px" alt="" className="nombrelogo" />
-                    
-                    <form onSubmit={handleSubmit}>
-                        <div className="input-box">
-                            <label htmlFor="numero_documento">Número de Documento:</label>
-                            <input
-                                type="text"
-                                id="numero_documentos"
-                                value={numero_documentos}
-                                onChange={(e) => setNumeroDocumentos(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="input-box">
-                            <label htmlFor="user_password">Contraseña:</label>
-                            <input
-                                type="password"
-                                id="user_password"
-                                value={user_password}
-                                onChange={(e) => setUserPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                        {error && <p className="error-message">{error}</p>}
-                        <button type="submit" className="btn-submit">Iniciar Sesion</button>
-                    </form>
+            <img src="../../public/img/fondo6.png" alt="" className="fondo2" />
+            <div class="content-header">
+                <div class="limiter-width-page">
+                    <div class="header-page">
+                        <div class="header-logo"><img src="../../public/img/logoSena.png" alt="" /></div>
+                        <div class="right-logo"><img src="../../public/img/logoEscuela.png" alt="" /></div>
+                        <div class="empresa-logo"><img src="../../public/img/nombrelogo.png" alt="" /></div>
+                    </div>
                 </div>
-                    <div className="icon-close">×</div>
-                </div>
+                <header>
+                    <div class="menu-visible">
+                        <button className="btn-iniciar-sesion" onClick={openIngresarModal}>
+                            Iniciar Sesión
+                        </button>
+                    </div>
+                </header>
             </div>
+
+
+
+            {modallogin && (
+                <div className='centro'>
+                    <div className="wrapper active-popup">
+
+                        <div className="form-box login">
+                        <div onClick={closeSalirModal} className="icon-close">×</div>
+                            <img src="../../public/img/nombrelogo.png" width="300px" alt="" className="nombrelogo" />
+
+                            <form onSubmit={handleSubmit}>
+                                <div className="input-box">
+                                    <label htmlFor="numero_documento">Número de Documento:</label>
+                                    <input
+                                        type="text"
+                                        id="numero_documentos"
+                                        value={numero_documentos}
+                                        onChange={(e) => setNumeroDocumentos(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div className="input-box">
+                                    <label htmlFor="user_password">Contraseña:</label>
+                                    <input
+                                        type="password"
+                                        id="user_password"
+                                        value={user_password}
+                                        onChange={(e) => setUserPassword(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                {error && <p className="error-message">{error}</p>}
+                                <button type="submit" className="btn-submit">Iniciar Sesion</button>
+                                
+                            </form>
+                        </div>
+                       
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
