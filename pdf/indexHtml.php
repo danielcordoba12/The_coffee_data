@@ -36,79 +36,106 @@
             text-align: left;
         }
 
-        .spacer {
-            height: 20px;
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            margin: 5px;
         }
 
         .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            width: 100%;
+            /* Ajusta el ancho de la tabla al 100% */
+            border-collapse: collapse;
+            /* Colapsa los bordes de la tabla */
+            text-align: center;
+            /* Centra el contenido de la tabla */
+        }
+
+        .header td,
+        .header th {
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+        .header p {
+            margin: 0;
+            /* Elimina el margen predeterminado de los párrafos */
+            text-align: center;
+        }
+
+        .bullet-list {
+            margin-left: 20px;
+            /* Espacio para simular la viñeta */
+        }
+
+        .bullet-item {
+            margin-bottom: 10px;
+            /* Espacio entre elementos */
+        }
+
+        .bullet-item:before {
+            content: "•";
+            /* Utilizamos el carácter • para las viñetas */
+            display: inline-block;
+            /* Para que el carácter aparezca en línea con el texto */
+            width: 1.5em;
+            /* Ancho del espacio donde se mostrará la viñeta */
+            margin-right: 0.5em;
+            /* Espacio entre la viñeta y el texto */
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <table>
-            <tr>
-                <th>HOLLLAA</th>
-                <th colspan="4" style="text-align:center;">Centro de Gestión y Desarrollo Sostenible Surcolombiano
+    <table class="header">
+        <tr>
+            <td colspan="1">
+                <img src="data:img/png;base64,<?php echo base64_encode(file_get_contents('img/logo.png')); ?>" alt="">
+            </td>
+            <td colspan="2">
+                <p>Centro de Gestión y Desarrollo Sostenible Surcolombiano</p>
                 <p>Escuela Nacional de la Calidad del Café</p>
-                </th>
-                <th>hooooo</th>
-            </tr>
-            <tr>
-                <th>HOLLLAA</th>
-                <th colspan="4" style="text-align:center;">Escuela Nacional de la Calidad del Café</th>
-                <th>
-                <p>CÓDIGO:FS-D-01</p>
-                <p>VERSIÓN:01</p>
-                <p>FECHA:2023-05-05</p>
+            </td>
+            <td colspan="1">
+            <img src="" alt="">
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <img src="" alt="">
+            </td>
+            <td colspan="2">
+                <p>INFORME SERVICIO ANALISIS FISICO SENSORIAL</p>
+            </td>
+            <td>
+                <p>CÓDIGO: FS-D-01</p>
+                <p>VERSIÓN: 01</p>
+                <p>FECHA: 2023-05-05</p>
                 <p>PÁGINA: 1 de 4</p>
-                </th>
-            </tr>
-        </table>
-    </div>
-    <br><br><br><br><br><br><br>
-
-    <h2>Objetivo</h2>
-    <p>El objetivo del siguiente informe es presentar los resultados del análisis físico-sensorial obtenidos para la muestra de café AFS-40 descrita a continuación.</p>
-
-    <h2>Información General</h2>
-    <table>
-        <tr>
-            <th>Productor</th>
-            <td>Erlendy Valenzuela</td>
-        </tr>
-        <tr>
-            <th>Departamento</th>
-            <td>Huila</td>
-        </tr>
-        <tr>
-            <th>Municipio</th>
-            <td>Oporapa</td>
-        </tr>
-        <tr>
-            <th>Vereda</th>
-            <td>El Carmen</td>
-        </tr>
-        <tr>
-            <th>Finca</th>
-            <td>El Topacio</td>
-        </tr>
-        <tr>
-            <th>Código Externo</th>
-            <td>T1D</td>
-        </tr>
-        <tr>
-            <th>Consecutivo Informe</th>
-            <td>INF-AFS-40</td>
+            </td>
         </tr>
     </table>
 
-    <h2>Especificaciones del café</h2>
+    <h2>1. Objetivo</h2>
+    <p>El objetivo del siguiente informe es presentar los resultados del análisis físico-sensorial obtenidos para la muestra de café AFS-40 descrita a continuación.</p>
+
+    <h2>2. Información General</h2>
+
+    <div class="bullet-list">
+        <div class="bullet-item"><strong>Productor:</strong> Erlendy Valenzuela</div>
+        <div class="bullet-item"><strong>Departamento:</strong> Huila</div>
+        <div class="bullet-item"><strong>Municipio:</strong> Oporapa</div>
+        <div class="bullet-item"><strong>Vereda:</strong> El Carmen</div>
+        <div class="bullet-item"><strong>Finca:</strong> El Topacio</div>
+        <div class="bullet-item"><strong>Código Externo:</strong> T1D</div>
+        <div class="bullet-item"><strong>Consecutivo Informe:</strong> INF-AFS-40</div>
+    </div>
+
+
+    <h2>3. Especificaciones del café</h2>
     <table>
         <tr>
             <th>Variedad De Café</th>
@@ -119,12 +146,16 @@
             <td>1530</td>
         </tr>
         <tr>
+            <th>Método De Muestreo</th>
+            <td>No especifica</td>
+        </tr>
+        <tr>
             <th>Método Para La Preparación De La Muestra</th>
             <td>No especifica</td>
         </tr>
     </table>
 
-    <h2>Datos generales del café</h2>
+    <h2>4. Datos generales del café</h2>
     <table>
         <tr>
             <th>Tipo De Molienda</th>

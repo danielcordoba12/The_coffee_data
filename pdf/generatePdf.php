@@ -43,7 +43,7 @@ header("Access-Control-Allow-Headers: Content-Type");
     $html = ob_get_clean();
     /* header("Location: otra_pagina.php"); */
     $dompdf->load_html($html);
-    $dompdf->setPaper("A3", "landscape");
+    $dompdf->setPaper("A3", "portrait");
     $dompdf->render();
 
     $dompdf->stream();
