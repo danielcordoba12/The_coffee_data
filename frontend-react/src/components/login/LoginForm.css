@@ -97,6 +97,7 @@
   /* Se redujo el tamaño de la fuente */
   transition: border-bottom-color 0.3s ease;
   /* Transición suave para el cambio de color del borde inferior */
+  outline: none;
 }
 
 .input-box input:hover {
@@ -241,7 +242,7 @@
   margin: 0 auto;
   height: 90%;
   display: block;
-  width: 40%;
+  width: 35%;
 }
 
 .menu-visible {

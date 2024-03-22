@@ -198,7 +198,6 @@ export const desactivarUsuario = async (req, res) => {
     }
 };
 
-
 export const listarcatadores= async (req, res) => {
 
     try {     

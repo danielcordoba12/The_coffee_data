@@ -1,38 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bcrypt from "bcryptjs";
+import Api from '../services/Api';
 import Swal from 'sweetalert2';
+import { jwtDecode } from 'jwt-decode';
+import bcrypt from 'bcryptjs';
 
 const UserProfile = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
-    displayName: '',
+    nombre: '',
     apellido: '',
     telefono: '',
-    email: '',
-    newPassword: '',
-    confirmPassword: '',
-    photo: ''
+    correo_electronico: '',
+    user_password: '',
+    confirmar_contrasena: '',
+    tipo_documento: '',
+    rol: '',
+    cargo: '',
+    numero_documentos: ''
   });
-  const [editingInfo, setEditingInfo] = useState(false);
-  const [editingPassword, setEditingPassword] = useState(false);
 
-  // Función para cargar los datos del usuario al montar el componente
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Lógica para obtener los datos del usuario desde el servidor
-      // Simulación de datos de usuario
+      const decoded = jwtDecode(token);
       const userData = {
-        displayName: 'Daniel  ',
-        apellido: 'Cordoba',
-        telefono: '3123123',
-        email: 'dcordobaruizv@gmail.com',
-        photo: 'url_de_la_foto' // La URL de la foto del usuario
+        nombre: decoded.nombre,
+        apellido: decoded.apellido,
+        telefono: decoded.telefono,
+        correo_electronico: decoded.correo_electronico,
+        tipo_documento: decoded.tipo_documento,
+        rol: decoded.rol,
+        cargo: decoded.cargo,
+        numero_documentos: decoded.numero_documentos
       };
       setUserInfo(userData);
     } else {
-      // Si no hay token, redirigir al usuario a la página de inicio de sesión
       navigate('/');
     }
   }, [navigate]);
@@ -45,56 +48,86 @@ const UserProfile = () => {
     console.log("Cerrando sesión...");
   };
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setUserInfo({
-        ...userInfo,
-        photo: URL.createObjectURL(file)
-      });
-    }
-  };
-
-  const handleSaveInfo = () => {
-    if (!userInfo.displayName || !userInfo.apellido || !userInfo.telefono || !userInfo.email) {
+  const validateForm = () => {
+    if (userInfo.nombre.trim() === '') {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Por favor, completa todos los campos.',
+        text: 'Por favor ingresa un nombre.'
       });
-      return;
+      return false;
     }
-
-    // Lógica para enviar los datos actualizados del usuario al servidor
-    console.log("Guardando información del usuario:", userInfo);
-    // Simulación de éxito
-    Swal.fire({
-      icon: 'success',
-      title: '¡Datos actualizados!',
-      text: 'Los datos del usuario se han actualizado correctamente.',
-    });
-    setEditingInfo(false);
-  };
-
-  const handleSavePassword = () => {
-    if (!userInfo.newPassword || !userInfo.confirmPassword) {
+    if (userInfo.apellido.trim() === '') {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Por favor, completa ambos campos de contraseña.',
+        text: 'Por favor ingresa un apellido.'
       });
-      return;
+      return false;
     }
+    // Añade más validaciones para los otros campos aquí
+    return true;
+  };
 
-    // Lógica para enviar la nueva contraseña al servidor
-    console.log("Guardando nueva contraseña:", userInfo.newPassword);
-    // Simulación de éxito
-    Swal.fire({
-      icon: 'success',
-      title: '¡Contraseña actualizada!',
-      text: 'La contraseña se ha actualizado correctamente.',
-    });
-    setEditingPassword(false);
+  const hashPassword = async (password) => {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
+  };
+
+  const handleSaveInfo = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        handleNavigate('/');
+        return;
+      }
+      if (!validateForm()) {
+        return;
+      }
+      if (userInfo.user_password !== userInfo.confirmar_contrasena) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Las contraseñas no coinciden.'
+        });
+        return;
+      }
+
+      // Encriptar la contraseña antes de guardarla
+      const hashedPassword = await hashPassword(userInfo.user_password);
+      const updatedUserInfo = { ...userInfo, user_password: hashedPassword, confirmar_contrasena: hashedPassword };
+
+      const decoded = jwtDecode(token);
+      const response = await Api.put(`/usuario/actualizar/${decoded.id}`, updatedUserInfo, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Datos actualizados!',
+          text: 'Los datos del usuario se han actualizado correctamente.'
+        }).then(() => {
+          // Limpiar el token y redirigir al inicio
+          localStorage.removeItem('token');
+          handleNavigate('/');
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Hubo un problema al actualizar los datos del usuario.'
+        });
+      }
+    } catch (error) {
+      console.error('Error al actualizar la información del usuario:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Hubo un problema al actualizar los datos del usuario.'
+      });
+    }
   };
 
   return (
@@ -102,36 +135,14 @@ const UserProfile = () => {
       <div className="container py-5">
         <div className="card shadow">
           <div className="card-body">
-            <div className="text-center mb-4">
-              <div className="mb-3">
-                {userInfo.photo ? (
-                  <img src={userInfo.photo} alt="Perfil" className="rounded-circle profile-picture" />
-                ) : (
-                  <div className="upload-icon">
-                    <label htmlFor="photo-upload" className="upload-label">
-                      <i className="fas fa-camera"></i>
-                    </label>
-                    <input
-                      type="file"
-                      id="photo-upload"
-                      accept="image/*"
-                      onChange={handlePhotoChange}
-                      style={{ display: "none" }}
-                    />
-                  </div>
-                )}
-              </div>
-              <h2 className="card-title mb-0">Perfil de Usuario</h2>
-              <p className="text-muted">{userInfo.rol}</p>
-            </div>
+            <h2 className="card-title mb-0">Perfil de Usuario</h2>
             <div className="mb-3">
               <label className="form-label">Nombre</label>
               <input
                 type="text"
                 className="form-control form-empty"
-                value={userInfo.displayName}
-                onChange={(e) => setUserInfo({ ...userInfo, displayName: e.target.value })}
-                disabled={!editingInfo}
+                value={userInfo.nombre}
+                onChange={(e) => setUserInfo({ ...userInfo, nombre: e.target.value })}
               />
             </div>
             <div className="mb-3">
@@ -141,7 +152,6 @@ const UserProfile = () => {
                 className="form-control form-empty"
                 value={userInfo.apellido}
                 onChange={(e) => setUserInfo({ ...userInfo, apellido: e.target.value })}
-                disabled={!editingInfo}
               />
             </div>
             <div className="mb-3">
@@ -151,7 +161,6 @@ const UserProfile = () => {
                 className="form-control form-empty"
                 value={userInfo.telefono}
                 onChange={(e) => setUserInfo({ ...userInfo, telefono: e.target.value })}
-                disabled={!editingInfo}
               />
             </div>
             <div className="mb-3">
@@ -159,52 +168,60 @@ const UserProfile = () => {
               <input
                 type="email"
                 className="form-control form-empty"
-                value={userInfo.email}
-                onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
-                disabled={!editingInfo}
+                value={userInfo.correo_electronico}
+                onChange={(e) => setUserInfo({ ...userInfo, correo_electronico: e.target.value })}
               />
             </div>
-            {editingPassword && (
-              <>
-                <div className="mb-3">
-                  <label className="form-label">Nueva Contraseña</label>
-                  <input
-                    type="password"
-                    className="form-control form-empty"
-                    value={userInfo.newPassword}
-                    onChange={(e) => setUserInfo({ ...userInfo, newPassword: e.target.value })}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Confirmar Contraseña</label>
-                  <input
-                    type="password"
-                    className="form-control form-empty"
-                    value={userInfo.confirmPassword}
-                    onChange={(e) => setUserInfo({ ...userInfo, confirmPassword: e.target.value })}
-                  />
-                </div>
-              </>
-            )}
             <div className="mb-3">
-              {editingInfo ? (
-                <button className="btn btn-primary me-2" onClick={handleSaveInfo}>
-                  Guardar Información
-                </button>
-              ) : (
-                <button className="btn btn-outline-primary me-2" onClick={() => setEditingInfo(true)}>
-                  Editar Información
-                </button>
-              )}
-              {editingPassword ? (
-                <button className="btn btn-primary me-2" onClick={handleSavePassword}>
-                  Guardar Contraseña
-                </button>
-              ) : (
-                <button className="btn btn-outline-primary me-2" onClick={() => setEditingPassword(true)}>
-                  Cambiar Contraseña
-                </button>
-              )}
+              <label className="form-label">Tipo de Documento</label>
+              <input
+                type="text"
+                className="form-control"
+                value={userInfo.tipo_documento}
+                readOnly
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Rol</label>
+              <input
+                type="text"
+                className="form-control"
+                value={userInfo.rol}
+                readOnly
+              />
+            </div>
+    
+            <div className="mb-3">
+              <label className="form-label">Número de Documentos</label>
+              <input
+                type="text"
+                className="form-control"
+                value={userInfo.numero_documentos}
+                readOnly
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Contraseña</label>
+              <input
+                type="password"
+                className="form-control form-empty"
+                value={userInfo.user_password}
+                onChange={(e) => setUserInfo({ ...userInfo, user_password: e.target.value })}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Confirmar Contraseña</label>
+              <input
+                type="password"
+                className="form-control form-empty"
+                value={userInfo.confirmar_contrasena}
+                onChange={(e) => setUserInfo({ ...userInfo, confirmar_contrasena: e.target.value })}
+              />
+            </div>
+            <div className="mb-3">
+              <button className="btn btn-primary me-2" onClick={handleSaveInfo}>
+                Guardar Información
+              </button>
               <button className="btn btn-danger" onClick={handleLogout}>
                 Cerrar Sesión
               </button>
@@ -216,4 +233,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default UserProfile
