@@ -3,7 +3,7 @@ import Api from "../services/Api";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import "../style/usuarios.css";
+import "../style/fincas.css";
 import Sweet from "../helpers/Sweet";
 import EncryptionComponent from "../components/crypt/criptar.jsx";
 import bcrypt from "bcryptjs";
