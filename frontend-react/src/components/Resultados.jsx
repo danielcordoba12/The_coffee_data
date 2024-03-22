@@ -989,17 +989,29 @@ useEffect(() => {
                     </button>
                     : '' : ''}
                   </td>
-                  {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
+                  {/* {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ?  */}
                   <td>
+                  {task.estado === 1 ? (
+
                     <button className="btn-reg-mue"
                       onClick={() => {
                         toggleModal(2);
                         buscarResultado(task.id);
                       }}
                       >
-                    Editar</button>
+                    Editar
+                    </button>
+                      ) : (
+                    <button
+                      className="btn-desactivar"
+                      // onClick={() => {desactivarMuestra(task.analisis_id,task.id)}}
+                    >
+                     No diponble
+                    </button>
+                                )}  
+
                   </td>
-                  : '' : ''}
+                  {/* : '' : ''} */}
 
                   <td>
                     <button

@@ -653,7 +653,7 @@ const generarInputs3 = () => {
                                     {task.estado === 0 ? (
                                         <button
                                         className="btn-activar"
-                                        onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
+                                        // onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
                                         >
                                         Finalizado
                                         </button>
@@ -669,13 +669,15 @@ const generarInputs3 = () => {
                                             
                                         )}     
                                     </td>                                    
-                                    {user.user ? user.user.rol == 'administrador' ?
+                                    {/* {user.user ? user.user.rol == 'administrador' ? */}
                                             <td className="btn-container">
                                                 <FontAwesomeIcon
                                                     icon= {faFilePdf}
                                                     className="btn-pdf rounded-3"
                                                     
                                                 />
+                                    {task.estado === 1 ? (
+
                                                 <button
                                                     type="button"
                                                     className="btn-actualizar-mod rounded-3"
@@ -683,8 +685,13 @@ const generarInputs3 = () => {
                                                 >
                                                     Modificar
                                                 </button>
+                                        ) : (
+                                            ""
+
+                                        )}     
+                                            
                                             </td>
-                                            : '' : ''}
+                                            {/* : '' : ''} */}
                                 </tr>
                             )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
                         </tbody>
@@ -925,17 +932,19 @@ const generarInputs3 = () => {
                                         )}  
                                     </td>
 
-                                    {user.user ? user.user.rol == 'administrador' ? 
+                                    {/* {user.user ? user.user.rol == 'administrador' ?  */}
+                                    
                                     <td>
+                                        
                                         <button
                                             type="button"
                                             className="btn-actualizar-mod rounded-3"
                                             onClick={() => openModal(task.id_analisis)}
                                         >
-                                            Modificar
+                                            Modifcar
                                         </button>
                                     </td>
-                                    : '' : ''}
+                                    {/* : '' : ''} */}
                                 </tr>
                             )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
                         </tbody>
