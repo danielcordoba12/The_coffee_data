@@ -532,13 +532,14 @@ const FincaView = (user) => {
 
 
             <div className="container-listado">
-                <div className="container-fluid w-full">
-                    <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+                <div className="container-fluid w-100">
+                    <table className="table table-hover rounded-3 display responsive nowrap shadow"
                         ref={tableRef}
                         cellPadding={0}
                         width="100%"
                         style={
                             {
+                                overflow : "visible !important",
                                 width: "100%",
                                 maxWidth: "100%"
                             }
@@ -547,16 +548,14 @@ const FincaView = (user) => {
 
                         <thead>
                             <tr className="bg-gray-200">
-                                <th>id</th>
-                                <th>Fecha Creación</th>
-                                <th>Nombre</th>
-                                <th>Longitud</th>
-                                <th>Latitud</th>
-                                <th>usuario</th>
-                                <th>municipio</th>
-                                <th>Estado</th>
-                                <th>Nombre Vereda</th>
-                                <th>opciones</th>
+                                <th className="text-muted">id</th>
+                                <th className="text-muted">Fecha Creación</th>
+                                <th className="text-muted">Nombre</th>                        
+                                <th className="text-muted">usuario</th>
+                                <th className="text-muted">municipio</th>
+                                <th className="text-muted">Estado</th>
+                                <th className="text-muted">Nombre Vereda</th>
+                                <th className="text-muted">opciones</th>
                             </tr>
                         </thead>
 
@@ -569,14 +568,12 @@ const FincaView = (user) => {
                                 .map((task) => (
                                     <tr key={task.id} className="border-t">
                                         <td className="td-id">{task.id}</td>
-                                        <td>{formatDate(task.fecha_creacion)}</td>
-                                        <td>{task.nombre}</td>
-                                        <td>{task.longitud}</td>
-                                        <td>{task.latitud}</td>
-                                        <td>{task.nombre_usuario}</td>
-                                        <td>{task.nombre_municipio}</td>
-                                        <td>{task.estado === 1 ? "Activo" : "Desactivado"}</td>
-                                        <td>{task.noombre_vereda}</td>
+                                        <td className="text-muted">{formatDate(task.fecha_creacion)}</td>
+                                        <td className="text-muted">{task.nombre}</td>
+                                        <td className="text-muted">{task.nombre_usuario}</td>
+                                        <td className="text-muted">{task.nombre_municipio}</td>
+                                        <td className="text-muted">{task.estado === 1 ? "Activo" : "Desactivado"}</td>
+                                        <td className="text-muted">{task.noombre_vereda}</td>
                                         <td>
                                             <div className="btn-group">
                                                 {user.user ? user.user.rol == 'administrador' ?
@@ -642,7 +639,7 @@ const FincaView = (user) => {
                                             style={
                                                 {
                                                     width: "100%",
-                                                    maxWidth: "100%"
+                                                    maxWidth: "95%"
                                                 }
                                             }
                                         >
@@ -733,32 +730,7 @@ const FincaView = (user) => {
                                 onChange={(e) =>
                                     setModalFinca({ ...modalFinca, nombre: e.target.value })
                                 }
-                            /></div>
-                        <div>
-                            <label className="labeledit" htmlFor="longitud">longitud</label>
-                            <input
-                                className="input-field"
-                                label="longitud"
-                                id="longitud"
-                                type="text"
-
-                                value={modalFinca.longitud}
-                                onChange={(e) =>
-                                    setModalFinca({ ...modalFinca, longitud: e.target.value })
-                                }
-                            /></div>
-                        <div>
-                            <label className="labeledit" htmlFor="latitud">latitud</label>
-                            <input
-                                className="input-field"
-                                id="latitud"
-                                type="text"
-
-                                value={modalFinca.latitud}
-                                onChange={(e) =>
-                                    setModalFinca({ ...modalFinca, latitud: e.target.value })
-                                }
-                            /></div>
+                            /></div>    
                         <div>
 
                             <input

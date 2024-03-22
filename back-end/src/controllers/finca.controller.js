@@ -154,16 +154,6 @@ export const guardarFinca = async (req, res) => {
           "opciones": opcionesMunicipios,
           "referencia": "el municipio"
         }
-      },
-      "float": {
-        "latitud": {
-          "value": req.body.latitud,
-          "referencia": "La latitud"
-        },
-        "longitud": {
-          "value": req.body.longitud,
-          "referencia": "la longitud"
-        }
       }
 
     }
@@ -251,16 +241,6 @@ export const actualizarFinca = async (req, res) => {
           "value": req.body.municipios_id,
           "opciones": opcionesMunicipios,
           "referencia": "el municipio"
-        }
-      },
-      "float": {
-        "latitud": {
-          "value": req.body.latitud,
-          "referencia": "La latitud"
-        },
-        "longitud": {
-          "value": req.body.longitud,
-          "referencia": "la longitud"
         }
       }
     };

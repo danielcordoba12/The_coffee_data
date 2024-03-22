@@ -24,6 +24,7 @@
     width: 100%;
     max-width: 100%;
     background-color: gainsboro;
+    overflow: auto;
 }
 .container-outlet {
     display: flex;

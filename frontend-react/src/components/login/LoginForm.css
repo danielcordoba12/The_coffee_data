@@ -1,110 +1,253 @@
 /* Estilos para el contenedor principal */
 .background-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    /* background-color: #0B2E4b; */
-    align-items: center;
-  }
-  .nombrelogo{
-    margin-top: 30px;
-  }
-  /* Estilos para la imagen de fondo */
-  .fondo2 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ajusta la imagen al contenedor */
-    filter: blur(2px);
-  }
-  
-  /* Estilos para el contenedor del formulario */
-  .centro {
-    width: 400px; /* Se redujo el ancho del contenedor */
-    height: 500px; /* Se redujo la altura del contenedor */
-    background-color: rgb(255, 255, 255); /* Fondo semi-transparente (más claro que el blanco) */
-    padding: 30px; /* Se redujo el padding */
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    border: #0B2E4b solid 1px;
-  }
-  
-  /* Estilos para el formulario */
-  .form-box {
-    max-width: 300px; /* Se redujo el ancho máximo del formulario */
-    margin: 0 auto;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  /* background-color: #0B2E4b; */
+  align-items: center;
+}
+
+.nombrelogo {
+  margin-top: 30px;
+}
+
+/* Estilos para la imagen de fondo */
+.fondo2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Ajusta la imagen al contenedor */
+  /* filter: blur(2px); */
+}
+
+/* Estilos para el contenedor del formulario */
+.centro {
+  width: 320px;
+  max-height: 420px;
+  /* Se redujo el ancho del contenedor */
+  background-color: rgb(255, 255, 255);
+  /* Fondo semi-transparente (más claro que el blanco) */
+  padding: 20px;
+  /* Se redujo el padding */
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  /* Sombra suave */
+  border: #0B2E4b solid 1px;
+  margin: 0 auto;
+  margin-top: 130px;
+}
+.title-ini{
+  font-size: 24px; /* Tamaño de la fuente */
+    font-weight: bold; /* Grosor de la fuente */
+    color: #333; /* Color del texto */
+    margin-bottom: 20px; /* Margen inferior */
     text-align: center;
-  }
-  
-  /* Estilos para las etiquetas y campos de entrada */
-  .input-box {
-    margin-bottom: 30px; /* Se redujo el margen inferior */
-    margin-top: 30px; /* Se redujo el margen superior */
-  }
-  
-  .input-box label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    text-align: left;
-    color: #0B2E4b;
-  }
-  
-  .input-box input {
-    margin-top: 20px;
-    width: 100%;
-    height: 35px;
-    padding: 10px; /* Se redujo el padding */
-    border: none; /* Eliminar todos los bordes */
-    border-bottom: 1px solid #8d6e63; /* Agregar borde solo en la parte inferior (marrón claro) */
-    border-radius: 5px;
-    font-size: 14px; /* Se redujo el tamaño de la fuente */
-    transition: border-bottom-color 0.3s ease; /* Transición suave para el cambio de color del borde inferior */
-  }
-  
-  .input-box input:hover {
-    border-bottom-color: #6d4c41; /* Cambiar el color del borde inferior al pasar el ratón (marrón más oscuro) */
-  }
-  
-  /* Estilos para el botón de enviar */
-  .btn-submit {
-    display: inline-block;
-    padding: 10px 20px; /* Se redujo el padding */
-    background-color: #0B2E4b; /* Marrón */
-    border: 0.5px solid black;
-    color: white;
-    border-radius: 5px;
-    font-size: 14px; /* Se redujo el tamaño de la fuente */
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    letter-spacing: 1px; /* Ajusta el espaciado entre letras */
-  }
-  
-  .btn-submit:hover {
-    background-color: white; /* Marrón más oscuro al pasar el ratón */
-    color: #0B2E4b;
-  }
-  
-  /* Estilos para los mensajes de error */
-  .error-message {
-    color: #b31312; /* Rojo oscuro */
-    margin-top: -10px;
-    font-size: 1.1em; /* Se redujo el tamaño de la fuente */
-  }
-  
-  /* Estilos para el botón de cerrar */
-  .icon-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Estilos para el formulario */
+.wrapper {
+  position: relative;
+}
+
+.form-box {
+  position: relative;
+  max-width: 300px; /* Cambia este valor según el tamaño deseado */
+  margin: 0 auto; /* Ajustar este valor según la altura de la barra del título */
+}
+
+/* Otros estilos para el formulario según sea necesario */
+
+
+/* Estilos para las etiquetas y campos de entrada */
+.input-box {
+  margin-bottom: 30px;
+  /* Se redujo el margen inferior */
+  margin-top: 30px;
+  /* Se redujo el margen superior */
+}
+
+.input-box label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-align: left;
+  color: #0B2E4b;
+}
+
+.input-box input {
+  margin-top: 20px;
+  width: 100%;
+  height: 35px;
+  padding: 10px;
+  /* Se redujo el padding */
+  border: none;
+  /* Eliminar todos los bordes */
+  border-bottom: 1px solid #8d6e63;
+  /* Agregar borde solo en la parte inferior (marrón claro) */
+  border-radius: 5px;
+  font-size: 14px;
+  /* Se redujo el tamaño de la fuente */
+  transition: border-bottom-color 0.3s ease;
+  /* Transición suave para el cambio de color del borde inferior */
+}
+
+.input-box input:hover {
+  border-bottom-color: #6d4c41;
+  /* Cambiar el color del borde inferior al pasar el ratón (marrón más oscuro) */
+}
+
+/* Estilos para el botón de enviar */
+.btn-submit {
+  display: inline-block;
+  padding: 10px 20px;
+  /* Se redujo el padding */
+  background-color: #0B2E4b;
+  /* Marrón */
+  border: 0.5px solid black;
+  color: white;
+  border-radius: 5px;
+  font-size: 14px;
+  /* Se redujo el tamaño de la fuente */
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  letter-spacing: 1px;
+  /* Ajusta el espaciado entre letras */
+}
+
+.btn-submit:hover {
+  background-color: white;
+  /* Marrón más oscuro al pasar el ratón */
+  color: #0B2E4b;
+}
+
+/* Estilos para los mensajes de error */
+.error-message {
+  color: #b31312;
+  /* Rojo oscuro */
+  margin-top: -10px;
+  font-size: 1.1em;
+  /* Se redujo el tamaño de la fuente */
+}
+
+/* Estilos para el botón de cerrar */
+.icon-close {
+  color: rgb(20, 65, 107);
+  position: absolute;
+  top: -90px;
+  right: -20px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 4px;
+  z-index: 99;
+}
+
+
+.btn-iniciar-sesion {
+  background: #f9f9f9;
+  color: #575756;
+  font-size: 1em;
+  font-family: 'Source Sans Pro';
+  line-height: 1.44em;
+  border: none;
+  border-radius: 3px;
+  padding: 0px 20px;
+  box-shadow: 0 0 1px #fff;
+  bottom: 50px;
+  transition: all 0.2s;
+  font-weight: bold;
+}
+
+.content-header {
+  top: 0;
+  padding: 0 80px;
+  width: 100%;
+  padding: 0 50px;
+  position: fixed;
+  display: block;
+  z-index: 200;
+  background: linear-gradient(to bottom, #fff 90px, rgb(77, 146, 20) 1px, rgb(77, 146, 20));
+  box-sizing: border-box;
+  box-shadow: 0px 0px 2px rgb(121, 121, 121);
+  -webkit-box-shadow: 0px 0px 2px rgb(121, 121, 121);
+}
+
+.limiter-width-page {
+  max-width: 1920px;
+  margin: auto;
+}
+
+.header-page {
+  width: 100%;
+  height: 90px;
+  z-index: 200;
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    "logo empresa_logo empresa_nombre";
+}
+
+.header-page>.header-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 80px;
+  grid-area: logo;
+}
+
+.header-page .header-logo>img {
+  display: block;
+  height: 70%;
+  margin-right: auto;
+}
+
+.header-page .empresa-logo {
+  margin: 10px;
+  height: 60px;
+  grid-area: empresa_nombre;
+}
+
+.header-page .empresa-logo>img {
+  display: block;
+  height: 90%;
+  margin-left: auto;
+}
+
+.header-page>.empresa-nombre {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-page>.right-logo {
+  height: 80px;
+  grid-area: empresa_logo;
+}
+
+.header-page>.right-logo img {
+  margin: 0 auto;
+  height: 90%;
+  display: block;
+  width: 40%;
+}
+
+.menu-visible {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Api from "../services/Api";
 import Sweet from "../helpers/Sweet";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../style/analisis.css';
 import esES from "../languages/es-ES.json"
 import $ from "jquery";
@@ -9,12 +10,12 @@ import "bootstrap";
 import "datatables.net";
 import "datatables.net-bs5";
 import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable'
-
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
 import { Alert } from "bootstrap";
-
+import {
+    faFilePdf
+  } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -667,17 +668,23 @@ const generarInputs3 = () => {
                                         </button>
                                             
                                         )}     
-                                    </td>                                    {user.user ? user.user.rol == 'administrador' ? 
-                                    <td>
-                                        <button
-                                            type="button"
-                                            className="btn-actualizar-mod rounded-3"
-                                            onClick={() => openModal(task.id_analisis)}
-                                        >
-                                            Modificar
-                                        </button>
-                                    </td>
-                                    : '' : ''}
+                                    </td>                                    
+                                    {user.user ? user.user.rol == 'administrador' ?
+                                            <td className="btn-container">
+                                                <FontAwesomeIcon
+                                                    icon= {faFilePdf}
+                                                    className="btn-pdf rounded-3"
+                                                    
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className="btn-actualizar-mod rounded-3"
+                                                    onClick={() => openModal(task.id_analisis)}
+                                                >
+                                                    Modificar
+                                                </button>
+                                            </td>
+                                            : '' : ''}
                                 </tr>
                             )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
                         </tbody>
