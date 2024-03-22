@@ -329,7 +329,7 @@ const ListarUsuarios = () => {
       <div className="tablalistar">
         <table
           style={{ width: "100%" }}
-          className=" table table-stripped  border display reponsive nowrap b-4 bg-white"
+          className=" table table-hover rounded-3 overflow-hidden display responsive nowrap shadow"
           ref={tableRef}
         >
           <thead>
@@ -357,7 +357,7 @@ const ListarUsuarios = () => {
                 <td>
                   <button
                     type="button"
-                    className="btn-actualizar-mod"
+                    className="btn-actualizar-mod mx-2"
                     onClick={() => {
                       setFormStatus(2),
                         setRegistrarUsuarioModalOpen(true),
@@ -383,194 +383,214 @@ const ListarUsuarios = () => {
       </div>
 
       {isRegistrarUsuarioModalOpen && (
-        <>
-          <div className="overlay-u" onClick={closeRegistrarUsuarioModal}></div>
-          <div className="tabla-regis-finca">
-            <h1 className="titleRegistrarUser">Usuario</h1>
-            <form
-              className="contenido-regi"
-              onSubmit={(e) => {
-                handleSubmit(
-                  e,
-                  formStatus,
-                  userUpdate[0] ? userUpdate[0].id : ""
-                );
-              }}
-            >
-              <div className="div-input">
-                <input
-                  defaultValue={userUpdate[0] ? userUpdate[0].nombre : ""}
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  ref={nombre}
-                  placeholder=""
-                  className="form-empty"
-                />
-                <label htmlFor="nombre">Nombre</label>
-                <div className="invalid-feedback is-invalid">
-                  Nombre Incorrecto
-                </div>
-              </div>
-              <div className="div-input">
-                <input
-                  defaultValue={userUpdate[0] ? userUpdate[0].apellido : ""}
-                  type="text"
-                  id="apellido"
-                  name="apellido"
-                  ref={apellido}
-                  placeholder=""
-                  className="form-empty"
-                />
-                <label htmlFor="apellido">Apellido</label>
-                <div className="invalid-feedback is-invalid">
-                  apellido Incorrecto
-                </div>
-              </div>
-              <div className="div-input">
-                <input
-                  defaultValue={
-                    userUpdate[0] ? userUpdate[0].numero_documentos : ""
-                  }
-                  type="number"
-                  id="numero_documentos"
-                  name="numero_documentos"
-                  ref={numero_documentos}
-                  placeholder=""
-                  className="form-empty"
-                />
-                <label htmlFor="numero_documentos">Número de documentos</label>
-                <div className="invalid-feedback is-invalid">
-                  Número Incorrecto
-                </div>
-              </div>
-              <div className="div-input">
-                <input
-                  defaultValue={userUpdate[0] ? userUpdate[0].telefono : ""}
-                  type="text"
-                  id="telefono"
-                  name="telefono"
-                  ref={telefono}
-                  placeholder=""
-                  className="form-empty"
-                />
-                <label htmlFor="telefono">Teléfono</label>
-                <div className="invalid-feedback is-invalid">
-                  Telefono Incorrecto
-                </div>
-              </div>
-              <div className="div-input">
-                <input
-                  defaultValue={
-                    userUpdate[0] ? userUpdate[0].correo_electronico : ""
-                  }
-                  type="text"
-                  id="correo_electronico"
-                  name="correo_electronico"
-                  ref={correo_electronico}
-                  placeholder=""
-                  className="form-empty"
-                />
-                <label htmlFor="correo_electronico">Correo Electrónico</label>
-                <div className="invalid-feedback is-invalid">
-                  correo Incorrecto
-                </div>
-              </div>
-              {formStatus === 1 ? (
-                <div className="div-input">
-                  <input
-                    type="password"
-                    id="user_password"
-                    name="user_password"
-                    ref={user_password}
-                    placeholder=""
-                    className="form-empty"
-                  />
-                  <label htmlFor="user_password">Contraseña</label>
-                </div>
-              ) : (
-                <>
-                  <div className="dnone">
-                    <input
-                      type="password"
-                      id="user_password"
-                      name="user_password"
-                      ref={user_password}
-                      placeholder=""
-                      className=""
-                    />
-                    <label htmlFor="user_password">Contraseña</label>
-                  </div>
-                </>
-              )}
-              <div className="div-input">
-                <input
-                  defaultValue={
-                    userUpdate[0] ? userUpdate[0].tipo_documento : ""
-                  }
-                  type="text"
-                  id="tipo_documento"
-                  name="tipo_documento"
-                  ref={tipo_documento}
-                  placeholder=""
-                  className="form-empty"
-                />
-                <label htmlFor="tipo_documento">Tipo de Documento</label>
-                <div className="invalid-feedback is-invalid">
-                  Tipo de Documento Incorrecto
-                </div>
-              </div>
-              <div className="div-input">
-                <input
-                  defaultValue={userUpdate[0] ? userUpdate[0].rol : ""}
-                  type="text"
-                  id="rol"
-                  name="rol"
-                  ref={rol}
-                  placeholder=""
-                  className="form-empty"
-                />
-                <label htmlFor="rol">Rol</label>
-                <div className="invalid-feedback is-invalid">
-                  Rol Incorrecto
-                </div>
-              </div>
-              <div className="div-input">
-                <input
-                  defaultValue={userUpdate[0] ? userUpdate[0].cargo : ""}
-                  type="text"
-                  id="cargo"
-                  name="cargo"
-                  ref={cargo}
-                  placeholder=""
-                  className="form-empty"
-                />
-                <label htmlFor="cargo">Cargo</label>
-                <div className="invalid-feedback is-invalid">
-                  Cargo Incorrecto
-                </div>
-              </div>
-              {formStatus === 1 ? (
-                <button className="btn-regis-u" type="submit">
-                  Registrar
-                </button>
-              ) : formStatus === 2 ? (
-                <button className="btn-blue" type="submit">
-                  Actualizar
-                </button>
-              ) : (
-                ""
-              )}
-              <button
-                className="close-modal-x"
-                onClick={closeRegistrarUsuarioModal}
-              >
-                X
-              </button>
-            </form>
+  <>
+    <div className="overlay-u" onClick={closeRegistrarUsuarioModal}></div>
+    <div className="tabla-regis-finca">
+      <h1 className="titleRegistrarUser">Usuario</h1>
+      <form
+        className="contenido-regi"
+        onSubmit={(e) => {
+          handleSubmit(
+            e,
+            formStatus,
+            userUpdate[0] ? userUpdate[0].id : ""
+          );
+        }}
+      >
+        <div className="div-input">
+          <input
+            defaultValue={userUpdate[0] ? userUpdate[0].nombre : ""}
+            type="text"
+            id="nombre"
+            name="nombre"
+            ref={nombre}
+            placeholder=""
+            className="form-empty"
+            required
+          />
+          <label htmlFor="nombre">Nombre</label>
+          <div className="invalid-feedback is-invalid">
+            Por favor ingrese un nombre válido.
           </div>
-        </>
-      )}
+        </div>
+        <div className="div-input">
+          <input
+            defaultValue={userUpdate[0] ? userUpdate[0].apellido : ""}
+            type="text"
+            id="apellido"
+            name="apellido"
+            ref={apellido}
+            placeholder=""
+            className="form-empty"
+            required
+          />
+          <label htmlFor="apellido">Apellido</label>
+          <div className="invalid-feedback is-invalid">
+            Por favor ingrese un apellido válido.
+          </div>
+        </div>
+        <div className="div-input">
+          <input
+            defaultValue={
+              userUpdate[0] ? userUpdate[0].numero_documentos : ""
+            }
+            type="number"
+            id="numero_documentos"
+            name="numero_documentos"
+            ref={numero_documentos}
+            placeholder=""
+            className="form-empty"
+            required
+          />
+          <label htmlFor="numero_documentos">Número de documentos</label>
+          <div className="invalid-feedback is-invalid">
+            Por favor ingrese un número de documento válido.
+          </div>
+        </div>
+        <div className="div-input">
+          <input
+            defaultValue={userUpdate[0] ? userUpdate[0].telefono : ""}
+            type="text"
+            id="telefono"
+            name="telefono"
+            ref={telefono}
+            placeholder=""
+            className="form-empty"
+            required
+          />
+          <label htmlFor="telefono">Teléfono</label>
+          <div className="invalid-feedback is-invalid">
+            Por favor ingrese un número de teléfono válido.
+          </div>
+        </div>
+        <div className="div-input">
+          <input
+            defaultValue={
+              userUpdate[0] ? userUpdate[0].correo_electronico : ""
+            }
+            type="text"
+            id="correo_electronico"
+            name="correo_electronico"
+            ref={correo_electronico}
+            placeholder=""
+            className="form-empty"
+            required
+          />
+          <label htmlFor="correo_electronico">Correo Electrónico</label>
+          <div className="invalid-feedback is-invalid">
+            Por favor ingrese un correo electrónico válido.
+          </div>
+        </div>
+        {formStatus === 1 ? (
+          <div className="div-input">
+            <input
+              type="password"
+              id="user_password"
+              name="user_password"
+              ref={user_password}
+              placeholder=""
+              className="form-empty"
+              required
+            />
+            <label htmlFor="user_password">Contraseña</label>
+            <div className="invalid-feedback is-invalid">
+              Por favor ingrese una contraseña válida.
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="dnone">
+              <input
+                type="password"
+                id="user_password"
+                name="user_password"
+                ref={user_password}
+                placeholder=""
+                className=""
+              />
+              <label htmlFor="user_password">Contraseña</label>
+            </div>
+          </>
+        )}
+        <div className="div-input">
+          <select
+            className="input-register-us"
+            id="tipo_documento"
+            name="tipo_documento"
+            ref={tipo_documento}
+            required
+          >
+            <option value="" disabled>
+              Seleccione un tipo de documento
+            </option>
+            <option value="tarjeta de identidad">tarjeta de identidad</option>
+            <option value="cedula de ciudadania">cedula de ciudadania</option>
+          </select>
+          <div className="invalid-feedback is-invalid">
+            Por favor seleccione un tipo de documento.
+          </div>
+        </div>
+        <div className="div-input">
+          <select
+            className="input-register-us"
+            id="rol"
+            name="rol"
+            ref={rol}
+            required
+          >
+            <option value="" disabled>
+              Seleccione un rol
+            </option>
+            <option value="administrador">administrador</option>
+            <option value="catador">catador</option>
+            <option value="cafetero">cafetero</option>
+          </select>
+          <div className="invalid-feedback is-invalid">
+            Por favor seleccione un rol.
+          </div>
+        </div>
+        <div className="div-input">
+          <select
+            className="input-register-us"
+            id="cargo"
+            name="cargo"
+            ref={cargo}
+            required
+          >
+            <option value="" disabled>
+              Seleccione un cargo
+            </option>
+            <option value="aprendiz">Aprendiz</option>
+            <option value="instructor">Instructor</option>
+            <option value="usuario">Usuario</option>
+          </select>
+          <div className="invalid-feedback is-invalid">
+            Por favor seleccione un cargo.
+          </div>
+        </div>
+        {formStatus === 1 ? (
+          <button className="btn-regis-u" type="submit">
+            Registrar
+          </button>
+        ) : formStatus === 2 ? (
+          <button className="btn-blue" type="submit">
+            Actualizar
+          </button>
+        ) : (
+          ""
+        )}
+        <button
+          className="close-modal-x"
+          onClick={closeRegistrarUsuarioModal}
+        >
+          X
+        </button>
+      </form>
+    </div>
+  </>
+)}
+
+
 
       {isRegistrarModalOpen && (
         <>

@@ -28,6 +28,7 @@
        height: 70px;
      }
   .tablalistar{
+    margin-top: 75px;
     position: relative;
     left: -26px;
     width: 93%;
@@ -38,9 +39,10 @@
   }
   .titleRegistrarUser{
     position: relative;
-    left: -33px;
     top: -10px;
-    color: #168A45;
+    justify-content: center;
+    align-items: center;
+    color: #808080 ;
     margin-top: 13px;
     font-size: 1.5rem;
     font-weight: bold;
@@ -110,8 +112,22 @@
   }
 
   
+  .input-register-us{
+    
+    left: -20px;
+    top: 0.1px;
+    width: 75%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    background-color: rgb(250, 249, 249);
+    color: rgb(0, 0, 0)
+  }
   
-  
+
   
 .table1 {
     width: 100%;

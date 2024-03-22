@@ -5,7 +5,7 @@ import { pool } from '../database/conexion.js';
 export const validarusuario = async (req, res) => {
     try {
         let { numero_documentos, user_password } = req.body;
-        let sql = `SELECT id, nombre, rol, user_password FROM usuarios WHERE numero_documentos = '${numero_documentos}'`;
+        let sql = `SELECT * FROM usuarios WHERE numero_documentos = '${numero_documentos}'`;
         const [rows] = await pool.query(sql);
 
         if (rows.length > 0) {
@@ -13,8 +13,8 @@ export const validarusuario = async (req, res) => {
             // Compara la contraseña proporcionada con la contraseña almacenada
             if (bcrypt.compareSync(user_password, user.user_password)) {
                 // Si las contraseñas coinciden, genera un token JWT
-                const token = jwt.sign({ id: user.id, nombre: user.nombre, rol: user.rol }, process.env.AUT_SECRET, { expiresIn: 14400 }); // 3600 segundos = 1 hora
-                return res.status(200).json({ token: token, message: "Inicio de sesión exitoso" });
+                const token = jwt.sign({ id: user.id, nombre: user.nombre, rol: user.rol, apellido: user.apellido, telefono: user.telefono, correo_electronico: user.correo_electronico, user_password :user.user_password, numero_documentos: user.numero_documentos, tipo_documento: user.tipo_documento }, process.env.AUT_SECRET, { expiresIn: 14400 }); // 3600 segundos = 1 hora
+                return res.status(200).json({ token: token, message: "Inicio de sesión exitoso", user: user });
             } else {
                 return res.status(401).json({ message: "Contraseña incorrecta" });
             }
@@ -25,6 +25,7 @@ export const validarusuario = async (req, res) => {
         return res.status(500).json({ message: 'Error en el servidor: ' + e });
     }
 };
+
 
 
 export const validartoken = async (req, res, next) => {

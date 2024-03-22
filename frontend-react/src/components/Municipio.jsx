@@ -343,7 +343,7 @@ const Municipio = () => {
                     <div  className="fondo-modal"></div>
                     <div className="table-register-municipio">
                         <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-                            Editar Municipio
+                            Editar
                         </h1>
                         <div className="max-w-xs">
                             <div>
@@ -405,7 +405,7 @@ const Municipio = () => {
                     <div  className="fondo-modal"></div>
                     <div className="table-register-municipio">
                         <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-                            Registrar Municipio
+                            Registrar
                         </h1>
                         <form
                             className="contenido-regi"
@@ -441,7 +441,7 @@ const Municipio = () => {
                                 className="btn-register-municipio"
                                 type="submit"
                             >
-                                Registrar municipio
+                                Registrar
                             </button>
                             <button
                                 className="close-modal-municipio"

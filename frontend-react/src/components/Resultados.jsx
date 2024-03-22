@@ -24,6 +24,8 @@ function Resultado(user) {
   const [resultado,setResultado] = useState([]);
   const [resultadoSellecionado,setResultadoSeleccionado] = useState([])
   const [analisis , setAnalisi] = useState([])
+  const [catador , setCatador] = useState([])
+  const [catadorId , setCatadorId] = useState("")
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
@@ -31,7 +33,6 @@ function Resultado(user) {
   const [cafesId, setCafesId] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [dataSelect, setDataSelect] = useState({});
-
   const [filtro, setFiltro] = useState('');
 
 
@@ -83,7 +84,8 @@ function Resultado(user) {
 
 
   useEffect(()=>{
-    listarResultado()
+    // listarResultado();
+    listarCatador();
   },[]);
 
 
@@ -305,7 +307,7 @@ useEffect(() => {
 
       // const valorInput4 = nuevosDatos[4].valor; // Valor del input 2
 
-
+/////////////DEFECTOS TOTALES////////////////////
       const valorInput7 = nuevosDatos[7].valor;
       const valorInput9 = nuevosDatos[9].valor;
       const valorInput10 = nuevosDatos[10].valor;
@@ -317,20 +319,37 @@ useEffect(() => {
       const defectosTotales = toNumber(valorInput7) + toNumber(valorInput9) + toNumber(valorInput10) + toNumber(valorInput11) + toNumber(valorInput23) + toNumber(valorInput24) + toNumber(valorInput25);
 
       nuevosDatos[3].valor = defectosTotales
-
+///////////////////////////////////////////////////////
 
   
-      // Realiza el cálculo y actualiza el valor del input 5
+//////////////////////////////////////MERMA POR TRILLA///////////////////
       const nuevoValorInput5 = /* Tu cálculo */( valorInput2 *  100) / valorInput1;
+
+
       nuevosDatos[16].valor = nuevoValorInput5 ;
 
+
+/////////////////////////peso total almendra////////////////////////
       const nuevoValorInput6 = /* Tu cálculo */valorInput1 - valorInput2 ;
       nuevosDatos[2].valor = nuevoValorInput6;
 
-
+////////////////////////////////PESO ALMENDRA SANA////////////////////////////////////
       nuevosDatos[4].valor = nuevoValorInput6 - defectosTotales   ;
 
       
+/////////////////////////////////FACTOR DE RENDIMIENTO///////////////////////////
+
+    const almendraSana = nuevosDatos[4].valor
+    const factorRendimiento = (valorInput1 * 70) /  almendraSana;
+    nuevosDatos[18].valor =  factorRendimiento.toFixed(0);
+
+
+///////////////////////////////////////
+
+  const porcentajeDefectos = /* Tu cálculo */( defectosTotales *  100) / valorInput1;
+  nuevosDatos[19].valor = porcentajeDefectos;
+  const PorcentajeAlmendraSana = /* Tu cálculo */( almendraSana *  100) / valorInput1;
+  nuevosDatos[17].valor = PorcentajeAlmendraSana;
 
 
     }
@@ -354,7 +373,6 @@ useEffect(() => {
         i === index ? { ...dato, [field]: value } : dato
         
       );
-      console.log("Nuevo estado:", nuevosDatos);
       return nuevosDatos;
     });
   };
@@ -441,7 +459,7 @@ useEffect(() => {
   ///////////////////////////////////////////////////77Fin de respaldo/////////////////////////////////////////////////////
   const generarInputs = () => {
     const filas = [];
-    const numColumnas = 15;
+    const numColumnas = 10;
     // let cafes_id = dataSelect.cafes_id;
     // console.log("este es cafes_id " + cafes_id);
     // setCafesId(dataSelect.cafes_id)
@@ -493,30 +511,30 @@ useEffect(() => {
   
   
     // Agregar una columna separada para el análisis
-    filas.push(
-      <div className="columna" key="analisis">
-        <div className="container-input div-input-search-select">
-        <input className="input-search-cafe " type="text" id="cafes_id" />
-                        <label htmlFor="cafes_id" className='label-analisis-resultado'>Analisis</label>
-                        <div className="select-options-cafe" 
+    // filas.push(
+    //   <div className="columna" key="analisis">
+    //     <div className="container-input div-input-search-select">
+    //     <input className="input-search-cafe " type="text" id="cafes_id" />
+    //                     <label htmlFor="cafes_id" className='label-analisis-resultado'>Analisis</label>
+    //                     <div className="select-options-cafe" 
 
-                        >
-                            {analisis.length > 0 && analisis
-                            .map((key, index) => (
-                                (
-                                    <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafes_id").value = key.id_analisis;!dataSelect.cafes_id ? dataSelect.cafes_id = {} : "".dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id_analisis}>
+    //                     >
+    //                         {analisis.length > 0 && analisis
+    //                         .map((key, index) => (
+    //                             (
+    //                                 <div className="option-select-cafe" data-id={key.id_analisis } onClick={() => { document.getElementById("cafes_id").value = key.id_analisis;!dataSelect.cafes_id ? dataSelect.cafes_id = {} : "".dataSelect.cafes_id.value = key.id; clearFocusInput("cafes_id") }} key={key.id_analisis}>
                                       
-                                      {key.id_analisis + "," + key.codigo_externo+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
-                                )
-                            ))}
-                        </div>
-                        {
+    //                                   {key.id_analisis + "," + key.codigo_externo+ ", " + key.nombre_usuario + ", "  + key.nombre_tipo_analisis } </div>
+    //                             )
+    //                         ))}
+    //                     </div>
+    //                     {
 
-                        //  console.log("este es cafes_id " + cafes_id )
-                        }
-        </div>
-      </div>
-    );
+    //                     //  console.log("este es cafes_id " + cafes_id )
+    //                     }
+    //     </div>
+    //   </div>
+    // );
   
     return filas;
   };
@@ -526,7 +544,7 @@ useEffect(() => {
   
   const generarInputs2 = () => {
     const filas = [];
-    const numColumnas = 15;
+    const numColumnas = 10;
   
     for (let i = 0; i < resultadoSellecionado.length; i += numColumnas) {
       const fila = resultadoSellecionado.slice(i, i + numColumnas);
@@ -569,7 +587,7 @@ useEffect(() => {
 
   const generarInputs3 = () => {
     const filas = [];
-    const numColumnas = 15;
+    const numColumnas = 10;
 
     for (let i = 0; i < datos.length; i += numColumnas) {
       const fila = datos.slice(i, i + numColumnas);
@@ -609,7 +627,7 @@ useEffect(() => {
   ////////////////////////////////////////////////DATA TABLE//////////////////////////////////////////
 
   useEffect(()=> {
-    if (resultado.length > 0 ) {
+    if (catador.length > 0 ) {
       if($.fn.DataTable.isDataTable(tableRef.current)) {
         $(tableRef.current).DataTable().destroy();
       }
@@ -637,7 +655,7 @@ useEffect(() => {
       });
 
     }
-  },[resultado])
+  },[catador])
 
 
   const GuardarResultados = async () => {
@@ -649,9 +667,8 @@ useEffect(() => {
       const datosConAnalisisId = datos.map((dato) => ({
         ...dato,
         fecha: fechaActual,
-        analisis_id: cafes_id.value
+        analisis_id: catadorId
       }));
-      console.log(typeof localhost);
 
       // setDatos(datosConAnalisisId);
       // const datosValidos = datosConAnalisisId.filter(dato => dato.valor !== null || dato.valor !== undefined);
@@ -671,7 +688,8 @@ useEffect(() => {
         console.log("Resultado del servidor:", result);
         Sweet.registroExitoso();
         hideAllModals()
-        listarResultado();
+        // listarResultado();
+        listarCatador();
 
       }
 
@@ -686,26 +704,34 @@ useEffect(() => {
 
   };
 
-  async function listarResultado(){
-    try{
+  // async function listarResultado(){
+  //   try{
 
-      const response = await fetch(`http://${localhost}:4000/resultado/listar`, {
-        method: "GET",
-        headers: {
-          token: localStorage.getItem("token")
-      }
-      })
-      const data = await response.json();
-      setResultado(data)
-      // return data
-    }catch(e){
-      console.error("Error" + e);
+  //     const response = await fetch(`http://${localhost}:4000/resultado/listar`, {
+  //       method: "GET",
+  //       headers: {
+  //         token: localStorage.getItem("token")
+  //     }
+  //     })
+  //     const data = await response.json();
+  //     setResultado(data)
+  //     // return data
+  //   }catch(e){
+  //     console.error("Error" + e);
+  //   }
+  // }
+  const listarCatador = async () => {
+    try {
+        const response = await Api.get('catador/listar');
+        setCatador(response.data);
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
     }
-  }
+}
 
 
-  function buscarResultado(id,fecha_creacion) {
-    fetch(`http://${localhost}:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion}`,{
+  function buscarResultado(id) {
+    fetch(`http://${localhost}:4000/resultado/buscar/${id}`,{
       headers: {
         'Content-type': 'application/json',
       },
@@ -727,6 +753,7 @@ useEffect(() => {
       });
       // console.log(dato)
   }
+
 
   const actualizarResultado = (id) => {
     // console.log("Respuesta desde el frontend")
@@ -754,7 +781,8 @@ useEffect(() => {
         console.log("Resultado del servidor:", result);
         Sweet.actualizacionExitosa();
         hideAllModals();
-        listarResultado(); 
+        // listarResultado(); 
+        listarCatador();
       })
       .catch((error) => {
         console.error("Error al procesar la solicitud", error);
@@ -784,6 +812,41 @@ useEffect(() => {
     setFiltro(event.target.value.toLowerCase());
     setMostrarOpciones(true);
   };
+
+  const desactivarMuestra = async (analisis,catador) => {
+    Sweet.confimarHabilitar().then(async (result) => {
+        if (result.isConfirmed) {
+
+        try {
+            
+            await Api.patch(`/catador/desactivar/analisis/${catador}/catador/${analisis}`);
+                
+            if(data.status == 200) {
+                Sweet.habilitacionExitosa();
+                buscarUsuarios();
+                closeModalCatador();
+                listarCatador();
+
+
+            }
+
+                if(data.status == 404) {
+                    Sweet.habilitacionFallida(); 
+                }
+            // closeModalEdit();
+
+        } catch (error) {
+            console.error("Error activando el analisis: ", error);
+        }
+    }
+        }).finally(() => {
+          // Esta parte se ejecutará independientemente de si el usuario confirma o cancela
+          listarCatador();
+      });
+
+
+};
+
   // const handleClickOpcion = (cafe) => {
   //   // Actualizamos el filtro con el valor seleccionado
   //   setFiltro(`${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`);
@@ -867,27 +930,21 @@ useEffect(() => {
 
 <div className="main-container">
 <h1 className='title-registrar'>Listar resultados</h1> 
-{user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
-  <button className="btn-reg-mue" onClick={() => setShowModal1(!showModal1)}>
-      Registrar resultado
-  </button>
-  : '' : ''}
+
 
   <div className="container-fluid w-full">
-    <table className=" bg-white table table-stiped table-bordered border display responsive nowrap b-4"
+  <table id="table-d" style={{ width: "100%" }} className="table table-hover rounded-3 overflow-hidden display responsive nowrap shadow" 
         ref={tableRef}
         cellPadding={0}
         width= "100%">
     <thead>
         <tr>
           <th>ID</th>
-          <th>Muestra</th>
-          <th>Cantidad</th>
-          <th>Usuario</th>
-          <th>Finca</th>
-          <th>Lote</th>
-          <th>Tipo analisis</th>
-          <th>Fecha</th>
+          <th>Analisis</th>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>Estado</th>
+          <th>Registrar</th>
           {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
           <th>Actualizar</th>
           : '' : ''}
@@ -897,24 +954,47 @@ useEffect(() => {
         </tr>
       </thead>
       <tbody>
-              {resultado.length > 0 ? resultado
+              {catador.length > 0 ? catador
               .map((task,index) => (
                 <tr key={task.id}>
                   <td>{task.id}</td>
                   {/* <td>{formatDate(task. fecha_creacion)}</td> */}
-                  <td>{task.muestra}</td>
-                  <td>{task.valor}</td>
-                  <td>{task.usuario}</td>
-                  <td>{task.finca}</td>
-                  <td>{task.lote}</td>
-                  <td>{task.tipo_analisis}</td>
-                  <td>{formatDate(task.fecha_creacion)}</td>
+                  <td>{task.analisis_id}</td>
+                  <td>{task.nombre}</td>
+                  <td>{task.apellidos}</td>
+                  <td>
+                        {task.estado === 0 ? (
+                                        <button
+                                        className="btn-activar"
+                                        >
+                                        Finalizado
+                                        </button>
+
+                                        
+                                        ) : (
+                                            <button
+                                            className="btn-desactivar"
+                                            onClick={() => {desactivarMuestra(task.analisis_id,task.id)}}
+                                        >
+                                            Pendiente
+                                        </button>
+                                            
+                                        )}  
+                  </td>
+                  <td>
+                  {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
+                    <button className="btn-reg-mue" onClick={() => {setShowModal1(!showModal1);
+                    setCatadorId(task.id)}}>
+                        Registrar resultado
+                    </button>
+                    : '' : ''}
+                  </td>
                   {user.user ? user.user.rol == 'administrador' || user.user.rol == 'catador' ? 
                   <td>
                     <button className="btn-reg-mue"
                       onClick={() => {
                         toggleModal(2);
-                        buscarResultado(task.analisis_id,convertirFechaSQL( task.fecha_creacion));
+                        buscarResultado(task.id);
                       }}
                       >
                     Editar</button>
@@ -925,7 +1005,7 @@ useEffect(() => {
                     <button
                                   type="button"
                                   className="btn-reg-mue"
-                                  onClick={() => { toggleModal(3), buscarResultado(task.analisis_id,convertirFechaSQL(task.fecha_creacion)) ;} }
+                                  onClick={() => { toggleModal(3); buscarResultado(task.id) ;} }
                               >Mas
                               </button>
                   </td>

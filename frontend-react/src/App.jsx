@@ -66,7 +66,7 @@ function App() {
         <Route path="listar/muestra" element={<ListarMuestra user={dataUser}/>} />
         <Route path="editar/muestra/:id" element={<EditarMestra />} />
         <Route path="grafica" element={<Grafica />} />
-        <Route path="/home" element={<Maquetado />} />
+        {/* <Route path="/home" element={<Maquetado />} /> */}
 
 
 

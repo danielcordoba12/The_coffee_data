@@ -30,6 +30,7 @@ function Dashboard() {
   const [tooltipHovered, setTooltipHovered] = useState(false);
   const [tooltipStates, setTooltipStates] = useState({});
   const [dataUser, setDataUser] = useState("");
+  const [user, setDataUser2] = useState("");
   const [rolAdmin, setRolAdmin] = useState(false);
   const [rolCafetero, setCafetero] = useState(true);
   const menuWidth = menuDesplegado ? "220px" : "65px";
@@ -57,6 +58,7 @@ function Dashboard() {
 
     // console.log("decode token", decodedToken.rol);
     setDataUser(decodedToken);
+    setDataUser2(decodedToken)
     if (decodedToken.rol == "administrador") {
       // console.log("holis", rolCafetero);
       setRolAdmin(true);
@@ -233,12 +235,12 @@ function Dashboard() {
       
               <div className="lista-items">
                 <ul id="listaItemsUl" className="listaItemsUl">
-                <li className="first-icon">
+                {/* <li className="first-icon">
                 <Link to={"/home"}>
                   <FontAwesomeIcon icon={faHouse} className="icon"/>
                     <p id="paragraph">Home</p>
                     </Link>
-                  </li>
+                  </li> */}
 
                   {rolAdmin ? (
                     <li className="first-icon">

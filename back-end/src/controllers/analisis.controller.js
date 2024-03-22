@@ -87,19 +87,23 @@ function validate(data) {
 
 export const guardarAnalisis = async (req, res) => {
 
+    await pool.query('START TRANSACTION')
+
     const [muestras] = await pool.query("SELECT id FROM muestras");
     let opcionesmuestras = [];
     for (let x = 0; x < muestras.length; x++) {
         opcionesmuestras.push(muestras[x]["id"])
     }
 
-    const [usuarios] = await pool.query("SELECT id FROM usuarios");
-    let opcionesusuarios = [];
-    for (let x = 0; x < usuarios.length; x++) {
-        opcionesusuarios.push(usuarios[x]["id"])
-    }
+    // const [usuarios] = await pool.query("SELECT id FROM usuarios");
+    // let opcionesusuarios = [];
+    // for (let x = 0; x < usuarios.length; x++) {
+    //     opcionesusuarios.push(usuarios[x]["id"])
+    // }
 
     try {
+
+
 
         let data = {
 
@@ -109,11 +113,11 @@ export const guardarAnalisis = async (req, res) => {
                     "opciones": opcionesmuestras,
                     "referencia": "la muestra"
                 },
-                "usuarios_id": {
-                    "value": req.body.usuarios_id,
-                    "opciones": opcionesusuarios,
-                    "referencia": "el usuario"
-                }
+                // "usuarios_id": {
+                //     "value": req.body.usuarios_id,
+                //     "opciones": opcionesusuarios,
+                //     "referencia": "el usuario"
+                // }
             }
         }
         let validateInputs = validate(data)
@@ -130,12 +134,31 @@ export const guardarAnalisis = async (req, res) => {
             return res.status(400).json(error1);
         }
         let data1 = req.body;
-        console.log('user', data1);
+        // console.log('este es la info ', data1);
+        
 
-        let sql = 'INSERT INTO analisis(tipo_analisis_id,muestras_id,usuarios_id) VALUES (?,?,?)';
-        const [rows] = await pool.query(sql, [1, data1.muestras_id, data1.usuarios_id]);
+        let sql = 'INSERT INTO analisis(tipo_analisis_id,muestras_id) VALUES (?,?)';
+        const [rows] = await pool.query(sql, [1, data1.muestras_id]);
+        const analisis_id = rows.insertId;
 
-        if (rows.affectedRows > 0) {
+        let rows2 = [];
+
+
+        for (let i = 0; i < data1.usuarios_id.length; i++) {
+            
+            console.log("data",data1.usuarios_id[i].id);
+            console.log("analisis desde el backend", analisis_id);
+            let sql2= 'INSERT INTO catadores(analisis_id, usuarios_id) VALUES (?,?)';
+            const [result] = await pool.query(sql2, [analisis_id, data1.usuarios_id[i].id]); 
+            rows2.push(result);
+            
+        }
+        
+
+
+        await pool.query('COMMIT')
+
+        if (rows.affectedRows > 0 && rows2.every(row => row.affectedRows > 0)) {
             res.status(200).json({
                 "status": 200,
                 "menssage": "Registro de analisis exitoso..!"
@@ -143,13 +166,15 @@ export const guardarAnalisis = async (req, res) => {
 
 
         } else {
+            await pool.query('ROLLBACK');
             res.status(200).json({
                 "status": 401,
                 "menssage": "No se registro"
             });
         }
     } catch (error) {
-        res.status(200).json({
+        await pool.query('ROLLBACK');
+        res.status(500).json({
             "status": 500,
             "menssage": "error en el sevidor" + error
         });
@@ -160,7 +185,7 @@ export const buscaranalisis = async (req, res) => {
     try {
 
         let id = req.params.id;
-        const [result] = await pool.query("select a.id,fecha_analisis,m.consecutivo_informe,calidad,a.estado,tipo_analisis_id,a.muestras_id,usuarios_id FROM analisis a JOIN muestras m ON m.id = a.muestras_id where a.id =" + id);
+        const [result] = await pool.query("select a.id,fecha_analisis,m.consecutivo_informe,calidad,a.estado,tipo_analisis_id,a.muestras_id, u.nombre FROM analisis a JOIN muestras m ON m.id = a.muestras_id JOIN catadores ca ON ca.analisis_id = a.id JOIN usuarios u ON ca.usuarios_id = u.id where a.id =" + id);
         res.status(200).json(result);
     } catch (err) {
         res.status(500).json({
@@ -176,34 +201,44 @@ export const listarAnalisis = async (req, res) => {
         if (req.user.rol != "administrador") {
             where = " WHERE a.usuarios_id = " + req.user.id + " "
         }
-        const sql = `SELECT   
+        const sql = `SELECT
         a.id AS id_analisis,
         m.codigo_externo AS codigo_externo,
-        us.nombre AS nombre_usuario,
         a.fecha_analisis,
-        a.estado,vd.nombre AS nombre_variedades,
-        u.nombre AS propietario,
+        a.estado,
+        vd.nombre AS nombre_variedades,
         f.nombre AS nombre_fincas,
         l.nombre AS nombre_lotes,
-        ta.nombre AS nombre_tipo_analisis
-    FROM   
+        ta.nombre AS nombre_tipo_analisis,
+        SUBSTRING_INDEX(catador, ' ', 1) AS nombre_catador,
+        SUBSTRING_INDEX(catador, ' ', -1) AS apellido_catador,
+        uc.nombre AS propietario
+    FROM
         analisis a
-    JOIN   
+    JOIN
         muestras m ON m.id = a.muestras_id
-    JOIN   
+    JOIN
         cafes c ON c.id = m.cafes_id
-    JOIN   
+    JOIN
         variedades vd ON vd.id = c.variedades_id
-    JOIN   
+    JOIN
         lotes l ON l.id = c.lotes_id
-    JOIN   
+    JOIN
         fincas f ON f.id = l.fincas_id
-    JOIN   
-        usuarios u ON u.id = f.usuarios_id
-    JOIN   
-        usuarios us ON us.id = a.usuarios_id
-    JOIN   
+    JOIN
+        usuarios uc ON uc.id = f.usuarios_id
+    JOIN
         tipos_analisis ta ON ta.id = a.tipo_analisis_id
+    JOIN
+        (
+            SELECT 
+                ca.analisis_id,
+                CONCAT(u.nombre, ' ', u.apellido) AS catador
+            FROM 
+                catadores ca
+            JOIN 
+                usuarios u ON u.id = ca.usuarios_id
+        ) AS catador_table ON catador_table.analisis_id = a.id
         ` + where + `
     GROUP BY   
         a.id;
@@ -211,14 +246,14 @@ export const listarAnalisis = async (req, res) => {
         const [result] = await pool.query(sql);
         if (result.length > 0) {
             res.status(200).json(result);
-          } else {
+        } else {
             res.status(200).json({
-              result : result,
-              status: false,
-              message: "No se encontran analisis."
-            });
-      
-          }
+                result : result,
+                status: false,
+                message: "No se encontran analisis."
+        });
+    
+        }
 
     } catch (err) {
         res.status(500).json({

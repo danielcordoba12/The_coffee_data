@@ -232,7 +232,7 @@ const Variedad = () => {
             <div className="div-modal">
             <div  className="fondo-modal"></div>
             <div className="table-register-variedad">
-                <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar Variedad</h1>
+                <h1 className="text-center font-bold underline text-3xl p-3 m-2">Editar</h1>
                 <div className="max-w-xs">
                     <div>
                     <label className="labeledit" htmlFor="nombre">Nombre</label>
@@ -266,7 +266,7 @@ const Variedad = () => {
             <div  className="fondo-modal"></div>
             <div className="table-register-variedad">
                 <h1 className="text-center font-bold underline text-3xl p-3 m-2">
-                    Registrar Variedad
+                    Registrar
                 </h1>
 
                 <form
@@ -288,7 +288,7 @@ const Variedad = () => {
 
                     
                     <button className="btn-register-variedad"
-                        type="submit">Registrar Variedad</button>
+                        type="submit">Registrar</button>
                     <button
                         className="close-modal-variedad"
                         onClick={closeRegistrarModal}

@@ -210,7 +210,7 @@ option {
   position: relative;
   top: 95px;
   left: 26px;
-  width: 93%;
+  width: 90%;
   height: 1000rem;
   overflow: hidden;
   border-radius: 8px;
@@ -248,6 +248,21 @@ option {
   max-width: 90%;
   height: 500px;
   width: 500px;
+  text-align: center;
+}
+.contRegistrarCatador{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1001;
+  max-height: 95%;
+  max-width: 90%;
+  /* height: 700px; */
+  width: 900px;
   text-align: center;
 }
 
@@ -417,10 +432,26 @@ option {
   border-radius: 4px;
 
 }
+.close-modal-Ana2{
+  position: absolute;
+  /* top: -150px; */
+  /* right: -10px; */
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  color: #168A45;
+  font-size: 36px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 4px;
 
-.input-search-d {
-  color: #808080;
-  background-color: whitesmoke;
+
+}
+
+.input-search-d{
+  background-color: rgb(255, 255, 255);
 }
 
 .div-input-d {
@@ -547,11 +578,95 @@ select {
 
 .contTitle {
   height: 70px !important;
-  position: relative;
-  top: 56px;
-  left: 26px;
-  background-color: white;
-  border-radius: 8px;
-  width: 93%;
+}
+
+
+
+
+
+
+.formulario-resultado-analisis  {
+  /* backdrop-filter: blur(10px); */
+  /* background-color: #fff; */
+  padding: 15px;
+  border-radius: 0px 0px 8px 8px;
+  display: flex;
+  position: absolute;
+  top: 95px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  background-color: rgb(234, 241, 243);
+  /* border-bottom:1px black solid; */
+  justify-content: space-between;
+  max-width: 1030px;
+  width: 100%;
+  height: 69vh;
+  /* margin-left: 25%; ; */
+  /* visibility: hidden; */
+
+
+}
+
+.formulario-resultado-analisis input + .label-actualizar {
+  position: absolute;
+  top: 50%;
+  left: 90px;
+  transform: translateY(-50%);
+  color: black;
+  font-size: 16px;
+  pointer-events: none;
+  transition: transform 0.3s, font-size 0.3s, color 0.3s;
+}
+
+
+
+
+
+
+
+.formulario-resultado-analisis input:focus + label,
+.formulario-resultado-analisis input:not(:placeholder-shown) + label {
+  transform: translateY(-100%) scale(1.2);
+  font-size: 12px;
+  color: black;
+  top: 10px;
+
+  transition: all 0.5s;
+}
+
+.title-registrar-analisis{
+  background-color: rgb(240, 234, 243);
+  color: #168A45;
+  width: 1030px;
+  height: 45px;
+  /* z-index: -1; */
+  position: absolute;
+  /* bottom : 45%; */
+  top: 50px;
+}
+.main-container-analisis {
+  position: relative; /* Asegura que el contenedor padre tenga posición relativa */
+  max-width: 100%;
+  max-height: 90vh; /* Ajusta la altura máxima según sea necesario */
+}
+
+.main-content-analisis {
+  z-index: 12;
+  font-family: Arial, sans-serif;
+  display: flex;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  top: 0;
+
+  /* width: 10000px;
+  height: 100px;
+  background-color: red;
+  top: 0;
+  position: absolute; */
 
 }
