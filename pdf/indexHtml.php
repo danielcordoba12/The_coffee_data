@@ -100,12 +100,12 @@
                 <p>Escuela Nacional de la Calidad del Café</p>
             </td>
             <td colspan="1">
-            <img src="" alt="">
+                <img src="" alt="">
             </td>
         </tr>
         <tr>
             <td>
-            <img src="" alt="">
+                <img src="" alt="">
             </td>
             <td colspan="2">
                 <p>INFORME SERVICIO ANALISIS FISICO SENSORIAL</p>
@@ -140,16 +140,12 @@
         <tr>
             <th>Variedad De Café</th>
             <td>Cenicafé</td>
-        </tr>
-        <tr>
             <th>Altura Del Cultivo (m.s.n.m)</th>
             <td>1530</td>
         </tr>
         <tr>
             <th>Método De Muestreo</th>
             <td>No especifica</td>
-        </tr>
-        <tr>
             <th>Método Para La Preparación De La Muestra</th>
             <td>No especifica</td>
         </tr>
@@ -160,44 +156,36 @@
         <tr>
             <th>Tipo De Molienda</th>
             <td>Media</td>
-        </tr>
-        <tr>
             <th>Tipo De Tostión</th>
             <td>Media</td>
         </tr>
         <tr>
             <th>Tipo De Fermentación</th>
             <td>No especifica</td>
-        </tr>
-        <tr>
             <th>Tiempo De Fermentación</th>
             <td>No especifica</td>
         </tr>
         <tr>
             <th>Densidad De Café Verde (g/L)</th>
             <td>No reporta</td>
-        </tr>
-        <tr>
             <th>Actividad De Agua (Aw)</th>
             <td>No reporta</td>
         </tr>
         <tr>
             <th>Fecha De Procesamiento</th>
             <td>05-07-2023</td>
-        </tr>
-        <tr>
             <th>Tiempo De Secado</th>
             <td>No especifica</td>
         </tr>
         <tr>
             <th>Código de la Muestra</th>
             <td>AFS-40</td>
-        </tr>
-        <tr>
             <th>Presentación</th>
             <td>C.P. S</td>
         </tr>
     </table>
+
+
 
 </body>
 
