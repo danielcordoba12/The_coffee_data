@@ -329,7 +329,7 @@ const ListarUsuarios = () => {
       <div className="tablalistar">
         <table
           style={{ width: "100%" }}
-          className=" table table-stripped  border display reponsive nowrap b-4 bg-white"
+          className=" table table-hover rounded-3 overflow-hidden display responsive nowrap shadow"
           ref={tableRef}
         >
           <thead>
@@ -357,7 +357,7 @@ const ListarUsuarios = () => {
                 <td>
                   <button
                     type="button"
-                    className="btn-actualizar-mod"
+                    className="btn-actualizar-mod mx-2"
                     onClick={() => {
                       setFormStatus(2),
                         setRegistrarUsuarioModalOpen(true),
@@ -514,7 +514,7 @@ const ListarUsuarios = () => {
         )}
         <div className="div-input">
           <select
-            className="input-register"
+            className="input-register-us"
             id="tipo_documento"
             name="tipo_documento"
             ref={tipo_documento}
@@ -532,7 +532,7 @@ const ListarUsuarios = () => {
         </div>
         <div className="div-input">
           <select
-            className="input-register"
+            className="input-register-us"
             id="rol"
             name="rol"
             ref={rol}
@@ -551,7 +551,7 @@ const ListarUsuarios = () => {
         </div>
         <div className="div-input">
           <select
-            className="input-register"
+            className="input-register-us"
             id="cargo"
             name="cargo"
             ref={cargo}
