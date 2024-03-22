@@ -1,7 +1,7 @@
 
 import {Router} from "express";
 
-import {guardarUsuario,listarUsuario,ActivarUsuario,desactivarUsuario,CambioPerfilUsuario,buscarUsuarios,actualizarUsuario} from "../controllers/usuarios.controller.js";
+import {guardarUsuario,listarUsuario,ActivarUsuario,desactivarUsuario,CambioPerfilUsuario,buscarUsuarios,actualizarUsuario,listarcatadores} from "../controllers/usuarios.controller.js";
 import { validatorUsuario } from "../validation/usuario.validator.js";
 import { validartoken } from "../controllers/autenticacion.controller.js";
 
@@ -15,6 +15,7 @@ usuarioRoute.patch("/activar/:id",ActivarUsuario);
 usuarioRoute.patch("/desactivar/:id",desactivarUsuario);
 usuarioRoute.put("/actualizar/:id",actualizarUsuario); 
 usuarioRoute.put("/cambio/:id",CambioPerfilUsuario);
+usuarioRoute.get("/listar/catador",listarcatadores);
 
 
 

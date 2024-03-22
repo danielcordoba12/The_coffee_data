@@ -197,3 +197,24 @@ export const desactivarUsuario = async (req, res) => {
         
     }
 };
+
+export const listarcatadores= async (req, res) => {
+
+    try {     
+        const [result] = await pool.query(`select id,nombre,apellido,tipo_documento , numero_documentos AS Documento,rol from usuarios where rol = 'catador'`);
+        if (result.length > 0) {
+            res.status(200).json(result);
+            } else {
+                res.status(401).json({
+                    result : result,
+                    status: false,
+                    message: "No se encontraron catadores."
+            });
+    
+            }
+    } catch (err) {
+        res.status(500).json({
+            massage: "Error al  listar catadores :" + err
+        });
+    }
+};

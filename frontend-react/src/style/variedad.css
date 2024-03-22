@@ -1,14 +1,16 @@
 .title-variedad {
-  color: #168A45;
-  font: bold;
-  display: flex;
   justify-content: center;
-  margin-top: 0;
+  text-align: left;
+  font-weight: bold;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #168A45;
+  font-size: 1.5rem;
+  top: 25px;
+  left: 20px;
 }
 
-.bgr-v {
-  background-color: rgb(234, 241, 243);
-}
+
 
 /* css de registrar variedad */
 
@@ -113,9 +115,9 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
-  top: 30px;
+  top: -46px;
   /* Ajusta la distancia desde la parte superior */
-  left: 180px;
+  left: 130px;
   /* Ajusta la distancia desde la derecha */
 }
 

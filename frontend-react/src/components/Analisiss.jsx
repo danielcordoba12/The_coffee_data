@@ -2,23 +2,27 @@ import React, { useEffect, useRef, useState } from "react";
 import Api from "../services/Api";
 import Sweet from "../helpers/Sweet";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../style/analisis.css';
 import esES from "../languages/es-ES.json"
 import $ from "jquery";
 import "bootstrap";
 import "datatables.net";
 import "datatables.net-bs5";
-
+import { jsPDF } from "jspdf";
 import "datatables.net-responsive";
 import "datatables.net-responsive-bs5";
 import { Alert } from "bootstrap";
-
+import {
+    faFilePdf
+  } from "@fortawesome/free-solid-svg-icons";
 
 
 
 const Analisis = (user) => {
 
     const [analisis, setAnalisis] = useState([]);
+    const [catadores, setCatadores] = useState([]);
     const [statusSelect, setStatusSelect] = useState({});
     const [key, setKey] = useState(0);
     const [ModalTipoAnalisis, setModalTipoAnalisis] = useState(null);
@@ -28,17 +32,28 @@ const Analisis = (user) => {
     const [selectAnalisisid, setselectAnalisisid] = useState(null);
     const [modalAnalisis, setModalAnalisis] = useState(null);
     const [aRegistrarModalOpen, setaRegistrarModalOpen] = useState(false)
+    const [modalCatador, setModalCatador] = useState(false)
     const [tipos_analisis, settipoAnalisis] = useState([]);
     const [muestras, setMuestra] = useState([]);
     const [tipo_analisis, settipo_analisis] = useState([]);
     const [usuarios, setUsuario] = useState([]);
     const [datasSelect, setDataSelect] = useState({});
+    const [inputValue, setInputValue] = useState('');
+    const [buscarPromedio,setbuscarPromedio] = useState([])
+    const [showModal3, setShowModal3] = useState(false);
+    const [promedio,setPromedio] = useState([])
+    
+
+
+
 
 
     const tipo_analisis_id = useRef();
     const muestras_id = useRef();
     const usuarios_id = useRef();
 
+
+    const [usuariosSeleccionados, setUsuariosSeleccionados] = useState([]);
 
 
     const navigate = useNavigate()
@@ -50,7 +65,40 @@ const Analisis = (user) => {
         buscarUsuarios();
 
     }, []);
-
+    const labelText = [
+        'Peso C.P.S ',
+        'Peso Cisco',
+        'Peso total de la almendra',
+        'Peso defectos totales ',
+        'Peso de almendra sana',
+        'Negro total o parcial ',
+        'Vinagre (g) ',
+        'Vetado',
+        'Sobresecado',
+        'Picado por insectos  ',
+        'Inmaduro ',
+        'Flojo ',
+        'Malla 18 ',
+        'Malla 17 ',
+        'Malla 16 ',
+        'Humedad',
+        'Merma por trilla',
+        'Porcentaje de almendra sana ',
+        'Factor de rendimiento ',
+        'Porcentaje de defectos totales ',
+        'Cristalizado',
+        'Cardenillo  ',
+        'Ámbar',
+        'Mordido',
+        'Averanado ',
+        'Aplastado ',
+        'Decolorado ',
+        'Malla 15  ',
+        'Malla 14' ,
+        'Mallas menores '
+        // 'analisis'
+        // Otras mallas o campos pueden agregarse según sea necesario
+    ];
 
     const buscarAnalisis = async () => {
         try {
@@ -82,13 +130,36 @@ const Analisis = (user) => {
 
     const buscarUsuarios = async () => {
         try {
-            const response = await Api.get('usuario/listarusuario');
+            const response = await Api.get('usuario/listar/catador');
             console.log(response, "usuariissss")
             setUsuario(response.data);
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
     }
+    const buscarcatador = async (anaId) => {
+    try {
+        const response = await Api.get(`catador/buscar/${anaId}`);
+        setCatadores(response.data);
+    } catch (error) {
+        console.error('Error buscando el analisis', error);
+    }
+
+};
+
+
+    const buscarPromedioResultado = async (anaId) => {
+        try {
+            const response = await Api.get(`resultado/promedio/${anaId}`);
+            setbuscarPromedio(response.data);
+            console.log("hola desde promedio", response.data);
+        } catch (error) {
+            console.error('Error buscando el analisis', error);
+        }
+        calcularPromedio(buscarPromedio);
+
+    };
+
 
     const openModal = async (anaId) => {
         setselectAnalisisid(anaId);
@@ -103,7 +174,7 @@ const Analisis = (user) => {
         try {
             setModalAnalisis({})
             const actualizar = await Api.put(`/analisis/update/${selectAnalisisid}`, data);
-            console.log(datasSelect,actualizar, data,"dataaaaaaaaaaaaaaaaaaa")
+            console.log(datasSelect, actualizar, data, "dataaaaaaaaaaaaaaaaaaa")
             if (actualizar.data.status == false) {
                 let keys = Object.keys(actualizar.data.err)
                 let h6Error = document.querySelectorAll(".h6-error");
@@ -122,12 +193,11 @@ const Analisis = (user) => {
 
                 }
             } else {
-              Sweet.actualizacionExitosa("/home/analisis");
                 closeModalEdit();
                 buscarAnalisis();
 
             }
-    
+
         } catch (error) {
             console.error("Error editando el Analisis: ", error);
         }
@@ -146,17 +216,36 @@ const Analisis = (user) => {
             }
         }
     };
-    const handleEditUser3 = async () => {
-        const result = await Sweet.confimarHabilitar({});
-        if (result.isConfirmed) {
+    const handleEditUser3 = async (analisis,catador) => {
+        Sweet.confimarHabilitar().then(async (result) => {
+            if (result.isConfirmed) {
+
             try {
-                await Api.patch(`/analisis/activar/${selectAnalisisid}`, modalAnalisis);
+                
+                await Api.patch(`/catador/activar/analisis/${catador}/catador/${analisis}`);
+            closeModalCatador();
+                    
+                if(data.status == 200) {
+                    Sweet.habilitacionExitosa();
+                    buscarUsuarios();
+                    closeModalCatador();
+
+                }
+
+                    if(data.status == 404) {
+                        Sweet.habilitacionFallida(); 
+                    }
                 closeModalEdit();
-                buscarAnalisis();
+
             } catch (error) {
                 console.error("Error activando el analisis: ", error);
             }
         }
+            })
+
+            buscarcatador(analisis);
+
+
     };
 
 
@@ -183,10 +272,24 @@ const Analisis = (user) => {
         setaRegistrarModalOpen(false);
     };
 
+    
+    const openModalCatador = () => {
+        setModalCatador(true);
+    };
+    const closeModalCatador = () => {
+        setModalCatador(false);
+    };
+
     const handleRegistrarAnalisis = async (data) => {
         const AnalisisDta = {
-            ...data
+            muestras_id: data.muestras_id,
+            tipo_analisis_id: data.tipo_analisis_id,
+            usuarios_id: datasSelect.usuarios_id
         };
+        // console.log("datos" , datasSelect.usuarios_id[0].id);
+        console.log("datos" , AnalisisDta);
+
+        
         const headers = {
             headers: {
                 token: "xd",
@@ -212,12 +315,13 @@ const Analisis = (user) => {
 
                 }
             } else {
-                Sweet.registroExitoso("/home/analisis");
-                closeRegistrarAnalisisModal()
+                buscarAnalisis();
+                Sweet.registroExitoso();
+                closeRegistrarAnalisisModal();
+
             }
 
-            const response = await Api.get("analisis/listar");
-            setAnalisis(response.data);
+            // setAnalisis(response.data);
             // console.log(data,"tiposssssss")
             // const response = await Api.get("analisis/listar");
             //  setAnalisis(response.data);
@@ -228,94 +332,104 @@ const Analisis = (user) => {
 
     function clearFocusInput(Element) {
         let inputSearch = document.getElementById(Element)
-
+    
         if (inputSearch) {
-
             let divOptions = inputSearch.parentNode.querySelectorAll(".select-option-input-d");
             if (divOptions.length > 0) {
-                divOptions[0].style.display = "none"
+                // Ocultar todas las opciones
+                divOptions.forEach(div => div.style.display = "none");
             }
+    
             let select = inputSearch.parentNode.querySelectorAll(".option-select-ana")
             for (let s = 0; s < select.length; s++) {
-                let elementvalue = inputSearch.getAttribute("id")
-
-                if (datasSelect[inputSearch.getAttribute("id")].value == select[s].getAttribute("data-id")) {
-                    select[s].classList.add("option-select-focus")
+                let elementvalue = inputSearch.getAttribute("id");
+    
+                // Verificar si el valor de select[s] está presente en datasSelect
+                if (datasSelect[elementvalue] && datasSelect[elementvalue].value == select[s].getAttribute("data-id")) {
+                    select[s].classList.add("option-select-focus");
                 } else {
-                    select[s].classList.remove("option-select-focus")
+                    select[s].classList.remove("option-select-focus");
                 }
-
             }
         }
     }
+    
+    // useEffect(() => {
+    //     window.addEventListener("click", function (e) {
+    //         let divOptions = document.querySelectorAll(".div-input-search-select");
+    //         for (let s = 0; s < divOptions.length; s++) {
+    //             if (!e.target == divOptions[s] || !divOptions[s].contains(e.target)) {
+    //                 let options = divOptions[s].querySelectorAll(".select-option-input-d")
+    //                 if (options.length > 0) {
+    //                     options[0].style.display = "none"
+    //                 }
+    //             }
+    //         }
+    //     })
+    // }, [])
+
     useEffect(() => {
-        window.addEventListener("click", function (e) {
-            let divOptions = document.querySelectorAll(".div-input-search-select");
-            for (let s = 0; s < divOptions.length; s++) {
-                if (!e.target == divOptions[s] || !divOptions[s].contains(e.target)) {
-                    let options = divOptions[s].querySelectorAll(".select-option-input-d")
-                    if (options.length > 0) {
-                        options[0].style.display = "none"
-                    }
-                }
-            }
-        })
-    }, [])
+        setInputValue(getSelectedNames()); // Actualizar el valor del input cuando cambia el estado datasSelect
+    }, [datasSelect]);
+
+    function getSelectedNames() {
+        if (!datasSelect.usuarios_id) return ''; // Si no hay usuarios seleccionados, devolver una cadena vacía
+        return datasSelect.usuarios_id.map(user => user?.name || '').join(', '); // Obtener los nombres de los usuarios seleccionados y unirlos con una coma
+    }
+    
+    function handleInputChange(event) {
+        setInputValue(event.target.value); // Actualizar el valor del input con cada cambio
+    }
 
     function searchInput() {
-        let inputSearch = document.querySelectorAll(".input-search-d")
-
+        let inputSearch = document.querySelectorAll(".input-search-d");
 
         if (inputSearch.length > 0) {
-            for (let s = 0; s < inputSearch.length; s++) {
-
-                inputSearch[s].addEventListener("input", function () {
-                    let parent = inputSearch[s].parentNode
+            inputSearch.forEach(input => {
+                input.addEventListener("input", function () {
+                    let parent = input.parentNode;
                     if (parent) {
-                        let selectOptionsInput = parent.querySelectorAll(".select-option-input-d");
-                        if (selectOptionsInput[0]) {
-                            selectOptionsInput[0].style.display = "block"
-                            let options = selectOptionsInput[0].querySelectorAll("div");
-                            for (let o = 0; o < options.length; o++) {
-                                if (options[o].innerHTML.toLowerCase().includes(inputSearch[s].value.toLowerCase())) {
-                                    options[o].style.display = "block"
+                        let selectOptionsInput = parent.querySelector(".select-option-input-d");
+                        if (selectOptionsInput) {
+                            selectOptionsInput.style.display = "block";
+                            let options = selectOptionsInput.querySelectorAll("div");
+                            let inputValue = input.value.toLowerCase();
+                            let commaIndex = inputValue.lastIndexOf(",");
+                            let searchValue = inputValue.substring(commaIndex === -1 ? 0 : commaIndex + 1).trim();
+                            
+                            options.forEach(option => {
+                                if (option.innerHTML.toLowerCase().includes(searchValue)) {
+                                    option.style.display = "block";
                                 } else {
-                                    options[o].style.display = "none"
+                                    option.style.display = "none";
                                 }
-                                let referencia = inputSearch[s].getAttribute("id")
-                                console.log(referencia,"referenciaaa")
 
-                                if (options[o].innerHTML.toLowerCase() == inputSearch[s].value.toLowerCase()) {
-                                    let focusSelect = document.querySelectorAll(".option-select-focus")
-                                    if (focusSelect.length > 0) {
-                                        focusSelect[0].classList.remove("option-select-focus")
-                                    }
-                                    inputSearch[s].value = options[o].innerHTML
-                                    if (!datasSelect[inputSearch[s].getAttribute("data-id")]) {
-                                        datasSelect[inputSearch[s].getAttribute("data-id")] = {}
-                                    }
-                                    datasSelect[inputSearch[s].getAttribute("data-id")].value = options[o].getAttribute("data-id")
-                                    options[o].classList.add("option-select-focus")
-                                    if (!datasSelect[referencia]) {
-                                        datasSelect[referencia] = {}
-                                    }
-                                    datasSelect[referencia]["value"] = options[o].getAttribute("data-id");
-                                    options[o].parentNode.style.display = "none"
-                                    break
-                                } else {
-                                    if (!datasSelect[referencia]) {
-                                        datasSelect[referencia] = {}
-                                    }
-                                    datasSelect[referencia]["value"] = "";
-                                    options[o].classList.remove("option-select-focus")
-                                }
-                            }
+                                if (option.innerHTML.toLowerCase() === searchValue) {
+                                    let referencia = input.getAttribute("id");
+                                    let dataId = option.getAttribute("data-id");
+
+                                    // Actualizamos el estado datasSelect para agregar el nuevo valor
+                                    setDataSelect(prevState => ({
+                                        ...prevState,
+                                        [referencia]: [...(prevState[referencia] || []), dataId]
+                                    }));
+                                    
+                                    // Resto del código para manejar las opciones seleccionadas
+                                    // clearFocusInput(referencia);
+                                } 
+                                // else {
+                                //     clearFocusInput(referencia);
+                                // }
+                            });
                         }
                     }
-                })
-            }
+                });
+            });
         }
     }
+    
+
+    
     useEffect(() => {
         searchInput()
     }, [aRegistrarModalOpen]);
@@ -328,12 +442,12 @@ const Analisis = (user) => {
     const initializeDataTable = (analisis) => {
         $(document).ready(function () {
             $(dataTableRef.current).DataTable({
-                columnDefs:[
+                columnDefs: [
                     {
                         targets:-1,
                         responsivePriority:1
-                      }
-                  ],
+                    }
+                ],
                 lengthMenu: [5, 10, 20, 30, 40, 50],
                 processing: true,
                 pageLength: 5,
@@ -341,11 +455,19 @@ const Analisis = (user) => {
                 responsive: true,
             });
         });
+        
+        dataTableRef
+
+
+
 
         return () => {
             $(dataTableRef.current).DataTable().destroy(true);
         };
     };
+
+    /////////////////// DATA TABLE CAFETERO////////////////////
+    
 
     useEffect(() => {
         setKey(key + 1)
@@ -353,23 +475,127 @@ const Analisis = (user) => {
             initializeDataTable(analisis);
         }
     }, [analisis]);
+
+
+    const agregarUsuario = (usuario) => {
+        if (usuariosSeleccionados.length < 5) {
+            setUsuariosSeleccionados([...usuariosSeleccionados, usuario]);
+        }
+    };
+
+    const toggleModal = (modalId) => {
+        if (modalId === 3) {
+            setShowModal3(true);
+            console.log("hola desde toggle modal", showModal3);
+        } 
+    };
+    
+    const hideAllModals = () => {
+        setShowModal3(false);
+    };
+    
+
+    function calcularPromedio(datos) {
+        const promedios = {};
+        const conteo = {};
+    
+        datos.forEach(dato => {
+            const nombreLimpio = dato.nombre.trim(); // Eliminar espacios en blanco al principio y al final
+            if (!conteo[nombreLimpio]) {
+                conteo[nombreLimpio] = 0;
+                promedios[nombreLimpio] = 0;
+            }
+            conteo[nombreLimpio]++;
+            promedios[nombreLimpio] += dato.valor;
+        });
+    
+        for (const nombre in promedios) {
+            promedios[nombre] /= conteo[nombre];
+        }
+    
+        setPromedio(promedios)
+        console.log("psd", promedio);
+        console.log("psds", promedios);
+
+
+
+    }
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+      
+      
+  
+  // Llamar a la función y obtener el resultado
+// Aquí tienes el objeto con el promedio por variables_id
+  
+
+const generarInputs3 = () => {
+    const filas = [];
+    const numColumnas = 10;
+
+    for (let i = 0; i < Object.keys(promedio).length; i += numColumnas) {
+        const fila = Object.keys(promedio).slice(i, i + numColumnas);
+
+        filas.push(
+            <div className="columna" key={i}>
+                {fila.map((nombreVariable, j) => {
+                    const valorPromedio = promedio[nombreVariable]; // Obtener el valor promedio
+                    return (
+                        <div className="container-input" key={`${i}-${j}`}>
+                            <input
+                                type="text"
+                                id={`input-${nombreVariable}-${i + j}`}
+                                value={valorPromedio || ''}
+                                className='input-actualizar '
+                                placeholder=""
+                                readOnly
+                            />
+                            <label htmlFor={`input-${nombreVariable}-${i + j}`} className='label-actualizar'>
+                                {nombreVariable}
+                            </label>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
+
+    return filas;
+};
+
+
     return (
 
-        <>
+        <div className="main-container-analisis">
 
             <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
             <div className="contTitle">
                 <h1 className="titleanalisis">Análisis</h1>
                 {user.user ? user.user.rol == 'administrador' ?
-                <button to="/analisis/registrar" className="btn-registrar-d" onClick={() => {
-                    openRegistrarAnalisisModal();
-                    setDataSelect({})
+                    <button to="/analisis/registrar" className="btn-registrar-d" onClick={() => {
+                        openRegistrarAnalisisModal();
+                        setDataSelect({})
 
-                }}>
-                    Añadir
-                </button>
-                : '' : ''}
+                    }}>
+                        Añadir
+                    </button>
+                    : '' : ''}
             </div>
 
             <div className="tablaAnalisis">
@@ -381,15 +607,16 @@ const Analisis = (user) => {
                                 <th className="text-muted">Fecha </th>
                                 <th className="text-muted">Tipo Análisis </th>
                                 <th className="text-muted">Consecutivo Informe </th>
-                                <th className="text-muted">Catador</th>
-                                <th className="text-muted">Estado </th>
-                                <th className="text-muted">Propietario </th>
-                                <th className="text-muted"> Finca </th>
+                                <th className="text-muted">Propietario</th>
+                                <th className="text-muted">Finca </th>
                                 <th className="text-muted">Lote </th>
-                                <th className="text-muted">Variedad</th>
-                                {user.user ? user.user.rol == 'administrador' ? 
-                                <th className="text-muted"> Opciones</th>
-                                : '' : ''}
+                                <th className="text-muted"> Variedad </th>
+                                <th className="text-muted">Formato </th>
+                                <th className="text-muted">Catadores </th>
+                                <th className="text-muted">Estado</th>
+                                {user.user ? user.user.rol == 'administrador' ?
+                                    <th className="text-muted"> Opciones</th>
+                                    : '' : ''}
                             </tr>
                         </thead>
                         <tbody className="bg-gray-200 text-center">
@@ -400,27 +627,68 @@ const Analisis = (user) => {
                                     <td className="text-muted">{task.fecha_analisis = formatDate(task.fecha_analisis)}</td>
                                     <td className="text-muted">{task.nombre_tipo_analisis}</td>
                                     <td className="text-muted" >{task.codigo_externo}</td>
-                                    <td className="text-muted">{task.nombre_usuario}</td>
-                                    <td className="text-muted">{task.estado === 1 ? 'Activo' : 'Desactivado'}</td>
+
                                     <td className="text-muted">{task.propietario}</td>
                                     <td className="text-muted">{task.nombre_fincas}</td>
                                     <td className="text-muted">{task.nombre_lotes}</td>
                                     <td className="text-muted">{task.nombre_variedades}</td>
-                                    {user.user ? user.user.rol == 'administrador' ? 
+                                    <td> <button
+                                            type="button"
+                                            className="btn-actualizar-mod rounded-3"
+                                            onClick={() =>{toggleModal(3);buscarPromedioResultado(task.id_analisis)}}
+                                        >
+                                            ver 
+                                        </button></td>
+
                                     <td>
                                         <button
                                             type="button"
                                             className="btn-actualizar-mod rounded-3"
-                                            onClick={() => openModal(task.id_analisis)}
+                                            onClick={() =>{openModalCatador(),buscarcatador(task.id_analisis)}}
                                         >
-                                            Modificar
+                                            Catadores 
                                         </button>
                                     </td>
-                                    : '' : ''}
+                                    <td className="text-muted">
+                                    {task.estado === 0 ? (
+                                        <button
+                                        className="btn-activar"
+                                        onClick={() => { setUpdateModal(true); activarMuestra(task.id)}}
+                                        >
+                                        Finalizado
+                                        </button>
+
+                                        
+                                        ) : (
+                                            <button
+                                            className="btn-desactivar"
+                                            onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                                        >
+                                            Pendiente
+                                        </button>
+                                            
+                                        )}     
+                                    </td>                                    
+                                    {user.user ? user.user.rol == 'administrador' ?
+                                            <td className="btn-container">
+                                                <FontAwesomeIcon
+                                                    icon= {faFilePdf}
+                                                    className="btn-pdf rounded-3"
+                                                    
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className="btn-actualizar-mod rounded-3"
+                                                    onClick={() => openModal(task.id_analisis)}
+                                                >
+                                                    Modificar
+                                                </button>
+                                            </td>
+                                            : '' : ''}
                                 </tr>
                             )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
                         </tbody>
-                        </table>
+                    </table>
                 </div>
             </div>
 
@@ -435,47 +703,47 @@ const Analisis = (user) => {
 
                                 <div className="select-option-input-d">
                                     {muestras.length > 0 ? muestras
-                                    .map((key, index) => {
-                                        if (modalAnalisis.muestras_id) {
-                                            !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = modalAnalisis.muestras_id
-                                            if (key.id == modalAnalisis.muestras_id) {
-                                                !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.referencia = key.codigo_externo
+                                        .map((key, index) => {
+                                            if (modalAnalisis.muestras_id) {
+                                                !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = modalAnalisis.muestras_id
+                                                if (key.id == modalAnalisis.muestras_id) {
+                                                    !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.referencia = key.codigo_externo
+                                                }
                                             }
-                                        }
 
-                                        return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
-                                    }):<tr><td ></td></tr>}
+                                            return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
+                                        }) : <tr><td ></td></tr>}
                                 </div>
                                 <input defaultValue={datasSelect.muestras_id ? datasSelect.muestras_id.referencia ? datasSelect.muestras_id.referencia : "" : ""} className="input-search-d" type="text" id="muestras_id" />
                                 <label htmlFor="muestras_id" className="labelEdit">Muestras</label>
 
                             </div><br />
                             {user.user ? user.user.rol == 'administrador' ?
-                            <div className="div-input-d div-input-search-select">
+                                <div className="div-input-d div-input-search-select">
 
-                                <div className="select-option-input-d">
+                                    <div className="select-option-input-d">
 
-                                    {usuarios.map((key, index) => {
-                                        if (modalAnalisis.usuarios_id) {
-                                            !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = modalAnalisis.usuarios_id
-                                            if (key.id == modalAnalisis.usuarios_id) {
-                                                !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.referencia = key.nombre
+                                        {usuarios.map((key, index) => {
+                                            if (modalAnalisis.usuarios_id) {
+                                                !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = modalAnalisis.usuarios_id
+                                                if (key.id == modalAnalisis.usuarios_id) {
+                                                    !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.referencia = key.nombre
+                                                }
                                             }
-                                        }
 
-                                        return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
-                                    })}
-                                    
+                                            return <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
+                                        })}
+
+                                    </div>
+
+                                    <input className="input-search-d" defaultValue={datasSelect.usuarios_id ? datasSelect.usuarios_id.referencia ? datasSelect.usuarios_id.referencia : "" : ""} type="text" id="usuarios_id" />
+                                    <label htmlFor="usuarios_id" className="labelEdit">Catador</label>
                                 </div>
-                                
-                                <input className="input-search-d" defaultValue={datasSelect.usuarios_id ? datasSelect.usuarios_id.referencia ? datasSelect.usuarios_id.referencia : "" : ""} type="text" id="usuarios_id" />
-                                <label htmlFor="usuarios_id" className="labelEdit">Catador</label>
-                            </div>
-                            : '' : ''}
+                                : '' : ''}
                             <button
                                 className="btn-actualizar-d"
                                 onClick={() => {
-                             
+
                                     handleEditUser1({
                                         muestras_id: datasSelect.muestras_id ? datasSelect.muestras_id.value : "",
                                         usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value : ""
@@ -527,7 +795,8 @@ const Analisis = (user) => {
 
                                 tipo_analisis_id: datasSelect.tipo_analisis_id ? datasSelect.tipo_analisis_id.value : "",
                                 muestras_id: datasSelect.muestras_id ? datasSelect.muestras_id.value : "",
-                                usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value : ""
+                                // usuarios_id: datasSelect.usuarios_id ? datasSelect.usuarios_id.value : ""
+
                             });
                         }}
                         method="post"
@@ -536,27 +805,37 @@ const Analisis = (user) => {
                         <div className="div-input-d-select div-input-search-select ">
                             <label className="select-div-tip" htmlFor="tipo_analisis_id">Tipo Análisis</label>
                             <label className="label-tipe-ana" htmlFor="tipo_analisis_id">Fisico</label>
-                        
+
                         </div><br />
                         <div className="div-input-d div-input-search-select">
                             <input className="input-search-d" type="text" id="muestras_id" ref={muestras_id} />
                             <label htmlFor="muestras_id" className='label'>Muestra</label>
                             <div className="select-option-input-d">
-                                {muestras.map((key, index) => (
+                                {muestras.length > 0 ? muestras
+                                .map((key, index) => (
                                     (
                                         <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("muestras_id").value = key.codigo_externo; !datasSelect.muestras_id ? datasSelect.muestras_id = {} : ""; datasSelect.muestras_id.value = key.id; clearFocusInput("muestras_id") }} key={key.id}>{key.codigo_externo}</div>
                                     )
-                                ))}
+                                    
+                                )): null}
                             </div>
                         </div>
                         <div className="div-input-d div-input-search-select">
-                            <input className="input-search-d" type="text" id="usuarios_id" ref={usuarios_id} />
+                        <input className="input-search-d" type="text" id="usuarios_id" value={inputValue} onChange={handleInputChange} />
+
                             <label htmlFor="usuarios_id" className='label'>Catador</label>
                             <div className="select-option-input-d">
                                 {usuarios.map((key, index) => (
-                                    (
-                                        <div className="option-select-ana" data-id={key.id} onClick={() => { document.getElementById("usuarios_id").value = key.nombre; !datasSelect.usuarios_id ? datasSelect.usuarios_id = {} : ""; datasSelect.usuarios_id.value = key.id; clearFocusInput("usuarios_id") }} key={key.id}>{key.nombre}</div>
-                                    )
+                                    <div className="option-select-ana" data-id={key.id} onClick={() => { 
+                                        const inputValue = key.nombre + ' ' + key.apellido;
+                                        setDataSelect(prevState => ({
+                                            ...prevState,
+                                            usuarios_id: [...(prevState.usuarios_id || []), { id: key.id, name: inputValue }]
+                                        }));
+                                        clearFocusInput("usuarios_id");
+                                    }} key={key.id}>
+                                        {key.nombre} {key.apellido}
+                                    </div>
                                 ))}
                             </div>
                         </div>
@@ -572,7 +851,130 @@ const Analisis = (user) => {
                     </form>
                 </div>
             )}
-        </>
+
+
+            {/* //////////////////////////MODAL CATADOR //////////////////////////////////////////7 */}
+            
+            {modalCatador && (
+                <div className="overlay-d"></div>
+            )}
+            {modalCatador && (
+                
+                
+                <div className="contRegistrarCatador">
+                    <button
+                            className="close-modal-Ana2"
+                            onClick={() => closeModalCatador()}
+
+                        >
+                            X
+                        </button>
+                    <h1 className="titleRegistrar">
+                        
+                        Catadores
+                    </h1>
+                
+                    {/* <div className="tablaAnalisis"> */}
+                <div className="container-fluid w-full" key={key}>
+                    
+                    <table id="table-d" style={{ width: "100%" }} className="table table-hover rounded-3 overflow-hidden display responsive nowrap shadow" ref={dataTableRef}>
+                        
+                        <thead>
+                            <tr className="bg-black-200">
+                                <th hidden>if analisis</th>
+                                <th className="text-muted">id</th>
+                                <th className="text-muted">Nombre </th>
+                                <th className="text-muted">Apellido </th>
+                                <th className="text-muted">Estado </th>
+
+
+
+                                {user.user ? user.user.rol == 'administrador' ? 
+                                <th className="text-muted"> Opciones</th>
+                                : '' : ''}
+                            </tr>
+                        </thead>
+                        <tbody className="bg-gray-200 text-center">
+                            { catadores.length > 0 ? catadores 
+                            .map((task) => (
+                                <tr key={task.id}>
+                                    <td hidden>{task.analisis_id}</td>
+                                    <td className="text-muted">{task.id}</td>
+                                    <td className="text-muted">{task.nombre}</td>
+                                    <td className="text-muted">{task.apellidos}</td>
+                                    <td className="text-muted">                     
+                
+                    
+                                    {task.estado === 0 ? (
+                                        <button
+                                        className="btn-activar"
+                                        onClick={() => {  handleEditUser3(task.analisis_id,task.id)}}
+                                        >
+                                        Finalizado
+                                        </button>
+
+                                        
+                                        ) : (
+                                            <button
+                                            className="btn-desactivar"
+                                            onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                                        >
+                                            Pendiente
+                                        </button>
+                                            
+                                        )}  
+                                    </td>
+
+                                    {user.user ? user.user.rol == 'administrador' ? 
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="btn-actualizar-mod rounded-3"
+                                            onClick={() => openModal(task.id_analisis)}
+                                        >
+                                            Modificar
+                                        </button>
+                                    </td>
+                                    : '' : ''}
+                                </tr>
+                            )): <tr><td colSpan={999999999999} className="p-5 text-center">{analisis.message}</td></tr>}
+                        </tbody>
+                        
+                        </table>
+                </div>
+            {/* </div> */}
+            
+
+                    
+                </div>
+                
+            )}
+
+            {showModal3 ? 
+                <div className="main-content-analisis"  >
+                {/* <div className="container-tittle"> */}
+                <h1 className='title-registrar-analisis'>Visualizar resultado</h1> 
+
+
+                {/* </div> */}
+                <form className="formulario-resultado-analisis" method="post">
+
+                    {generarInputs3()}
+                
+                    <div className="buttons">          
+                    <button className="btn-reg-mue" type="button" onClick={hideAllModals}>
+                        Cancelar
+                    </button>
+                    </div>
+                    
+                </form>
+                </div>
+
+                : ""}
+
+
+            
+        </div>
 
     )
 }

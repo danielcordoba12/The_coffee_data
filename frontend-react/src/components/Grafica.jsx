@@ -138,12 +138,12 @@ function Grafica() {
   
 
   // function buscarResultado(id,fecha_creacion) {
-    function buscarResultado(id, fecha_creacion, callback) {
+    function buscarResultado(id) {
       const resultados = []; // Arreglo para almacenar los datos
   
       // Realizar las llamadas fetch
       Promise.all(id.map((id, index) => {
-          return fetch(`http://${localhost}:4000/resultado/buscar/${id}?fecha_creacion=${fecha_creacion[index]}`, {
+          return fetch(`http://${localhost}:4000/resultado/buscar/${id}}`, {
               method: 'GET',
               headers: {
                   'Content-type': 'application/json',
@@ -189,12 +189,12 @@ function Grafica() {
     // console.log("este es index" , index);
     setSelectedRows(prevState => ({
       ...prevState,
-      [id]: isChecked
+      [id]: id
     }));
 
   };
 
-  const idcheck = (index,id,fecha_creacion) => {
+  const idcheck = (index,id) => {
     const isChecked = selectedRows[id];
     // if (isChecked) {
     //   console.log(`El checkbox en el id ${id} está seleccionado`, isChecked);
@@ -209,7 +209,7 @@ function Grafica() {
       setResultadoSelect(resultadoSelect =>({...resultadoSelect,
         [index]:{
           id:id,
-          fecha_creacion:fecha_creacion
+          // fecha_creacion:fecha_creacion
         }
       }));
 
@@ -462,6 +462,7 @@ function Grafica() {
           {/* <th>Index</th> */}
           {/* <th hidden>Index</th> */}
           <th>ID</th>
+          <th>ID catador</th>
           <th>Muestra</th>
           <th>Cantidad</th>
           <th>Usuario</th>
@@ -482,6 +483,7 @@ function Grafica() {
                     {/* <td>{index}</td> */}
                     {/* <td hidden>{index}</td> */}
                     <td>{task.id}</td>
+                    <td>{task.catador_id}</td>
                     <td>{task.muestra}</td>
                     <td>{task.valor}</td>
                     <td>{task.usuario}</td>
@@ -493,8 +495,8 @@ function Grafica() {
                     <td>
                     <CheckApiExample
                       onChange={(isChecked) =>{ 
-                        handleCheckboxChange( isChecked,task.analisis_id); 
-                        idcheck(index,task.analisis_id,task.fecha_creacion)
+                        handleCheckboxChange( isChecked,task.catador_id); 
+                        idcheck(index,task.catador_id)
                         }}/>
                     </td>
                       {/* <td>
@@ -513,7 +515,7 @@ function Grafica() {
               {/* <button onClick={buscarResultado(resultadoSelect.id,resultadoSelect.fecha_creacion)}>Graficar </button> */}
               <button className='button-graficar'
               onClick={() => {
-                buscarResultado(ids, fechas),
+                buscarResultado(ids),
                 toggleModal();
               }}>Graficar</button>
               

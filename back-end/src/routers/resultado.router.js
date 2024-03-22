@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { guardarResultado, buscarResultado,listarResultados,eliminarResultado,actualizarResultado } from "../controllers/resultado.controller.js";
+import { guardarResultado, buscarResultado,listarResultados,eliminarResultado,actualizarResultado,promedioResultado } from "../controllers/resultado.controller.js";
 import { validarResultado } from "../validation/resultado.validator.js";
 import { validartoken } from "../controllers/autenticacion.controller.js";
 
@@ -12,6 +12,8 @@ resultadoRoute.get("/listar",validartoken,listarResultados);
 resultadoRoute.get("/buscar/:id",buscarResultado);
 resultadoRoute.put("/update/:id",actualizarResultado);
 resultadoRoute.delete("/delete/:id",eliminarResultado);
+resultadoRoute.get("/promedio/:id",promedioResultado);
+
 
 
 
