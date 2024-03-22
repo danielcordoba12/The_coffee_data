@@ -544,7 +544,7 @@ useEffect(() => {
   
   const generarInputs2 = () => {
     const filas = [];
-    const numColumnas = 15;
+    const numColumnas = 10;
   
     for (let i = 0; i < resultadoSellecionado.length; i += numColumnas) {
       const fila = resultadoSellecionado.slice(i, i + numColumnas);
@@ -587,7 +587,7 @@ useEffect(() => {
 
   const generarInputs3 = () => {
     const filas = [];
-    const numColumnas = 15;
+    const numColumnas = 10;
 
     for (let i = 0; i < datos.length; i += numColumnas) {
       const fila = datos.slice(i, i + numColumnas);
@@ -655,7 +655,7 @@ useEffect(() => {
       });
 
     }
-  },[resultado])
+  },[catador])
 
 
   const GuardarResultados = async () => {
@@ -730,7 +730,7 @@ useEffect(() => {
 }
 
 
-  function buscarResultado(id,fecha_creacion) {
+  function buscarResultado(id) {
     fetch(`http://${localhost}:4000/resultado/buscar/${id}`,{
       headers: {
         'Content-type': 'application/json',
@@ -812,6 +812,41 @@ useEffect(() => {
     setFiltro(event.target.value.toLowerCase());
     setMostrarOpciones(true);
   };
+
+  const desactivarMuestra = async (analisis,catador) => {
+    Sweet.confimarHabilitar().then(async (result) => {
+        if (result.isConfirmed) {
+
+        try {
+            
+            await Api.patch(`/catador/desactivar/analisis/${catador}/catador/${analisis}`);
+                
+            if(data.status == 200) {
+                Sweet.habilitacionExitosa();
+                buscarUsuarios();
+                closeModalCatador();
+                listarCatador();
+
+
+            }
+
+                if(data.status == 404) {
+                    Sweet.habilitacionFallida(); 
+                }
+            // closeModalEdit();
+
+        } catch (error) {
+            console.error("Error activando el analisis: ", error);
+        }
+    }
+        }).finally(() => {
+          // Esta parte se ejecutará independientemente de si el usuario confirma o cancela
+          listarCatador();
+      });
+
+
+};
+
   // const handleClickOpcion = (cafe) => {
   //   // Actualizamos el filtro con el valor seleccionado
   //   setFiltro(`${cafe.documento}-${cafe.nombre_usuario}-${cafe.numero_lote}-${cafe.nombre_variedad}`);
@@ -931,7 +966,6 @@ useEffect(() => {
                         {task.estado === 0 ? (
                                         <button
                                         className="btn-activar"
-                                        onClick={() => {  handleEditUser3(task.analisis_id,task.id)}}
                                         >
                                         Finalizado
                                         </button>
@@ -940,7 +974,7 @@ useEffect(() => {
                                         ) : (
                                             <button
                                             className="btn-desactivar"
-                                            onClick={() => { setUpdateModal(true); desactivarMuestra(task.id)}}
+                                            onClick={() => {desactivarMuestra(task.analisis_id,task.id)}}
                                         >
                                             Pendiente
                                         </button>

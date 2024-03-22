@@ -114,37 +114,37 @@ export const buscarResultado = async (req, res) => {
 };
 
 
-export const listarResultados = async (req, res) => {
-    try {
-        let where = " "
-        if (req.user.rol != "administrador") {
-            where = " WHERE catador.id = " + req.user.id + " "
-        }
-        // const [result] = await pool.query("SELECT r.id,r.valor, r.analisis_id as analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join tipos_analisis as t on r.analisis_id = t.id;");
-        // const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion, v.nombre AS variable FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id JOIN analisis as t ON r.analisis_id = t.id GROUP BY r.analisis_id;");
-
-
-        // const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion, v.nombre AS variable FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id JOIN analisis as t ON r.analisis_id = t.id GROUP BY r.fecha_creacion;");
-
-        const sql = "SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion,m.consecutivo_informe AS muestra, v.nombre AS variable, u.nombre AS usuario,f.nombre AS finca, l.nombre AS lote , ta.nombre AS tipo_analisis FROM resultados AS r JOIN variables AS v ON r.variables_id  = v.id  JOIN analisis as t ON r.analisis_id = t.id JOIN muestras as m ON t.muestras_id = m.id  JOIN cafes AS c ON m.cafes_id = c.id JOIN lotes AS l ON c.lotes_id = l.id  JOIN  fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id JOIN tipos_analisis AS ta ON t.tipo_analisis_id = ta.id " + where + " GROUP BY r.fecha_creacion ORDER BY id ASC;"
-        const [result] = await pool.query(sql);
-        
-        if (result.length > 0) {
-            res.status(200).json(result);
-            } else {
-            res.status(401).json({
-                result : result,
-                status: false,
-                message: "No se encontran resultados."
-            });
-    
+    export const listarResultados = async (req, res) => {
+        try {
+            let where = " "
+            if (req.user.rol != "administrador") {
+                where = " WHERE catador_id = " + req.user.id + " "
             }
-    } catch (err) {
-        res.status(500).json({
-            message: 'Error en listar resultados de la base de datos:' + err
-        });
-    }
-};
+            // const [result] = await pool.query("SELECT r.id,r.valor, r.analisis_id as analisis, v.nombre AS variable,r.fecha_creacion FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id join tipos_analisis as t on r.analisis_id = t.id;");
+            // const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion, v.nombre AS variable FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id JOIN analisis as t ON r.analisis_id = t.id GROUP BY r.analisis_id;");
+
+
+            // const [result] = await pool.query("SELECT r.analisis_id, MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion, v.nombre AS variable FROM resultados AS r JOIN variables AS v ON r.variables_id = v.id JOIN analisis as t ON r.analisis_id = t.id GROUP BY r.fecha_creacion;");
+
+            const sql = "SELECT  MAX(r.id) as id, MAX(r.valor) as valor, MAX(r.fecha_creacion) as fecha_creacion,m.consecutivo_informe AS muestra , v.nombre AS variable, u.nombre AS usuario,f.nombre AS finca, l.nombre AS lote , ta.nombre AS tipo_analisis, ca.id AS catador_id FROM resultados AS r JOIN variables AS v ON r.variables_id  = v.id   JOIN analisis as t JOIN muestras as m ON t.muestras_id = m.id  JOIN cafes AS c ON m.cafes_id = c.id JOIN lotes AS l ON c.lotes_id = l.id  JOIN  fincas AS f ON l.fincas_id = f.id JOIN usuarios AS u ON f.usuarios_id = u.id JOIN catadores ca ON ca.analisis_id = t.id JOIN tipos_analisis AS ta ON t.tipo_analisis_id = ta.id " + where + " GROUP BY ca.usuarios_id ORDER BY id ASC;"
+            const [result] = await pool.query(sql);
+            
+            if (result.length > 0) {
+                res.status(200).json(result);
+                } else {
+                res.status(401).json({
+                    result : result,
+                    status: false,
+                    message: "No se encontran resultados."
+                });
+        
+                }
+        } catch (err) {
+            res.status(500).json({
+                message: 'Error en listar resultados de la base de datos:' + err
+            });
+        }
+    };
 
 
 export const eliminarResultado = async (req, res) => {
