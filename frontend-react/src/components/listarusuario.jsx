@@ -357,7 +357,7 @@ const ListarUsuarios = () => {
                 <td>
                   <button
                     type="button"
-                    className="btn-actualizar-mod"
+                    className="btn-actualizar-mod mx-2"
                     onClick={() => {
                       setFormStatus(2),
                         setRegistrarUsuarioModalOpen(true),
