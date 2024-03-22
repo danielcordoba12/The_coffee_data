@@ -30,10 +30,9 @@ function Resultado(user) {
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
   const tableRef = useRef();
-    const [cafesId, setCafesId] = useState("");
-    const [selectedOption, setSelectedOption] = useState("");
-    const [dataSelect, setDataSelect] = useState({});
-
+  const [cafesId, setCafesId] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
+  const [dataSelect, setDataSelect] = useState({});
   const [filtro, setFiltro] = useState('');
 
 
@@ -670,7 +669,6 @@ useEffect(() => {
         fecha: fechaActual,
         analisis_id: catadorId
       }));
-      console.log("xxxx",datosConAnalisisId );
 
       // setDatos(datosConAnalisisId);
       // const datosValidos = datosConAnalisisId.filter(dato => dato.valor !== null || dato.valor !== undefined);
@@ -755,6 +753,7 @@ useEffect(() => {
       });
       // console.log(dato)
   }
+
 
   const actualizarResultado = (id) => {
     // console.log("Respuesta desde el frontend")

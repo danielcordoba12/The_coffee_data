@@ -234,3 +234,18 @@ export const actualizarResultado = async (req, res) => {
     }
 };
 
+export const promedioResultado = async (req, res) => {
+    try {
+        let id = req.params.id;
+                
+        const [result] = await pool.query(`SELECT r.id, r.valor as valor, v.nombre ,u.nombre AS catador, m.consecutivo_informe AS Informe, r.variables_id AS variables  FROM resultados r JOIN catadores ca ON ca.id = r.catadores_id JOIN usuarios u ON u.id = ca.usuarios_id JOIN analisis a ON ca.analisis_id  = a.id JOIN muestras m ON a.muestras_id = m.id  JOIN variables v ON v.id = r.variables_id WHERE ca.analisis_id = ${id} `)
+
+    
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(500).json({
+            message: "Error en listar resultado:" + err
+        });
+    } 
+};
+

@@ -38,6 +38,12 @@ const Analisis = (user) => {
     const [usuarios, setUsuario] = useState([]);
     const [datasSelect, setDataSelect] = useState({});
     const [inputValue, setInputValue] = useState('');
+    const [buscarPromedio,setbuscarPromedio] = useState([])
+    const [showModal3, setShowModal3] = useState(false);
+    const [promedio,setPromedio] = useState([])
+    
+
+
 
 
 
@@ -58,7 +64,40 @@ const Analisis = (user) => {
         buscarUsuarios();
 
     }, []);
-
+    const labelText = [
+        'Peso C.P.S ',
+        'Peso Cisco',
+        'Peso total de la almendra',
+        'Peso defectos totales ',
+        'Peso de almendra sana',
+        'Negro total o parcial ',
+        'Vinagre (g) ',
+        'Vetado',
+        'Sobresecado',
+        'Picado por insectos  ',
+        'Inmaduro ',
+        'Flojo ',
+        'Malla 18 ',
+        'Malla 17 ',
+        'Malla 16 ',
+        'Humedad',
+        'Merma por trilla',
+        'Porcentaje de almendra sana ',
+        'Factor de rendimiento ',
+        'Porcentaje de defectos totales ',
+        'Cristalizado',
+        'Cardenillo  ',
+        'Ámbar',
+        'Mordido',
+        'Averanado ',
+        'Aplastado ',
+        'Decolorado ',
+        'Malla 15  ',
+        'Malla 14' ,
+        'Mallas menores '
+        // 'analisis'
+        // Otras mallas o campos pueden agregarse según sea necesario
+    ];
 
     const buscarAnalisis = async () => {
         try {
@@ -106,6 +145,19 @@ const Analisis = (user) => {
     }
 
 };
+
+
+    const buscarPromedioResultado = async (anaId) => {
+        try {
+            const response = await Api.get(`resultado/promedio/${anaId}`);
+            setbuscarPromedio(response.data);
+            console.log("hola desde promedio", response.data);
+        } catch (error) {
+            console.error('Error buscando el analisis', error);
+        }
+        calcularPromedio(buscarPromedio);
+
+    };
 
 
     const openModal = async (anaId) => {
@@ -373,7 +425,6 @@ const Analisis = (user) => {
                 });
             });
         }
-        console.log(datasSelect);
     }
     
 
@@ -430,9 +481,106 @@ const Analisis = (user) => {
             setUsuariosSeleccionados([...usuariosSeleccionados, usuario]);
         }
     };
+
+    const toggleModal = (modalId) => {
+        if (modalId === 3) {
+            setShowModal3(true);
+            console.log("hola desde toggle modal", showModal3);
+        } 
+    };
+    
+    const hideAllModals = () => {
+        setShowModal3(false);
+    };
+    
+
+    function calcularPromedio(datos) {
+        const promedios = {};
+        const conteo = {};
+    
+        datos.forEach(dato => {
+            const nombreLimpio = dato.nombre.trim(); // Eliminar espacios en blanco al principio y al final
+            if (!conteo[nombreLimpio]) {
+                conteo[nombreLimpio] = 0;
+                promedios[nombreLimpio] = 0;
+            }
+            conteo[nombreLimpio]++;
+            promedios[nombreLimpio] += dato.valor;
+        });
+    
+        for (const nombre in promedios) {
+            promedios[nombre] /= conteo[nombre];
+        }
+    
+        setPromedio(promedios)
+        console.log("psd", promedio);
+        console.log("psds", promedios);
+
+
+
+    }
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+      
+      
+  
+  // Llamar a la función y obtener el resultado
+// Aquí tienes el objeto con el promedio por variables_id
+  
+
+const generarInputs3 = () => {
+    const filas = [];
+    const numColumnas = 10;
+
+    for (let i = 0; i < Object.keys(promedio).length; i += numColumnas) {
+        const fila = Object.keys(promedio).slice(i, i + numColumnas);
+
+        filas.push(
+            <div className="columna" key={i}>
+                {fila.map((nombreVariable, j) => {
+                    const valorPromedio = promedio[nombreVariable]; // Obtener el valor promedio
+                    return (
+                        <div className="container-input" key={`${i}-${j}`}>
+                            <input
+                                type="text"
+                                id={`input-${nombreVariable}-${i + j}`}
+                                value={valorPromedio || ''}
+                                className='input-actualizar '
+                                placeholder=""
+                                readOnly
+                            />
+                            <label htmlFor={`input-${nombreVariable}-${i + j}`} className='label-actualizar'>
+                                {nombreVariable}
+                            </label>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
+
+    return filas;
+};
+
+
     return (
 
-        <>
+        <div className="main-container-analisis">
 
             <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
@@ -462,6 +610,7 @@ const Analisis = (user) => {
                                 <th className="text-muted">Finca </th>
                                 <th className="text-muted">Lote </th>
                                 <th className="text-muted"> Variedad </th>
+                                <th className="text-muted">Formato </th>
                                 <th className="text-muted">Catadores </th>
                                 <th className="text-muted">Estado</th>
                                 {user.user ? user.user.rol == 'administrador' ?
@@ -482,6 +631,13 @@ const Analisis = (user) => {
                                     <td className="text-muted">{task.nombre_fincas}</td>
                                     <td className="text-muted">{task.nombre_lotes}</td>
                                     <td className="text-muted">{task.nombre_variedades}</td>
+                                    <td> <button
+                                            type="button"
+                                            className="btn-actualizar-mod rounded-3"
+                                            onClick={() =>{toggleModal(3);buscarPromedioResultado(task.id_analisis)}}
+                                        >
+                                            ver 
+                                        </button></td>
 
                                     <td>
                                         <button
@@ -786,7 +942,32 @@ const Analisis = (user) => {
                 </div>
                 
             )}
-        </>
+
+            {showModal3 ? 
+                <div className="main-content-analisis"  >
+                {/* <div className="container-tittle"> */}
+                <h1 className='title-registrar-analisis'>Visualizar resultado</h1> 
+
+
+                {/* </div> */}
+                <form className="formulario-resultado-analisis" method="post">
+
+                    {generarInputs3()}
+                
+                    <div className="buttons">          
+                    <button className="btn-reg-mue" type="button" onClick={hideAllModals}>
+                        Cancelar
+                    </button>
+                    </div>
+                    
+                </form>
+                </div>
+
+                : ""}
+
+
+            
+        </div>
 
     )
 }
