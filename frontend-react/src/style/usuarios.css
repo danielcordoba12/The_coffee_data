@@ -28,6 +28,7 @@
        height: 70px;
      }
   .tablalistar{
+    margin-top: 75px;
     position: relative;
     left: -26px;
     width: 93%;
@@ -40,7 +41,7 @@
     position: relative;
     left: -33px;
     top: -10px;
-    color: #168A45;
+    color: #808080 ;
     margin-top: 13px;
     font-size: 1.5rem;
     font-weight: bold;
